@@ -1,0 +1,2517 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAPIENS 360 — Strategie Monopole Contenu</title>
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg: #111;
+  --card: #161616;
+  --border: #2C4A3555;
+  --gold: #B8956A;
+  --green: #2C4A35;
+  --ivory: #FAF7F2;
+  --stone: #888;
+  --gold-glow: #B8956A44;
+  --green-glow: #2C4A3544;
+  --danger: #c17b5a;
+  --red: #C75050;
+  --blue: #5B9BD5;
+  --purple: #C77DBA;
+  --success: #6BC77A;
+}
+
+body {
+  background: var(--bg);
+  color: var(--ivory);
+  font-family: 'Segoe UI', Arial, sans-serif;
+  line-height: 1.65;
+  font-size: 15px;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+.container { max-width: 1100px; margin: 0 auto; padding: 20px; }
+
+/* ── Hero ── */
+.hero {
+  text-align: center;
+  padding: 70px 24px 44px;
+  border-bottom: 2px solid var(--green);
+  margin-bottom: 0;
+  background: radial-gradient(ellipse at 50% 0%, rgba(184,149,106,0.06), transparent 60%);
+}
+.hero-brand {
+  font-family: Georgia, serif;
+  font-size: 14px;
+  color: var(--gold);
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.hero-360 {
+  font-family: Georgia, serif;
+  font-size: clamp(42px, 7vw, 62px);
+  color: #fff;
+  line-height: 1.05;
+  margin-bottom: 6px;
+}
+.hero-360 span { color: var(--gold); }
+.hero-title {
+  font-family: Georgia, serif;
+  font-size: clamp(20px, 3.5vw, 28px);
+  color: var(--gold);
+  font-weight: 400;
+  letter-spacing: 2px;
+  margin-bottom: 18px;
+}
+.hero-desc {
+  color: var(--stone);
+  font-size: 14px;
+  max-width: 720px;
+  margin: 0 auto;
+  line-height: 1.8;
+}
+.hero-desc strong { color: var(--ivory); }
+
+/* ── Sticky Nav ── */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(17,17,17,0.97);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border);
+  overflow-x: auto;
+  white-space: nowrap;
+  scrollbar-width: thin;
+  scrollbar-color: var(--green) transparent;
+}
+.nav::-webkit-scrollbar { height: 3px; }
+.nav::-webkit-scrollbar-track { background: transparent; }
+.nav::-webkit-scrollbar-thumb { background: var(--green); border-radius: 3px; }
+.nav a {
+  display: inline-block;
+  padding: 14px 14px;
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.35);
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+.nav a:hover { color: var(--ivory); }
+.nav a.active { color: var(--gold); border-bottom-color: var(--gold); }
+
+/* ── Search ── */
+.search-bar {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 24px 24px 0;
+}
+.search-wrap { position: relative; }
+.search-icon {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #555;
+  font-size: 18px;
+  pointer-events: none;
+}
+.search-input {
+  width: 100%;
+  padding: 14px 20px 14px 48px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  color: var(--ivory);
+  font-size: 15px;
+  font-family: inherit;
+  outline: none;
+  transition: border-color .2s;
+}
+.search-input:focus { border-color: var(--gold); }
+.search-input::placeholder { color: #555; }
+
+/* ── Sections ── */
+.section {
+  margin-bottom: 50px;
+  scroll-margin-top: 60px;
+}
+.section-header {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  margin-bottom: 22px;
+  padding-bottom: 14px;
+  border-bottom: 2px solid var(--green);
+}
+.section-num {
+  font-family: Georgia, serif;
+  font-size: 48px;
+  color: var(--green);
+  line-height: 1;
+}
+.section-title {
+  font-family: Georgia, serif;
+  font-size: 28px;
+  color: var(--gold);
+}
+.section-subtitle {
+  font-size: 13px;
+  color: var(--stone);
+  margin-top: 2px;
+}
+
+/* ── Cards ── */
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 24px 28px;
+  margin-bottom: 18px;
+}
+.card.gold {
+  border-color: var(--gold);
+  background: linear-gradient(135deg, rgba(184,149,106,0.1), var(--card));
+}
+.card.green { border-left: 4px solid var(--green); }
+.card.red { border-left: 4px solid var(--danger); }
+.card.danger {
+  border: 1px solid var(--danger);
+  background: linear-gradient(135deg, rgba(193,123,90,0.08), var(--card));
+}
+.card.vision-card {
+  border: 2px solid var(--gold);
+  background: linear-gradient(135deg, rgba(184,149,106,0.12), var(--card));
+  padding: 36px 32px;
+  text-align: center;
+}
+.card h3 {
+  font-family: Georgia, serif;
+  font-size: 20px;
+  color: var(--gold);
+  margin-bottom: 12px;
+}
+.card h4 {
+  font-size: 13px;
+  color: var(--gold);
+  font-weight: 700;
+  margin: 18px 0 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.card h4:first-child { margin-top: 0; }
+.card p { margin-bottom: 12px; }
+.card p:last-child { margin-bottom: 0; }
+.card ul, .card ol { padding-left: 20px; margin-bottom: 14px; }
+.card li { margin-bottom: 8px; }
+.card li strong { color: #fff; }
+.card p strong { color: var(--gold); }
+
+/* ── Vision big quote ── */
+.vision-quote {
+  font-family: Georgia, serif;
+  font-size: clamp(18px, 2.5vw, 24px);
+  color: var(--ivory);
+  line-height: 1.5;
+  margin-bottom: 16px;
+}
+.vision-quote em { color: var(--gold); font-style: normal; font-weight: 700; }
+
+/* ── Collapsible ── */
+.collapsible { margin-bottom: 18px; }
+.collapsible-header {
+  background: #1a1a1a;
+  border: 1px solid var(--border);
+  border-radius: 10px 10px 0 0;
+  padding: 16px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.collapsible-header:hover { background: #1e1e1e; }
+.collapsible-header h3 {
+  font-family: Georgia, serif;
+  font-size: 18px;
+  color: var(--gold);
+  margin: 0;
+}
+.collapsible-header .toggle-icon {
+  color: var(--gold);
+  font-size: 20px;
+  transition: transform 0.3s;
+}
+.collapsible-header.open .toggle-icon { transform: rotate(45deg); }
+.collapsible-body {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-top: none;
+  border-radius: 0 0 10px 10px;
+  padding: 24px 28px;
+  display: none;
+}
+.collapsible-body.open { display: block; }
+.collapsible.start-open .collapsible-body { display: block; }
+.collapsible.start-open .collapsible-header .toggle-icon { transform: rotate(45deg); }
+
+/* ── Copy button ── */
+.copy-block {
+  position: relative;
+  background: #0d0d0d;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 18px 20px;
+  margin: 14px 0;
+  font-size: 14px;
+  line-height: 1.7;
+  color: #d4d0c4;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+.copy-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: var(--green);
+  color: var(--gold);
+  border: none;
+  border-radius: 6px;
+  padding: 5px 14px;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: all 0.2s;
+}
+.copy-btn:hover { background: var(--gold); color: #111; }
+.copy-btn.copied { background: var(--success); color: #111; }
+
+/* ── Tables ── */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 16px 0;
+  background: var(--card);
+  border-radius: 8px;
+  overflow: hidden;
+  font-size: 14px;
+}
+th {
+  background: var(--green);
+  color: var(--ivory);
+  padding: 12px 16px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+td {
+  padding: 12px 16px;
+  border-bottom: 1px solid #2C4A3522;
+  color: #d4d0c4;
+}
+tr:last-child td { border-bottom: none; }
+td strong { color: var(--ivory); }
+td em { color: var(--gold); font-style: normal; }
+
+/* ── Grids ── */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin: 18px 0; }
+.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 18px; margin: 18px 0; }
+@media (max-width: 900px) { .grid-3 { grid-template-columns: 1fr; } }
+@media (max-width: 768px) { .grid-2 { grid-template-columns: 1fr; } }
+
+/* ── Quote ── */
+.quote {
+  border-left: 3px solid var(--gold);
+  padding: 16px 22px;
+  margin: 16px 0;
+  background: rgba(184,149,106,0.06);
+  font-style: italic;
+  color: #d4d0c4;
+  border-radius: 0 8px 8px 0;
+  font-size: 15px;
+  line-height: 1.7;
+}
+.quote strong { color: var(--ivory); font-style: normal; }
+
+/* ── Pillar cards ── */
+.pillar {
+  background: var(--card);
+  border: 2px solid var(--green);
+  border-radius: 10px;
+  padding: 28px;
+  text-align: center;
+}
+.pillar-num {
+  font-family: Georgia, serif;
+  font-size: 42px;
+  color: var(--green);
+  margin-bottom: 6px;
+}
+.pillar h4 {
+  font-family: Georgia, serif;
+  font-size: 20px;
+  color: var(--gold);
+  margin-bottom: 10px;
+  text-transform: none;
+  letter-spacing: 0;
+}
+.pillar p { color: var(--stone); font-size: 14px; }
+
+/* ── Acte cards (storytelling) ── */
+.acte-card {
+  background: var(--card);
+  border-radius: 10px;
+  padding: 28px;
+  margin-bottom: 18px;
+  border-left: 4px solid var(--gold);
+}
+.acte-card.acte-1 { border-left-color: var(--danger); }
+.acte-card.acte-2 { border-left-color: var(--blue); }
+.acte-card.acte-3 { border-left-color: var(--success); }
+.acte-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.acte-card.acte-1 .acte-label { color: var(--danger); }
+.acte-card.acte-2 .acte-label { color: var(--blue); }
+.acte-card.acte-3 .acte-label { color: var(--success); }
+.acte-card h3 {
+  font-family: Georgia, serif;
+  font-size: 22px;
+  color: var(--ivory);
+  margin-bottom: 14px;
+}
+
+/* ── Signature phrases ── */
+.signature-phrase {
+  background: linear-gradient(135deg, rgba(184,149,106,0.08), var(--card));
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 18px 22px;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+.signature-num {
+  font-family: Georgia, serif;
+  font-size: 28px;
+  color: var(--green);
+  flex-shrink: 0;
+  width: 36px;
+  text-align: center;
+  line-height: 1;
+  padding-top: 2px;
+}
+.signature-text {
+  font-family: Georgia, serif;
+  font-size: 16px;
+  color: var(--ivory);
+  line-height: 1.5;
+  flex: 1;
+}
+
+/* ── Flowchart ── */
+.flowchart {
+  background: #0d0d0d;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 28px;
+  margin: 18px 0;
+  font-family: 'Courier New', monospace;
+  font-size: 13px;
+  line-height: 1.8;
+  color: var(--stone);
+  overflow-x: auto;
+}
+.flowchart strong { color: var(--gold); }
+.flowchart em { color: var(--success); font-style: normal; }
+
+/* ── Checklist ── */
+.checklist { list-style: none; padding: 0; }
+.checklist li {
+  padding: 10px 0;
+  border-bottom: 1px solid #222;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+.checklist li:last-child { border-bottom: none; }
+.checklist input[type="checkbox"] {
+  margin-top: 4px;
+  accent-color: var(--gold);
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+.checklist .done { text-decoration: line-through; color: #555; }
+
+/* ── Timeline ── */
+.timeline { position: relative; padding-left: 30px; border-left: 2px solid var(--green); margin: 24px 0; }
+.timeline-item { margin-bottom: 24px; position: relative; }
+.timeline-item::before {
+  content: '';
+  width: 14px;
+  height: 14px;
+  background: var(--gold);
+  border-radius: 50%;
+  position: absolute;
+  left: -38px;
+  top: 4px;
+  box-shadow: 0 0 0 4px var(--bg);
+}
+.timeline-item .period {
+  font-size: 11px;
+  color: var(--gold);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-weight: 700;
+}
+.timeline-item .desc { color: #d4d0c4; margin-top: 4px; }
+.timeline-item .desc strong { color: var(--ivory); }
+
+/* ── Progress bars ── */
+.progress-row { margin: 12px 0; }
+.progress-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  margin-bottom: 4px;
+}
+.progress-label span:first-child { color: var(--ivory); }
+.progress-label span:last-child { color: var(--gold); font-weight: 700; }
+.progress-track {
+  height: 8px;
+  background: #222;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.5s;
+  background: linear-gradient(90deg, var(--green), var(--gold));
+}
+
+/* ── Metric cards ── */
+.metric-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 22px;
+  text-align: center;
+}
+.metric-value {
+  font-family: Georgia, serif;
+  font-size: 36px;
+  color: var(--gold);
+  margin-bottom: 4px;
+}
+.metric-label {
+  font-size: 12px;
+  color: var(--stone);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* ── Day cards (collapsible) ── */
+.day-card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; margin-bottom: 18px; overflow: hidden; }
+.day-header {
+  background: #1a1a1a;
+  padding: 16px 24px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.day-header:hover { background: #1e1e1e; }
+.day-header .day-label { font-family: Georgia, serif; font-size: 18px; color: var(--gold); }
+.day-header .day-tag {
+  background: var(--green);
+  color: var(--gold);
+  padding: 4px 12px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.day-header .day-tag.jad { background: #B8956A22; color: var(--gold); }
+.day-header .day-tag.geoffrey { background: #2C4A3544; color: #6a9a78; }
+.day-header .day-tag.both { background: #ffffff11; color: #fff; }
+.day-body { padding: 24px; }
+.day-body.collapsed { display: none; }
+
+/* ── Tags ── */
+.tag {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+.tag.green { background: var(--green); color: var(--gold); }
+.tag.gold { background: var(--gold); color: #111; }
+.tag.red { background: var(--red); color: #fff; }
+.tag.blue { background: var(--blue); color: #111; }
+.tag.purple { background: var(--purple); color: #111; }
+.tag.stone { background: #333; color: var(--stone); }
+
+/* ── Stat row ── */
+.stat-row {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 14px;
+  margin: 18px 0;
+}
+@media (max-width: 768px) {
+  .stat-row { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ── Week cards ── */
+.week-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 24px;
+  margin-bottom: 18px;
+}
+.week-card h3 {
+  font-family: Georgia, serif;
+  color: var(--gold);
+  font-size: 18px;
+  margin-bottom: 14px;
+}
+
+/* ── Footer ── */
+footer {
+  text-align: center;
+  padding: 40px 20px;
+  border-top: 1px solid var(--border);
+  color: #555;
+  font-size: 12px;
+  margin-top: 60px;
+  letter-spacing: 1px;
+}
+
+/* ── Responsive ── */
+@media (max-width: 600px) {
+  .container { padding: 14px; }
+  .card { padding: 18px 16px; }
+  .section-num { font-size: 36px; }
+  .section-title { font-size: 22px; }
+  .hero { padding: 40px 16px 30px; }
+  .stat-row { grid-template-columns: 1fr 1fr; }
+  .nav a { padding: 12px 10px; font-size: 10px; }
+  table { font-size: 12px; }
+  th, td { padding: 8px 10px; }
+}
+
+/* ── Hidden for search ── */
+.search-hidden { display: none !important; }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════ HERO ═══════════════════════════════════════════ -->
+<div class="hero">
+  <div class="hero-brand">SAPIENS</div>
+  <div class="hero-360">3<span>6</span>0</div>
+  <div class="hero-title">Strategie Monopole Contenu</div>
+  <p class="hero-desc">
+    <strong>Dominer tout le marche francophone de la peau</strong> — YouTube, Instagram, SEO, storytelling, ecosysteme complet.<br>
+    Le blueprint pour que Geoffrey devienne LA reference incontournable en sante terrain biologique.
+  </p>
+</div>
+
+<!-- ═══════════════════════════════════════════ NAV ═══════════════════════════════════════════ -->
+<div class="nav" id="nav">
+  <a href="#vision" class="active">Vision</a>
+  <a href="#storytelling">Storytelling Geoffrey</a>
+  <a href="#vocabulaire">Vocabulaire</a>
+  <a href="#youtube">YouTube Monopole</a>
+  <a href="#instagram">Instagram Systeme</a>
+  <a href="#repurposing">Repurposing</a>
+  <a href="#seo">SEO Domination</a>
+  <a href="#nurture">Ecosysteme Nurture</a>
+  <a href="#temoignages">Temoignages Machine</a>
+  <a href="#concurrents">Concurrents</a>
+  <a href="#plan90">90 Jours</a>
+  <a href="#checklist">Checklist</a>
+</div>
+
+<!-- ═══════════════════════════════════════════ SEARCH ═══════════════════════════════════════════ -->
+<div class="search-bar">
+  <div class="search-wrap">
+    <span class="search-icon">&#128269;</span>
+    <input type="text" class="search-input" id="globalSearch" placeholder="Rechercher dans la strategie (ex: psoriasis, thumbnail, CTA, email, temoignage...)">
+  </div>
+</div>
+
+<div class="container">
+
+<!-- ═══════════════════════════════════════════════════════════════════════════════════════════════ -->
+<!-- SECTION 1: LA VISION — POURQUOI LE MONOPOLE -->
+<!-- ═══════════════════════════════════════════════════════════════════════════════════════════════ -->
+<div class="section" id="vision">
+  <div class="section-header">
+    <div class="section-num">01</div>
+    <div>
+      <div class="section-title">La Vision — Pourquoi le Monopole</div>
+      <div class="section-subtitle">Le plan pour posseder tout le marche francophone de la peau</div>
+    </div>
+  </div>
+
+  <div class="card vision-card">
+    <div class="vision-quote">
+      "Dans 6 mois, quand quelqu'un tape <em>'rosacee'</em>, <em>'psoriasis traitement naturel'</em>, <em>'acne adulte cause'</em>, <em>'eczema chronique solution'</em> en francais — il tombe sur Geoffrey. Sur YouTube. Sur Instagram. Sur Google. <em>Partout.</em> Geoffrey EST la reference. Pas une reference. <em>LA</em> reference."
+    </div>
+  </div>
+
+  <div class="card gold">
+    <h3>La strategie en 1 phrase</h3>
+    <p style="font-size:17px; color: var(--ivory);">Creer tellement de contenu de haute valeur que <strong>personne ne peut rivaliser</strong>. Pas en budget pub. En <strong>PROFONDEUR</strong> de contenu.</p>
+  </div>
+
+  <div class="card">
+    <h3>Le Calcul du Monopole</h3>
+    <div class="stat-row">
+      <div class="metric-card">
+        <div class="metric-value">100</div>
+        <div class="metric-label">Videos YouTube<br>en 6 mois</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-value">25h+</div>
+        <div class="metric-label">Heures de contenu<br>Regle 7-11-4 x3</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-value">1,000</div>
+        <div class="metric-label">Reels Instagram<br>en 6 mois</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-value">50+</div>
+        <div class="metric-label">Mots-cles Google<br>top 3</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-value">30+</div>
+        <div class="metric-label">Temoignages video<br>preuve sociale</div>
+      </div>
+    </div>
+    <p style="text-align:center; color:var(--stone); font-size:13px; margin-top:8px;">La regle 7-11-4 : un prospect a besoin de 7 heures de contenu, 11 interactions, et 4 lieux differents avant d'acheter. Avec 100 videos, on depasse ce seuil x3.</p>
+  </div>
+
+  <div class="card">
+    <h3>Pourquoi personne ne peut copier</h3>
+    <p>Le contenu est base sur <strong>30+ calls de vente REELS</strong>, des temoignages <strong>REELS</strong>, une expertise clinique <strong>REELLE</strong> (Dr Dufournet, Dr Florent), et un praticien qui a <strong>VECU</strong> le probleme.</p>
+    <p>Un concurrent peut copier le format. Il ne peut pas copier l'authenticite.</p>
+    <div class="quote">
+      Un naturopathe peut faire une video sur le psoriasis. Mais il ne peut pas dire "j'ai vecu ca". Un dermato peut parler d'inflammation. Mais il ne peut pas dire "j'ai resolu ca sur moi-meme sans cortisone". Un influenceur peut avoir 100K abonnes. Mais il ne peut pas montrer 100+ accompagnements reels avec des resultats mesurables.
+    </div>
+  </div>
+
+  <div class="grid-3" style="margin-top:24px;">
+    <div class="pillar">
+      <div class="pillar-num">I</div>
+      <h4>VOLUME</h4>
+      <p>Plus de contenu que quiconque dans le marche francophone sante peau. 100 videos. 1,000 reels. 50 articles. Omnipresence totale.</p>
+    </div>
+    <div class="pillar">
+      <div class="pillar-num">II</div>
+      <h4>PROFONDEUR</h4>
+      <p>Chaque sujet traite 10x plus en detail que les concurrents. Pas des reponses generiques. Des explications cliniques completes.</p>
+    </div>
+    <div class="pillar">
+      <div class="pillar-num">III</div>
+      <h4>AUTHENTICITE</h4>
+      <p>Vrai praticien. Vrai vecu. Vrais resultats. Formation clinique reelle. Impossible a reproduire par un concurrent generique.</p>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:24px;">
+    <h3>L'Equation de la Domination</h3>
+    <table>
+      <tr><th>Canal</th><th>Volume M6</th><th>Impact</th><th>Investissement</th></tr>
+      <tr><td><strong>YouTube</strong></td><td>100 videos / 25h+</td><td>Autorite + SEO + Trust</td><td>Geoffrey: 20 min/video, Jad: 2h/video</td></tr>
+      <tr><td><strong>Instagram Reels</strong></td><td>1,000 reels</td><td>Visibilite + Leads directs</td><td>Jad: extraits YouTube + originaux</td></tr>
+      <tr><td><strong>TikTok</strong></td><td>1,000 reposts</td><td>Audience complementaire</td><td>Zero effort (repost auto)</td></tr>
+      <tr><td><strong>Blog/SEO</strong></td><td>50+ articles</td><td>Trafic Google organique</td><td>Jad: transcriptions editees</td></tr>
+      <tr><td><strong>Pinterest</strong></td><td>100+ pins</td><td>Trafic passif femmes 30-50</td><td>1 pin par video YouTube</td></tr>
+      <tr><td><strong>Email</strong></td><td>30+ emails educatifs</td><td>Nurture long terme</td><td>Jad: 1 email par video</td></tr>
+      <tr><td><strong>Podcast</strong></td><td>40+ episodes</td><td>Audience audio</td><td>Zero effort (audio des videos)</td></tr>
+      <tr><td><strong>Temoignages</strong></td><td>30+ videos</td><td>Preuve sociale imbattable</td><td>Process systematique</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════════════════════════════════ -->
+<!-- SECTION 2: STORYTELLING GEOFFREY -->
+<!-- ═══════════════════════════════════════════════════════════════════════════════════════════════ -->
+<div class="section" id="storytelling">
+  <div class="section-header">
+    <div class="section-num">02</div>
+    <div>
+      <div class="section-title">Le Storytelling de Geoffrey — L'Arme Secrete</div>
+      <div class="section-subtitle">L'histoire personnelle qui differencie de chaque naturopathe generique</div>
+    </div>
+  </div>
+
+  <div class="card gold">
+    <h3>Pourquoi cette section est CRITIQUE</h3>
+    <p>Geoffrey n'est pas un "coach sante" generique. Son histoire personnelle est ce qui cree la connexion emotionnelle avec Lea (notre ICP). Chaque prospect qui regarde une video, un reel, un temoignage — doit SENTIR que Geoffrey comprend son combat. Parce qu'il l'a vecu.</p>
+    <p><strong>L'histoire de Geoffrey EST le produit marketing.</strong> Pas les features du programme. Pas le prix. L'histoire.</p>
+  </div>
+
+  <!-- ACTE 1 -->
+  <div class="acte-card acte-1">
+    <div class="acte-label">Acte 1 — Le Guerrier Blesse</div>
+    <h3>Credibilite + Empathie</h3>
+    <p>Geoffrey est un sportif de combat de haut niveau. Son corps EST son outil de travail. Et pourtant — sa peau flambe. Plaques. Inflammation. Aucune logique. Les bilans sont normaux. Les dermatologues n'ont pas de reponse. Il essaie tout: cremes, cortisone, regimes. Ca ameliore. Ca revient. <strong>Toujours.</strong></p>
+    <div class="quote">
+      "Mon corps me trahissait. Je pouvais encaisser des coups au combat, mais je ne pouvais pas empecher ma propre peau de bruler."
+    </div>
+    <p style="color:var(--stone); font-size:13px;"><strong style="color:var(--danger);">Fonction narrative:</strong> Ce passage cree l'identification. Lea aussi a un corps qui la "trahit". Lea aussi a tout essaye. Lea aussi a des bilans normaux mais une peau qui flambe. Geoffrey = elle, mais avec une issue.</p>
+  </div>
+
+  <!-- ACTE 2 -->
+  <div class="acte-card acte-2">
+    <div class="acte-label">Acte 2 — La Revelation</div>
+    <h3>Le Mecanisme</h3>
+    <p>Il decouvre l'axe intestin-immunite-peau. Il se forme cliniquement aupres du <strong>Dr Boris Dufournet</strong> et du <strong>Dr Florent</strong> sur les protocoles cetogenes et carnivores therapeutiques. Ce n'est pas de la theorie. Il teste <strong>SUR LUI-MEME</strong>. Les resultats sont immediats.</p>
+    <div class="quote">
+      "Le jour ou j'ai compris que ma peau n'etait pas le probleme mais le <strong>MESSAGER</strong> — tout a change. Mon intestin controlait mon inflammation. Personne ne me l'avait jamais dit."
+    </div>
+    <p style="color:var(--stone); font-size:13px;"><strong style="color:var(--blue);">Fonction narrative:</strong> Ce passage installe LE mecanisme central de SAPIENS 360 (l'axe intestin-immunite-peau) dans une histoire personnelle. Ce n'est plus une theorie abstraite — c'est un vecu.</p>
+  </div>
+
+  <!-- ACTE 3 -->
+  <div class="acte-card acte-3">
+    <div class="acte-label">Acte 3 — La Mission</div>
+    <h3>Le Pourquoi</h3>
+    <p>Il decide d'aider les autres. Il cree SAPIENS 360. Il accompagne <strong>100+ personnes</strong>. Les resultats se repetent: psoriasis, acne, eczema, rosacee — le meme terrain, la meme solution, les memes resultats.</p>
+    <div class="quote">
+      "Je ne suis pas un influenceur sante. Je suis un praticien qui a vecu ce que tu vis. Et j'ai trouve la sortie."
+    </div>
+    <p style="color:var(--stone); font-size:13px;"><strong style="color:var(--success);">Fonction narrative:</strong> Ce passage transforme Geoffrey en "guide". Il a traverse le desert, il connait le chemin, et maintenant il tend la main. C'est le Hero's Journey classique — le heros blesse qui devient le guide.</p>
+  </div>
+
+  <!-- LES 5 VERSIONS DU STORYTELLING -->
+  <div style="margin-top:30px;">
+    <h3 style="font-family:Georgia,serif; font-size:22px; color:var(--gold); margin-bottom:18px;">Les 5 Versions du Storytelling — Copy-Paste</h3>
+
+    <!-- Version 30 sec -->
+    <div class="collapsible start-open">
+      <div class="collapsible-header" onclick="toggleCollapsible(this)">
+        <h3>Version 30 secondes (Reel)</h3>
+        <span class="toggle-icon">+</span>
+      </div>
+      <div class="collapsible-body open">
+        <p style="color:var(--stone); font-size:13px; margin-bottom:10px;">Utiliser pour: Reels Instagram, TikTok, hook de video</p>
+        <div class="copy-block">Je m'appelle Geoffrey. J'etais sportif de combat. Mon corps, c'etait mon outil. Et pourtant — ma peau flambait. Aucun dermato ne savait pourquoi. J'ai fini par comprendre moi-meme: le probleme n'est pas ta peau. C'est ce qui se passe en dessous.<button class="copy-btn" onclick="copyBlock(this)">Copier</button></div>
+      </div>
+    </div>
+
+    <!-- Version 2 min -->
+    <div class="collapsible">
+      <div class="collapsible-header" onclick="toggleCollapsible(this)">
+        <h3>Version 2 minutes (YouTube intro)</h3>
+        <span class="toggle-icon">+</span>
+      </div>
+      <div class="collapsible-body">
+        <p style="color:var(--stone); font-size:13px; margin-bottom:10px;">Utiliser pour: Intro de chaque video YouTube, pitch rapide</p>
+        <div class="copy-block">Je m'appelle Geoffrey. Avant de creer SAPIENS 360, j'etais sportif de combat de haut niveau. Mon corps, c'etait tout pour moi. Et un jour, ma peau a commence a flamber. Sans logique. Sans explication.
+
+J'ai vu des dermatos. Des specialistes. On m'a donne des cremes. De la cortisone. Ca ameliorait. Puis ca revenait. Toujours.
+
+J'ai mis des annees a comprendre que le probleme n'etait pas ma peau. C'etait mon intestin. 70% du systeme immunitaire est dans l'intestin. Quand le terrain est deregle, l'inflammation s'exprime sur la peau.
+
+J'ai etudie. Je me suis forme cliniquement aupres du Dr Dufournet et du Dr Florent. J'ai applique sur moi-meme. Ca a marche.
+
+Depuis, j'ai accompagne plus de 100 personnes avec le meme resultat. Ce que je vais te montrer dans cette video, c'est exactement ce que personne ne t'a jamais explique.<button class="copy-btn" onclick="copyBlock(this)">Copier</button></div>
+      </div>
+    </div>
+
+    <!-- Version 5 min -->
+    <div class="collapsible">
+      <div class="collapsible-header" onclick="toggleCollapsible(this)">
+        <h3>Version 5 minutes (YouTube video dediee)</h3>
+        <span class="toggle-icon">+</span>
+      </div>
+      <div class="collapsible-body">
+        <p style="color:var(--stone); font-size:13px; margin-bottom:10px;">Utiliser pour: Video YouTube dediee "Mon Histoire", About page, long-form</p>
+        <div class="copy-block">Je m'appelle Geoffrey. Et si je te parle aujourd'hui de sante de la peau, ce n'est pas parce que j'ai lu un bouquin. C'est parce que je l'ai vecu.
+
+Il y a quelques annees, j'etais sportif de combat de haut niveau. Mon corps, c'etait mon outil de travail. Je m'entrainais tous les jours. Je faisais attention a tout. Et pourtant — ma peau flambait. Des plaques. De l'inflammation. Des rougeurs qui ne s'expliquaient pas.
+
+J'ai fait ce que tout le monde fait. J'ai vu des dermatologues. On m'a dit: "C'est chronique." On m'a donne des cremes. De la cortisone. Ca ameliorait pendant quelques semaines. Et puis ca revenait. Toujours. A chaque fois un peu plus fort.
+
+Le pire, c'est que mes bilans sanguins etaient normaux. "Tout va bien", qu'on me disait. Mais mon corps, lui, hurlait. J'ai commence a me demander si c'etait dans ma tete.
+
+Et puis un jour, j'ai decouvert quelque chose que personne ne m'avait jamais explique: 70% de mon systeme immunitaire etait dans mon intestin. Et mon intestin etait en guerre. La permeabilite intestinale, le desequilibre du microbiote, l'inflammation de bas grade — tout ca produisait les symptomes que je voyais sur ma peau.
+
+Ma peau n'etait pas le probleme. Elle etait le messager.
+
+J'ai decide de me former serieusement. Pas des formations Instagram. Des formations cliniques. J'ai etudie aupres du Dr Boris Dufournet et du Dr Florent. Les protocoles cetogenes et carnivores therapeutiques. La micronutrition. L'axe intestin-immunite-peau.
+
+Et j'ai tout applique sur moi-meme. D'abord.
+
+Les resultats ont ete clairs. Nets. Mesurables. En quelques semaines, ma peau s'est stabilisee. Pas avec une creme. Pas avec un complement magique. En traitant le terrain.
+
+J'aurais pu m'arreter la. Reprendre le combat. Vivre ma vie.
+
+Mais j'ai repense a toutes ces annees d'errance. A ces rendez-vous chez le dermato ou on me disait "c'est chronique, il faut vivre avec". A cette frustration de tout essayer sans comprendre pourquoi ca ne marchait pas.
+
+Et je me suis dit: il y a des milliers de personnes qui vivent exactement ce que j'ai vecu. Qui ne savent pas. Qui n'ont personne pour leur expliquer.
+
+Alors j'ai cree SAPIENS 360.
+
+Depuis, j'ai accompagne plus de 100 personnes. Des femmes avec du psoriasis depuis 8 ans. De l'acne adulte apres 25 ans. De la rosacee apres 3 dermatologues differents. De l'eczema depuis l'enfance.
+
+Et a chaque fois, le meme schema: le terrain deregle, l'intestin en inflammation, la peau qui exprime ce que le corps n'arrive pas a resoudre a l'interieur.
+
+Ce que je fais, ce n'est pas de la magie. C'est de la science. Du protocole clinique adapte. Du suivi personnalise. Et surtout — c'est de la comprehension profonde de ce que tu vis. Parce que je l'ai vecu.
+
+Si tu te reconnais dans cette histoire, tu n'es pas seule. Et surtout — ce n'est pas irreversible.<button class="copy-btn" onclick="copyBlock(this)">Copier</button></div>
+      </div>
+    </div>
+
+    <!-- Bio Instagram -->
+    <div class="collapsible">
+      <div class="collapsible-header" onclick="toggleCollapsible(this)">
+        <h3>Version bio Instagram</h3>
+        <span class="toggle-icon">+</span>
+      </div>
+      <div class="collapsible-body">
+        <p style="color:var(--stone); font-size:13px; margin-bottom:10px;">Utiliser pour: Bio Instagram, bio TikTok, bio Pinterest</p>
+        <div class="copy-block">Geoffrey | Praticien Terrain Biologique
+Ex-sportif combat | Ma peau m'a appris ce que la medecine ne m'a jamais dit
+J'aide les femmes avec rosacee/acne/eczema/psoriasis a stabiliser leur peau en 90j
+100+ accompagnements<button class="copy-btn" onclick="copyBlock(this)">Copier</button></div>
+      </div>
+    </div>
+
+    <!-- Description YouTube -->
+    <div class="collapsible">
+      <div class="collapsible-header" onclick="toggleCollapsible(this)">
+        <h3>Version description YouTube</h3>
+        <span class="toggle-icon">+</span>
+      </div>
+      <div class="collapsible-body">
+        <p style="color:var(--stone); font-size:13px; margin-bottom:10px;">Utiliser pour: Section "A propos" YouTube, description chaine</p>
+        <div class="copy-block">Geoffrey est praticien en protocoles terrain biologique, forme cliniquement aupres du Dr Boris Dufournet et du Dr Florent. Ancien sportif de combat de haut niveau, il a vecu lui-meme l'inflammation chronique et l'errance medicale. Depuis, il a accompagne plus de 100 personnes vers la stabilisation de leur terrain — psoriasis, acne, rosacee, eczema.<button class="copy-btn" onclick="copyBlock(this)">Copier</button></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- REGLES DU STORYTELLING -->
+  <div style="margin-top:30px;">
+    <h3 style="font-family:Georgia,serif; font-size:22px; color:var(--gold); margin-bottom:18px;">Les Regles du Storytelling Geoffrey</h3>
+
+    <div class="grid-2">
+      <div class="card green">
+        <h3>Geoffrey EST</h3>
+        <ul>
+          <li>Un <strong>praticien</strong> (pas un influenceur)</li>
+          <li>Un <strong>clinicien</strong> (pas un coach bien-etre)</li>
+          <li>Un <strong>ancien sportif</strong> (pas un intellectuel deconnecte)</li>
+          <li>Quelqu'un qui a <strong>VECU le probleme</strong> (pas un spectateur)</li>
+          <li><strong>Calme, pose, direct, factuel</strong> (pas emotionnel ni hype)</li>
+          <li><strong>Empathique mais ferme</strong> (pas mou ni complaisant)</li>
+        </ul>
+      </div>
+      <div class="card danger">
+        <h3>Geoffrey n'est PAS</h3>
+        <ul>
+          <li>Un <strong>vendeur</strong> (JAMAIS de pitch en contenu)</li>
+          <li>Un influenceur lifestyle</li>
+          <li>Un "guru" de la sante</li>
+          <li>Un naturopathe generique</li>
+          <li>Un "coach" vague</li>
+          <li>Emotionnel ou dramatique</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:18px;">
+      <h3>Le Ton Geoffrey par Plateforme</h3>
+      <table>
+        <tr><th>Plateforme</th><th>Ton</th><th>Comportement</th></tr>
+        <tr><td><strong>YouTube</strong></td><td>Clinicien. Lent. Pedagogique.</td><td>Regard camera. Pose. Comme un medecin qui explique a son patient. Zero hype.</td></tr>
+        <tr><td><strong>Instagram Reels</strong></td><td>Direct. Percutant. 1 idee.</td><td>Hook percutant. Energie controlled. Pas de danse, pas de trends, pas de filtres.</td></tr>
+        <tr><td><strong>WhatsApp/DMs</strong></td><td>Chaleureux. Humain. Direct.</td><td>Emojis moderes (principalement le 🙏). Phrases courtes. Ecoute active.</td></tr>
+        <tr><td><strong>Calls de vente</strong></td><td>ABSENT</td><td>Geoffrey n'est jamais present sur les calls de vente. C'est Jad qui close. Geoffrey = le praticien inaccessible sauf pour les clients.</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════════════════════════════════ -->
+<!-- SECTION 3: VOCABULAIRE — LA BIBLE DES MOTS -->
+<!-- ═══════════════════════════════════════════════════════════════════════════════════════════════ -->
+<div class="section" id="vocabulaire">
+  <div class="section-header">
+    <div class="section-num">03</div>
+    <div>
+      <div class="section-title">Vocabulaire — La Bible des Mots</div>
+      <div class="section-subtitle">Chaque mot compte. Chaque mot positionne. Chaque mot vend (ou tue la vente).</div>
+    </div>
+  </div>
+
+  <div class="card gold">
+    <h3>Pourquoi le vocabulaire est strategique</h3>
+    <p>Les mots qu'on utilise definissent comment Lea percoit SAPIENS 360. "Programme" = produit. "Accompagnement" = humain. "Regime" = privation. "Protocole" = science. <strong>Chaque mot est un choix de positionnement.</strong></p>
+    <p>Ces regles s'appliquent PARTOUT: videos, reels, emails, DMs, calls, descriptions, thumbnails, stories, commentaires. Zero exception.</p>
+  </div>
+
+  <!-- MOTS SAPIENS -->
+  <div class="collapsible start-open">
+    <div class="collapsible-header" onclick="toggleCollapsible(this)">
+      <h3>Les Mots SAPIENS (TOUJOURS utiliser)</h3>
+      <span class="toggle-icon">+</span>
+    </div>
+    <div class="collapsible-body open">
+      <table>
+        <tr><th>Mot / Expression</th><th>Pourquoi l'utiliser</th></tr>
+        <tr><td><strong>Terrain biologique</strong></td><td>Positionne comme clinique, pas comme regime. Differentie de tous les "naturopathes".</td></tr>
+        <tr><td><strong>Cause racine</strong></td><td>Differentie de "traitement symptomatique". Implique qu'on va plus loin que les autres.</td></tr>
+        <tr><td><strong>Errance medicale</strong></td><td>Valide leur experience. Cree de l'empathie. Lea se sent COMPRISE.</td></tr>
+        <tr><td><strong>Inflammation systemique</strong></td><td>Scientifique mais accessible. Positionne Geoffrey comme expert.</td></tr>
+        <tr><td><strong>Protocole clinique adapte</strong></td><td>"Protocole" = serieux et structure. "Adapte" = personnalise. Les deux ensemble = premium.</td></tr>
+        <tr><td><strong>Stabiliser</strong> (jamais "guerir")</td><td>Pas de promesse illegale. Plus credible que "guerir". Implique un processus maitrise.</td></tr>
+        <tr><td><strong>Axe intestin-immunite-peau</strong></td><td>LE mecanisme central. 3 mots qui expliquent tout le programme. Repetition constante.</td></tr>
+        <tr><td><strong>La peau est le messager</strong></td><td>LA metaphore fondamentale de SAPIENS 360. A repeter dans chaque contenu.</td></tr>
+        <tr><td><strong>Ton terrain</strong></td><td>Le possessif "ton" = personnalisation. "Terrain" = approche holistique sans etre vague.</td></tr>
+        <tr><td><strong>Recalibrage</strong></td><td>Plus sophistique que "regime". Implique une remise a zero scientifique.</td></tr>
+        <tr><td><strong>Reponse inflammatoire</strong></td><td>Precis. Scientifique. Pas anxiogene. Explique le "pourquoi" des symptomes.</td></tr>
+        <tr><td><strong>Predisposition genetique</strong> (pas "genetique")</td><td>"Predisposition" ne ferme pas la porte. "C'est genetique" = fataliste. "Predisposition" = ca peut etre gere.</td></tr>
+        <tr><td><strong>Accompagnement</strong> (pas "programme")</td><td>Humain, pas produit. "Programme" = transaction. "Accompagnement" = relation.</td></tr>
+        <tr><td><strong>Approche terrain</strong></td><td>Alternative a "cetose/cetogene" qui fait peur. Meme concept, meilleur packaging.</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- MOTS INTERDITS -->
+  <div class="collapsible start-open">
+    <div class="collapsible-header" onclick="toggleCollapsible(this)">
+      <h3 style="color:var(--red);">Les Mots INTERDITS (ne JAMAIS utiliser)</h3>
+      <span class="toggle-icon">+</span>
+    </div>
+    <div class="collapsible-body open">
+      <table>
+        <tr><th style="background:var(--red);">Mot Interdit</th><th style="background:var(--green);">Alternative</th><th>Pourquoi c'est interdit</th></tr>
+        <tr><td><strong style="color:var(--red);">Cetose / cetogene</strong></td><td><em>Approche terrain / protocole alimentaire</em></td><td>Cree la peur du "regime strict". Declanche des debats. Polarise.</td></tr>
+        <tr><td><strong style="color:var(--red);">Regime</strong></td><td><em>Protocole / approche</em></td><td>"Regime" = privation, echec, temporaire. Lea a deja echoue 10 regimes.</td></tr>
+        <tr><td><strong style="color:var(--red);">Guerir / guerison</strong></td><td><em>Stabiliser / resoudre</em></td><td>Promesse illegale en France. Risque juridique reel. Et sonne charlatan.</td></tr>
+        <tr><td><strong style="color:var(--red);">Detox / detoxification</strong></td><td><em>Recalibrage / reinitialisation</em></td><td>Associe a charlatan et influenceurs sante. Detruit la credibilite clinique.</td></tr>
+        <tr><td><strong style="color:var(--red);">Toxines</strong></td><td><em>Inflammation / desequilibre</em></td><td>Pas scientifique. Aucun medecin serieux ne dit "toxines".</td></tr>
+        <tr><td><strong style="color:var(--red);">Miracle</strong></td><td><em>— (ne jamais dire)</em></td><td>Red flag immediat. Tue la credibilite en 1 mot.</td></tr>
+        <tr><td><strong style="color:var(--red);">100% naturel</strong></td><td><em>Clinique / science-based</em></td><td>Trop utilise par les arnaques. Associe a MLM et huiles essentielles.</td></tr>
+        <tr><td><strong style="color:var(--red);">Revolutionnaire</strong></td><td><em>Fondamental / profond</em></td><td>Marketing-speak. Lea l'a vu 1000 fois. Zero impact.</td></tr>
+        <tr><td><strong style="color:var(--red);">Cliniquement prouve</strong></td><td><em>Base sur la science / forme cliniquement</em></td><td>Attention aux claims legales. Geoffrey n'a pas fait d'essais cliniques.</td></tr>
+        <tr><td><strong style="color:var(--red);">Traitement</strong></td><td><em>Accompagnement / protocole</em></td><td>Geoffrey n'est pas medecin. "Traitement" est un acte medical.</td></tr>
+        <tr><td><strong style="color:var(--red);">Diet / diete</strong></td><td><em>Alimentation terrain</em></td><td>"Diet" = privation, frustration, echec. Memes connotations que "regime".</td></tr>
+        <tr><td><strong style="color:var(--red);">Carnivore</strong> (en public)</td><td><em>Protocole alimentaire adapte</em></td><td>Trop polarisant. Declanche des attaques vegans. Detourne du message.</td></tr>
+        <tr><td><strong style="color:var(--red);">Viande rouge</strong> (en public)</td><td><em>Proteines animales de qualite</em></td><td>Declanche la peur "cancerigene". Ferme l'esprit avant d'avoir ecoute.</td></tr>
+        <tr><td><strong style="color:var(--red);">Coach</strong></td><td><em>Praticien</em></td><td>"Coach" = generique, pas credible pour 1200 euros. "Praticien" = serieux.</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- PHRASES SIGNATURE -->
+  <div style="margin-top:24px;">
+    <h3 style="font-family:Georgia,serif; font-size:22px; color:var(--gold); margin-bottom:6px;">Les 10 Phrases Signature</h3>
+    <p style="color:var(--stone); font-size:13px; margin-bottom:18px;">A repeter dans CHAQUE video, chaque reel, chaque interaction. La repetition cree la memorisation. Quand Lea pense "peau", elle pense a CES phrases.</p>
+
+    <div class="signature-phrase">
+      <div class="signature-num">1</div>
+      <div class="signature-text">"Ta peau n'est pas le probleme. Ta peau est le messager."</div>
+    </div>
+    <div class="signature-phrase">
+      <div class="signature-num">2</div>
+      <div class="signature-text">"Tout ce que tu as essaye traitait la surface. Personne n'a regarde ce qui produit tes symptomes."</div>
+    </div>
+    <div class="signature-phrase">
+      <div class="signature-num">3</div>
+      <div class="signature-text">"Chronique ne veut pas dire irreversible."</div>
+    </div>
+    <div class="signature-phrase">
+      <div class="signature-num">4</div>
+      <div class="signature-text">"70% de ton systeme immunitaire est dans ton intestin."</div>
+    </div>
+    <div class="signature-phrase">
+      <div class="signature-num">5</div>
+      <div class="signature-text">"Le risque, c'est nous. Pas toi."</div>
+    </div>
+    <div class="signature-phrase">
+      <div class="signature-num">6</div>
+      <div class="signature-text">"Tu n'as pas la mauvaise peau. Tu as le mauvais angle de traitement."</div>
+    </div>
+    <div class="signature-phrase">
+      <div class="signature-num">7</div>
+      <div class="signature-text">"On ne traite pas tes symptomes. On traite ce qui les produit."</div>
+    </div>
+    <div class="signature-phrase">
+      <div class="signature-num">8</div>
+      <div class="signature-text">"Ce n'est pas dans ta tete. Ce n'est pas ta faute."</div>
+    </div>
+    <div class="signature-phrase">
+      <div class="signature-num">9</div>
+      <div class="signature-text">"Ca s'ameliore. Puis ca revient. C'est le signe que le terrain n'a jamais ete stabilise."</div>
+    </div>
+    <div class="signature-phrase">
+      <div class="signature-num">10</div>
+      <div class="signature-text">"Je l'ai vecu. Je l'ai resolu. Et je t'accompagne."</div>
+    </div>
+  </div>
+
+  <!-- LEXIQUE PAR PLATEFORME -->
+  <div class="card" style="margin-top:24px;">
+    <h3>Lexique par Plateforme</h3>
+
+    <h4>YouTube (long format, autorite)</h4>
+    <ul>
+      <li><strong>Ton:</strong> pedagogique, pose, factuel</li>
+      <li><strong>Vocabulaire:</strong> plus technique mais toujours accessible — "microbiote", "reponse immunitaire", "inflammation de bas grade", "permeabilite intestinale"</li>
+      <li><strong>Structure:</strong> "Voici ce qu'on va voir... / Premier point... / Ce que ca veut dire pour toi..."</li>
+      <li><strong>Phrases d'accroche:</strong> "Ce que je vais te montrer...", "Ce que personne ne t'a explique...", "La science dit que..."</li>
+    </ul>
+
+    <h4>Instagram Reels (court, pattern interrupt)</h4>
+    <ul>
+      <li><strong>Ton:</strong> direct, percutant, 1 seule idee par reel</li>
+      <li><strong>Vocabulaire:</strong> simple, emotionnel, phrases courtes. Zero jargon technique.</li>
+      <li><strong>Structure:</strong> Hook (2 sec) → 1 verite (15-20 sec) → CTA ou open loop</li>
+      <li><strong>Phrases d'accroche:</strong> "Si tu as [condition]...", "Ton dermato ne te dira jamais ca...", "Arrete de [erreur commune]..."</li>
+    </ul>
+
+    <h4>DMs/WhatsApp (setting, humain)</h4>
+    <ul>
+      <li><strong>Ton:</strong> chaleureux, empathique, direct</li>
+      <li><strong>Vocabulaire:</strong> conversationnel, simple, phrases courtes</li>
+      <li><strong>Structure:</strong> Question → Ecoute → Reponse courte → CTA doux</li>
+      <li><strong>Emojis autorises:</strong> 🙏 (principal), pas de surcharge</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════════════════════════════════ -->
+<!-- SECTION 4: YOUTUBE — STRATEGIE MONOPOLE -->
+<!-- ═══════════════════════════════════════════════════════════════════════════════════════════════ -->
+<div class="section" id="youtube">
+  <div class="section-header">
+    <div class="section-num">04</div>
+    <div>
+      <div class="section-title">YouTube — Strategie Monopole</div>
+      <div class="section-subtitle">100 videos en 6 mois. 25+ heures de contenu. Devenir la chaine sante peau #1 en francais.</div>
+    </div>
+  </div>
+
+  <!-- Objectif -->
+  <div class="card gold">
+    <h3>L'Objectif: 100 videos en 6 mois</h3>
+    <table>
+      <tr><th>Mois</th><th>Videos/semaine</th><th>Videos ce mois</th><th>Total cumule</th><th>Heures contenu</th></tr>
+      <tr><td><strong>M1</strong></td><td>3/semaine</td><td>12</td><td>12</td><td>~3h</td></tr>
+      <tr><td><strong>M2</strong></td><td>4/semaine</td><td>16</td><td>28</td><td>~7h</td></tr>
+      <tr><td><strong>M3</strong></td><td>4/semaine</td><td>16</td><td>44</td><td>~11h</td></tr>
+      <tr><td><strong>M4</strong></td><td>5/semaine</td><td>20</td><td>64</td><td>~16h</td></tr>
+      <tr><td><strong>M5</strong></td><td>5/semaine</td><td>20</td><td>84</td><td>~21h</td></tr>
+      <tr><td><strong>M6</strong></td><td>5/semaine</td><td>20</td><td>104</td><td>~26h</td></tr>
+    </table>
+    <div class="progress-row" style="margin-top:16px;">
+      <div class="progress-label">
+        <span>Progression vers les 100 videos</span>
+        <span id="ytProgress">0 / 100</span>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill" id="ytProgressFill" style="width:0%"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4 Series -->
+  <h3 style="font-family:Georgia,serif; font-size:22px; color:var(--gold); margin:28px 0 18px;">Architecture YouTube — 4 Series</h3>
+
+  <div class="collapsible start-open">
+    <div class="collapsible-header" onclick="toggleCollapsible(this)">
+      <h3>Serie 1: "TON DERMATO NE T'A JAMAIS DIT CA" (Anti-Objections)</h3>
+      <span class="toggle-icon">+</span>
+    </div>
+    <div class="collapsible-body open">
+      <p style="margin-bottom:14px;">Les 15 videos anti-objections du Content Engine. <strong>Objectif: detruire chaque blocage d'achat.</strong></p>
+      <p style="color:var(--stone); font-size:13px; margin-bottom:14px;">Chaque video attaque une objection specifique que Lea a AVANT de booker un call. Si ces objections sont detruites par le contenu, le call est 10x plus facile a closer.</p>
+      <ul>
+        <li>"Pourquoi ton dermatologue ne regarde pas au bon endroit"</li>
+        <li>"Acne adulte apres 25 ans: la VRAIE cause"</li>
+        <li>"Rosacee: pourquoi les cremes ne peuvent PAS resoudre ton probleme"</li>
+        <li>"Psoriasis: ce n'est PAS chronique (voici pourquoi)"</li>
+        <li>"Eczema: la connexion intestin que personne ne t'a jamais montree"</li>
+        <li>"Quand le traitement empire ton probleme (cortisone)"</li>
+        <li>"Bilans normaux mais ton corps ne va pas? Voici pourquoi."</li>
+        <li>"Stress et peau: le vrai mecanisme (pas ce que tu crois)"</li>
+        <li>"Probiotiques: le vrai du faux pour ta peau"</li>
+        <li>"Pourquoi tu as tout essaye et rien ne marche"</li>
+        <li>"Grossesse et psoriasis: ce qu'on ne te dit pas"</li>
+        <li>"Les 3 erreurs qui empirent ta peau chaque jour"</li>
+        <li>"Alimentation anti-inflammatoire: le guide honnete"</li>
+        <li>"Pourquoi les complements ne suffisent pas"</li>
+        <li>"L'erreur #1 des femmes avec une peau reactive"</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="collapsible">
+    <div class="collapsible-header" onclick="toggleCollapsible(this)">
+      <h3>Serie 2: "COMPRENDRE TON TERRAIN" (Education / Autorite)</h3>
+      <span class="toggle-icon">+</span>
+    </div>
+    <div class="collapsible-body">
+      <p style="margin-bottom:14px;">Videos SEO profondes sur les mecanismes. <strong>Objectif: devenir LA reference educative.</strong></p>
+      <p style="color:var(--stone); font-size:13px; margin-bottom:14px;">Ces videos construisent l'autorite de Geoffrey comme clinicien. Elles attirent du trafic SEO long terme et positionnent SAPIENS 360 comme la source la plus complete en francais.</p>
+      <ul>
+        <li>"L'axe intestin-immunite-peau: explication complete"</li>
+        <li>"Le microbiome: les 2 kg de bacteries qui controlent ta sante"</li>
+        <li>"Inflammation de bas grade: le tueur silencieux"</li>
+        <li>"Pourquoi tes bilans sont normaux mais ton corps ne va pas"</li>
+        <li>"Le systeme immunitaire et ta peau: le lien que personne ne t'a appris"</li>
+        <li>"Cortisol, stress et inflammation: le vrai mecanisme"</li>
+        <li>"Les aliments inflammatoires: la liste complete"</li>
+        <li>"La permeabilite intestinale: quand ton intestin fuit"</li>
+        <li>"Histamine et peau: le lien cache"</li>
+        <li>"Thyroide et inflammation cutanee"</li>
+        <li>"Le foie et ta peau: la connexion oubliee"</li>
+        <li>"Sommeil et regeneration cutanee"</li>
+        <li>"Hormones feminines et inflammation"</li>
+        <li>"Omega-3, Omega-6: l'equilibre qui change tout"</li>
+        <li>"Le gluten et ta peau: mythe ou realite?"</li>
+        <li>"Les produits laitiers: inflammatoires ou pas?"</li>
+        <li>"La vitamine D et ton systeme immunitaire"</li>
+        <li>"Le zinc: le mineral de ta peau"</li>
+        <li>"Digestion et absorption: la cle invisible"</li>
+        <li>"L'eau et l'hydratation: ce que ta peau a vraiment besoin"</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="collapsible">
+    <div class="collapsible-header" onclick="toggleCollapsible(this)">
+      <h3>Serie 3: "HISTOIRES DE TERRAIN" (Temoignages + Cas)</h3>
+      <span class="toggle-icon">+</span>
+    </div>
+    <div class="collapsible-body">
+      <p style="margin-bottom:14px;">1 video par temoignage client. Format: l'histoire complete (anonymisee ou avec permission). <strong>Objectif: 1 video temoignage par semaine a partir de M3.</strong></p>
+      <ul>
+        <li>"8 ans de psoriasis — disparues en 5 semaines"</li>
+        <li>"27 ans, acne adulte — pour la premiere fois quelqu'un m'a explique"</li>
+        <li>"Rosacee apres 3 dermatologues — son medecin ne comprend pas"</li>
+        <li>"Eczema + fatigue chronique — tout est lie"</li>
+        <li>"Dermite seborrheique depuis 4 ans — 3 semaines de protocole"</li>
+        <li>"Psoriasis et stress au travail — le declencheur cache"</li>
+        <li>"Acne post-pilule — le terrain deregle par les hormones synthetiques"</li>
+        <li>"Rosacee et digestion — le lien que personne ne voyait"</li>
+        <li>"Eczema chez l'enfant — ce que les parents doivent savoir"</li>
+        <li>"Post-Covid et eruptions cutanees — quand l'inflammation s'installe"</li>
+      </ul>
+      <p style="color:var(--stone); font-size:13px; margin-top:10px;">Note: les temoignages sont la forme de contenu la plus puissante pour convertir. Un prospect qui regarde 3 temoignages de personnes avec sa condition est pratiquement vendu avant le call.</p>
+    </div>
+  </div>
+
+  <div class="collapsible">
+    <div class="collapsible-header" onclick="toggleCollapsible(this)">
+      <h3>Serie 4: "GEOFFREY REPOND" (Q&A)</h3>
+      <span class="toggle-icon">+</span>
+    </div>
+    <div class="collapsible-body">
+      <p style="margin-bottom:14px;">Courtes videos (5-8 min) repondant a UNE question precise. Source: commentaires YouTube, DMs, questions des calls. <strong>Objectif: 2/semaine, facile et rapide a filmer.</strong></p>
+      <ul>
+        <li>"Est-ce que le psoriasis est hereditaire?"</li>
+        <li>"Est-ce que je peux manger du fromage?"</li>
+        <li>"Cetose et sport, c'est compatible?"</li>
+        <li>"Combien de temps pour voir les resultats?"</li>
+        <li>"Et si je suis vegetarienne?"</li>
+        <li>"Est-ce que c'est adapte pour les hommes?"</li>
+        <li>"Mon dermato dit que c'est chronique, c'est vrai?"</li>
+        <li>"Est-ce que le soleil aide ou empire ma peau?"</li>
+        <li>"Je suis enceinte, je peux suivre le protocole?"</li>
+        <li>"Faut-il arreter les cremes tout de suite?"</li>
+        <li>"Combien ca coute? (transparence sur le prix)"</li>
+        <li>"Quelle est la difference avec un naturopathe?"</li>
+        <li>"Est-ce que les resultats durent dans le temps?"</li>
+        <li>"J'ai deja tout essaye, pourquoi ca marcherait cette fois?"</li>
+        <li>"Mon medecin generaliste est sceptique, comment lui expliquer?"</li>
+      </ul>
+      <p style="color:var(--stone); font-size:13px; margin-top:10px;">Avantage: Geoffrey repond naturellement a ces questions tous les jours. Zero script necessaire. Il suffit de tourner 3-4 Q&A en 30 minutes.</p>
+    </div>
+  </div>
+
+  <!-- SEO YouTube -->
+  <div class="card" style="margin-top:24px;">
+    <h3>SEO YouTube — Dominer les Recherches</h3>
+    <p style="margin-bottom:14px;">Mots-cles cibles avec le volume estimatif de recherches mensuelles en francais:</p>
+    <div style="overflow-x:auto;">
+    <table>
+      <tr><th>Mot-cle</th><th>Volume</th><th>Video a creer</th><th>Serie</th></tr>
+      <tr><td>rosacee traitement naturel</td><td><span class="tag gold">Eleve</span></td><td>"Rosacee: la vraie cause"</td><td>S1</td></tr>
+      <tr><td>psoriasis guerir naturellement</td><td><span class="tag gold">Tres eleve</span></td><td>"Psoriasis: pas chronique"</td><td>S1</td></tr>
+      <tr><td>acne adulte cause</td><td><span class="tag gold">Eleve</span></td><td>"Acne adulte apres 25 ans"</td><td>S1</td></tr>
+      <tr><td>eczema chronique solution</td><td><span class="tag green">Moyen</span></td><td>"Eczema: la connexion intestin"</td><td>S2</td></tr>
+      <tr><td>psoriasis alimentation</td><td><span class="tag gold">Eleve</span></td><td>"Psoriasis et alimentation"</td><td>S2</td></tr>
+      <tr><td>inflammation intestinale peau</td><td><span class="tag green">Moyen</span></td><td>"L'axe intestin-peau"</td><td>S2</td></tr>
+      <tr><td>dermatologue ne marche pas</td><td><span class="tag green">Moyen</span></td><td>"Pourquoi le dermato echoue"</td><td>S1</td></tr>
+      <tr><td>cremes cortisone danger</td><td><span class="tag green">Moyen</span></td><td>"Quand le traitement empire"</td><td>S1</td></tr>
+      <tr><td>bilans normaux mais malade</td><td><span class="tag green">Moyen</span></td><td>"Bilans normaux, peau flambe"</td><td>S2</td></tr>
+      <tr><td>regime anti-inflammatoire peau</td><td><span class="tag gold">Eleve</span></td><td>"Alimentation anti-inflammatoire"</td><td>S2</td></tr>
+      <tr><td>probiotiques peau</td><td><span class="tag green">Moyen</span></td><td>"Probiotiques: le vrai du faux"</td><td>S1</td></tr>
+      <tr><td>stress et peau</td><td><span class="tag gold">Eleve</span></td><td>"Stress et peau: le vrai lien"</td><td>S1</td></tr>
+      <tr><td>psoriasis grossesse</td><td><span class="tag green">Moyen</span></td><td>"Grossesse et psoriasis"</td><td>S1</td></tr>
+      <tr><td>microbiote et peau</td><td><span class="tag green">Moyen</span></td><td>"Microbiome complet"</td><td>S2</td></tr>
+      <tr><td>temoignage psoriasis</td><td><span class="tag green">Moyen</span></td><td>Playlist temoignages</td><td>S3</td></tr>
+    </table>
+    </div>
+  </div>
+
+  <!-- Titre SEO -->
+  <div class="card">
+    <h3>Titre SEO Formula</h3>
+    <p><strong>Structure:</strong> [Condition] + [Promesse/Hook] + (ce que le prospect tape dans Google)</p>
+    <h4>Exemples</h4>
+    <div class="copy-block">Psoriasis : pourquoi ton dermatologue ne regarde pas au bon endroit<button class="copy-btn" onclick="copyBlock(this)">Copier</button></div>
+    <div class="copy-block">Acne adulte apres 25 ans : la VRAIE cause (ce n'est pas hormonal)<button class="copy-btn" onclick="copyBlock(this)">Copier</button></div>
+    <div class="copy-block">Rosacee traitement naturel : ce qui marche VRAIMENT (et pourquoi les cremes echouent)<button class="copy-btn" onclick="copyBlock(this)">Copier</button></div>
+    <div class="copy-block">Eczema chronique : la connexion intestin que personne ne t'a montree<button class="copy-btn" onclick="copyBlock(this)">Copier</button></div>
+    <div class="copy-block">Inflammation de la peau : le tueur silencieux qui se cache dans ton intestin<button class="copy-btn" onclick="copyBlock(this)">Copier</button></div>
+  </div>
+
+  <!-- Description YouTube Template -->
+  <div class="card">
+    <h3>Description YouTube Template (copy-paste pour chaque video)</h3>
+    <div class="copy-block">[Hook 2 lignes specifiques a la video]
+
+Dans cette video, j'explique [sujet]. Si tu as [condition] depuis [duree], cette video va changer ta facon de comprendre ton corps.
+
+Tu veux comprendre ce qui se passe dans TON corps ?
+[LIEN VSL]
+
+Reserve ton appel diagnostic GRATUIT (30 min, sans engagement) :
+https://api.leadconnectorhq.com/widget/booking/exr3PQmMOOXUFOnkUfsJ
+
+Instagram : @geo_le_sapiens
+
+Timestamps :
+0:00 - [sujet]
+X:XX - [sujet]
+etc.
+
+---
+Geoffrey | Praticien Terrain Biologique | SAPIENS 360
+Forme cliniquement aupres du Dr Boris Dufournet et du Dr Florent
+100+ accompagnements | Psoriasis, Acne, Rosacee, Eczema
+
+#psoriasis #rosacee #acne #eczema #peau #santenaturelle #inflammation #intestin #microbiote<button class="copy-btn" onclick="copyBlock(this)">Copier</button></div>
+  </div>
+
+  <!-- Thumbnail Strategy -->
+  <div class="card">
+    <h3>Strategie Thumbnails</h3>
+    <p style="margin-bottom:16px;">3 templates de thumbnails qui marchent pour le marche sante:</p>
+
+    <div class="grid-3">
+      <div class="card green" style="margin-bottom:0;">
+        <h4 style="margin-top:0;">Template A — "VERITE CHOC"</h4>
+        <ul style="font-size:13px;">
+          <li>Visage Geoffrey expression serieuse/choquee</li>
+          <li>Texte gros: 4-5 mots max</li>
+          <li>Fond contraste rouge ou vert</li>
+          <li>Ex: "TON DERMATO TE MENT"</li>
+        </ul>
+      </div>
+      <div class="card green" style="margin-bottom:0;">
+        <h4 style="margin-top:0;">Template B — "AVANT/APRES"</h4>
+        <ul style="font-size:13px;">
+          <li>Split screen avant/apres (anonymise)</li>
+          <li>Texte: "X semaines"</li>
+          <li>Fleche directionnelle</li>
+          <li>Ex: "5 SEMAINES" avec fleche</li>
+        </ul>
+      </div>
+      <div class="card green" style="margin-bottom:0;">
+        <h4 style="margin-top:0;">Template C — "QUESTION"</h4>
+        <ul style="font-size:13px;">
+          <li>Texte de la question en gros</li>
+          <li>Visage Geoffrey pensif</li>
+          <li>Point d'interrogation</li>
+          <li>Ex: "HEREDITAIRE ?"</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card red" style="margin-top:18px;">
+      <h4 style="margin-top:0;">Regles Thumbnails</h4>
+      <ul>
+        <li><strong>Visage Geoffrey dans 80% des thumbnails.</strong> Les visages attirent l'oeil. Les humains sont programmes pour regarder les visages.</li>
+        <li><strong>Texte lisible sur mobile</strong> (gros, contraste fort). 70% des vues YouTube sont sur mobile.</li>
+        <li><strong>Contraste fort.</strong> Arriere-plan simple. Pas de surcharge visuelle.</li>
+        <li><strong>JAMAIS de clickbait pur.</strong> Le titre doit tenir sa promesse. La confiance est l'asset #1.</li>
+        <li><strong>Tester 2 thumbnails par video</strong> (A/B test YouTube). Garder celle qui a le meilleur CTR apres 48h.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════════════════════════════════ -->
+<!-- SECTION 5: INSTAGRAM — LE SYSTEME -->
+<!-- ═══════════════════════════════════════════════════════════════════════════════════════════════ -->
+<div class="section" id="instagram">
+  <div class="section-header">
+    <div class="section-num">05</div>
+    <div>
+      <div class="section-title">Instagram — Le Systeme</div>
+      <div class="section-subtitle">5 reels/jour + 5-8 stories/jour. Omnipresence totale. Zero temps mort.</div>
+    </div>
+  </div>
+
+  <div class="card gold">
+    <h3>Objectif: 5 reels/jour + 5-8 stories/jour</h3>
+    <div class="grid-2">
+      <div>
+        <h4>Reel Production System</h4>
+        <p>1 video YouTube = 3-5 clips Reels (extraits avec lien)</p>
+        <p>+ 2-3 Reels originaux par jour (hooks, identite, decision)</p>
+        <p>= <strong>5 reels/jour minimum</strong></p>
+      </div>
+      <div>
+        <h4>Le Split CTA</h4>
+        <p><strong>40% des Reels</strong> → lien YouTube (Meta Verified Plus)</p>
+        <p><strong>60% des Reels</strong> → "commente SAPIENS" (ManyChat)</p>
+        <p style="color:var(--stone); font-size:13px;">Le ratio peut etre ajuste selon les performances</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Posting schedule -->
+  <div class="card">
+    <h3>Horaires de Publication Optimaux</h3>
+    <table>
+      <tr><th>Heure</th><th>Type de Reel</th><th>CTA</th><th>Pourquoi ce creneau</th></tr>
+      <tr><td><strong>7h</strong></td><td>Revelation / Hook choc</td><td>"Commente SAPIENS"</td><td>Lea se reveille, scroll avant le travail</td></tr>
+      <tr><td><strong>11h</strong></td><td>Preuve / Temoignage</td><td>Lien YouTube</td><td>Pause cafe, engagement eleve</td></tr>
+      <tr><td><strong>14h</strong></td><td>Mecanisme / Education</td><td>Lien YouTube</td><td>Pause dejeuner, contenu plus profond</td></tr>
+      <tr><td><strong>18h</strong></td><td>Identite / Geoffrey</td><td>"Commente SAPIENS"</td><td>Fin de journee, contenu humain</td></tr>
+      <tr><td><strong>21h</strong></td><td>Decision / Urgence</td><td>"Commente SAPIENS"</td><td>Moment de reflexion, decision</td></tr>
+    </table>
+  </div>
+
+  <!-- Stories system -->
+  <div class="card">
+    <h3>Stories System — 5 a 8 par jour</h3>
+    <table>
+      <tr><th>Heure</th><th>Type de Story</th><th>Contenu</th></tr>
+      <tr><td><strong>7-8h</strong></td><td>Geoffrey routine</td><td>Humaniser: petit-dejeuner protocole, preparation, quotidien</td></tr>
+      <tr><td><strong>12-13h</strong></td><td>Education rapide</td><td>1 fait, 1 stat, 1 verite. Texte sur image simple.</td></tr>
+      <tr><td><strong>15-16h</strong></td><td>Preuve sociale</td><td>Screenshot message client, resultat, avant/apres</td></tr>
+      <tr><td><strong>20-21h</strong></td><td>Interactif</td><td>Sondage, question box, "Ca te parle?"</td></tr>
+      <tr><td><strong>Reactif</strong></td><td>Temoignage live</td><td>Quand un prospect/client temoigne spontanement</td></tr>
+    </table>
+  </div>
+
+  <!-- Bio -->
+  <div class="card">
+    <h3>Bio Instagram Optimisee</h3>
+    <div class="copy-block">Geoffrey | Praticien Terrain Biologique
+Ta peau n'est pas le probleme. C'est le messager.
+100+ femmes accompagnees | Psoriasis - Acne - Rosacee - Eczema
+Comprendre ce qui se passe dans ton corps
+[Lien VSL ou quiz]<button class="copy-btn" onclick="copyBlock(this)">Copier</button></div>
+  </div>
+
+  <!-- Highlights -->
+  <div class="card">
+    <h3>Highlights Instagram (dans cet ordre)</h3>
+    <table>
+      <tr><th>#</th><th>Nom</th><th>Contenu</th><th>Objectif</th></tr>
+      <tr><td>1</td><td><strong>RESULTATS</strong></td><td>Tous les temoignages et avant/apres</td><td>Preuve sociale immediate</td></tr>
+      <tr><td>2</td><td><strong>PROTOCOLE</strong></td><td>Comment ca marche (3-5 stories)</td><td>Comprendre la methode</td></tr>
+      <tr><td>3</td><td><strong>GEOFFREY</strong></td><td>Son histoire, son parcours</td><td>Connexion personnelle</td></tr>
+      <tr><td>4</td><td><strong>FAQ</strong></td><td>Reponses aux questions frequentes</td><td>Detruire les objections</td></tr>
+      <tr><td>5</td><td><strong>VIDEOS</strong></td><td>Renvoi vers YouTube</td><td>Bridge Instagram→YouTube</td></tr>
+    </table>
+  </div>
+
+  <!-- TikTok -->
+  <div class="card green">
+    <h3>TikTok — Duplication Zero Effort</h3>
+    <p>Reposter <strong>TOUS</strong> les Reels Instagram sur TikTok. Zero effort supplementaire. TikTok a une audience differente et plus jeune.</p>
+    <p>Meme bio. Meme contenu. Le format est identique. Un outil comme Repurpose.io ou meme un copier-coller manuel suffit.</p>
+    <p style="color:var(--stone); font-size:13px;">Bonus: TikTok peut generer des leads inattendus. Certaines femmes 30+ sont sur TikTok meme si Instagram reste le canal principal.</p>
+  </div>
+
+  <!-- Pinterest -->
+  <div class="card green">
+    <h3>Pinterest — SEO Passif</h3>
+    <p>Creer des pins pour chaque video YouTube (image + titre + lien). Pinterest = moteur de recherche visuel.</p>
+    <p><strong>Les femmes 30-50 ans (notre ICP) sont TRES actives sur Pinterest pour la sante.</strong></p>
+    <p>1 pin par video = trafic passif gratuit. Les pins ont une duree de vie de 6-12 mois (vs 24h pour un post Instagram).</p>
+    <ul>
+      <li><strong>Format pin:</strong> image verticale 1000x1500px, titre de la video YouTube, lien vers la video</li>
+      <li><strong>Boards:</strong> "Sante de la peau", "Psoriasis", "Acne adulte", "Rosacee", "Alimentation anti-inflammatoire"</li>
+      <li><strong>Frequence:</strong> 5 pins/semaine (1 par video YouTube)</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════════════════════════════════ -->
+<!-- SECTION 6: REPURPOSING -->
+<!-- ═══════════════════════════════════════════════════════════════════════════════════════════════ -->
+<div class="section" id="repurposing">
+  <div class="section-header">
+    <div class="section-num">06</div>
+    <div>
+      <div class="section-title">Repurposing — 1 Video = 15 Contenus</div>
+      <div class="section-subtitle">Le systeme pour transformer chaque video en une machine a contenu multi-plateforme</div>
+    </div>
+  </div>
+
+  <div class="card gold">
+    <h3>La Regle d'Or du Repurposing</h3>
+    <p style="font-size:17px; text-align:center; color:var(--ivory);">Geoffrey filme <strong>20 minutes</strong>. Jad transforme ca en <strong>15 contenus</strong> sur <strong>7 plateformes</strong>.</p>
+    <p style="text-align:center; color:var(--stone);">Temps total: Geoffrey = 20 min. Jad = 2h. ROI = 15 contenus pour 2h20 de travail.</p>
+  </div>
+
+  <!-- Flowchart -->
+  <div class="flowchart">
+<strong>1 VIDEO YOUTUBE (15-25 min)</strong>
+    |
+    |--- <em>3-5 REELS INSTAGRAM</em> (clips 30-60 sec) avec lien YT
+    |--- <em>3-5 REELS TIKTOK</em> (memes clips, repost)
+    |--- <em>1 PIN PINTEREST</em> (image + titre + lien)
+    |--- <em>1 EMAIL EDUCATIF</em> (resume + lien video)
+    |--- <em>1 POST SKOOL</em> (pour la communaute)
+    |--- <em>5-8 STORIES</em> (citations + behind the scenes)
+    |--- <em>1 THREAD/CAROUSEL</em> (version texte condensee)
+    |--- <em>1 ARTICLE BLOG</em> (transcription editee, SEO)
+    |--- <em>1 EPISODE PODCAST</em> (audio extrait)
+    |
+    = <strong>15-20 CONTENUS POUR 1 TOURNAGE</strong>
+  </div>
+
+  <!-- Process concret -->
+  <div class="card">
+    <h3>Process Concret — Etape par Etape</h3>
+    <table>
+      <tr><th>#</th><th>Etape</th><th>Qui</th><th>Temps</th><th>Outil</th></tr>
+      <tr><td>1</td><td>Filmer la video YouTube (15-25 min, pas de script)</td><td><strong>Geoffrey</strong></td><td>20 min</td><td>Camera/iPhone</td></tr>
+      <tr><td>2</td><td>Monter la video YouTube (sous-titres, thumbnail, SEO)</td><td><strong>Jad</strong></td><td>45 min</td><td>CapCut/Premiere</td></tr>
+      <tr><td>3</td><td>Extraire 3-5 clips courts (moments les plus percutants)</td><td><strong>Jad</strong></td><td>20 min</td><td>CapCut</td></tr>
+      <tr><td>4</td><td>Poster clips sur Instagram + TikTok avec liens/CTA</td><td><strong>Jad</strong></td><td>15 min</td><td>Meta Business/TikTok</td></tr>
+      <tr><td>5</td><td>Creer le pin Pinterest</td><td><strong>Jad</strong></td><td>5 min</td><td>Canva + Pinterest</td></tr>
+      <tr><td>6</td><td>Ecrire l'email educatif base sur la video</td><td><strong>Jad</strong></td><td>15 min</td><td>GHL</td></tr>
+      <tr><td>7</td><td>Poster le resume sur Skool</td><td><strong>Geoffrey</strong></td><td>5 min</td><td>Skool</td></tr>
+      <tr><td>8</td><td>Planifier les stories de la semaine</td><td><strong>Jad</strong></td><td>10 min</td><td>Meta Business</td></tr>
+      <tr><td>9</td><td>Ecrire l'article blog (transcription editee)</td><td><strong>Jad</strong></td><td>20 min</td><td>WordPress/Webflow</td></tr>
+      <tr><td>10</td><td>Extraire audio pour podcast</td><td><strong>Jad</strong></td><td>5 min</td><td>Descript/Anchor</td></tr>
+    </table>
+    <p style="color:var(--stone); font-size:13px; margin-top:12px;"><strong>Total Geoffrey:</strong> 25 min | <strong>Total Jad:</strong> 2h15 | <strong>Output:</strong> 15-20 contenus sur 7 plateformes</p>
+  </div>
+
+  <!-- Rythme -->
+  <div class="card">
+    <h3>Rythme de Production Hebdomadaire</h3>
+    <table>
+      <tr><th>Jour</th><th>Geoffrey</th><th>Jad</th></tr>
+      <tr><td><strong>Lundi</strong></td><td>Filme 2-3 videos en batch (1h30)</td><td>Monte video 1 + extrait clips</td></tr>
+      <tr><td><strong>Mardi</strong></td><td>Stories routine</td><td>Monte video 2 + extrait clips + poste reels</td></tr>
+      <tr><td><strong>Mercredi</strong></td><td>Filme 2-3 Q&A courtes (45 min)</td><td>Monte video 3 + email educatif + poste reels</td></tr>
+      <tr><td><strong>Jeudi</strong></td><td>Stories routine</td><td>Articles blog + Pinterest + podcast + poste reels</td></tr>
+      <tr><td><strong>Vendredi</strong></td><td>Stories routine</td><td>Poste reels + planification semaine prochaine</td></tr>
+      <tr><td><strong>Weekend</strong></td><td>Stories lifestyle (humaniser)</td><td>Newsletter + bilan KPI + preparation lundi</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════════════════════════════════ -->
+<!-- SECTION 7: SEO GOOGLE -->
+<!-- ═══════════════════════════════════════════════════════════════════════════════════════════════ -->
+<div class="section" id="seo">
+  <div class="section-header">
+    <div class="section-num">07</div>
+    <div>
+      <div class="section-title">SEO Google — Domination Ecrite</div>
+      <div class="section-subtitle">YouTube domine la video. Google domine le texte. Il faut les deux.</div>
+    </div>
+  </div>
+
+  <!-- Blog -->
+  <div class="card">
+    <h3>Blog sur sapiens360.fr</h3>
+    <p>Chaque video YouTube → 1 article blog (transcription editee + images + liens internes).</p>
+
+    <h4>Structure Article</h4>
+    <ul>
+      <li><strong>Titre</strong> = titre YouTube (SEO-optimise, H1)</li>
+      <li><strong>H2</strong> = timestamps de la video (chaque section)</li>
+      <li><strong>Contenu</strong> = transcription editee (pas brute, reformulee pour la lecture)</li>
+      <li><strong>Images</strong> = thumbnail + infographies simples</li>
+      <li><strong>CTA</strong> = VSL + booking en milieu et fin d'article</li>
+      <li><strong>Schema markup</strong> = FAQ, HowTo, Article (pour les rich snippets Google)</li>
+      <li><strong>Liens internes</strong> = vers les autres articles du blog (maillage)</li>
+      <li><strong>Video embeddee</strong> = la video YouTube directement dans l'article</li>
+    </ul>
+  </div>
+
+  <!-- 20 articles prioritaires -->
+  <div class="card">
+    <h3>20 Articles Prioritaires (M1-M3)</h3>
+    <p style="margin-bottom:14px;">Les memes sujets que les 15 videos anti-objections + 5 sujets education. Objectif: apparaitre dans Google quand Lea tape ses questions.</p>
+    <div style="overflow-x:auto;">
+    <table>
+      <tr><th>#</th><th>Titre de l'article</th><th>Mot-cle cible</th><th>Video associee</th></tr>
+      <tr><td>1</td><td>Psoriasis : la vraie cause que personne ne t'a expliquee</td><td>psoriasis cause</td><td>S1-01</td></tr>
+      <tr><td>2</td><td>Acne adulte apres 25 ans : pourquoi ca arrive et comment en sortir</td><td>acne adulte cause</td><td>S1-02</td></tr>
+      <tr><td>3</td><td>Rosacee traitement naturel : ce qui marche vraiment</td><td>rosacee traitement naturel</td><td>S1-03</td></tr>
+      <tr><td>4</td><td>Eczema chronique : la connexion intestin-peau</td><td>eczema chronique solution</td><td>S1-04</td></tr>
+      <tr><td>5</td><td>Cortisone et peau : quand le traitement empire le probleme</td><td>cortisone danger peau</td><td>S1-05</td></tr>
+      <tr><td>6</td><td>L'axe intestin-immunite-peau : explication complete</td><td>intestin immunite peau</td><td>S2-01</td></tr>
+      <tr><td>7</td><td>Inflammation de bas grade : le tueur silencieux</td><td>inflammation bas grade</td><td>S2-02</td></tr>
+      <tr><td>8</td><td>Microbiote et sante de la peau : tout comprendre</td><td>microbiote peau</td><td>S2-03</td></tr>
+      <tr><td>9</td><td>Permeabilite intestinale : quand ton intestin fuit</td><td>permeabilite intestinale</td><td>S2-04</td></tr>
+      <tr><td>10</td><td>Bilans sanguins normaux mais corps malade : pourquoi</td><td>bilans normaux malade</td><td>S2-05</td></tr>
+      <tr><td>11</td><td>Alimentation anti-inflammatoire : le guide complet</td><td>alimentation anti-inflammatoire</td><td>S2-06</td></tr>
+      <tr><td>12</td><td>Stress et peau : le vrai mecanisme</td><td>stress peau lien</td><td>S1-06</td></tr>
+      <tr><td>13</td><td>Probiotiques et peau : le vrai du faux</td><td>probiotiques peau</td><td>S1-07</td></tr>
+      <tr><td>14</td><td>Psoriasis et alimentation : ce que la science dit</td><td>psoriasis alimentation</td><td>S2-07</td></tr>
+      <tr><td>15</td><td>Pourquoi tout ce que tu as essaye pour ta peau n'a pas marche</td><td>probleme peau rien marche</td><td>S1-08</td></tr>
+      <tr><td>16</td><td>Aliments inflammatoires : la liste complete</td><td>aliments inflammatoires liste</td><td>S2-08</td></tr>
+      <tr><td>17</td><td>Dermatologue : pourquoi les cremes ne suffisent pas</td><td>dermatologue ne marche pas</td><td>S1-09</td></tr>
+      <tr><td>18</td><td>Omega-3 et peau : pourquoi c'est essentiel</td><td>omega 3 peau</td><td>S2-09</td></tr>
+      <tr><td>19</td><td>Psoriasis grossesse : tout ce qu'il faut savoir</td><td>psoriasis grossesse</td><td>S1-10</td></tr>
+      <tr><td>20</td><td>Vitamine D et systeme immunitaire : le lien avec ta peau</td><td>vitamine D peau</td><td>S2-10</td></tr>
+    </table>
+    </div>
+  </div>
+
+  <!-- CTA blog template -->
+  <div class="card">
+    <h3>CTA Blog Template (milieu d'article)</h3>
+    <div class="copy-block">Tu te reconnais dans cette situation ? Tu as deja tout essaye — cremes, dermato, complements — et ta peau continue de flamber ?
+
+Geoffrey accompagne les femmes comme toi vers la stabilisation de leur terrain biologique. Plus de 100 accompagnements. Des resultats mesurables en 90 jours.
+
+Reserve ton appel diagnostic gratuit (30 min, sans engagement) :
+https://api.leadconnectorhq.com/widget/booking/exr3PQmMOOXUFOnkUfsJ<button class="copy-btn" onclick="copyBlock(this)">Copier</button></div>
+  </div>
+
+  <!-- Google My Business -->
+  <div class="card green">
+    <h3>Google My Business</h3>
+    <p>Creer un profil Google Business pour SAPIENS 360 (meme si c'est un business en ligne).</p>
+    <ul>
+      <li>Apparaitre dans les resultats locaux + Google Maps</li>
+      <li>Collecter des avis Google (demander aux clients satisfaits)</li>
+      <li>Publier des posts reguliers (1 par video YouTube)</li>
+      <li>Lien direct vers le booking</li>
+    </ul>
+    <p style="color:var(--stone); font-size:13px;">Un profil Google Business avec 20+ avis 5 etoiles = credibilite instantanee quand Lea Google "SAPIENS 360".</p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════════════════════════════════ -->
+<!-- SECTION 8: ECOSYSTEME NURTURE -->
+<!-- ═══════════════════════════════════════════════════════════════════════════════════════════════ -->
+<div class="section" id="nurture">
+  <div class="section-header">
+    <div class="section-num">08</div>
+    <div>
+      <div class="section-title">Ecosysteme Nurture — Le Tunnel Infini</div>
+      <div class="section-subtitle">Pas juste des emails de relance. Un systeme de nurture qui construit la confiance sur 30-60 jours.</div>
+    </div>
+  </div>
+
+  <!-- Email sequence -->
+  <div class="card gold">
+    <h3>Sequence "Comprendre ton terrain" (10 emails sur 30 jours)</h3>
+    <p style="margin-bottom:14px;">Pas juste les emails de relance. Des VRAIS emails educatifs qui construisent la confiance sur 30-60 jours. Chaque email = 1 idee, 1 lien YouTube, 1 CTA discret.</p>
+    <table>
+      <tr><th>Jour</th><th>Sujet</th><th>Objectif</th></tr>
+      <tr><td><strong>J+0</strong></td><td>Bienvenue + VSL</td><td>Premier contact, decouverte</td></tr>
+      <tr><td><strong>J+1</strong></td><td>"Pourquoi ta peau flambe (en 3 minutes)"</td><td>Le mecanisme central en 1 email</td></tr>
+      <tr><td><strong>J+3</strong></td><td>"L'erreur #1 que tout le monde fait avec sa peau"</td><td>Detruire l'approche symptomatique</td></tr>
+      <tr><td><strong>J+5</strong></td><td>"70% de ton immunite est dans ton intestin — voila pourquoi"</td><td>Installer le mecanisme</td></tr>
+      <tr><td><strong>J+8</strong></td><td>"Pourquoi les cremes ne peuvent PAS resoudre ton probleme"</td><td>Anti-objection cortisone/cremes</td></tr>
+      <tr><td><strong>J+12</strong></td><td>Temoignage matche par condition</td><td>Preuve sociale personnalisee</td></tr>
+      <tr><td><strong>J+16</strong></td><td>"Le cycle espoir-rechute-epuisement — et comment en sortir"</td><td>Empathie + urgence de changer</td></tr>
+      <tr><td><strong>J+21</strong></td><td>"Ce que ton dermatologue ne sait pas"</td><td>Positionner Geoffrey comme alternative</td></tr>
+      <tr><td><strong>J+25</strong></td><td>"Les 3 choses qui changent quand on traite le terrain"</td><td>Visualiser les resultats</td></tr>
+      <tr><td><strong>J+30</strong></td><td>"Tu es prete ? L'appel est gratuit."</td><td>CTA final fort + Calendly</td></tr>
+    </table>
+  </div>
+
+  <!-- Email templates -->
+  <div class="collapsible">
+    <div class="collapsible-header" onclick="toggleCollapsible(this)">
+      <h3>Email J+1 — "Pourquoi ta peau flambe" (Template)</h3>
+      <span class="toggle-icon">+</span>
+    </div>
+    <div class="collapsible-body">
+      <div class="copy-block">Objet: Pourquoi ta peau flambe (en 3 minutes)
+
+[Prenom],
+
+Imagine que ta peau est une alarme incendie.
+
+Quand l'alarme sonne, tu ne coupes pas l'alarme. Tu cherches le feu.
+
+Et pourtant — c'est exactement ce que font les cremes, la cortisone, et la plupart des traitements dermatologiques. Ils coupent l'alarme. Le feu continue.
+
+Le "feu" dans ton corps, c'est l'inflammation. Et elle ne vient pas de ta peau. Elle vient de ton intestin.
+
+70% de ton systeme immunitaire est situe dans ton intestin. Quand le terrain intestinal est deregle — permeabilite intestinale, desequilibre du microbiote, inflammation de bas grade — ton corps exprime cette inflammation a travers ta peau.
+
+C'est pour ca que:
+- Les cremes ameliorent temporairement, mais ca revient
+- Les bilans sanguins sont "normaux" mais ton corps ne va pas
+- Tu as tout essaye et rien ne marche durablement
+
+Geoffrey explique tout ca en detail dans cette video:
+[LIEN VIDEO YOUTUBE - "L'axe intestin-immunite-peau"]
+
+Si tu veux comprendre ce qui se passe dans TON corps, regarde cette video. Ca prend 15 minutes et ca va changer ta facon de voir ta peau.
+
+A bientot,
+L'equipe SAPIENS 360
+
+P.S. Si tu veux en parler directement avec Geoffrey, tu peux reserver un appel diagnostic gratuit ici:
+https://api.leadconnectorhq.com/widget/booking/exr3PQmMOOXUFOnkUfsJ<button class="copy-btn" onclick="copyBlock(this)">Copier</button></div>
+    </div>
+  </div>
+
+  <div class="collapsible">
+    <div class="collapsible-header" onclick="toggleCollapsible(this)">
+      <h3>Email J+12 — Temoignage matche (Template)</h3>
+      <span class="toggle-icon">+</span>
+    </div>
+    <div class="collapsible-body">
+      <div class="copy-block">Objet: "[Prenom du temoin] avait exactement le meme probleme que toi"
+
+[Prenom],
+
+Je voulais te partager l'histoire de [Prenom temoin].
+
+[Description courte]: [condition] depuis [duree]. [Nombre] dermatos. [Nombre] cremes. Rien ne marchait durablement.
+
+[Citation du temoignage — 2-3 phrases emotionnelles]
+
+Apres [duree dans le protocole], voici ce qui a change:
+- [Resultat 1]
+- [Resultat 2]
+- [Resultat 3]
+
+Tu peux voir son temoignage complet ici:
+[LIEN VIDEO YOUTUBE]
+
+Ce qui est remarquable, c'est que l'histoire de [Prenom temoin] ressemble probablement beaucoup a la tienne. Le meme terrain deregle. Les memes tentatives. La meme frustration.
+
+La difference? Quelqu'un lui a enfin explique ce qui se passait SOUS la surface.
+
+Si tu veux que Geoffrey regarde ton cas specifique, l'appel est gratuit et sans engagement:
+https://api.leadconnectorhq.com/widget/booking/exr3PQmMOOXUFOnkUfsJ
+
+A bientot,
+L'equipe SAPIENS 360<button class="copy-btn" onclick="copyBlock(this)">Copier</button></div>
+    </div>
+  </div>
+
+  <div class="collapsible">
+    <div class="collapsible-header" onclick="toggleCollapsible(this)">
+      <h3>Email J+30 — CTA final (Template)</h3>
+      <span class="toggle-icon">+</span>
+    </div>
+    <div class="collapsible-body">
+      <div class="copy-block">Objet: On en parle ?
+
+[Prenom],
+
+Ca fait 30 jours que tu as decouvert SAPIENS 360.
+
+Pendant ces 30 jours, je t'ai explique:
+- Pourquoi ta peau flambe (et pourquoi les cremes ne resolvent rien)
+- L'axe intestin-immunite-peau
+- Pourquoi "chronique" ne veut pas dire "irreversible"
+- Les resultats de personnes qui avaient exactement le meme probleme que toi
+
+Si tu es encore la, c'est que quelque chose te parle.
+
+Geoffrey peut regarder ton cas specifique. Gratuitement. En 30 minutes. Sans engagement. Sans pression.
+
+L'objectif de cet appel, c'est simplement de comprendre ce qui se passe dans TON corps et de te dire honnetement si on peut t'aider.
+
+Reserve ton creneau ici:
+https://api.leadconnectorhq.com/widget/booking/exr3PQmMOOXUFOnkUfsJ
+
+Si ce n'est pas le bon moment, pas de probleme. Les videos de Geoffrey sont la pour toi quand tu seras prete.
+
+A bientot,
+L'equipe SAPIENS 360<button class="copy-btn" onclick="copyBlock(this)">Copier</button></div>
+    </div>
+  </div>
+
+  <!-- Podcast -->
+  <div class="card" style="margin-top:24px;">
+    <h3>Podcast "TERRAIN" — Le Podcast de Geoffrey (M3+)</h3>
+    <p><strong>Format:</strong> Audio uniquement du contenu YouTube, ou conversations avec des clients/experts.</p>
+    <ul>
+      <li><strong>Zero effort supplementaire:</strong> extraire l'audio des videos YouTube</li>
+      <li><strong>Distribution:</strong> Spotify, Apple Podcasts, Google Podcasts</li>
+      <li><strong>Audience additionnelle</strong> qui ne regarde pas YouTube (voiture, sport, menage)</li>
+      <li><strong>Frequence:</strong> 1 episode/semaine = meme rythme que YouTube</li>
+      <li><strong>Intro/outro podcast:</strong> 15 secondes d'intro fixe + CTA booking en outro</li>
+    </ul>
+  </div>
+
+  <!-- Newsletter -->
+  <div class="card">
+    <h3>Newsletter "Le Terrain de la Semaine" (M2+)</h3>
+    <p>1 email/semaine pour les leads qui n'ont pas encore booke mais restent engages.</p>
+    <h4>Structure chaque semaine</h4>
+    <ul>
+      <li>La video YouTube de la semaine (lien + resume 3 lignes)</li>
+      <li>1 insight rapide (1 phrase, 1 verite)</li>
+      <li>1 question de la communaute (et la reponse de Geoffrey)</li>
+      <li>Le reel le plus performant de la semaine (lien)</li>
+      <li>CTA discret vers le booking</li>
+    </ul>
+    <div class="copy-block">Objet: [Insight de la semaine — ex: "Pourquoi tes bilans sont normaux"]
+
+[Prenom],
+
+Cette semaine chez SAPIENS 360:
+
+LA VIDEO: "[Titre video YouTube]"
+[Resume en 3 lignes]
+Regarde ici: [LIEN]
+
+L'INSIGHT: [1 phrase percutante de Geoffrey]
+
+LA QUESTION: "[Question d'une abonnee]"
+Geoffrey: "[Reponse courte et directe]"
+
+LE REEL: [Celui qui a le plus performe cette semaine]
+Regarde ici: [LIEN]
+
+---
+Tu veux en parler? L'appel avec Geoffrey est gratuit:
+https://api.leadconnectorhq.com/widget/booking/exr3PQmMOOXUFOnkUfsJ<button class="copy-btn" onclick="copyBlock(this)">Copier</button></div>
+  </div>
+
+  <!-- WhatsApp Community -->
+  <div class="card green">
+    <h3>Communaute WhatsApp / Skool (M3+)</h3>
+    <p>Creer un espace communautaire gratuit pour les leads chaudes. Pas un groupe de vente. Un espace de valeur.</p>
+    <ul>
+      <li><strong>Contenu:</strong> 1 post/jour de Geoffrey (insight rapide, reponse a une question)</li>
+      <li><strong>Temoignages:</strong> les clients partagent spontanement leurs resultats</li>
+      <li><strong>Lives:</strong> 1 live Q&A par mois (Geoffrey repond en direct)</li>
+      <li><strong>Effet:</strong> les leads voient des resultats d'autres personnes au quotidien → social proof passive</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════════════════════════════════ -->
+<!-- SECTION 9: MACHINE A TEMOIGNAGES -->
+<!-- ═══════════════════════════════════════════════════════════════════════════════════════════════ -->
+<div class="section" id="temoignages">
+  <div class="section-header">
+    <div class="section-num">09</div>
+    <div>
+      <div class="section-title">Machine a Temoignages</div>
+      <div class="section-subtitle">Process systematique pour collecter, organiser et exploiter chaque temoignage client</div>
+    </div>
+  </div>
+
+  <!-- Process -->
+  <div class="card">
+    <h3>Process Systematique de Collecte</h3>
+    <table>
+      <tr><th>Moment</th><th>Qui demande</th><th>Format</th><th>Usage</th></tr>
+      <tr><td><strong>J+14</strong></td><td>Geoffrey</td><td>Texte WhatsApp</td><td>Reel screenshot</td></tr>
+      <tr><td><strong>J+30</strong></td><td>Geoffrey</td><td>Vocal 30 sec</td><td>Reel audio + sous-titres</td></tr>
+      <tr><td><strong>J+60</strong></td><td>Jad</td><td>Video selfie 1 min</td><td>YouTube + Reel</td></tr>
+      <tr><td><strong>J+90</strong></td><td>Jad</td><td>Interview video 5 min</td><td>YouTube serie "Histoires de Terrain"</td></tr>
+      <tr><td><strong>Avant/Apres</strong></td><td>Geoffrey</td><td>Photos comparaison</td><td>Reels + Stories + Highlights</td></tr>
+      <tr><td><strong>NPS</strong></td><td>Auto (GHL)</td><td>Score + commentaire</td><td>Dashboard interne</td></tr>
+    </table>
+  </div>
+
+  <!-- Templates de demande -->
+  <div class="collapsible start-open">
+    <div class="collapsible-header" onclick="toggleCollapsible(this)">
+      <h3>Templates de Demande (Copy-Paste)</h3>
+      <span class="toggle-icon">+</span>
+    </div>
+    <div class="collapsible-body open">
+      <h4>J+14 — Premier resultat</h4>
+      <div class="copy-block">[Prenom], 2 semaines! Comment tu te sens? Si tu vois deja des changements, est-ce que tu peux me decrire en quelques mots ce que tu observes? Ca aide enormement les futures participantes 🙏<button class="copy-btn" onclick="copyBlock(this)">Copier</button></div>
+
+      <h4>J+30 — Vocal</h4>
+      <div class="copy-block">[Prenom], 30 jours! Les resultats sont la. Est-ce que tu serais d'accord pour m'enregistrer un petit vocal de 30 secondes? Juste: comment c'etait avant, et comment c'est maintenant. Ca serait enorme pour nous 🙏<button class="copy-btn" onclick="copyBlock(this)">Copier</button></div>
+
+      <h4>J+60 — Video selfie</h4>
+      <div class="copy-block">[Prenom], 2 mois de protocole. Tu te souviens comment c'etait avant? Si tu veux bien filmer un petit selfie video de 1 minute (ton parcours + tes resultats), ca serait incroyable. Pas besoin d'etre parfait — l'authenticite c'est tout 🙏<button class="copy-btn" onclick="copyBlock(this)">Copier</button></div>
+
+      <h4>J+90 — Interview complete</h4>
+      <div class="copy-block">[Prenom], 90 jours. On a fait un sacre chemin ensemble. J'aimerais beaucoup qu'on fasse un petit interview video ensemble (5 min, par Zoom). Ca me permettrait de montrer aux personnes comme toi qu'il y a une vraie solution 🙏<button class="copy-btn" onclick="copyBlock(this)">Copier</button></div>
+
+      <h4>Demande de photo avant/apres</h4>
+      <div class="copy-block">[Prenom], est-ce que par hasard tu as une photo de ta peau d'avant le protocole? En comparant avec maintenant, ca montre vraiment le chemin parcouru. Si tu es d'accord pour partager (anonymement bien sur), ca aiderait tellement d'autres femmes a se decider 🙏<button class="copy-btn" onclick="copyBlock(this)">Copier</button></div>
+    </div>
+  </div>
+
+  <!-- Temoignage Bank -->
+  <div class="card">
+    <h3>Temoignage Bank — Objectifs par Condition</h3>
+    <table>
+      <tr><th>Condition</th><th>Actuels</th><th>Objectif M6</th><th>Progression</th></tr>
+      <tr>
+        <td><strong>Psoriasis</strong></td><td>3</td><td>15</td>
+        <td><div class="progress-track" style="width:120px;display:inline-block;vertical-align:middle;"><div class="progress-fill" style="width:20%"></div></div> 20%</td>
+      </tr>
+      <tr>
+        <td><strong>Acne</strong></td><td>1</td><td>8</td>
+        <td><div class="progress-track" style="width:120px;display:inline-block;vertical-align:middle;"><div class="progress-fill" style="width:12.5%"></div></div> 12%</td>
+      </tr>
+      <tr>
+        <td><strong>Rosacee</strong></td><td>1</td><td>5</td>
+        <td><div class="progress-track" style="width:120px;display:inline-block;vertical-align:middle;"><div class="progress-fill" style="width:20%"></div></div> 20%</td>
+      </tr>
+      <tr>
+        <td><strong>Eczema</strong></td><td>1</td><td>5</td>
+        <td><div class="progress-track" style="width:120px;display:inline-block;vertical-align:middle;"><div class="progress-fill" style="width:20%"></div></div> 20%</td>
+      </tr>
+      <tr>
+        <td><strong>Digestion</strong></td><td>1</td><td>5</td>
+        <td><div class="progress-track" style="width:120px;display:inline-block;vertical-align:middle;"><div class="progress-fill" style="width:20%"></div></div> 20%</td>
+      </tr>
+      <tr>
+        <td><strong>Dermite</strong></td><td>0</td><td>3</td>
+        <td><div class="progress-track" style="width:120px;display:inline-block;vertical-align:middle;"><div class="progress-fill" style="width:0%"></div></div> 0%</td>
+      </tr>
+      <tr>
+        <td><strong>Post-Covid</strong></td><td>0</td><td>2</td>
+        <td><div class="progress-track" style="width:120px;display:inline-block;vertical-align:middle;"><div class="progress-fill" style="width:0%"></div></div> 0%</td>
+      </tr>
+    </table>
+    <p style="color:var(--stone); font-size:13px; margin-top:10px;"><strong>Total actuel:</strong> 7 temoignages | <strong>Objectif M6:</strong> 43 temoignages | Chaque nouveau client = 4 opportunites de temoignage (J14, J30, J60, J90)</p>
+  </div>
+
+  <!-- Exploitation des temoignages -->
+  <div class="card">
+    <h3>Comment Exploiter Chaque Temoignage (Maximiser le ROI)</h3>
+    <table>
+      <tr><th>Format source</th><th>Contenus generes</th></tr>
+      <tr><td><strong>Texte WhatsApp</strong></td><td>Screenshot → Reel avec musique + texte overlay | Story | Highlight "RESULTATS" | Email de nurture</td></tr>
+      <tr><td><strong>Vocal 30 sec</strong></td><td>Reel audio + sous-titres | Story audio | Episode podcast "Paroles de clients"</td></tr>
+      <tr><td><strong>Video selfie 1 min</strong></td><td>Reel complet | Story | YouTube Short | Highlight | Email avec video embeddee</td></tr>
+      <tr><td><strong>Interview 5 min</strong></td><td>Video YouTube complete (Serie 3) | 3-5 clips Reels | Article blog | Email dedicace | Pin Pinterest</td></tr>
+      <tr><td><strong>Photo avant/apres</strong></td><td>Reel carrousel | Story | Highlight | Thumbnail YouTube | Email visuel | Pin Pinterest</td></tr>
+    </table>
+    <p style="color:var(--stone); font-size:13px; margin-top:10px;">1 interview de 5 minutes = 10+ contenus. Le temoignage est la forme de contenu avec le meilleur ROI.</p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════════════════════════════════ -->
+<!-- SECTION 10: CONCURRENTS -->
+<!-- ═══════════════════════════════════════════════════════════════════════════════════════════════ -->
+<div class="section" id="concurrents">
+  <div class="section-header">
+    <div class="section-num">10</div>
+    <div>
+      <div class="section-title">Deplacement des Concurrents</div>
+      <div class="section-subtitle">Cartographie du marche et strategie de positionnement superieur</div>
+    </div>
+  </div>
+
+  <div class="card danger">
+    <h3>Regle Absolue: Ne JAMAIS nommer les concurrents</h3>
+    <p>On ne mentionne jamais un concurrent par nom. Ni en video, ni en DM, ni sur un call. On se positionne AU-DESSUS en montrant la valeur, pas en attaquant.</p>
+    <p style="color:var(--stone); font-size:13px;">Nommer un concurrent = lui donner de la visibilite gratuite. Ignorer les concurrents = positionner Geoffrey comme si il etait SEUL dans le marche.</p>
+  </div>
+
+  <!-- Cartographie -->
+  <div class="card">
+    <h3>Cartographie des Concurrents Francophones</h3>
+    <div style="overflow-x:auto;">
+    <table>
+      <tr><th>Concurrent</th><th>Type</th><th>Forces</th><th>Faiblesses</th><th>Comment les deplacer</th></tr>
+      <tr>
+        <td><strong>Dermatos classiques</strong></td>
+        <td><span class="tag blue">Medical</span></td>
+        <td>Credibilite institutionnelle</td>
+        <td>Traitement symptomatique, 0 contenu, 0 suivi personnalise</td>
+        <td>Videos "Pourquoi le dermato echoue" — montrer les limites sans attaquer</td>
+      </tr>
+      <tr>
+        <td><strong>Naturopathes generiques</strong></td>
+        <td><span class="tag purple">Alternatif</span></td>
+        <td>Prix bas (50-100 euros/seance)</td>
+        <td>Pas specialises peau, pas de protocole mesurable, pas de tracking</td>
+        <td>Videos "La difference entre un naturo et un protocole clinique"</td>
+      </tr>
+      <tr>
+        <td><strong>Accompagnements online 300 euros</strong></td>
+        <td><span class="tag stone">Digital</span></td>
+        <td>Prix accessible</td>
+        <td>Generiques, pas personnalises, pas de suivi 1:1</td>
+        <td>"Pourquoi le prix est le pire critere de choix"</td>
+      </tr>
+      <tr>
+        <td><strong>Influenceurs sante Instagram</strong></td>
+        <td><span class="tag gold">Social</span></td>
+        <td>Audience large</td>
+        <td>Pas de resultats prouves, pas de formation clinique</td>
+        <td>Videos profondes et cliniques que les influenceurs ne peuvent pas faire</td>
+      </tr>
+      <tr>
+        <td><strong>Programmes anti-inflammatoires</strong></td>
+        <td><span class="tag stone">Digital</span></td>
+        <td>Education de qualite</td>
+        <td>Pas d'accompagnement 1:1, pas de tracking personnalise</td>
+        <td>"Comprendre ne suffit pas — tu as besoin d'etre ACCOMPAGNEE"</td>
+      </tr>
+    </table>
+    </div>
+  </div>
+
+  <!-- Contenu de deplacement -->
+  <div class="card">
+    <h3>Videos de Deplacement (Positionnement Superieur)</h3>
+    <p style="margin-bottom:14px;">Ces videos positionnent SAPIENS 360 au-dessus sans jamais attaquer directement:</p>
+    <ul>
+      <li><strong>"Pourquoi un programme en ligne ne remplacera jamais un accompagnement 1:1"</strong><br><span style="color:var(--stone); font-size:13px;">Cible: les accompagnements online a 300 euros sans suivi</span></li>
+      <li><strong>"La difference entre un naturopathe et un protocole clinique mesurable"</strong><br><span style="color:var(--stone); font-size:13px;">Cible: les naturopathes generiques sans specialisation peau</span></li>
+      <li><strong>"Pourquoi le prix le plus bas est souvent le plus cher"</strong><br><span style="color:var(--stone); font-size:13px;">Cible: objection prix + concurrents low-cost</span></li>
+      <li><strong>"Les 5 questions a poser avant de choisir un accompagnement"</strong><br><span style="color:var(--stone); font-size:13px;">Cible: tous les concurrents (Geoffrey coche toutes les cases, eux non)</span></li>
+      <li><strong>"Pourquoi les programmes generiques echouent pour les conditions chroniques"</strong><br><span style="color:var(--stone); font-size:13px;">Cible: programmes one-size-fits-all vs accompagnement personnalise</span></li>
+      <li><strong>"Influenceur sante vs praticien: la difference qui change tout"</strong><br><span style="color:var(--stone); font-size:13px;">Cible: influenceurs Instagram sante sans formation clinique</span></li>
+      <li><strong>"Pourquoi la cortisone ne peut pas resoudre un probleme de terrain"</strong><br><span style="color:var(--stone); font-size:13px;">Cible: approche dermatologique classique</span></li>
+    </ul>
+  </div>
+
+  <!-- Avantages competitifs -->
+  <div class="card gold">
+    <h3>Les 7 Avantages Competitifs Imbattables de SAPIENS 360</h3>
+    <table>
+      <tr><th>#</th><th>Avantage</th><th>Pourquoi personne ne peut copier</th></tr>
+      <tr><td>1</td><td><strong>Geoffrey a VECU le probleme</strong></td><td>Pas un theoricien. Pas un spectateur. Un praticien qui a souffert et resolu.</td></tr>
+      <tr><td>2</td><td><strong>Formation clinique reelle</strong></td><td>Dr Dufournet + Dr Florent. Pas une formation Instagram en 3 jours.</td></tr>
+      <tr><td>3</td><td><strong>100+ accompagnements</strong></td><td>Track record prouve. Pas des promesses. Des resultats mesurables.</td></tr>
+      <tr><td>4</td><td><strong>Protocole PERSONNALISE</strong></td><td>Pas un PDF generique. Un protocole adapte a chaque personne.</td></tr>
+      <tr><td>5</td><td><strong>Suivi 1:1 quotidien</strong></td><td>WhatsApp + tracking cetose + ajustements. Aucun concurrent ne fait ca.</td></tr>
+      <tr><td>6</td><td><strong>25+ heures de contenu educatif</strong></td><td>La profondeur de contenu est un MOAT. Il faut 6 mois pour rattraper.</td></tr>
+      <tr><td>7</td><td><strong>Specialisation pure PEAU</strong></td><td>Pas "sante generale". Pas "bien-etre". PEAU. Focus total.</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════════════════════════════════ -->
+<!-- SECTION 11: PLAN 90 JOURS -->
+<!-- ═══════════════════════════════════════════════════════════════════════════════════════════════ -->
+<div class="section" id="plan90">
+  <div class="section-header">
+    <div class="section-num">11</div>
+    <div>
+      <div class="section-title">Plan 90 Jours — Execution</div>
+      <div class="section-subtitle">Semaine par semaine. Action par action. Pas de place pour le flou.</div>
+    </div>
+  </div>
+
+  <!-- MOIS 1 -->
+  <h3 style="font-family:Georgia,serif; font-size:22px; color:var(--gold); margin:24px 0 18px; padding:12px 0; border-bottom:1px solid var(--border);">Mois 1: Fondation (Semaines 1-4)</h3>
+
+  <div class="day-card">
+    <div class="day-header" onclick="toggleDay(this)">
+      <div class="day-label">Semaine 1 — Setup + Premiers Contenus</div>
+      <div class="day-tag both">Fondation</div>
+    </div>
+    <div class="day-body">
+      <ul class="checklist" data-key="m1s1">
+        <li><input type="checkbox"> Meta Verified Plus active</li>
+        <li><input type="checkbox"> 4 videos YouTube existantes optimisees (descriptions, CTA, pinned comments)</li>
+        <li><input type="checkbox"> Premiers Reels avec liens YouTube publies</li>
+        <li><input type="checkbox"> Bio Instagram mise a jour (version optimisee)</li>
+        <li><input type="checkbox"> Highlights Instagram crees (5 categories: RESULTATS, PROTOCOLE, GEOFFREY, FAQ, VIDEOS)</li>
+        <li><input type="checkbox"> Storytelling Geoffrey ecrit (5 versions dans ce doc)</li>
+        <li><input type="checkbox"> Vocabulaire imprime et affiche (mots DO / mots DON'T)</li>
+        <li><input type="checkbox"> Compte TikTok cree avec bio</li>
+        <li><input type="checkbox"> Compte Pinterest cree avec boards</li>
+        <li><input type="checkbox"> Description YouTube template prete</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="day-card">
+    <div class="day-header" onclick="toggleDay(this)">
+      <div class="day-label">Semaine 2 — Production lancee</div>
+      <div class="day-tag jad">Production</div>
+    </div>
+    <div class="day-body">
+      <ul class="checklist" data-key="m1s2">
+        <li><input type="checkbox"> 3 nouvelles videos YouTube filmees + publiees</li>
+        <li><input type="checkbox"> 15 Reels publies (3/jour minimum)</li>
+        <li><input type="checkbox"> 1ere newsletter envoyee</li>
+        <li><input type="checkbox"> Sequence email educative ecrite (10 emails dans GHL)</li>
+        <li><input type="checkbox"> Premiers reposts TikTok actifs</li>
+        <li><input type="checkbox"> 5 premiers pins Pinterest</li>
+        <li><input type="checkbox"> Stories quotidiennes lancees (5-8/jour)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="day-card">
+    <div class="day-header" onclick="toggleDay(this)">
+      <div class="day-label">Semaine 3 — Acceleration + Analyse</div>
+      <div class="day-tag both">Scale</div>
+    </div>
+    <div class="day-body">
+      <ul class="checklist" data-key="m1s3">
+        <li><input type="checkbox"> 3 nouvelles videos YouTube</li>
+        <li><input type="checkbox"> 15 Reels minimum</li>
+        <li><input type="checkbox"> Pinterest: 10 pins total</li>
+        <li><input type="checkbox"> Blog: 3 premiers articles (transcriptions editees)</li>
+        <li><input type="checkbox"> Analyser: quels contenus performent le mieux?</li>
+        <li><input type="checkbox"> Ajuster les hooks des Reels selon la data</li>
+        <li><input type="checkbox"> Identifier le type de contenu qui genere le plus de DMs</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="day-card">
+    <div class="day-header" onclick="toggleDay(this)">
+      <div class="day-label">Semaine 4 — Bilan Mois 1</div>
+      <div class="day-tag both">Review</div>
+    </div>
+    <div class="day-body">
+      <ul class="checklist" data-key="m1s4">
+        <li><input type="checkbox"> 3 videos YouTube (total M1: 12 videos = ~3h de contenu)</li>
+        <li><input type="checkbox"> 15 Reels</li>
+        <li><input type="checkbox"> Bilan M1: metriques completes (vues, engagement, bookings, close rate)</li>
+        <li><input type="checkbox"> Premier temoignage video demande (J+14 des premiers clients)</li>
+        <li><input type="checkbox"> Ajustements strategie selon les resultats</li>
+        <li><input type="checkbox"> Planifier M2 avec les learnings de M1</li>
+      </ul>
+
+      <div class="card gold" style="margin-top:14px;">
+        <h4 style="margin-top:0;">KPI Cibles Fin M1</h4>
+        <table>
+          <tr><td>Videos YouTube publiees</td><td><strong>12</strong></td></tr>
+          <tr><td>Reels publies</td><td><strong>60+</strong></td></tr>
+          <tr><td>Articles blog</td><td><strong>3</strong></td></tr>
+          <tr><td>Abonnes YouTube</td><td><strong>50+ (baseline)</strong></td></tr>
+          <tr><td>Newsletter envoyees</td><td><strong>3</strong></td></tr>
+          <tr><td>Sequence email active</td><td><strong>10 emails dans GHL</strong></td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- MOIS 2 -->
+  <h3 style="font-family:Georgia,serif; font-size:22px; color:var(--gold); margin:28px 0 18px; padding:12px 0; border-bottom:1px solid var(--border);">Mois 2: Acceleration (Semaines 5-8)</h3>
+
+  <div class="card">
+    <h3>Objectifs Mois 2</h3>
+    <ul class="checklist" data-key="m2">
+      <li><input type="checkbox"> 4 videos/semaine (16 total ce mois, 28 cumule)</li>
+      <li><input type="checkbox"> Lancer serie "Geoffrey Repond" (Q&A courtes, 2/semaine)</li>
+      <li><input type="checkbox"> Premiers articles blog indexes par Google</li>
+      <li><input type="checkbox"> Premiers temoignages video collectes (J+30 des premiers clients)</li>
+      <li><input type="checkbox"> Newsletter hebdomadaire installee et reguliere</li>
+      <li><input type="checkbox"> Analyser: quels sujets YouTube generent des bookings?</li>
+      <li><input type="checkbox"> Lancer les 5 videos "deplacement concurrents"</li>
+      <li><input type="checkbox"> Google My Business cree et optimise</li>
+      <li><input type="checkbox"> 20 pins Pinterest total</li>
+      <li><input type="checkbox"> 5 articles blog supplementaires (8 total)</li>
+      <li><input type="checkbox"> TikTok: analyser si ca genere du trafic</li>
+    </ul>
+
+    <div class="card gold" style="margin-top:14px;">
+      <h4 style="margin-top:0;">KPI Cibles Fin M2</h4>
+      <table>
+        <tr><td>Videos YouTube cumule</td><td><strong>28</strong></td></tr>
+        <tr><td>Heures de contenu</td><td><strong>~7h</strong></td></tr>
+        <tr><td>Reels cumule</td><td><strong>200+</strong></td></tr>
+        <tr><td>Abonnes YouTube</td><td><strong>200+</strong></td></tr>
+        <tr><td>Premier prospect mention YouTube sur call</td><td><strong>OUI</strong></td></tr>
+        <tr><td>Temoignages collectes</td><td><strong>5+</strong></td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- MOIS 3 -->
+  <h3 style="font-family:Georgia,serif; font-size:22px; color:var(--gold); margin:28px 0 18px; padding:12px 0; border-bottom:1px solid var(--border);">Mois 3: Scale (Semaines 9-12)</h3>
+
+  <div class="card">
+    <h3>Objectifs Mois 3</h3>
+    <ul class="checklist" data-key="m3">
+      <li><input type="checkbox"> 4-5 videos/semaine (16-20 total, 44-48 cumule)</li>
+      <li><input type="checkbox"> Lancer serie "Histoires de Terrain" (temoignages video, 1/semaine)</li>
+      <li><input type="checkbox"> Podcast lance (audio des videos YouTube, distribution Spotify/Apple)</li>
+      <li><input type="checkbox"> SEO Google: premieres positions sur mots-cles cibles</li>
+      <li><input type="checkbox"> 15+ temoignages collectes au total</li>
+      <li><input type="checkbox"> YouTube commence a generer du trafic organique (pas seulement Instagram)</li>
+      <li><input type="checkbox"> Premier prospect qui booke SANS passer par Instagram (YouTube direct)</li>
+      <li><input type="checkbox"> Communaute WhatsApp/Skool lancee</li>
+      <li><input type="checkbox"> 15 articles blog total</li>
+      <li><input type="checkbox"> 50 pins Pinterest total</li>
+      <li><input type="checkbox"> Close rate des prospects YouTube vs Instagram: mesurer la difference</li>
+    </ul>
+
+    <div class="card gold" style="margin-top:14px;">
+      <h4 style="margin-top:0;">KPI Cibles Fin M3</h4>
+      <table>
+        <tr><td>Videos YouTube cumule</td><td><strong>44-48</strong></td></tr>
+        <tr><td>Heures de contenu</td><td><strong>~11-12h</strong></td></tr>
+        <tr><td>Reels cumule</td><td><strong>450+</strong></td></tr>
+        <tr><td>Abonnes YouTube</td><td><strong>500+</strong></td></tr>
+        <tr><td>Bookings depuis YouTube</td><td><strong>5+/mois</strong></td></tr>
+        <tr><td>Articles blog indexes</td><td><strong>10+</strong></td></tr>
+        <tr><td>Temoignages video</td><td><strong>15+</strong></td></tr>
+        <tr><td>Podcast episodes</td><td><strong>8+</strong></td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- Timeline visuelle -->
+  <div class="card" style="margin-top:24px;">
+    <h3>Timeline des Resultats Attendus</h3>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="period">Semaine 1-2</div>
+        <div class="desc">Setup complet. Premiers contenus. Zero impact sur les calls encore. <strong>Phase de construction.</strong></div>
+      </div>
+      <div class="timeline-item">
+        <div class="period">Semaine 3-4</div>
+        <div class="desc">12 videos publiees. Premiers Reels avec liens. <strong>YouTube commence a indexer le contenu.</strong></div>
+      </div>
+      <div class="timeline-item">
+        <div class="period">Mois 2</div>
+        <div class="desc">28 videos. YouTube recommande. <strong>Premiers prospects qui mentionnent YouTube sur les calls. Close rate different.</strong></div>
+      </div>
+      <div class="timeline-item">
+        <div class="period">Mois 3</div>
+        <div class="desc">44+ videos = ~11h de contenu. <strong>YouTube genere des bookings autonomes. SEO Google commence a payer. Podcast lance.</strong></div>
+      </div>
+      <div class="timeline-item">
+        <div class="period">Mois 4-5</div>
+        <div class="desc">64-84 videos. <strong>Regle 7-11-4 depassee. Les prospects arrivent pre-vendus. Close rate 40%+.</strong></div>
+      </div>
+      <div class="timeline-item">
+        <div class="period">Mois 6</div>
+        <div class="desc">100+ videos. 26h+ de contenu. <strong>MONOPOLE INSTALLE. Geoffrey = LA reference francophone. Concurrents ne peuvent plus rattraper.</strong></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════════════════════════════════ -->
+<!-- SECTION 12: CHECKLISTS -->
+<!-- ═══════════════════════════════════════════════════════════════════════════════════════════════ -->
+<div class="section" id="checklist">
+  <div class="section-header">
+    <div class="section-num">12</div>
+    <div>
+      <div class="section-title">Checklists Quotidienne + Hebdomadaire</div>
+      <div class="section-subtitle">Les routines qui garantissent l'execution. Persistance localStorage — tes coches sont sauvegardees.</div>
+    </div>
+  </div>
+
+  <!-- Checklist Jad quotidienne -->
+  <div class="day-card">
+    <div class="day-header" onclick="toggleDay(this)">
+      <div class="day-label">Checklist Quotidienne — Jad</div>
+      <div class="day-tag jad">Chaque Jour</div>
+    </div>
+    <div class="day-body">
+      <ul class="checklist" data-key="daily_jad">
+        <li><input type="checkbox"> <strong>Poster 5 Reels</strong> (7h, 11h, 14h, 18h, 21h)</li>
+        <li><input type="checkbox"> 2 Reels avec lien YouTube (11h + 14h)</li>
+        <li><input type="checkbox"> 3 Reels "commente SAPIENS" (7h, 18h, 21h)</li>
+        <li><input type="checkbox"> Reposter tous les Reels sur TikTok</li>
+        <li><input type="checkbox"> Poster 5-8 Stories (routine, education, preuve, interactif)</li>
+        <li><input type="checkbox"> Repondre aux commentaires Instagram (identifier les leads)</li>
+        <li><input type="checkbox"> Envoyer 10-15 vocaux setting (leads ManyChat)</li>
+        <li><input type="checkbox"> Verifier les leads GHL (pipeline, relances, follow-ups)</li>
+        <li><input type="checkbox"> Monter ou preparer la prochaine video YouTube</li>
+      </ul>
+      <p style="color:var(--stone); font-size:12px; margin-top:10px;">Reset chaque matin. Les coches se sauvegardent en localStorage.</p>
+      <button onclick="resetChecklist('daily_jad')" style="margin-top:10px; background:var(--card); border:1px solid var(--border); color:var(--stone); padding:8px 16px; border-radius:6px; cursor:pointer; font-size:12px;">Reset checklist du jour</button>
+    </div>
+  </div>
+
+  <!-- Checklist Geoffrey quotidienne -->
+  <div class="day-card">
+    <div class="day-header" onclick="toggleDay(this)">
+      <div class="day-label">Checklist Quotidienne — Geoffrey</div>
+      <div class="day-tag geoffrey">Chaque Jour</div>
+    </div>
+    <div class="day-body">
+      <ul class="checklist" data-key="daily_geoffrey">
+        <li><input type="checkbox"> <strong>Filmer 1 YouTube ou 1 Q&A</strong> (si jour de tournage: lundi ou mercredi)</li>
+        <li><input type="checkbox"> Stories: routine matin + 1 education rapide</li>
+        <li><input type="checkbox"> Repondre clients WhatsApp (suivi quotidien)</li>
+        <li><input type="checkbox"> Tracking cetose clients (donnees du jour)</li>
+        <li><input type="checkbox"> 1 post Skool (si video publiee)</li>
+      </ul>
+      <button onclick="resetChecklist('daily_geoffrey')" style="margin-top:10px; background:var(--card); border:1px solid var(--border); color:var(--stone); padding:8px 16px; border-radius:6px; cursor:pointer; font-size:12px;">Reset checklist du jour</button>
+    </div>
+  </div>
+
+  <!-- Checklist hebdomadaire -->
+  <div class="day-card">
+    <div class="day-header" onclick="toggleDay(this)">
+      <div class="day-label">Checklist Hebdomadaire (Dimanche)</div>
+      <div class="day-tag both">Chaque Dimanche</div>
+    </div>
+    <div class="day-body">
+      <ul class="checklist" data-key="weekly">
+        <li><input type="checkbox"> <strong>Publier 3-5 videos YouTube</strong> (selon le mois)</li>
+        <li><input type="checkbox"> Remplir dashboard KPI (14_KPI_DASHBOARD.html)</li>
+        <li><input type="checkbox"> Analyser: quel contenu a genere des bookings cette semaine?</li>
+        <li><input type="checkbox"> Planifier les 4-5 videos YouTube de la semaine prochaine (sujets + series)</li>
+        <li><input type="checkbox"> Ecrire les hooks des Reels de la semaine</li>
+        <li><input type="checkbox"> Newsletter envoyee ("Le Terrain de la Semaine")</li>
+        <li><input type="checkbox"> 1 article blog publie (transcription editee)</li>
+        <li><input type="checkbox"> 5 pins Pinterest crees</li>
+        <li><input type="checkbox"> 1 temoignage demande (si client a J+14/30/60/90)</li>
+        <li><input type="checkbox"> Ecouter 1 call (le pire de la semaine) + identifier 1 amelioration</li>
+        <li><input type="checkbox"> Verifier les emails automatiques GHL (sequence + newsletters)</li>
+        <li><input type="checkbox"> Bilan TikTok: vues, engagement, trafic</li>
+        <li><input type="checkbox"> Bilan Pinterest: impressions, clics, trafic</li>
+        <li><input type="checkbox"> Podcast: episode publie (si lance)</li>
+      </ul>
+      <button onclick="resetChecklist('weekly')" style="margin-top:10px; background:var(--card); border:1px solid var(--border); color:var(--stone); padding:8px 16px; border-radius:6px; cursor:pointer; font-size:12px;">Reset checklist hebdo</button>
+    </div>
+  </div>
+
+  <!-- Checklist mensuelle -->
+  <div class="day-card">
+    <div class="day-header" onclick="toggleDay(this)">
+      <div class="day-label">Checklist Mensuelle (Fin de mois)</div>
+      <div class="day-tag gold">Review</div>
+    </div>
+    <div class="day-body">
+      <ul class="checklist" data-key="monthly">
+        <li><input type="checkbox"> <strong>Bilan complet:</strong> videos publiees vs objectif</li>
+        <li><input type="checkbox"> <strong>YouTube analytics:</strong> vues totales, watch time, abonnes, top videos</li>
+        <li><input type="checkbox"> <strong>Instagram analytics:</strong> reach, engagement rate, followers gained, top reels</li>
+        <li><input type="checkbox"> <strong>Bookings:</strong> combien ce mois? Source (Instagram, YouTube, email, autre)?</li>
+        <li><input type="checkbox"> <strong>Close rate:</strong> par source (prospects YouTube vs Instagram)</li>
+        <li><input type="checkbox"> <strong>CA:</strong> chiffre du mois vs objectif</li>
+        <li><input type="checkbox"> <strong>Temoignages:</strong> combien collectes? Quels formats?</li>
+        <li><input type="checkbox"> <strong>SEO:</strong> positions Google sur les mots-cles cibles</li>
+        <li><input type="checkbox"> <strong>Email:</strong> taux d'ouverture, taux de clic, desabonnements</li>
+        <li><input type="checkbox"> <strong>Ajustements:</strong> que changer le mois prochain?</li>
+        <li><input type="checkbox"> <strong>Objectifs M+1:</strong> definis et ecrits</li>
+      </ul>
+      <button onclick="resetChecklist('monthly')" style="margin-top:10px; background:var(--card); border:1px solid var(--border); color:var(--stone); padding:8px 16px; border-radius:6px; cursor:pointer; font-size:12px;">Reset checklist mensuelle</button>
+    </div>
+  </div>
+
+  <!-- Quick reference -->
+  <div class="card gold" style="margin-top:24px;">
+    <h3>Rappel: Les Chiffres du Monopole</h3>
+    <div class="stat-row">
+      <div class="metric-card">
+        <div class="metric-value">5</div>
+        <div class="metric-label">Reels / jour</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-value">3-5</div>
+        <div class="metric-label">Videos YT / sem</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-value">5-8</div>
+        <div class="metric-label">Stories / jour</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-value">1</div>
+        <div class="metric-label">Newsletter / sem</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-value">1</div>
+        <div class="metric-label">Article blog / sem</div>
+      </div>
+    </div>
+    <p style="text-align:center; color:var(--stone); font-size:13px; margin-top:12px;">Chaque jour sans contenu est un jour ou un concurrent peut combler l'ecart. La consistance est le SEUL avantage qui ne peut pas etre copie.</p>
+  </div>
+
+  <!-- Booking link -->
+  <div class="card" style="margin-top:24px; text-align:center;">
+    <h3>Lien Booking (a utiliser PARTOUT)</h3>
+    <div class="copy-block" style="text-align:center; font-size:14px;">https://api.leadconnectorhq.com/widget/booking/exr3PQmMOOXUFOnkUfsJ<button class="copy-btn" onclick="copyBlock(this)">Copier</button></div>
+    <p style="color:var(--stone); font-size:13px;">Ce lien doit etre dans: chaque description YouTube, chaque bio, chaque email, chaque article blog, chaque landing page.</p>
+  </div>
+</div>
+
+</div><!-- /container -->
+
+<!-- ═══════════════════════════════════════════════════════════════════════════════════════════════ -->
+<!-- FOOTER -->
+<!-- ═══════════════════════════════════════════════════════════════════════════════════════════════ -->
+<footer>
+  SAPIENS 360 | Strategie Monopole Contenu | La reference francophone de la sante terrain | Avril 2026
+</footer>
+
+<!-- ═══════════════════════════════════════════════════════════════════════════════════════════════ -->
+<!-- JAVASCRIPT -->
+<!-- ═══════════════════════════════════════════════════════════════════════════════════════════════ -->
+<script>
+// ── Collapsible sections ──
+function toggleCollapsible(header) {
+  header.classList.toggle('open');
+  const body = header.nextElementSibling;
+  body.classList.toggle('open');
+}
+
+// ── Day cards toggle ──
+function toggleDay(header) {
+  const body = header.nextElementSibling;
+  body.classList.toggle('collapsed');
+}
+
+// ── Copy blocks ──
+function copyBlock(btn) {
+  const block = btn.parentElement;
+  const text = block.textContent.replace('Copier', '').replace('Copie!', '').trim();
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = 'Copie!';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.textContent = 'Copier';
+      btn.classList.remove('copied');
+    }, 2000);
+  });
+}
+
+// ── Checklist persistence (localStorage) ──
+function initChecklists() {
+  document.querySelectorAll('.checklist input[type="checkbox"]').forEach((cb, i) => {
+    const list = cb.closest('.checklist');
+    const key = 'sapiens_monopole_' + (list.dataset.key || 'default') + '_' + i;
+    cb.checked = localStorage.getItem(key) === 'true';
+    cb.addEventListener('change', () => {
+      localStorage.setItem(key, cb.checked);
+      const label = cb.parentElement;
+      if (cb.checked) label.classList.add('done');
+      else label.classList.remove('done');
+    });
+    if (cb.checked) cb.parentElement.classList.add('done');
+  });
+}
+
+// ── Reset checklist ──
+function resetChecklist(key) {
+  document.querySelectorAll('.checklist[data-key="' + key + '"] input[type="checkbox"]').forEach((cb, i) => {
+    const storageKey = 'sapiens_monopole_' + key + '_' + i;
+    localStorage.removeItem(storageKey);
+    cb.checked = false;
+    cb.parentElement.classList.remove('done');
+  });
+}
+
+// ── Sticky nav active state ──
+const navLinks = document.querySelectorAll('.nav a');
+const sections = document.querySelectorAll('.section');
+
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      navLinks.forEach(l => l.classList.remove('active'));
+      const link = document.querySelector('.nav a[href="#' + entry.target.id + '"]');
+      if (link) link.classList.add('active');
+    }
+  });
+}, { rootMargin: '-20% 0px -70% 0px' });
+
+sections.forEach(s => observer.observe(s));
+
+navLinks.forEach(link => {
+  link.addEventListener('click', e => {
+    e.preventDefault();
+    const target = document.querySelector(link.getAttribute('href'));
+    if (target) target.scrollIntoView({ behavior: 'smooth' });
+  });
+});
+
+// ── Global search ──
+const searchInput = document.getElementById('globalSearch');
+searchInput.addEventListener('input', function() {
+  const query = this.value.toLowerCase().trim();
+  const allCards = document.querySelectorAll('.card, .collapsible, .day-card, .acte-card, .signature-phrase, .flowchart');
+
+  if (!query) {
+    allCards.forEach(el => el.classList.remove('search-hidden'));
+    sections.forEach(s => s.classList.remove('search-hidden'));
+    return;
+  }
+
+  sections.forEach(section => {
+    let hasVisibleContent = false;
+    const sectionCards = section.querySelectorAll('.card, .collapsible, .day-card, .acte-card, .signature-phrase, .flowchart');
+
+    sectionCards.forEach(card => {
+      const text = card.textContent.toLowerCase();
+      if (text.includes(query)) {
+        card.classList.remove('search-hidden');
+        hasVisibleContent = true;
+      } else {
+        card.classList.add('search-hidden');
+      }
+    });
+
+    if (hasVisibleContent) {
+      section.classList.remove('search-hidden');
+    } else {
+      section.classList.add('search-hidden');
+    }
+  });
+});
+
+// ── YouTube progress tracker ──
+function updateYTProgress() {
+  const key = 'sapiens_monopole_yt_count';
+  let count = parseInt(localStorage.getItem(key) || '0');
+  const el = document.getElementById('ytProgress');
+  const fill = document.getElementById('ytProgressFill');
+  if (el) el.textContent = count + ' / 100';
+  if (fill) fill.style.width = Math.min(count, 100) + '%';
+}
+updateYTProgress();
+
+// ── Init ──
+initChecklists();
+
+// ── Init collapsible states ──
+document.querySelectorAll('.collapsible.start-open .collapsible-header').forEach(h => {
+  h.classList.add('open');
+});
+</script>
+</body>
+</html>
