@@ -751,7 +751,7 @@ section:last-of-type { border-bottom: none; }
     <div class="flow-card-body">
       <div class="copy-block">
         <span class="copy-label">Relance post-VSL</span>
-        <button class="copy-btn" onclick="copyText(this)">Copier</button>Hey [prenom]! Tu as pu regarder la video? Si tu veux qu'on regarde ta situation ensemble, l'appel est gratuit: [LIEN CALENDLY]</div>
+        <button class="copy-btn" onclick="copyText(this)">Copier</button>Hey [prenom]! Tu as pu regarder la video? Si tu veux qu'on regarde ta situation ensemble, l'appel est gratuit: https://api.leadconnectorhq.com/widget/booking/exr3PQmMOOXUFOnkUfsJ</div>
     </div>
   </div>
 
@@ -783,7 +783,7 @@ Regarde cette video — elle t'explique ce qui se passe avec ta peau et ce qu'on
 [LIEN VSL]
 
 Et si tu veux qu'on regarde ca ensemble:
-[LIEN CALENDLY]</div>
+https://api.leadconnectorhq.com/widget/booking/exr3PQmMOOXUFOnkUfsJ</div>
 
       <div class="action">
         <span class="action-tag tag-green">Toutes les donnees envoyees a GHL via webhook</span>
@@ -813,89 +813,217 @@ Et si tu veux qu'on regarde ca ensemble:
 </section>
 
 <!-- ═══════════════════════════════════════════ -->
-<!-- SECTION 4: POST-VOCAL                      -->
+<!-- SECTION 4: SCRIPT SETTING POST-VOCAL V3    -->
 <!-- ═══════════════════════════════════════════ -->
 <section id="post-vocal">
   <div class="section-label">Section 04</div>
-  <h2 class="section-title">Scenarios Post-Vocal</h2>
+  <h2 class="section-title">Script Setting Post-Vocal — V3</h2>
 
-  <!-- Scenario A -->
-  <div class="scenario">
-    <div class="scenario-header">
-      <span class="scenario-letter">A</span>
-      Elle a vu la VSL et repond
-    </div>
-    <div class="tree-step"><span class="arrow-prefix">&rarr;</span> 1. "Qu'est-ce qui t'a retenue de reserver l'appel?" — laisser le blocage sortir</div>
-    <div class="tree-step"><span class="arrow-prefix">&rarr;</span> 2. Repondre a l'objection (voir section Objections)</div>
-    <div class="tree-step"><span class="arrow-prefix">&rarr;</span> 3. Envoyer Calendly</div>
+  <div class="note">
+    <strong>Contexte :</strong> Elle a commente SAPIENS. Elle a recu la VSL. Le vocal de Geoffrey est parti a H+3. Elle a repondu. Geoffrey prend le relais manuellement.
   </div>
 
-  <!-- Scenario B -->
-  <div class="scenario">
-    <div class="scenario-header">
-      <span class="scenario-letter">B</span>
-      Elle n'a pas vu la VSL
+  <div class="card" style="border-color: var(--gold); background: linear-gradient(135deg, rgba(184,149,106,0.08), var(--card));">
+    <h4 class="card-title">Logique cle</h4>
+    <p style="color:var(--ivory);margin-bottom:12px;">Qu'elle ait regarde la VSL ou non — <strong style="color:var(--gold);">la conversation continue dans les deux cas</strong>. La VSL n'est jamais un prerequis. Les deux branches convergent vers le meme endroit : qualification de la douleur et envoi du lien Calendly.</p>
+    <div style="background:#0d0d0d;border-radius:6px;padding:16px;font-size:13px;line-height:2;color:var(--stone);margin-top:12px;">
+      Elle a regarde la VSL <span style="color:var(--gold);">&rarr;</span> <strong style="color:var(--ivory);">Etape 1A</strong> : Pourquoi pas reserve ?<br>
+      Elle n'a pas regarde la VSL <span style="color:var(--gold);">&rarr;</span> <strong style="color:var(--ivory);">Etape 1B</strong> : Qualifier directement<br>
+      <span style="color:var(--gold);">&darr;</span> Dans les deux cas <span style="color:var(--gold);">&rarr;</span> <strong style="color:var(--ivory);">Etape 2</strong> : Qualification douleur <span style="color:var(--gold);">&rarr;</span> <strong style="color:var(--ivory);">Etape 3</strong> : Objection <span style="color:var(--gold);">&rarr;</span> <strong style="color:var(--ivory);">Etape 4</strong> : Lien
     </div>
-    <div class="copy-block">
-      <span class="copy-label">Reponse</span>
-      <button class="copy-btn" onclick="copyText(this)">Copier</button>Pas de souci. C'est quoi ta situation avec ta peau?</div>
-    <div class="tree-step"><span class="arrow-prefix">&rarr;</span> Qualifier en 2-3 echanges</div>
-    <div class="tree-step"><span class="arrow-prefix">&rarr;</span> <strong style="color:#C06060;">JAMAIS</strong> renvoyer la VSL</div>
-    <div class="tree-step"><span class="arrow-prefix">&rarr;</span> Passer directement au Calendly si qualifiee</div>
   </div>
 
-  <!-- Scenario C -->
-  <div class="scenario">
-    <div class="scenario-header">
-      <span class="scenario-letter">C</span>
-      Pas de reponse au vocal
+  <!-- ETAPE 0 -->
+  <div class="flow-card" style="margin-top:32px;">
+    <div class="flow-card-header">
+      <h3>Etape 0 — Premiere Question</h3>
+      <div class="trigger">Des qu'elle repond au vocal — dans les 10 minutes</div>
     </div>
-    <div class="msg-step" style="margin-top:12px;">
-      <div class="msg-step-label">H+24</div>
+    <div class="flow-card-body">
+      <div class="note" style="margin-bottom:16px;">
+        <strong>Repondre dans les 10 minutes.</strong> Au-dela l'elan emotionnel est retombe.
+      </div>
       <div class="copy-block">
-        <span class="copy-label">Relance</span>
-        <button class="copy-btn" onclick="copyText(this)">Copier</button>Hey [prenom]! T'as pu ecouter mon vocal?</div>
+        <span class="copy-label">Geoffrey</span>
+        <button class="copy-btn" onclick="copyText(this)">Copier</button>T'as eu le temps de regarder la video que je t'avais envoyee ? 🙏</div>
     </div>
-    <div class="msg-step">
-      <div class="msg-step-label">H+72</div>
+  </div>
+
+  <!-- ETAPE 1A -->
+  <div class="flow-card">
+    <div class="flow-card-header" style="background:rgba(74,122,90,0.15);">
+      <h3>Etape 1A — Elle a regarde la VSL</h3>
+      <div class="trigger">Comprendre pourquoi elle n'a pas reserve</div>
+    </div>
+    <div class="flow-card-body">
+      <div style="background:rgba(184,149,106,0.06);border-left:3px solid var(--stone);padding:12px 16px;border-radius:0 6px 6px 0;margin-bottom:16px;font-size:14px;color:var(--stone);font-style:italic;">
+        Prospect : "Oui j'ai regarde, c'etait interessant..."
+      </div>
       <div class="copy-block">
-        <span class="copy-label">Dernier message</span>
-        <button class="copy-btn" onclick="copyText(this)">Copier</button>Je vais pas insister. Mais ce que tu vis — c'est pas une fatalite. Si un jour t'as envie qu'on en parle — je suis la.</div>
+        <span class="copy-label">Geoffrey</span>
+        <button class="copy-btn" onclick="copyText(this)">Copier</button>Ok super.
+
+Et qu'est-ce qui t'a retenue de reserver l'appel ? 🙏</div>
+      <div class="note" style="margin-top:12px;">
+        <strong>Silence.</strong> Laisser l'objection sortir naturellement. Ne pas anticiper. Ne pas proposer de reponses. C'est ici que le vrai blocage apparait.
+      </div>
+
+      <h4 class="card-title" style="margin-top:24px;font-size:15px;">Si elle n'arrive pas a nommer le blocage</h4>
+      <div style="background:rgba(184,149,106,0.06);border-left:3px solid var(--stone);padding:12px 16px;border-radius:0 6px 6px 0;margin-bottom:16px;font-size:14px;color:var(--stone);font-style:italic;">
+        Prospect : "Je sais pas trop... j'hesite"
+      </div>
+      <div class="copy-block">
+        <span class="copy-label">Geoffrey</span>
+        <button class="copy-btn" onclick="copyText(this)">Copier</button>C'est quoi exactement qui hesite ?
+La peur que ca marche pas encore une fois — ou autre chose ? 🙏</div>
+      <div class="note" style="margin-top:12px;">
+        Elle va finir par nommer l'objection reelle. Attendre. Puis aller <strong>Etape 2</strong>.
+      </div>
     </div>
-    <div class="note" style="margin-top:12px;">
-      <strong>STOP.</strong> Pas de CTA. Pas de lien.
+  </div>
+
+  <!-- ETAPE 1B -->
+  <div class="flow-card">
+    <div class="flow-card-header" style="background:rgba(74,122,90,0.15);">
+      <h3>Etape 1B — Elle n'a PAS regarde la VSL</h3>
+      <div class="trigger">Qualifier directement — ne pas renvoyer vers la video</div>
+    </div>
+    <div class="flow-card-body">
+      <div class="danger-box" style="margin-bottom:16px;padding:16px 20px;">
+        <div class="danger-box-title" style="font-size:14px;margin-bottom:8px;">Regle</div>
+        <span style="font-size:14px;">Ne jamais dire "regarde la video et reviens me parler". La conversation continue maintenant. Elle verra la VSL plus tard via le lien de confirmation Calendly.</span>
+      </div>
+      <div style="background:rgba(184,149,106,0.06);border-left:3px solid var(--stone);padding:12px 16px;border-radius:0 6px 6px 0;margin-bottom:16px;font-size:14px;color:var(--stone);font-style:italic;">
+        Prospect : "Non pas encore, j'ai pas eu le temps..."
+      </div>
+      <div class="copy-block">
+        <span class="copy-label">Geoffrey</span>
+        <button class="copy-btn" onclick="copyText(this)">Copier</button>Pas de souci.
+
+Dis-moi — c'est quoi ta situation avec ta peau en ce moment ? 🙏</div>
+      <div class="note" style="margin-top:12px;">
+        Enchainer directement sur les questions de qualification — <strong>Etape 2</strong>.
+      </div>
+    </div>
+  </div>
+
+  <!-- ETAPE 2 -->
+  <div class="flow-card">
+    <div class="flow-card-header" style="background:rgba(184,149,106,0.12);">
+      <h3>Etape 2 — Qualification de la Douleur</h3>
+      <div class="trigger">3 questions — meme script pour les deux branches</div>
+    </div>
+    <div class="flow-card-body">
+      <div class="note" style="margin-bottom:20px;">
+        Ces 3 questions sont identiques qu'elle ait regarde la VSL ou non. Elles creusent la douleur et preparent le terrain pour l'envoi du lien.
+      </div>
+
+      <!-- Q1 -->
+      <div class="copy-block" style="margin-bottom:8px;">
+        <span class="copy-label">Geoffrey — Question 1</span>
+        <button class="copy-btn" onclick="copyText(this)">Copier</button>Ca dure depuis combien de temps cette situation avec ta peau ?</div>
+      <div style="background:rgba(184,149,106,0.06);border-left:3px solid var(--stone);padding:10px 16px;border-radius:0 6px 6px 0;margin-bottom:16px;font-size:13px;color:var(--stone);font-style:italic;">
+        "3 ans, j'ai tout essaye rien ne tient..."
+      </div>
+
+      <!-- Q2 -->
+      <div class="copy-block" style="margin-bottom:8px;">
+        <span class="copy-label">Geoffrey — Question 2</span>
+        <button class="copy-btn" onclick="copyText(this)">Copier</button>T'as essaye quoi exactement jusqu'ici ? 🙏</div>
+      <div style="background:rgba(184,149,106,0.06);border-left:3px solid var(--stone);padding:10px 16px;border-radius:0 6px 6px 0;margin-bottom:16px;font-size:13px;color:var(--stone);font-style:italic;">
+        "Dermatologue, cremes, sans gluten, des complements... rien n'a tenu plus de quelques semaines"
+      </div>
+
+      <!-- Q3 -->
+      <div class="copy-block" style="margin-bottom:8px;">
+        <span class="copy-label">Geoffrey — Question 3 (la cle)</span>
+        <button class="copy-btn" onclick="copyText(this)">Copier</button>Le plus dur pour toi c'est la peau elle-meme ou le fait que rien ne tient jamais vraiment ? 🙏</div>
+      <div style="background:rgba(184,149,106,0.06);border-left:3px solid var(--stone);padding:10px 16px;border-radius:0 6px 6px 0;margin-bottom:16px;font-size:13px;color:var(--stone);font-style:italic;">
+        "Le fait que ca revient toujours... j'en peux plus de recommencer a zero"
+      </div>
+
+      <!-- Question terrain -->
+      <div class="copy-block" style="margin-bottom:8px;">
+        <span class="copy-label">Geoffrey — Question terrain</span>
+        <button class="copy-btn" onclick="copyText(this)">Copier</button>T'as deja consulte quelqu'un qui traite ton terrain dans sa globalite sans traiter chaque symptome individuellement ? 🙏</div>
+      <div style="background:rgba(184,149,106,0.06);border-left:3px solid var(--stone);padding:10px 16px;border-radius:0 6px 6px 0;margin-bottom:16px;font-size:13px;color:var(--stone);font-style:italic;">
+        "Non jamais"
+      </div>
+
+      <!-- Transition vers lien -->
+      <div class="copy-block" style="border-color:var(--gold);">
+        <span class="copy-label">Geoffrey — Transition vers le lien</span>
+        <button class="copy-btn" onclick="copyText(this)">Copier</button>C'est exactement ca le probleme.
+
+Tout ce que t'as essaye traitait la surface. Personne n'a encore regarde ce qui produit tes symptomes.
+
+C'est une difference fondamentale. 🙏
+
+Si tu veux on peut prendre 30 minutes ensemble pour regarder ton cas precis.
+
+Tu veux que je t'envoie le lien ?</div>
     </div>
   </div>
 </section>
 
 <!-- ═══════════════════════════════════════════ -->
-<!-- SECTION 5: OBJECTIONS SETTING              -->
+<!-- SECTION 5: OBJECTIONS SETTING V3           -->
 <!-- ═══════════════════════════════════════════ -->
 <section id="objections">
   <div class="section-label">Section 05</div>
-  <h2 class="section-title">Mini-Scripts Objections Setting</h2>
+  <h2 class="section-title">Etape 3 — Objections</h2>
+
+  <div class="note" style="margin-bottom:24px;">
+    Chaque objection traitee en <strong>2-3 messages maximum</strong>. L'objectif c'est lever le dernier obstacle et envoyer le lien.
+  </div>
 
   <div class="objection-card">
-    <div class="objection-q">"C'est combien?"</div>
+    <div class="objection-q">"C'est combien ?"</div>
     <div class="objection-a">
       <div class="copy-block">
-        <button class="copy-btn" onclick="copyText(this)">Copier</button>On en parle sur l'appel — l'investissement depend de ton profil et de la formule adaptee a ta situation. L'appel est gratuit. On regarde si ca a du sens pour toi.</div>
+        <button class="copy-btn" onclick="copyText(this)">Copier</button>On en parle sur l'appel — ca depend vraiment de ton profil.
+
+Ce que je peux te dire — la plupart des gens que j'accompagne avaient deja depense bien plus en cremes et consultations sans resultat durable.
+
+L'appel est gratuit de toute facon. On regarde d'abord si ca a du sens pour toi. 🙏</div>
     </div>
   </div>
 
   <div class="objection-card">
-    <div class="objection-q">"J'ai peur que ca marche pas"</div>
+    <div class="objection-q">"J'ai peur que ca marche pas encore une fois"</div>
     <div class="objection-a">
       <div class="copy-block">
-        <button class="copy-btn" onclick="copyText(this)">Copier</button>Je comprends — apres tout ce que tu as essaye, c'est normal d'avoir cette peur. La difference c'est que tout ce que tu as fait jusqu'ici traitait la surface. Nous on traite ce qui produit l'inflammation. Et on a une garantie : si apres 90 jours ca n'a pas bouge — on continue gratuitement. Le risque, c'est nous. Pas toi.</div>
+        <button class="copy-btn" onclick="copyText(this)">Copier</button>C'est la reaction la plus normale du monde.
+
+Apres tout ce que t'as essaye — avoir peur de se faire avoir encore une fois — c'est logique.
+
+Mais tout ce que t'as essaye — ils traitaient tous la surface. Personne n'a regarde ce qui produit tes symptomes.
+
+C'est exactement pour ca qu'on a une garantie. Si apres 90 jours d'application serieuse ca n'a pas change — on continue gratuitement.
+
+Le risque c'est nous. Pas toi. 🙏</div>
     </div>
   </div>
 
   <div class="objection-card">
-    <div class="objection-q">"Mon dermato dit que c'est chronique"</div>
+    <div class="objection-q">"J'ai deja tout essaye"</div>
     <div class="objection-a">
       <div class="copy-block">
-        <button class="copy-btn" onclick="copyText(this)">Copier</button>Chronique ≠ irreversible. Ton dermato traite la peau. Nous on traite ce qui fait flamber la peau. C'est pas le meme travail.</div>
+        <button class="copy-btn" onclick="copyText(this)">Copier</button>C'est exactement pour ca que je veux qu'on parle.
+
+Tout ce que t'as essaye ciblait tes symptomes. Personne n'a encore regarde ce qui les produit.
+
+C'est une difference fondamentale. 🙏</div>
+    </div>
+  </div>
+
+  <div class="objection-card">
+    <div class="objection-q">"J'ai pas le temps"</div>
+    <div class="objection-a">
+      <div class="copy-block">
+        <button class="copy-btn" onclick="copyText(this)">Copier</button>Je comprends. Le protocole c'est 10 minutes par jour — pas plus. Le reste s'adapte a ta vraie vie.
+
+C'est justement pour ca que ca tient. 🙏</div>
     </div>
   </div>
 
@@ -903,8 +1031,36 @@ Et si tu veux qu'on regarde ca ensemble:
     <div class="objection-q">"J'y crois pas trop"</div>
     <div class="objection-a">
       <div class="copy-block">
-        <button class="copy-btn" onclick="copyText(this)">Copier</button>C'est quoi exactement qui te fait douter?</div>
-      <div class="note" style="margin-top:8px;"><strong>Technique :</strong> Attendre la reponse specifique avant de repondre.</div>
+        <button class="copy-btn" onclick="copyText(this)">Copier</button>C'est honnete et je le respecte. C'est quoi exactement qui te fait douter ?
+
+Je prefere qu'on en parle franchement. 🙏</div>
+      <div class="note" style="margin-top:12px;"><strong>Attendre sa reponse.</strong> Identifier le doute precis. Puis :</div>
+      <div class="copy-block" style="margin-top:12px;">
+        <button class="copy-btn" onclick="copyText(this)">Copier</button>Je comprends.
+
+Mais la seule facon de savoir si ca peut marcher pour toi — c'est qu'on regarde ton terrain ensemble. L'appel est gratuit. Aucun engagement. T'as juste une reponse claire a la fin. 🙏</div>
+    </div>
+  </div>
+
+  <div class="objection-card">
+    <div class="objection-q">"Mon dermatologue dit que c'est chronique"</div>
+    <div class="objection-a">
+      <div class="copy-block">
+        <button class="copy-btn" onclick="copyText(this)">Copier</button>Chronique ca veut dire que ca dure dans le temps. Ca veut pas dire que c'est irreversible. Ca veut dire que personne n'a encore regarde ce qui l'entretient vraiment.
+
+Ton dermatologue traite la peau. Moi je traite ce qui fait flamber la peau. C'est pas le meme travail. 🙏</div>
+    </div>
+  </div>
+
+  <div class="objection-card">
+    <div class="objection-q">"Je dois en parler a quelqu'un"</div>
+    <div class="objection-a">
+      <div class="copy-block">
+        <button class="copy-btn" onclick="copyText(this)">Copier</button>Je comprends completement.
+
+Ce que je te propose — reserve le creneau maintenant. T'as 24h pour en parler. Comme ca si l'offre se ferme ce soir — t'as quand meme ta place.
+
+Et si il y a des questions apres — Jad y repond directement sur l'appel. 🙏</div>
     </div>
   </div>
 
@@ -912,27 +1068,119 @@ Et si tu veux qu'on regarde ca ensemble:
     <div class="objection-q">"C'est pas le bon moment"</div>
     <div class="objection-a">
       <div class="copy-block">
-        <button class="copy-btn" onclick="copyText(this)">Copier</button>Ca fait combien de temps que tu attends le bon moment?</div>
-      <div class="note" style="margin-top:8px;"><strong>Technique :</strong> Silence. Laisser la question faire son travail.</div>
+        <button class="copy-btn" onclick="copyText(this)">Copier</button>Ca fait combien de temps que tu attends le bon moment ? 🙏</div>
+      <div class="note" style="margin-top:12px;"><strong>Silence.</strong> Laisser la question atterrir.</div>
+      <div class="copy-block" style="margin-top:12px;">
+        <button class="copy-btn" onclick="copyText(this)">Copier</button>L'appel c'est 30 minutes. Gratuit. Sans engagement.
+
+Meme si c'est pas le bon moment pour commencer — t'auras une reponse claire sur ce qui se passe dans ton corps.
+
+C'est deja ca. 🙏</div>
     </div>
   </div>
 </section>
 
 <!-- ═══════════════════════════════════════════ -->
-<!-- SECTION 6: CALENDLY                        -->
+<!-- SECTION 6: ENVOI LIEN + TRANSITION         -->
 <!-- ═══════════════════════════════════════════ -->
 <section id="calendly">
   <div class="section-label">Section 06</div>
-  <h2 class="section-title">Transition vers Calendly</h2>
+  <h2 class="section-title">Etape 4 — Envoi du Lien + Transition Geoffrey &rarr; Jad</h2>
+
+  <div class="note" style="margin-bottom:20px;">
+    Ne pas envoyer le lien avant que l'objection soit vraiment traitee. Si elle hesite encore — une question de plus. <strong>Maximum 3 echanges avant d'envoyer quoi qu'il arrive.</strong>
+  </div>
 
   <div class="copy-block">
-    <span class="copy-label">Message de booking</span>
-    <button class="copy-btn" onclick="copyText(this)">Copier</button>Voila le lien pour reserver ton appel:
-[LIEN CALENDLY]
+    <span class="copy-label">Geoffrey — Proposition d'appel</span>
+    <button class="copy-btn" onclick="copyText(this)">Copier</button>Si tu veux on peut prendre 30 minutes ensemble pour regarder ton cas precis.
 
-L'appel se fera avec Jad, qui m'accompagne sur la partie analyse de profil. Il va regarder ta situation en detail et te dire honnetement si le protocole est adapte a ton cas.
+C'est gratuit. Sans engagement. A la fin tu sais si on peut vraiment t'aider — ou pas. Je te le dis honnetement dans les deux cas.
 
-30 minutes. Gratuit. Sans engagement.</div>
+Tu veux le lien ? 🙏</div>
+
+  <div style="background:rgba(184,149,106,0.06);border-left:3px solid var(--stone);padding:12px 16px;border-radius:0 6px 6px 0;margin:16px 0;font-size:14px;color:var(--stone);font-style:italic;">
+    Prospect : "Oui envoie-moi le lien"
+  </div>
+
+  <div class="copy-block" style="border-color:var(--gold);">
+    <span class="copy-label">Geoffrey — Envoi lien + transition Jad</span>
+    <button class="copy-btn" onclick="copyText(this)">Copier</button>Parfait.
+
+L'echange se fera avec Jad qui m'accompagne sur toute la partie integration.
+
+Jad c'est lui qui analyse les profils avant qu'on demarre un accompagnement — il prendra le temps de faire le point avec toi et de voir si ce qu'on propose est vraiment adapte a ta situation.
+
+Voila le lien pour reserver 👇
+
+https://api.leadconnectorhq.com/widget/booking/exr3PQmMOOXUFOnkUfsJ</div>
+
+  <div class="note" style="margin-top:16px;">
+    <strong>Pourquoi cette formulation :</strong> "Jad c'est lui qui analyse les profils avant qu'on demarre" — positionne Jad comme un filtre de qualite, pas un vendeur. Ca augmente le taux de show-up.
+  </div>
+
+  <div class="copy-block" style="margin-top:24px;">
+    <span class="copy-label">Geoffrey — Confirmation apres booking</span>
+    <button class="copy-btn" onclick="copyText(this)">Copier</button>Ton appel est confirme ✅ Tu vas echanger avec Jad, il travaille en binome avec moi sur le protocole SAPIENS et analyse chaque profil avant qu'on demarre ensemble. Il prendra le temps de comprendre ta situation en profondeur. A tres vite 🙏</div>
+
+  <!-- ETAPE 5 -->
+  <div class="flow-card" style="margin-top:32px;">
+    <div class="flow-card-header" style="background:rgba(139,58,58,0.12);">
+      <h3>Etape 5 — Message Final (H+72 si pas de reponse au vocal)</h3>
+      <div class="trigger">Geoffrey envoie ce message manuellement a toutes les personnes qui n'ont pas repondu au vocal apres 72h</div>
+    </div>
+    <div class="flow-card-body">
+      <div class="copy-block">
+        <span class="copy-label">Geoffrey — Dernier message</span>
+        <button class="copy-btn" onclick="copyText(this)">Copier</button>Je vais pas insister apres ca. 🙏
+
+Mais ce que tu vis — c'est pas une fatalite.
+
+Si un jour t'as envie qu'on en parle — je suis la.</div>
+      <div class="danger-box" style="margin-top:16px;padding:16px 20px;">
+        <div class="danger-box-title" style="font-size:14px;margin-bottom:8px;">Regle absolue</div>
+        <span style="font-size:14px;">Pas de CTA. Pas de lien. Pas de "reserve ton appel". Apres ce message — <strong>STOP</strong>. Aucune relance supplementaire.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- VUE COMPLETE -->
+  <div class="card" style="margin-top:32px;border-color:var(--gold);">
+    <h4 class="card-title">Vue complete du script</h4>
+    <div style="background:#0d0d0d;border-radius:6px;padding:20px;font-size:13px;line-height:2.2;color:var(--stone);font-family:'Segoe UI',Arial,sans-serif;">
+      <strong style="color:var(--ivory);">Vocal Geoffrey H+3</strong> — Elle repond<br>
+      <span style="color:var(--gold);">&darr;</span><br>
+      <strong style="color:var(--gold);">ETAPE 0</strong> — "T'as eu le temps de regarder la video ?"<br>
+      <span style="color:var(--gold);">&darr;</span><br>
+      <strong style="color:var(--green-bright);">OUI</strong> &rarr; <strong style="color:var(--gold);">ETAPE 1A</strong> : "Qu'est-ce qui t'a retenue de reserver ?"<br>
+      <strong style="color:#C06060;">NON</strong> &rarr; <strong style="color:var(--gold);">ETAPE 1B</strong> : "C'est quoi ta situation avec ta peau ?" — continuer directement<br>
+      <span style="color:var(--gold);">&darr;</span> Dans les deux cas<br>
+      <strong style="color:var(--gold);">ETAPE 2</strong> — Qualification douleur (3 questions)<br>
+      <span style="color:var(--gold);">&darr;</span><br>
+      <strong style="color:var(--gold);">ETAPE 3</strong> — Traitement objection si besoin<br>
+      <span style="color:var(--gold);">&darr;</span><br>
+      <strong style="color:var(--gold);">ETAPE 4</strong> — Envoi lien Calendly + transition Jad &rarr; <strong style="color:var(--green-bright);">DONE ✅</strong><br>
+      <span style="color:var(--gold);">&darr;</span> Elle ne repond pas au vocal<br>
+      <strong style="color:#C06060;">ETAPE 5</strong> — H+72 — Message final manuel — <strong style="color:#C06060;">STOP</strong>
+    </div>
+  </div>
+
+  <!-- 5 REGLES -->
+  <div style="margin-top:32px;">
+    <h4 class="card-title" style="margin-bottom:16px;">Les 5 regles du setting</h4>
+    <table class="data-table">
+      <thead>
+        <tr><th>Regle</th><th>Pourquoi</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong style="color:var(--ivory);">Repondre dans les 10 min</strong></td><td>L'elan emotionnel est encore la. Au-dela elle a refroidi.</td></tr>
+        <tr><td><strong style="color:var(--ivory);">Ne jamais renvoyer vers la VSL</strong></td><td>Si elle n'a pas regarde — on qualifie quand meme. La conversation ne s'arrete pas.</td></tr>
+        <tr><td><strong style="color:var(--ivory);">Demander pourquoi pas reserve si elle a vu</strong></td><td>C'est la question qui revele le vrai blocage. Ne jamais l'anticiper.</td></tr>
+        <tr><td><strong style="color:var(--ivory);">Maximum 3 echanges avant le lien</strong></td><td>Apres 3 echanges — envoyer le lien quoi qu'il arrive.</td></tr>
+        <tr><td><strong style="color:var(--ivory);">Jamais reduire le prix dans le setting</strong></td><td>Le prix se negocie en call avec Jad. Pas dans les DM de Geoffrey.</td></tr>
+      </tbody>
+    </table>
+  </div>
 </section>
 
 <!-- ═══════════════════════════════════════════ -->
