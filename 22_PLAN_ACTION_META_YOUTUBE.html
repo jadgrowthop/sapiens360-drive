@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAPIENS 360 — Plan d'Action Meta Verified + YouTube</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: #111; color: #e0ddd8; font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.65; font-size: 15px; }
+.container { max-width: 1100px; margin: 0 auto; padding: 20px; }
+
+/* HERO */
+.hero { text-align: center; padding: 60px 20px 40px; border-bottom: 2px solid #2C4A35; margin-bottom: 40px; }
+.hero .brand-sapiens { font-family: Georgia, serif; font-size: 14px; color: #B8956A; letter-spacing: 6px; text-transform: uppercase; }
+.hero .brand-360 { font-family: Georgia, serif; font-size: 52px; color: #fff; }
+.hero .brand-360 span { color: #B8956A; }
+.hero h2 { font-size: 20px; color: #B8956A; margin-top: 10px; font-weight: 400; letter-spacing: 2px; }
+.hero p { color: #888; margin-top: 14px; font-size: 14px; max-width: 700px; margin-left: auto; margin-right: auto; }
+
+/* NAV */
+.nav { position: sticky; top: 0; z-index: 50; background: rgba(17,17,17,0.97); backdrop-filter: blur(12px); border-bottom: 1px solid #2C4A3555; overflow-x: auto; white-space: nowrap; }
+.nav a { display: inline-block; padding: 14px 16px; font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.4); text-decoration: none; border-bottom: 2px solid transparent; transition: all 0.2s; }
+.nav a:hover { color: #e0ddd8; }
+.nav a.active { color: #B8956A; border-bottom-color: #B8956A; }
+
+/* SECTIONS */
+.section { margin-bottom: 50px; scroll-margin-top: 60px; }
+.section-header { display: flex; align-items: baseline; gap: 16px; margin-bottom: 20px; padding-bottom: 14px; border-bottom: 2px solid #2C4A35; }
+.section-num { font-family: Georgia, serif; font-size: 48px; color: #2C4A35; line-height: 1; }
+.section-title { font-family: Georgia, serif; font-size: 28px; color: #B8956A; }
+
+/* CARDS */
+.card { background: #161616; border: 1px solid #2C4A3555; border-radius: 10px; padding: 24px 28px; margin-bottom: 18px; }
+.card.gold { border-color: #B8956A; background: linear-gradient(135deg, rgba(184,149,106,0.08), #161616); }
+.card.green { border-left: 4px solid #2C4A35; }
+.card.red { border-left: 4px solid #c17b5a; }
+.card.danger { border: 1px solid #c17b5a; background: linear-gradient(135deg, rgba(193,123,90,0.08), #161616); }
+.card h3 { font-family: Georgia, serif; font-size: 20px; color: #B8956A; margin-bottom: 12px; }
+.card h4 { font-size: 13px; color: #B8956A; font-weight: 700; margin: 18px 0 10px; text-transform: uppercase; letter-spacing: 1px; }
+.card h4:first-child { margin-top: 0; }
+.card p { margin-bottom: 12px; }
+.card ul, .card ol { padding-left: 20px; margin-bottom: 14px; }
+.card li { margin-bottom: 8px; }
+.card li strong { color: #fff; }
+.card p strong { color: #B8956A; }
+
+/* DAY CARDS */
+.day-card { background: #161616; border: 1px solid #2C4A3555; border-radius: 10px; margin-bottom: 24px; overflow: hidden; }
+.day-header { background: #1a1a1a; padding: 16px 24px; border-bottom: 1px solid #2C4A3555; display: flex; justify-content: space-between; align-items: center; cursor: pointer; }
+.day-header:hover { background: #1e1e1e; }
+.day-header .day-label { font-family: Georgia, serif; font-size: 22px; color: #B8956A; }
+.day-header .day-title { font-size: 14px; color: #888; }
+.day-header .day-tag { background: #2C4A35; color: #B8956A; padding: 4px 12px; border-radius: 4px; font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
+.day-header .day-tag.jad { background: #B8956A22; color: #B8956A; }
+.day-header .day-tag.geoffrey { background: #2C4A3544; color: #6a9a78; }
+.day-header .day-tag.both { background: #ffffff11; color: #fff; }
+.day-body { padding: 24px; }
+.day-body.collapsed { display: none; }
+
+/* CHECKLIST */
+.checklist { list-style: none; padding: 0; }
+.checklist li { padding: 10px 0; border-bottom: 1px solid #222; display: flex; align-items: flex-start; gap: 12px; }
+.checklist li:last-child { border-bottom: none; }
+.checklist input[type="checkbox"] { margin-top: 4px; accent-color: #B8956A; width: 18px; height: 18px; flex-shrink: 0; }
+.checklist .done { text-decoration: line-through; color: #555; }
+
+/* TABLES */
+table { width: 100%; border-collapse: collapse; margin: 16px 0; background: #161616; border-radius: 8px; overflow: hidden; font-size: 14px; }
+th { background: #2C4A35; color: #FAF7F2; padding: 12px 16px; text-align: left; font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
+td { padding: 12px 16px; border-bottom: 1px solid #2C4A3522; color: #d4d0c4; }
+tr:last-child td { border-bottom: none; }
+
+/* GRID */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin: 18px 0; }
+@media (max-width: 768px) { .grid-2 { grid-template-columns: 1fr; } }
+
+/* QUOTE */
+.quote { border-left: 3px solid #B8956A; padding: 14px 22px; margin: 14px 0; background: rgba(184,149,106,0.06); font-style: italic; color: #d4d0c4; border-radius: 0 8px 8px 0; }
+
+/* BRAINSTORM */
+.brainstorm-card { background: #161616; border: 2px dashed #B8956A55; border-radius: 10px; padding: 24px; margin-bottom: 18px; }
+.brainstorm-card h3 { color: #B8956A; margin-bottom: 8px; }
+.brainstorm-card h3::before { content: "💡 "; }
+.brainstorm-card textarea { width: 100%; background: #111; border: 1px solid #2C4A3555; border-radius: 6px; color: #e0ddd8; padding: 12px; font-family: inherit; font-size: 14px; min-height: 80px; resize: vertical; margin-top: 8px; }
+
+/* MASTER */
+.skill-bar { margin: 12px 0; }
+.skill-bar .label { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 4px; }
+.skill-bar .label span:first-child { color: #e0ddd8; }
+.skill-bar .label span:last-child { color: #B8956A; font-weight: 700; }
+.skill-bar .bar { height: 8px; background: #222; border-radius: 4px; overflow: hidden; }
+.skill-bar .bar .fill { height: 100%; border-radius: 4px; transition: width 0.3s; }
+.skill-bar .bar .fill.low { background: #c17b5a; }
+.skill-bar .bar .fill.mid { background: #B8956A; }
+.skill-bar .bar .fill.high { background: #2C4A35; }
+
+/* TIMELINE */
+.timeline { position: relative; padding-left: 30px; border-left: 2px solid #2C4A35; margin: 24px 0; }
+.timeline-item { margin-bottom: 24px; position: relative; }
+.timeline-item::before { content: ''; width: 14px; height: 14px; background: #B8956A; border-radius: 50%; position: absolute; left: -38px; top: 4px; box-shadow: 0 0 0 4px #111; }
+.timeline-item .period { font-size: 11px; color: #B8956A; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 700; }
+.timeline-item .desc { color: #d4d0c4; margin-top: 4px; }
+
+/* FOOTER */
+footer { text-align: center; padding: 40px 20px; border-top: 1px solid #2C4A3555; color: #555; font-size: 12px; margin-top: 60px; }
+
+/* PROGRESS */
+.progress-bar { background: #222; border-radius: 6px; height: 12px; margin: 16px 0; overflow: hidden; }
+.progress-bar .fill { height: 100%; background: linear-gradient(90deg, #2C4A35, #B8956A); border-radius: 6px; transition: width 0.5s; }
+.progress-text { font-size: 13px; color: #888; text-align: right; }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="brand-sapiens">SAPIENS</div>
+  <div class="brand-360">3<span>6</span>0</div>
+  <h2>Plan d'Action — Meta Verified + YouTube</h2>
+  <p>Tout ce que tu dois faire, reflechir, brainstormer et maitriser dans les 14 prochains jours pour activer le bridge Instagram → YouTube → Call</p>
+</div>
+
+<!-- NAV -->
+<div class="nav" id="nav">
+  <a href="#contexte" class="active">Contexte</a>
+  <a href="#jour1">J1</a>
+  <a href="#jour2">J2</a>
+  <a href="#jour3">J3</a>
+  <a href="#jour4-5">J4-5</a>
+  <a href="#jour6-7">J6-7</a>
+  <a href="#semaine2">S2</a>
+  <a href="#brainstorm">Brainstorm</a>
+  <a href="#maitriser">Maitriser</a>
+  <a href="#kpi">KPI</a>
+</div>
+
+<div class="container">
+
+<!-- ============================================================ -->
+<!-- CONTEXTE -->
+<!-- ============================================================ -->
+<div class="section" id="contexte">
+  <div class="section-header">
+    <div class="section-num">00</div>
+    <div>
+      <div class="section-title">Contexte & Decision</div>
+    </div>
+  </div>
+
+  <div class="card gold">
+    <h3>La decision</h3>
+    <p><strong>Meta Verified Business Plus — $44.99/mois</strong> sur @geo_le_sapiens</p>
+    <p>Ce plan debloque les <strong>liens dans les Reels</strong> — le bridge manquant entre Instagram (proximite, 900K vues/mois) et YouTube (autorite, contenu long pour high-ticket).</p>
+  </div>
+
+  <div class="card">
+    <h3>Pourquoi maintenant</h3>
+    <ul>
+      <li><strong>900K vues/mois sous-monetisees</strong> — le trafic est la, la conversion est faible</li>
+      <li><strong>Close rate a 7%</strong> — les prospects arrivent pas assez "chauds" (pas assez de contenu long)</li>
+      <li><strong>Regle 7-11-4 (Hans Kadss)</strong> — pour du high-ticket, il faut 7h de contenu. Avec des Reels de 30 sec = 840 reels. Avec YouTube = 28 videos de 15 min</li>
+      <li><strong>YouTube = 0 videos</strong> actuellement. Chaque jour sans YouTube = opportunites perdues</li>
+      <li><strong>Le lien dans les Reels</strong> transforme chaque Reel en porte d'entree vers YouTube</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>Le nouveau funnel</h3>
+    <table>
+      <tr><th>Avant (actuel)</th><th>Apres (avec Plus + YouTube)</th></tr>
+      <tr>
+        <td>Reel 30s → "commente SAPIENS" → ManyChat → VSL → Call</td>
+        <td>Reel 30s → <strong>lien YouTube</strong> (40% des reels) → 12 min autorite → "commente SAPIENS" ou Calendly → Call</td>
+      </tr>
+      <tr>
+        <td>Prospect arrive au call avec 2-3 min de contenu vu</td>
+        <td>Prospect arrive avec <strong>30-60 min de contenu YouTube</strong> = deja convaincu</td>
+      </tr>
+      <tr>
+        <td>Close rate: ~7%</td>
+        <td>Close rate cible: <strong>25-40%</strong> (prospect pre-chauffe)</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="quote">
+    "YouTube construit l'AUTORITE. Instagram construit la PROXIMITE. Les deux sont necessaires pour vendre a 1,200€+." — Hans Kadss / Ryan Clogg
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- JOUR 1 -->
+<!-- ============================================================ -->
+<div class="section" id="jour1">
+  <div class="section-header">
+    <div class="section-num">01</div>
+    <div>
+      <div class="section-title">Jour 1 — Setup Meta Verified + Decisions YouTube</div>
+    </div>
+  </div>
+
+  <div class="day-card">
+    <div class="day-header" onclick="toggleDay(this)">
+      <div class="day-label">Matin — Jad</div>
+      <div class="day-tag jad">Setup</div>
+    </div>
+    <div class="day-body">
+      <h4>Souscrire Meta Verified Business Plus</h4>
+      <ul class="checklist" data-key="j1-matin">
+        <li><input type="checkbox"> Aller sur <strong>meta.com/meta-verified</strong> depuis un ordinateur (pas l'app — moins cher)</li>
+        <li><input type="checkbox"> Selectionner le compte <strong>@geo_le_sapiens</strong></li>
+        <li><input type="checkbox"> Choisir <strong>Business Plus — $44.99/mois</strong></li>
+        <li><input type="checkbox"> Fournir les documents demandes (piece d'identite Geoffrey, preuve d'activite)</li>
+        <li><input type="checkbox"> Payer et activer</li>
+        <li><input type="checkbox"> Verifier que le <strong>badge bleu</strong> apparait sur le profil</li>
+        <li><input type="checkbox"> Tester la fonctionnalite <strong>liens dans les Reels</strong> (poster un reel test avec lien)</li>
+      </ul>
+
+      <h4>Creer la chaine YouTube (si pas fait)</h4>
+      <ul class="checklist" data-key="j1-youtube">
+        <li><input type="checkbox"> Verifier l'etat de <strong>@geolesapiens</strong> sur YouTube</li>
+        <li><input type="checkbox"> Bio YouTube : "Geoffrey | Praticien Terrain Biologique | J'aide les femmes avec [rosa/acne/eczema/pso] a stabiliser leur peau en 90 jours en traitant la cause, pas le symptome"</li>
+        <li><input type="checkbox"> Photo de profil = meme que Instagram (coherence)</li>
+        <li><input type="checkbox"> Banniere YouTube (utiliser celle existante dans identite/08_media/)</li>
+        <li><input type="checkbox"> Lien VSL en description par defaut</li>
+        <li><input type="checkbox"> Lien Calendly en description par defaut</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="day-card">
+    <div class="day-header" onclick="toggleDay(this)">
+      <div class="day-label">Apres-midi — Jad + Geoffrey</div>
+      <div class="day-tag both">Decisions</div>
+    </div>
+    <div class="day-body">
+      <h4>Decisions a prendre ensemble (30 min)</h4>
+      <ul class="checklist" data-key="j1-decisions">
+        <li><input type="checkbox"> <strong>Quelles 4 premieres videos YouTube ?</strong> (voir la liste de 12 dans le Content Engine — choisir les 4 qui matchent le plus les objections des calls)</li>
+        <li><input type="checkbox"> <strong>Format YouTube defini :</strong> facecam Geoffrey, fond neutre, 8-15 min, pas de musique de fond, sous-titres auto</li>
+        <li><input type="checkbox"> <strong>Calendrier de tournage :</strong> quel jour de la semaine Geoffrey filme ? (recommandation : 1 apres-midi = 2 videos batch)</li>
+        <li><input type="checkbox"> <strong>Template description YouTube :</strong> ecrire le template une fois (intro, liens, CTA), copier-coller a chaque video</li>
+        <li><input type="checkbox"> <strong>Strategie liens dans les Reels :</strong> confirmer le split — MECANISME + PREUVE → lien YouTube, IDENTITE + DECISION → "commente SAPIENS"</li>
+      </ul>
+
+      <div class="card" style="margin-top: 16px;">
+        <h4>Les 4 premieres videos recommandees</h4>
+        <p>Choisir celles qui repondent aux objections les plus frequentes des calls :</p>
+        <ol>
+          <li><strong>"Rosacee : pourquoi ton dermatologue ne regarde pas au bon endroit"</strong> — 12 min. Votre condition #1, SEO fort, reframe "dermato chronique"</li>
+          <li><strong>"L'axe intestin-immunite-peau : explication complete"</strong> — 15 min. LE mecanisme fondamental, la video qu'on envoie a tous les prospects</li>
+          <li><strong>"Pourquoi tes bilans sont 'normaux' mais ta peau flambe"</strong> — 10 min. Adresse la frustration #1 de Lea, hook puissant</li>
+          <li><strong>"J'ai gueri ma peau en changeant ce que je mangeais — voici la science"</strong> — 12 min. Histoire Geoffrey = credibilite, science = autorite</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- JOUR 2 -->
+<!-- ============================================================ -->
+<div class="section" id="jour2">
+  <div class="section-header">
+    <div class="section-num">02</div>
+    <div>
+      <div class="section-title">Jour 2 — Tournage Video 1 + 2</div>
+    </div>
+  </div>
+
+  <div class="day-card">
+    <div class="day-header" onclick="toggleDay(this)">
+      <div class="day-label">Matin — Jad</div>
+      <div class="day-tag jad">Preparation</div>
+    </div>
+    <div class="day-body">
+      <h4>Preparer les scripts des 2 premieres videos</h4>
+      <ul class="checklist" data-key="j2-matin">
+        <li><input type="checkbox"> Ecrire le <strong>script Video 1</strong> — structure : Hook (30 sec) → Probleme (2 min) → Mecanisme (5 min) → Exemples (3 min) → CTA (1 min)</li>
+        <li><input type="checkbox"> Ecrire le <strong>script Video 2</strong> — meme structure</li>
+        <li><input type="checkbox"> Pour chaque video : 3 options de titre SEO + thumbnail idea</li>
+        <li><input type="checkbox"> Preparer le setup : camera/telephone charge, eclairage, fond neutre, micro (meme les airpods suffisent)</li>
+        <li><input type="checkbox"> Imprimer ou afficher les scripts pour Geoffrey</li>
+      </ul>
+
+      <div class="card">
+        <h4>Structure type d'une video YouTube (10-15 min)</h4>
+        <table>
+          <tr><th>Segment</th><th>Duree</th><th>Contenu</th></tr>
+          <tr><td><strong>Hook</strong></td><td>0:00-0:30</td><td>Question provocante ou stat choc. PAS "Bonjour aujourd'hui on va parler de..."</td></tr>
+          <tr><td><strong>Probleme</strong></td><td>0:30-2:30</td><td>Decrire le probleme que Lea vit. Utiliser SES mots. Elle doit se reconnaitre</td></tr>
+          <tr><td><strong>Pourquoi ca echoue</strong></td><td>2:30-5:00</td><td>Expliquer pourquoi tout ce qu'elle a essaye traite le symptome, pas la cause</td></tr>
+          <tr><td><strong>Le mecanisme</strong></td><td>5:00-9:00</td><td>L'axe intestin-immunite-peau. La revelation. Le "aha moment"</td></tr>
+          <tr><td><strong>Preuve</strong></td><td>9:00-11:00</td><td>1-2 cas anonymises. "Une femme avec le meme profil que toi..."</td></tr>
+          <tr><td><strong>Ouverture</strong></td><td>11:00-12:00</td><td>PAS de pitch. "Si tu veux comprendre TON terrain, le lien est en description." Pinned comment</td></tr>
+        </table>
+      </div>
+
+      <div class="card danger">
+        <h3>Regles YouTube — INTERDITS</h3>
+        <ul>
+          <li><strong>ZERO pitch direct</strong> — jamais "achete mon programme"</li>
+          <li><strong>ZERO prix</strong> — jamais mentionner le cout</li>
+          <li><strong>ZERO mot "cetose"</strong> — meme interdit qu'en closing</li>
+          <li><strong>ZERO nom de prospect/client</strong></li>
+          <li><strong>ZERO promesse de guerison</strong> — "stabiliser", pas "guerir"</li>
+          <li>CTA = <strong>lien VSL en description + pinned comment</strong>, pas dans la video</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="day-card">
+    <div class="day-header" onclick="toggleDay(this)">
+      <div class="day-label">Apres-midi — Geoffrey (2-3h)</div>
+      <div class="day-tag geoffrey">Tournage</div>
+    </div>
+    <div class="day-body">
+      <h4>Filmer Video 1 + Video 2 en batch</h4>
+      <ul class="checklist" data-key="j2-aprem">
+        <li><input type="checkbox"> Setup : eclairage, cadrage (buste, fond neutre), micro</li>
+        <li><input type="checkbox"> <strong>Video 1</strong> : filmer en suivant le script. OK de faire 2-3 prises par segment. Geoffrey parle <strong>lentement, pose, direct</strong> — mode clinicien, pas mode influenceur</li>
+        <li><input type="checkbox"> Pause 15 min, changer de haut si possible (on dirait 2 jours differents)</li>
+        <li><input type="checkbox"> <strong>Video 2</strong> : idem</li>
+        <li><input type="checkbox"> Transferer les rushes a Jad pour montage</li>
+      </ul>
+
+      <div class="card green">
+        <h3>Ton de Geoffrey sur YouTube</h3>
+        <p>Le ton est <strong>radicalement different</strong> des Reels :</p>
+        <ul>
+          <li><strong>Reels</strong> = energie, hooks rapides, 30 sec, pattern interrupt</li>
+          <li><strong>YouTube</strong> = calme, pose, pedagogique, direct, presque medical. Geoffrey parle comme un praticien qui explique a un patient.</li>
+          <li>Vitesse de parole : <strong>lente</strong>. Pauses apres les points importants.</li>
+          <li>Regard camera = regard direct, comme si il parlait a Lea en face</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- JOUR 3 -->
+<!-- ============================================================ -->
+<div class="section" id="jour3">
+  <div class="section-header">
+    <div class="section-num">03</div>
+    <div>
+      <div class="section-title">Jour 3 — Montage + Premier Reel avec lien</div>
+    </div>
+  </div>
+
+  <div class="day-card">
+    <div class="day-header" onclick="toggleDay(this)">
+      <div class="day-label">Toute la journee — Jad</div>
+      <div class="day-tag jad">Montage + Lancement</div>
+    </div>
+    <div class="day-body">
+      <h4>Montage Video 1</h4>
+      <ul class="checklist" data-key="j3-montage">
+        <li><input type="checkbox"> Monter la Video 1 (couper les hesitations, ajouter sous-titres auto, intro/outro simple)</li>
+        <li><input type="checkbox"> Creer la <strong>thumbnail</strong> : visage Geoffrey + texte gros sur fond contraste. Style : pas clickbait, mais intrigant</li>
+        <li><input type="checkbox"> Ecrire le <strong>titre SEO</strong> : "[Condition] : pourquoi [probleme courant] (explication complete)"</li>
+        <li><input type="checkbox"> Ecrire la <strong>description YouTube</strong> avec le template :
+          <br><br>
+          <code>[Accroche 2 lignes]<br><br>Dans cette video, j'explique [sujet].<br><br>👇 Tu veux comprendre ce qui se passe dans TON corps ?<br>Regarde cette video : [LIEN VSL]<br><br>📞 Reserve ton appel diagnostic gratuit :<br>[LIEN CALENDLY]<br><br>📲 Suis-moi sur Instagram : @geo_le_sapiens<br><br>[Timestamps]<br>0:00 - ...<br>2:30 - ...<br>etc.</code>
+        </li>
+        <li><input type="checkbox"> <strong>Pinned comment</strong> : "Tu as des questions sur ta situation ? Commente et je te reponds personnellement."</li>
+        <li><input type="checkbox"> Uploader Video 1 sur YouTube (programmer a J+1 matin si besoin)</li>
+      </ul>
+
+      <h4>Premier Reel avec lien YouTube</h4>
+      <ul class="checklist" data-key="j3-reel">
+        <li><input type="checkbox"> Extraire un <strong>clip de 30-45 sec</strong> du moment le plus percutant de la Video 1</li>
+        <li><input type="checkbox"> Ajouter un hook texte sur l'ecran</li>
+        <li><input type="checkbox"> Publier le Reel avec <strong>le lien YouTube</strong> (fonctionnalite Meta Verified Plus)</li>
+        <li><input type="checkbox"> Caption : "L'explication complete est dans la video 👆 [12 min qui vont tout changer]"</li>
+        <li><input type="checkbox"> Verifier que le lien est cliquable et fonctionne</li>
+      </ul>
+
+      <div class="card gold">
+        <h3>Le systeme de clips YouTube → Reels</h3>
+        <p>Chaque video YouTube de 12 min = <strong>3-5 Reels extraits</strong> avec lien vers la video complete :</p>
+        <ul>
+          <li><strong>Clip 1</strong> : Le hook (30 sec) — "L'explication complete ici 👆"</li>
+          <li><strong>Clip 2</strong> : Le moment "aha" du mecanisme — "Pourquoi ? La reponse dans la video complete"</li>
+          <li><strong>Clip 3</strong> : La preuve sociale — "Son parcours complet est ici"</li>
+          <li><strong>Clip 4</strong> : Un fact choc isole — "70% de ton systeme immunitaire est dans ton intestin 👆"</li>
+        </ul>
+        <p>→ <strong>1 video YouTube = 1 semaine de Reels avec liens</strong></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- JOUR 4-5 -->
+<!-- ============================================================ -->
+<div class="section" id="jour4-5">
+  <div class="section-header">
+    <div class="section-num">04</div>
+    <div>
+      <div class="section-title">Jours 4-5 — Montage Video 2 + Systeme de Clips</div>
+    </div>
+  </div>
+
+  <div class="day-card">
+    <div class="day-header" onclick="toggleDay(this)">
+      <div class="day-label">Jour 4 — Jad</div>
+      <div class="day-tag jad">Montage + Clips</div>
+    </div>
+    <div class="day-body">
+      <ul class="checklist" data-key="j4">
+        <li><input type="checkbox"> Monter la <strong>Video 2</strong> (sous-titres, thumbnail, description, upload)</li>
+        <li><input type="checkbox"> Extraire <strong>3-5 clips</strong> de la Video 1 pour les Reels des jours suivants</li>
+        <li><input type="checkbox"> Planifier ces Reels : 1 par jour aux heures MECANISME (14h) ou PREUVE (11h) avec lien YouTube</li>
+        <li><input type="checkbox"> Les autres creneaux (7h, 18h, 21h) = Reels classiques sans lien (REVELATION, IDENTITE, DECISION)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="day-card">
+    <div class="day-header" onclick="toggleDay(this)">
+      <div class="day-label">Jour 5 — Jad + Geoffrey</div>
+      <div class="day-tag both">Analyse + Ajustement</div>
+    </div>
+    <div class="day-body">
+      <ul class="checklist" data-key="j5">
+        <li><input type="checkbox"> Analyser les <strong>stats du premier Reel avec lien</strong> : clics sur le lien, vues YouTube, retention YouTube</li>
+        <li><input type="checkbox"> Comparer avec un Reel classique du meme jour : reach, engagement, saves</li>
+        <li><input type="checkbox"> Publier <strong>Video 2 sur YouTube</strong></li>
+        <li><input type="checkbox"> Preparer les <strong>scripts Video 3 + 4</strong></li>
+        <li><input type="checkbox"> Ajuster le format si besoin (hook plus court ? thumbnail differente ?)</li>
+      </ul>
+
+      <div class="card">
+        <h3>Quoi observer dans les stats</h3>
+        <table>
+          <tr><th>Metrique</th><th>Ou la voir</th><th>Cible</th></tr>
+          <tr><td>Clics sur le lien (Reel)</td><td>Instagram Insights → Reel → Interactions</td><td>>1% des vues</td></tr>
+          <tr><td>Vues YouTube (depuis Instagram)</td><td>YouTube Studio → Source de trafic</td><td>Croissant chaque semaine</td></tr>
+          <tr><td>Retention YouTube</td><td>YouTube Studio → Video → Retention</td><td>>40% a la moitie de la video</td></tr>
+          <tr><td>Clics description YouTube</td><td>YouTube Studio → Video → Clics</td><td>Track (baseline a etablir)</td></tr>
+          <tr><td>Abonnes YouTube</td><td>YouTube Studio → Dashboard</td><td>Croissant</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- JOUR 6-7 -->
+<!-- ============================================================ -->
+<div class="section" id="jour6-7">
+  <div class="section-header">
+    <div class="section-num">05</div>
+    <div>
+      <div class="section-title">Jours 6-7 — Tournage Video 3+4 + Routine Installee</div>
+    </div>
+  </div>
+
+  <div class="day-card">
+    <div class="day-header" onclick="toggleDay(this)">
+      <div class="day-label">Jour 6 — Geoffrey (tournage) + Jad (clips)</div>
+      <div class="day-tag both">Production</div>
+    </div>
+    <div class="day-body">
+      <ul class="checklist" data-key="j6">
+        <li><input type="checkbox"> Geoffrey filme <strong>Video 3 + Video 4</strong> en batch (meme session, 2-3h)</li>
+        <li><input type="checkbox"> Jad continue a publier les clips extraits des Videos 1-2 avec liens</li>
+        <li><input type="checkbox"> Verifier que le <strong>rythme est tenable</strong> : Geoffrey filme 1 apres-midi/semaine, Jad monte 2 videos/semaine</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="day-card">
+    <div class="day-header" onclick="toggleDay(this)">
+      <div class="day-label">Jour 7 — Review Semaine 1</div>
+      <div class="day-tag both">Bilan</div>
+    </div>
+    <div class="day-body">
+      <ul class="checklist" data-key="j7">
+        <li><input type="checkbox"> <strong>Combien de clics</strong> sur les liens Reels cette semaine ?</li>
+        <li><input type="checkbox"> <strong>Combien de vues YouTube</strong> total depuis Instagram ?</li>
+        <li><input type="checkbox"> <strong>Retention YouTube</strong> : les gens regardent combien de temps ?</li>
+        <li><input type="checkbox"> <strong>Impact sur les bookings</strong> : y a-t-il des leads qui mentionnent YouTube ?</li>
+        <li><input type="checkbox"> <strong>Quel Reel avec lien a le mieux performe ?</strong> Pourquoi ?</li>
+        <li><input type="checkbox"> <strong>Decision</strong> : ajuster le split liens/commente SAPIENS si besoin</li>
+        <li><input type="checkbox"> Remplir le <strong>dashboard KPI</strong> (14_KPI_DASHBOARD.html)</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SEMAINE 2 -->
+<!-- ============================================================ -->
+<div class="section" id="semaine2">
+  <div class="section-header">
+    <div class="section-num">06</div>
+    <div>
+      <div class="section-title">Semaine 2 — Routine + Optimisation</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>La routine hebdomadaire installee</h3>
+    <table>
+      <tr><th>Jour</th><th>Jad</th><th>Geoffrey</th></tr>
+      <tr><td><strong>Lundi</strong></td><td>Ecrire scripts Video N+1 et N+2</td><td>Reels classiques (5/jour)</td></tr>
+      <tr><td><strong>Mardi</strong></td><td>Monter video de la semaine precedente + extraire clips</td><td>Reels + stories</td></tr>
+      <tr><td><strong>Mercredi</strong></td><td>Publier Video YouTube + 1 Reel avec lien</td><td>Reels + lives</td></tr>
+      <tr><td><strong>Jeudi</strong></td><td>Reels avec liens (clips extraits) + setting/closing</td><td><strong>Tournage 2 videos YouTube (batch 2-3h)</strong></td></tr>
+      <tr><td><strong>Vendredi</strong></td><td>Publier Video YouTube #2 + clips</td><td>Reels + clients</td></tr>
+      <tr><td><strong>Samedi</strong></td><td>Planifier contenu semaine suivante</td><td>Repos</td></tr>
+      <tr><td><strong>Dimanche</strong></td><td>Review KPI + bilan</td><td>Live Q&A Skool 10h</td></tr>
+    </table>
+    <p><strong>Rythme cible : 2 videos YouTube/semaine + 2-3 Reels avec lien/semaine + 5 Reels classiques/jour</strong></p>
+  </div>
+
+  <div class="card">
+    <h3>Objectifs fin Semaine 2</h3>
+    <ul class="checklist" data-key="s2-objectifs">
+      <li><input type="checkbox"> <strong>4 videos YouTube publiees</strong></li>
+      <li><input type="checkbox"> <strong>8-10 Reels avec liens YouTube</strong> publies</li>
+      <li><input type="checkbox"> Premier <strong>abonne YouTube qui booke un call</strong> (tracker la source)</li>
+      <li><input type="checkbox"> <strong>Template de production rode</strong> : script → tournage → montage → publication → clips = process fluide</li>
+      <li><input type="checkbox"> <strong>Retention YouTube > 40%</strong> a mi-video</li>
+      <li><input type="checkbox"> Commencer a voir des <strong>vues YouTube organiques</strong> (pas seulement depuis Instagram)</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- BRAINSTORM -->
+<!-- ============================================================ -->
+<div class="section" id="brainstorm">
+  <div class="section-header">
+    <div class="section-num">07</div>
+    <div>
+      <div class="section-title">A Brainstormer</div>
+    </div>
+  </div>
+
+  <div class="brainstorm-card">
+    <h3>Quelles videos YouTube auraient le plus d'impact sur le close rate ?</h3>
+    <p>Pense aux <strong>3 objections les plus frequentes</strong> de tes calls. Si une video YouTube y repond AVANT le call, le prospect arrive deja convaincu.</p>
+    <p>Exemples : "J'ai tout essaye" → video "Pourquoi tout ce que tu as essaye ne pouvait pas marcher". "C'est chronique" → video "Chronique ne veut pas dire irreversible".</p>
+    <textarea placeholder="Tes idees de videos qui tuent les objections avant le call..."></textarea>
+  </div>
+
+  <div class="brainstorm-card">
+    <h3>Comment utiliser les liens Reels au-dela de YouTube ?</h3>
+    <p>Le lien peut aussi pointer vers : la VSL, le Calendly, un quiz, un lead magnet, un temoignage long format...</p>
+    <p>Idee : Reels PREUVE → lien vers page temoignage detaille. Reels DECISION → lien direct Calendly.</p>
+    <textarea placeholder="Tes idees d'utilisation des liens dans les Reels..."></textarea>
+  </div>
+
+  <div class="brainstorm-card">
+    <h3>YouTube Shorts : dupliquer les Reels ?</h3>
+    <p>Les Reels Instagram peuvent etre republies en YouTube Shorts (vertical, <60 sec). C'est du contenu deja fait = double exposition pour zero effort supplementaire. A tester ?</p>
+    <textarea placeholder="Pour ou contre ? Conditions ?"></textarea>
+  </div>
+
+  <div class="brainstorm-card">
+    <h3>Collaboration / Guest videos ?</h3>
+    <p>Inviter un expert (Dr Dufournet, Dr Florent, un client temoignage) dans une video YouTube = credibilite x10. Faisable ?</p>
+    <textarea placeholder="Qui inviter ? Quel format ?"></textarea>
+  </div>
+
+  <div class="brainstorm-card">
+    <h3>SEO YouTube : quels mots-cles Lea cherche ?</h3>
+    <p>Ouvre YouTube et tape "rosacee", "acne adulte", "eczema chronique", "psoriasis traitement naturel" → regarde les suggestions auto-complete. Ce sont les videos que Lea cherche.</p>
+    <textarea placeholder="Mots-cles trouves et idees de titres..."></textarea>
+  </div>
+
+  <div class="brainstorm-card">
+    <h3>Quelle est LA video "pilier" que tout prospect devrait voir ?</h3>
+    <p>Si un prospect ne pouvait voir QU'UNE video avant le call, laquelle ? C'est celle que tu mets en lien dans la bio, dans les emails, partout.</p>
+    <textarea placeholder="Ton idee de video pilier..."></textarea>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- MAITRISER -->
+<!-- ============================================================ -->
+<div class="section" id="maitriser">
+  <div class="section-header">
+    <div class="section-num">08</div>
+    <div>
+      <div class="section-title">A Maitriser</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Competences Jad — a developer</h3>
+
+    <div class="skill-bar">
+      <div class="label"><span>Montage video YouTube (CapCut/DaVinci)</span><span>Priorite #1</span></div>
+      <div class="bar"><div class="fill low" style="width: 20%"></div></div>
+    </div>
+    <p style="color:#888; font-size:13px; margin-bottom:20px;">Apprendre le montage basique : couper, sous-titres auto, transitions simples, export. Pas besoin d'etre un pro — propre et lisible suffit. CapCut gratuit fait tout.</p>
+
+    <div class="skill-bar">
+      <div class="label"><span>SEO YouTube (titres, descriptions, tags)</span><span>Priorite #2</span></div>
+      <div class="bar"><div class="fill low" style="width: 30%"></div></div>
+    </div>
+    <p style="color:#888; font-size:13px; margin-bottom:20px;">Comprendre : comment YouTube classe les videos, quels titres attirent les clics, comment structurer la description. Outils gratuits : TubeBuddy, VidIQ.</p>
+
+    <div class="skill-bar">
+      <div class="label"><span>Thumbnails YouTube</span><span>Priorite #3</span></div>
+      <div class="bar"><div class="fill mid" style="width: 40%"></div></div>
+    </div>
+    <p style="color:#888; font-size:13px; margin-bottom:20px;">La thumbnail = 80% du clic. Visage Geoffrey avec expression + texte gros + contraste. Canva gratuit suffit. Etudier les thumbnails des chaines sante qui marchent.</p>
+
+    <div class="skill-bar">
+      <div class="label"><span>Analytics YouTube Studio</span><span>Priorite #4</span></div>
+      <div class="bar"><div class="fill mid" style="width: 50%"></div></div>
+    </div>
+    <p style="color:#888; font-size:13px; margin-bottom:20px;">Savoir lire : retention, CTR, sources de trafic, impressions. Identifier quelle video performe et pourquoi.</p>
+
+    <div class="skill-bar">
+      <div class="label"><span>Strategie liens Reels (Meta Verified Plus)</span><span>A maitriser J1</span></div>
+      <div class="bar"><div class="fill mid" style="width: 60%"></div></div>
+    </div>
+    <p style="color:#888; font-size:13px; margin-bottom:20px;">Savoir : comment ajouter un lien, quels Reels en beneficient, comment tracker les clics. Tester le premier jour.</p>
+  </div>
+
+  <div class="card">
+    <h3>Competences Geoffrey — a developer</h3>
+
+    <div class="skill-bar">
+      <div class="label"><span>Parler a la camera en mode long (8-15 min)</span><span>Priorite #1</span></div>
+      <div class="bar"><div class="fill mid" style="width: 50%"></div></div>
+    </div>
+    <p style="color:#888; font-size:13px; margin-bottom:20px;">Different des Reels ! Ton pose, lent, pedagogique. Pratiquer : filmer 10 min sans coupure. Acceptable d'avoir des notes hors champ, mais le regard doit etre camera.</p>
+
+    <div class="skill-bar">
+      <div class="label"><span>Structurer un contenu long</span><span>Priorite #2</span></div>
+      <div class="bar"><div class="fill mid" style="width: 40%"></div></div>
+    </div>
+    <p style="color:#888; font-size:13px; margin-bottom:20px;">Un Reel = 1 idee. Une video YouTube = 1 argument construit en 5-7 etapes. Geoffrey doit apprendre a developper sans se perdre. La structure script de Jad aide.</p>
+
+    <div class="skill-bar">
+      <div class="label"><span>Gerer l'inconfort du "c'est pas parfait"</span><span>Mindset</span></div>
+      <div class="bar"><div class="fill high" style="width: 70%"></div></div>
+    </div>
+    <p style="color:#888; font-size:13px; margin-bottom:20px;">Les 4 premieres videos seront moyennes. C'est normal. La video 10 sera bonne. La video 20 sera excellente. Il faut publier sans attendre la perfection.</p>
+  </div>
+
+  <div class="card danger">
+    <h3>Les pieges a eviter absolument</h3>
+    <ol>
+      <li><strong>Attendre que ce soit parfait pour publier</strong> — une video moyenne publiee > une video parfaite jamais publiee</li>
+      <li><strong>Copier le format des gros YouTubeurs sante</strong> — Geoffrey a sa propre identite (clinicien, pas influenceur). La garder</li>
+      <li><strong>Mettre des liens dans TOUS les Reels</strong> — ca tue le "commente SAPIENS" qui alimente ManyChat. Garder le split 40/60</li>
+      <li><strong>Negliger les Reels classiques pour se concentrer sur YouTube</strong> — Instagram reste le moteur principal. YouTube est un accelerateur, pas un remplacement</li>
+      <li><strong>Oublier le CTA dans les descriptions YouTube</strong> — chaque video doit avoir VSL + Calendly + @geo_le_sapiens</li>
+      <li><strong>Filmer sans script</strong> — meme Geoffrey qui connait le sujet par coeur va divaguer sans structure. Script obligatoire</li>
+    </ol>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- KPI -->
+<!-- ============================================================ -->
+<div class="section" id="kpi">
+  <div class="section-header">
+    <div class="section-num">09</div>
+    <div>
+      <div class="section-title">KPI a Tracker</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Nouvelles metriques a ajouter au dashboard</h3>
+    <table>
+      <tr><th>Metrique</th><th>S1</th><th>S2</th><th>S3</th><th>S4</th><th>Cible M1</th></tr>
+      <tr><td><strong>Videos YouTube publiees</strong></td><td></td><td></td><td></td><td></td><td>8/mois (2/sem)</td></tr>
+      <tr><td><strong>Vues YouTube total</strong></td><td></td><td></td><td></td><td></td><td>Croissant</td></tr>
+      <tr><td><strong>Vues depuis Instagram</strong></td><td></td><td></td><td></td><td></td><td>>50% au debut</td></tr>
+      <tr><td><strong>Retention moyenne (%)</strong></td><td></td><td></td><td></td><td></td><td>>40%</td></tr>
+      <tr><td><strong>Abonnes YouTube</strong></td><td></td><td></td><td></td><td></td><td>Croissant</td></tr>
+      <tr><td><strong>Reels avec liens publies</strong></td><td></td><td></td><td></td><td></td><td>8-10/sem</td></tr>
+      <tr><td><strong>Clics liens Reels (total)</strong></td><td></td><td></td><td></td><td></td><td>>1% des vues</td></tr>
+      <tr><td><strong>Bookings source YouTube</strong></td><td></td><td></td><td></td><td></td><td>>2/sem M2</td></tr>
+      <tr><td><strong>Close rate prospects YouTube</strong></td><td></td><td></td><td></td><td></td><td>>35%</td></tr>
+    </table>
+  </div>
+
+  <div class="card gold">
+    <h3>La metrique qui compte le plus</h3>
+    <p style="font-size: 24px; text-align: center; color: #B8956A; font-family: Georgia, serif; padding: 20px;">
+      Close rate des prospects qui ont vu YouTube<br>vs<br>Close rate des prospects qui n'ont PAS vu YouTube
+    </p>
+    <p style="text-align: center;">Si la difference est significative (ex: 40% vs 15%), YouTube est valide. Scale.</p>
+    <p style="text-align: center; color: #888; font-size: 13px;">Pour tracker : demander a chaque prospect en debut de call "T'as regarde des videos sur la chaine YouTube ?"</p>
+  </div>
+
+  <div class="card">
+    <h3>Timeline des resultats attendus</h3>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="period">Semaine 1-2</div>
+        <div class="desc">Premiers Reels avec liens. Premiers clics. Vues YouTube principalement depuis Instagram. <strong>Pas encore d'impact sur les calls.</strong></div>
+      </div>
+      <div class="timeline-item">
+        <div class="period">Semaine 3-4</div>
+        <div class="desc">8 videos publiees. YouTube commence a recommander. <strong>Premiers prospects qui mentionnent YouTube sur les calls.</strong></div>
+      </div>
+      <div class="timeline-item">
+        <div class="period">Mois 2</div>
+        <div class="desc">16+ videos. SEO YouTube commence a generer du trafic organique. <strong>Close rate des prospects YouTube mesurable. Difference visible.</strong></div>
+      </div>
+      <div class="timeline-item">
+        <div class="period">Mois 3</div>
+        <div class="desc">24+ videos = ~5-6 heures de contenu. Approche de la regle 7-11-4. <strong>YouTube devient un canal d'acquisition autonome.</strong></div>
+      </div>
+      <div class="timeline-item">
+        <div class="period">Mois 6</div>
+        <div class="desc">50+ videos = 10+ heures de contenu. <strong>YouTube genere des bookings sans Instagram. Base pour les ads YouTube.</strong></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><!-- container -->
+
+<!-- FOOTER -->
+<footer>
+  SAPIENS 360 | Plan d'Action Meta Verified + YouTube | Avril 2026
+</footer>
+
+<script>
+// Toggle day cards
+function toggleDay(header) {
+  const body = header.nextElementSibling;
+  body.classList.toggle('collapsed');
+}
+
+// Checklist persistence
+document.querySelectorAll('.checklist input[type="checkbox"]').forEach((cb, i) => {
+  const list = cb.closest('.checklist');
+  const key = 'sapiens_meta_' + (list.dataset.key || 'default') + '_' + i;
+  cb.checked = localStorage.getItem(key) === 'true';
+  cb.addEventListener('change', () => {
+    localStorage.setItem(key, cb.checked);
+    const label = cb.parentElement;
+    if (cb.checked) label.classList.add('done');
+    else label.classList.remove('done');
+  });
+  if (cb.checked) cb.parentElement.classList.add('done');
+});
+
+// Brainstorm persistence
+document.querySelectorAll('.brainstorm-card textarea').forEach((ta, i) => {
+  const key = 'sapiens_brainstorm_' + i;
+  ta.value = localStorage.getItem(key) || '';
+  ta.addEventListener('input', () => localStorage.setItem(key, ta.value));
+});
+
+// Nav active state
+const navLinks = document.querySelectorAll('.nav a');
+const sections = document.querySelectorAll('.section');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      navLinks.forEach(l => l.classList.remove('active'));
+      const link = document.querySelector('.nav a[href="#' + entry.target.id + '"]');
+      if (link) link.classList.add('active');
+    }
+  });
+}, { rootMargin: '-20% 0px -70% 0px' });
+sections.forEach(s => observer.observe(s));
+
+navLinks.forEach(link => {
+  link.addEventListener('click', e => {
+    e.preventDefault();
+    document.querySelector(link.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+  });
+});
+</script>
+</body>
+</html>
