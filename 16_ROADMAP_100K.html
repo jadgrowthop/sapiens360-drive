@@ -1,0 +1,1194 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAPIENS 360 — Roadmap 100K€/mois</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #111;
+  --card: #161616;
+  --border: #2C4A3555;
+  --gold: #B8956A;
+  --green: #2C4A35;
+  --ivory: #FAF7F2;
+  --stone: #888;
+  --red: #8B3A3A;
+  --red-bg: #2A1515;
+  --green-bg: #152A15;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--ivory);
+  font-family: 'Segoe UI', Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4 { font-family: Georgia, 'Times New Roman', serif; font-weight: normal; }
+
+/* ── Sticky Nav ── */
+.sticky-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: #111111ee;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.sticky-nav::-webkit-scrollbar { height: 0; }
+.nav-inner {
+  display: flex;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 16px;
+  gap: 0;
+}
+.nav-tab {
+  padding: 14px 18px;
+  font-size: 13px;
+  color: var(--stone);
+  text-decoration: none;
+  white-space: nowrap;
+  border-bottom: 2px solid transparent;
+  transition: color .25s, border-color .25s;
+  cursor: pointer;
+  background: none;
+  border-top: none; border-left: none; border-right: none;
+  font-family: 'Segoe UI', Arial, sans-serif;
+}
+.nav-tab:hover, .nav-tab.active { color: var(--gold); border-bottom-color: var(--gold); }
+
+/* ── Layout ── */
+.container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+section { padding: 80px 0; }
+.section-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: var(--gold);
+  margin-bottom: 8px;
+}
+.section-title {
+  font-size: clamp(28px, 4vw, 42px);
+  color: var(--ivory);
+  margin-bottom: 16px;
+  line-height: 1.2;
+}
+.section-sub { color: var(--stone); font-size: 17px; margin-bottom: 48px; max-width: 700px; }
+
+/* ── Hero ── */
+.hero {
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 120px 24px 80px;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 800px;
+  height: 800px;
+  background: radial-gradient(circle, #2C4A3520 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero-badge {
+  display: inline-block;
+  font-size: 11px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--gold);
+  border: 1px solid var(--gold);
+  padding: 6px 20px;
+  border-radius: 30px;
+  margin-bottom: 32px;
+}
+.hero h1 {
+  font-size: clamp(36px, 5vw, 64px);
+  line-height: 1.1;
+  color: var(--ivory);
+  margin-bottom: 24px;
+}
+.hero h1 span { color: var(--gold); }
+.hero-sub {
+  font-size: clamp(16px, 2vw, 20px);
+  color: var(--stone);
+  max-width: 650px;
+  margin: 0 auto 40px;
+  line-height: 1.5;
+}
+.hero-arrow {
+  display: inline-flex;
+  font-size: 48px;
+  color: var(--gold);
+  margin: 0 24px;
+  vertical-align: middle;
+  opacity: .7;
+}
+
+/* ── Cards ── */
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 32px;
+  margin-bottom: 20px;
+}
+.card-green { border-left: 3px solid var(--green); background: var(--green-bg); }
+.card-red { border-left: 3px solid var(--red); background: var(--red-bg); }
+.card-gold { border-left: 3px solid var(--gold); }
+
+/* ── Grid ── */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+@media (max-width: 768px) {
+  .grid-2, .grid-3 { grid-template-columns: 1fr; }
+}
+
+/* ── Big Stat ── */
+.big-stat {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+  flex-wrap: wrap;
+  margin-bottom: 56px;
+}
+.stat-block { text-align: center; }
+.stat-value {
+  font-family: Georgia, serif;
+  font-size: clamp(36px, 6vw, 64px);
+  color: var(--ivory);
+  line-height: 1;
+}
+.stat-value.gold { color: var(--gold); }
+.stat-label { font-size: 13px; color: var(--stone); margin-top: 8px; text-transform: uppercase; letter-spacing: 2px; }
+
+/* ── Calculator ── */
+.calc-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  align-items: start;
+}
+@media (max-width: 768px) { .calc-grid { grid-template-columns: 1fr; } }
+
+.calc-input-group { margin-bottom: 28px; }
+.calc-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  color: var(--stone);
+  margin-bottom: 10px;
+}
+.calc-label strong { color: var(--gold); font-size: 18px; }
+input[type="range"] {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 4px;
+  background: #333;
+  border-radius: 4px;
+  outline: none;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--gold);
+  cursor: pointer;
+}
+input[type="range"]::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--gold);
+  cursor: pointer;
+  border: none;
+}
+.calc-number-input {
+  background: #222;
+  border: 1px solid #333;
+  color: var(--ivory);
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 18px;
+  width: 100%;
+  font-family: Georgia, serif;
+}
+.calc-number-input:focus { outline: none; border-color: var(--gold); }
+
+.calc-result {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 32px;
+  text-align: center;
+}
+.calc-result-value {
+  font-family: Georgia, serif;
+  font-size: 48px;
+  color: var(--gold);
+  line-height: 1;
+  margin-bottom: 8px;
+}
+.calc-result-label { font-size: 14px; color: var(--stone); }
+.calc-breakdown { margin-top: 24px; text-align: left; }
+.calc-breakdown-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid #222;
+  font-size: 14px;
+}
+.calc-breakdown-row span:first-child { color: var(--stone); }
+.calc-breakdown-row span:last-child { color: var(--ivory); font-weight: 600; }
+
+/* ── 100K Scenarios ── */
+.scenario-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin: 32px 0; }
+.scenario-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 24px;
+  text-align: center;
+}
+.scenario-card .price { font-family: Georgia, serif; font-size: 24px; color: var(--gold); }
+.scenario-card .detail { font-size: 13px; color: var(--stone); margin-top: 8px; line-height: 1.5; }
+
+.insight-card {
+  background: linear-gradient(135deg, #2C4A3530, #161616);
+  border: 1px solid var(--green);
+  border-radius: 12px;
+  padding: 32px;
+  margin: 40px 0;
+  text-align: center;
+  font-family: Georgia, serif;
+  font-size: 20px;
+  color: var(--ivory);
+  line-height: 1.5;
+}
+
+/* ── Tables ── */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 24px 0;
+  font-size: 14px;
+}
+.data-table th {
+  text-align: left;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--gold);
+  color: var(--gold);
+  font-weight: 600;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.data-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid #222;
+  color: var(--ivory);
+}
+.data-table tr:last-child td { border-bottom: none; }
+.data-table .highlight { color: var(--gold); font-weight: 600; }
+
+/* ── Timeline ── */
+.timeline { position: relative; padding-left: 32px; }
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 8px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--gold), var(--green));
+}
+.timeline-item { position: relative; margin-bottom: 40px; }
+.timeline-dot {
+  position: absolute;
+  left: -32px;
+  top: 4px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--gold);
+  border: 3px solid var(--bg);
+}
+.timeline-item h3 { font-size: 20px; color: var(--ivory); margin-bottom: 8px; }
+.timeline-item .target {
+  display: inline-block;
+  background: var(--green);
+  color: var(--ivory);
+  font-size: 12px;
+  padding: 4px 12px;
+  border-radius: 20px;
+  margin-bottom: 16px;
+}
+.timeline-item ul { list-style: none; }
+.timeline-item li {
+  padding: 6px 0;
+  padding-left: 20px;
+  position: relative;
+  color: var(--stone);
+  font-size: 15px;
+}
+.timeline-item li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 14px;
+  width: 6px;
+  height: 6px;
+  background: var(--gold);
+  border-radius: 50%;
+}
+
+/* ── Phase cards ── */
+.phase-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+.phase-number {
+  font-family: Georgia, serif;
+  font-size: 56px;
+  color: var(--gold);
+  opacity: .3;
+  line-height: 1;
+}
+
+/* ── Projection Tabs ── */
+.proj-tabs { display: flex; gap: 8px; margin-bottom: 32px; flex-wrap: wrap; }
+.proj-tab {
+  padding: 10px 24px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--stone);
+  cursor: pointer;
+  font-size: 14px;
+  transition: all .25s;
+  font-family: 'Segoe UI', Arial, sans-serif;
+}
+.proj-tab:hover { border-color: var(--gold); color: var(--ivory); }
+.proj-tab.active { background: var(--gold); color: #111; border-color: var(--gold); font-weight: 600; }
+
+/* ── Bar Chart ── */
+.chart-container { margin: 40px 0; }
+.chart-row {
+  display: grid;
+  grid-template-columns: 50px 1fr;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 12px;
+}
+.chart-label { font-size: 13px; color: var(--stone); text-align: right; }
+.chart-bars { display: flex; gap: 4px; height: 32px; align-items: end; }
+.chart-bar {
+  height: 100%;
+  border-radius: 4px;
+  position: relative;
+  transition: width .5s ease;
+  min-width: 2px;
+}
+.chart-bar.conservative { background: var(--stone); }
+.chart-bar.base { background: var(--green); }
+.chart-bar.aggressive { background: var(--gold); }
+.chart-bar-value {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: calc(100% + 8px);
+  font-size: 11px;
+  white-space: nowrap;
+  color: var(--stone);
+}
+.chart-legend { display: flex; gap: 24px; margin-top: 24px; }
+.chart-legend-item { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--stone); }
+.chart-legend-dot { width: 12px; height: 12px; border-radius: 3px; }
+
+/* ── Milestones ── */
+.milestone-month { margin-bottom: 32px; }
+.milestone-month h3 {
+  font-size: 18px;
+  color: var(--gold);
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #222;
+}
+.milestone-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid #1a1a1a;
+  cursor: pointer;
+  user-select: none;
+  transition: opacity .2s;
+}
+.milestone-item:hover { opacity: .85; }
+.milestone-check {
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  border: 2px solid #444;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all .25s;
+}
+.milestone-item.done .milestone-check {
+  background: var(--green);
+  border-color: var(--green);
+}
+.milestone-item.done .milestone-check::after {
+  content: '';
+  width: 10px;
+  height: 6px;
+  border-left: 2px solid var(--ivory);
+  border-bottom: 2px solid var(--ivory);
+  transform: rotate(-45deg) translateY(-1px);
+}
+.milestone-item.done .milestone-text { text-decoration: line-through; color: var(--stone); }
+.milestone-text { font-size: 15px; color: var(--ivory); }
+.milestone-progress {
+  margin-top: 12px;
+  height: 4px;
+  background: #222;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.milestone-progress-bar { height: 100%; background: var(--gold); border-radius: 4px; transition: width .3s; }
+.milestone-pct { font-size: 12px; color: var(--stone); margin-top: 6px; }
+
+/* ── Equipe Timeline ── */
+.hire-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 16px;
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+.hire-when {
+  font-size: 12px;
+  color: var(--gold);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  white-space: nowrap;
+  min-width: 90px;
+  padding-top: 2px;
+}
+.hire-details h4 { font-size: 16px; color: var(--ivory); margin-bottom: 6px; }
+.hire-details p { font-size: 14px; color: var(--stone); line-height: 1.5; }
+.hire-cost {
+  font-size: 13px;
+  color: var(--gold);
+  margin-top: 8px;
+  font-style: italic;
+}
+
+/* ── Footer ── */
+.footer {
+  text-align: center;
+  padding: 48px 24px;
+  border-top: 1px solid var(--border);
+  font-size: 13px;
+  color: var(--stone);
+}
+
+/* ── Utils ── */
+.mb-16 { margin-bottom: 16px; }
+.mb-32 { margin-bottom: 32px; }
+.mb-48 { margin-bottom: 48px; }
+.text-gold { color: var(--gold); }
+.text-stone { color: var(--stone); }
+.text-center { text-align: center; }
+.font-serif { font-family: Georgia, serif; }
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
+</style>
+</head>
+<body>
+
+<!-- ═══ STICKY NAV ═══ -->
+<nav class="sticky-nav">
+  <div class="nav-inner">
+    <button class="nav-tab active" data-target="calcul">Le Calcul</button>
+    <button class="nav-tab" data-target="diagnostic">Diagnostic</button>
+    <button class="nav-tab" data-target="phase1">Phase 1</button>
+    <button class="nav-tab" data-target="phase2">Phase 2</button>
+    <button class="nav-tab" data-target="phase3">Phase 3</button>
+    <button class="nav-tab" data-target="equipe">Equipe</button>
+    <button class="nav-tab" data-target="projections">Projections</button>
+    <button class="nav-tab" data-target="milestones">Milestones</button>
+  </div>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<header class="hero">
+  <div>
+    <div class="hero-badge">SAPIENS 360</div>
+    <h1>Roadmap <span>100K&euro;</span>/mois</h1>
+    <p class="hero-sub">De 3,900&euro; a 100,000&euro; en 6 mois &mdash; le calcul, les phases, les milestones</p>
+    <div style="margin-top: 12px;">
+      <span class="stat-value" style="font-size: clamp(24px,4vw,40px);">3,900&euro;</span>
+      <span class="hero-arrow">&rarr;</span>
+      <span class="stat-value gold" style="font-size: clamp(24px,4vw,40px);">100,000&euro;</span>
+    </div>
+  </div>
+</header>
+
+<!-- ═══ SECTION 1: LE CALCUL ═══ -->
+<section id="calcul">
+  <div class="container">
+    <div class="section-label">Section 1</div>
+    <h2 class="section-title">Le Calcul</h2>
+    <p class="section-sub">Combien de calls, a quel prix, a quel close rate ? Le calcul ne ment pas.</p>
+
+    <div class="big-stat">
+      <div class="stat-block">
+        <div class="stat-value">3,900&euro;</div>
+        <div class="stat-label">Actuel / mois</div>
+      </div>
+      <div style="font-size: 48px; color: var(--gold); opacity: .5;">&rarr;</div>
+      <div class="stat-block">
+        <div class="stat-value gold">100,000&euro;</div>
+        <div class="stat-label">Objectif / mois</div>
+      </div>
+    </div>
+
+    <div class="calc-grid">
+      <div>
+        <div class="calc-input-group">
+          <div class="calc-label">
+            <span>Calls / semaine</span>
+            <strong id="callsValue">10</strong>
+          </div>
+          <input type="range" id="callsSlider" min="5" max="50" value="10">
+        </div>
+        <div class="calc-input-group">
+          <div class="calc-label">
+            <span>Close rate</span>
+            <strong id="closeValue">30%</strong>
+          </div>
+          <input type="range" id="closeSlider" min="5" max="60" value="30">
+        </div>
+        <div class="calc-input-group">
+          <div class="calc-label">
+            <span>Prix moyen (&euro;)</span>
+          </div>
+          <input type="number" class="calc-number-input" id="priceInput" value="1500" min="100" max="10000" step="100">
+        </div>
+      </div>
+      <div class="calc-result">
+        <div class="calc-result-value" id="revenueResult">19,500&euro;</div>
+        <div class="calc-result-label">Revenue / mois</div>
+        <div class="calc-breakdown">
+          <div class="calc-breakdown-row"><span>Ventes / semaine</span><span id="weekSales">3.0</span></div>
+          <div class="calc-breakdown-row"><span>Revenue / semaine</span><span id="weekRevenue">4,500&euro;</span></div>
+          <div class="calc-breakdown-row"><span>Revenue / mois</span><span id="monthRevenue">19,500&euro;</span></div>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="font-size: 24px; margin: 56px 0 24px; color: var(--ivory);">Pour atteindre 100K&euro;/mois :</h3>
+
+    <div class="scenario-cards">
+      <div class="scenario-card">
+        <div class="price">1,200&euro;</div>
+        <div class="detail">30% close rate<br>278 calls/mois<br><strong style="color:var(--ivory);">64/semaine</strong><br><span style="color:var(--red);">Need team</span></div>
+      </div>
+      <div class="scenario-card">
+        <div class="price">1,500&euro;</div>
+        <div class="detail">35% close rate<br>190 calls/mois<br><strong style="color:var(--ivory);">44/semaine</strong></div>
+      </div>
+      <div class="scenario-card">
+        <div class="price">1,800&euro;</div>
+        <div class="detail">40% close rate<br>139 calls/mois<br><strong style="color:var(--ivory);">32/semaine</strong></div>
+      </div>
+      <div class="scenario-card" style="border-color: var(--gold);">
+        <div class="price">2,400&euro;</div>
+        <div class="detail">40% close rate<br>104 calls/mois<br><strong style="color:var(--gold);">24/semaine</strong></div>
+      </div>
+    </div>
+
+    <div class="insight-card">
+      &laquo; Le chemin le plus rapide vers 100K n'est PAS plus de calls.<br>
+      C'est : prix plus eleve + close rate plus haut + equipe. &raquo;
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SECTION 2: DIAGNOSTIC ═══ -->
+<section id="diagnostic" style="border-top: 1px solid var(--border);">
+  <div class="container">
+    <div class="section-label">Section 2</div>
+    <h2 class="section-title">Diagnostic Actuel</h2>
+    <p class="section-sub">Ou on en est. Sans filtre.</p>
+
+    <table class="data-table mb-48">
+      <thead>
+        <tr><th>Metrique</th><th>Actuel</th><th>Objectif 100K</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Revenue/mois</td><td>3,900&euro;</td><td class="highlight">100,000&euro;</td></tr>
+        <tr><td>Calls/semaine</td><td>5-6</td><td class="highlight">30-50</td></tr>
+        <tr><td>Show rate</td><td>70%</td><td class="highlight">70%+</td></tr>
+        <tr><td>Close rate</td><td>~7%</td><td class="highlight">35-40%</td></tr>
+        <tr><td>Prix moyen</td><td>~900&euro;</td><td class="highlight">1,800-2,400&euro;</td></tr>
+        <tr><td>Closers</td><td>1 (Jad)</td><td class="highlight">3-4</td></tr>
+        <tr><td>Geoffrey capacity</td><td>8 clients</td><td class="highlight">50+ (avec app/assistant)</td></tr>
+      </tbody>
+    </table>
+
+    <div class="grid-2">
+      <div>
+        <h3 style="color: var(--green); margin-bottom: 20px; font-size: 20px;">Ce qui fonctionne deja</h3>
+        <div class="card card-green"><strong>Traffic</strong><br><span class="text-stone">900K vues Instagram/mois</span></div>
+        <div class="card card-green"><strong>Product</strong><br><span class="text-stone">Protocole valide, resultats prouves</span></div>
+        <div class="card card-green"><strong>Audience</strong><br><span class="text-stone">Niche claire (peau + conditions chroniques)</span></div>
+        <div class="card card-green"><strong>Temoignages</strong><br><span class="text-stone">8+ clients satisfaits</span></div>
+        <div class="card card-green"><strong>Infrastructure</strong><br><span class="text-stone">GHL, ManyChat, Calendly, Whop en place</span></div>
+      </div>
+      <div>
+        <h3 style="color: var(--red); margin-bottom: 20px; font-size: 20px;">Ce qui manque</h3>
+        <div class="card card-red"><strong>Close rate trop bas</strong><br><span class="text-stone">7% vs 35%+ needed</span></div>
+        <div class="card card-red"><strong>Prix trop bas</strong><br><span class="text-stone">900&euro; moyen vs 1,800&euro;+</span></div>
+        <div class="card card-red"><strong>Pas de YouTube</strong><br><span class="text-stone">Besoin de contenu long pour high-ticket</span></div>
+        <div class="card card-red"><strong>1 seul closer (Jad)</strong><br><span class="text-stone">Bottleneck humain</span></div>
+        <div class="card card-red"><strong>Pas de referral system actif</strong><br><span class="text-stone">Growth organique non exploite</span></div>
+        <div class="card card-red"><strong>Geoffrey fait tout seul</strong><br><span class="text-stone">Setting + delivery = zero leverage</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SECTION 3: PHASE 1 ═══ -->
+<section id="phase1" style="border-top: 1px solid var(--border);">
+  <div class="container">
+    <div class="section-label">Section 3</div>
+    <div class="phase-header">
+      <div class="phase-number">01</div>
+      <div>
+        <h2 class="section-title" style="margin-bottom:4px;">Phase 1 &mdash; Fondation</h2>
+        <p class="text-stone">Mois 1-2 &middot; Target 15-20K&euro;/mois</p>
+      </div>
+    </div>
+
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <h3>Semaine 1-2 : Quick Wins Closing</h3>
+        <div class="target">TARGET : close rate 7% &rarr; 15%</div>
+        <ul>
+          <li>Appliquer Script V8 (cadrage, discovery 15min, silence 10sec)</li>
+          <li>Bannir le mot "cetose" immediatement</li>
+          <li>Creer offre 1,200&euro; sur Whop (pause anciens liens)</li>
+          <li>Preparer 5 temoignages par condition</li>
+          <li>Memoriser pitch garantie 30 jours</li>
+        </ul>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <h3>Semaine 3-4 : Infrastructure</h3>
+        <div class="target">TARGET : close rate 15% &rarr; 25%</div>
+        <ul>
+          <li>Commander 10 Keto-Mojo trackers</li>
+          <li>Creer menus Semaine 1 + liste courses</li>
+          <li>Rationaliser Google Sheets tracking</li>
+          <li>Creer les 15 plans "quoi qu'il arrive"</li>
+          <li>Enregistrer nouvelle VSL (9 min)</li>
+          <li>Rafraichir toutes les sequences email (vocabulaire V2)</li>
+        </ul>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <h3>Semaine 5-8 : Consolidation</h3>
+        <div class="target">TARGET : close rate 25% &rarr; 35%, CA 15-20K&euro;/mois</div>
+        <ul>
+          <li>Lancer YouTube (premieres 4 videos)</li>
+          <li>Activer referral system</li>
+          <li>Augmenter BOFU content a 40%</li>
+          <li>Ajuster script base sur patterns des calls</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3 style="font-size: 20px; color: var(--ivory); margin: 48px 0 16px;">KPI Cibles Phase 1</h3>
+    <table class="data-table">
+      <thead>
+        <tr><th>Metrique</th><th>S1</th><th>S4</th><th>S8</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Close rate</td><td>12%</td><td>25%</td><td class="highlight">35%</td></tr>
+        <tr><td>Prix moyen</td><td>1,200&euro;</td><td>1,200&euro;</td><td>1,200&euro;</td></tr>
+        <tr><td>Calls/sem</td><td>6</td><td>8</td><td>10</td></tr>
+        <tr><td>CA/mois</td><td>~5,000&euro;</td><td>~10,000&euro;</td><td class="highlight">15-20,000&euro;</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ═══ SECTION 4: PHASE 2 ═══ -->
+<section id="phase2" style="border-top: 1px solid var(--border);">
+  <div class="container">
+    <div class="section-label">Section 4</div>
+    <div class="phase-header">
+      <div class="phase-number">02</div>
+      <div>
+        <h2 class="section-title" style="margin-bottom:4px;">Phase 2 &mdash; Scaling</h2>
+        <p class="text-stone">Mois 3-4 &middot; Target 30-50K&euro;/mois</p>
+      </div>
+    </div>
+
+    <div class="card card-gold mb-32">
+      <strong class="text-gold">Trigger :</strong> close rate 50% &times; 3 semaines consecutives sur 1,200&euro;
+    </div>
+
+    <div class="grid-2 mb-48">
+      <div class="card">
+        <h4 style="color: var(--gold); margin-bottom: 12px;">Actions Revenue</h4>
+        <ul style="list-style: none;">
+          <li style="padding: 8px 0; color: var(--stone); border-bottom: 1px solid #222;">Introduire tier premium 1,800-2,400&euro; (2x calls, biomarqueurs etendus, WhatsApp prioritaire)</li>
+          <li style="padding: 8px 0; color: var(--stone); border-bottom: 1px solid #222;">Lancer les 7 masterclasses (filmees pendant Phase 1)</li>
+          <li style="padding: 8px 0; color: var(--stone); border-bottom: 1px solid #222;">Ads test : Meta + TikTok avec hooks valides (budget test 1,000&euro;/mois)</li>
+          <li style="padding: 8px 0; color: var(--stone);">Referrals target : 4-6/mois</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4 style="color: var(--gold); margin-bottom: 12px;">Actions Scaling</h4>
+        <ul style="list-style: none;">
+          <li style="padding: 8px 0; color: var(--stone); border-bottom: 1px solid #222;">YouTube : 2 videos/semaine, 10+ videos publiees</li>
+          <li style="padding: 8px 0; color: var(--stone); border-bottom: 1px solid #222;">Recruter assistant delivery (si 15+ clients simultanement)</li>
+          <li style="padding: 8px 0; color: var(--stone);">Soulager Geoffrey : contenu + clients premium</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3 style="font-size: 20px; color: var(--ivory); margin-bottom: 16px;">KPI Cibles Phase 2</h3>
+    <table class="data-table">
+      <thead>
+        <tr><th>Metrique</th><th>M3</th><th>M4</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Close rate</td><td>40%</td><td class="highlight">45%</td></tr>
+        <tr><td>Prix moyen</td><td>1,500&euro;</td><td>1,500&euro;</td></tr>
+        <tr><td>Calls/sem</td><td>12</td><td>15</td></tr>
+        <tr><td>CA/mois</td><td>30,000&euro;</td><td class="highlight">40-50,000&euro;</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ═══ SECTION 5: PHASE 3 ═══ -->
+<section id="phase3" style="border-top: 1px solid var(--border);">
+  <div class="container">
+    <div class="section-label">Section 5</div>
+    <div class="phase-header">
+      <div class="phase-number">03</div>
+      <div>
+        <h2 class="section-title" style="margin-bottom:4px;">Phase 3 &mdash; Acceleration</h2>
+        <p class="text-stone">Mois 5-6 &middot; Target 70-100K&euro;/mois</p>
+      </div>
+    </div>
+
+    <div class="grid-3 mb-48">
+      <div class="card">
+        <h4 style="color: var(--gold); margin-bottom: 12px;">Equipe</h4>
+        <ul style="list-style: none; font-size: 14px; color: var(--stone);">
+          <li style="padding: 6px 0;">Recruter 2eme closer (former sur Script V8)</li>
+          <li style="padding: 6px 0;">Recruter content manager (Geoffrey ne monte plus)</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4 style="color: var(--gold); margin-bottom: 12px;">Offre</h4>
+        <ul style="list-style: none; font-size: 14px; color: var(--stone);">
+          <li style="padding: 6px 0;">Lancer offre groupe premium (8-10 pers, 2,400&euro;)</li>
+          <li style="padding: 6px 0;">Lancer upsell plan annuel (500&euro;/an post-90j)</li>
+          <li style="padding: 6px 0;">Developper SAPIENS Tracker App (si traction)</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4 style="color: var(--gold); margin-bottom: 12px;">Acquisition</h4>
+        <ul style="list-style: none; font-size: 14px; color: var(--stone);">
+          <li style="padding: 6px 0;">Scale YouTube a 3 videos/semaine</li>
+          <li style="padding: 6px 0;">Scale ads a 3,000-5,000&euro;/mois</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3 style="font-size: 20px; color: var(--ivory); margin-bottom: 16px;">KPI Cibles Phase 3</h3>
+    <table class="data-table">
+      <thead>
+        <tr><th>Metrique</th><th>M5</th><th>M6</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Close rate</td><td>40%</td><td class="highlight">40%+</td></tr>
+        <tr><td>Prix moyen</td><td>1,800&euro;</td><td class="highlight">2,000&euro;</td></tr>
+        <tr><td>Calls/sem</td><td>20-25</td><td>25-30</td></tr>
+        <tr><td>Closers</td><td>2</td><td class="highlight">2-3</td></tr>
+        <tr><td>CA/mois</td><td>70,000&euro;</td><td class="highlight">100,000&euro;</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ═══ SECTION 6: EQUIPE ═══ -->
+<section id="equipe" style="border-top: 1px solid var(--border);">
+  <div class="container">
+    <div class="section-label">Section 6</div>
+    <h2 class="section-title">Roadmap Equipe</h2>
+    <p class="section-sub">Chaque embauche est declenchee par un seuil. Pas de recrutement speculatif.</p>
+
+    <div class="hire-card" style="border-color: var(--gold);">
+      <div class="hire-when">Maintenant</div>
+      <div class="hire-details">
+        <h4>Geoffrey &mdash; Fondateur, praticien, contenu</h4>
+        <p>Vision produit, protocoles, creation de contenu, delivery clients premium</p>
+      </div>
+    </div>
+    <div class="hire-card" style="border-color: var(--gold);">
+      <div class="hire-when">Maintenant</div>
+      <div class="hire-details">
+        <h4>Jad &mdash; Growth, closing, operations</h4>
+        <p>Closing calls, growth strategy, funnel, automatisations, KPI</p>
+      </div>
+    </div>
+
+    <div class="hire-card">
+      <div class="hire-when">M2-3</div>
+      <div class="hire-details">
+        <h4>Assistant delivery</h4>
+        <p>Suivi quotidien clients (sous Geoffrey). Permet a Geoffrey de creer contenu + gerer clients premium.</p>
+        <div class="hire-cost">1,500-2,000&euro;/mois &middot; Trigger : 15+ clients</div>
+      </div>
+    </div>
+
+    <div class="hire-card">
+      <div class="hire-when">M4</div>
+      <div class="hire-details">
+        <h4>2eme closer</h4>
+        <p>Forme par Jad sur Script V8. Prend 50% des calls.</p>
+        <div class="hire-cost">8-10% commission &middot; Trigger : 30K+ CA</div>
+      </div>
+    </div>
+    <div class="hire-card">
+      <div class="hire-when">M4</div>
+      <div class="hire-details">
+        <h4>Content manager</h4>
+        <p>Montage reels + YouTube. Geoffrey ne monte plus.</p>
+        <div class="hire-cost">1,500-2,000&euro;/mois &middot; Trigger : 30K+ CA</div>
+      </div>
+    </div>
+
+    <div class="hire-card">
+      <div class="hire-when">M5-6</div>
+      <div class="hire-details">
+        <h4>3eme closer</h4>
+        <p>Idem commission. Scale le volume de calls.</p>
+        <div class="hire-cost">8-10% commission &middot; Trigger : 50K+ CA</div>
+      </div>
+    </div>
+    <div class="hire-card">
+      <div class="hire-when">M5-6</div>
+      <div class="hire-details">
+        <h4>Ads manager</h4>
+        <p>Meta + TikTok. Gere les campagnes et le budget.</p>
+        <div class="hire-cost">2,000-3,000&euro;/mois &middot; Trigger : 50K+ CA</div>
+      </div>
+    </div>
+    <div class="hire-card" style="border-style: dashed;">
+      <div class="hire-when">M5-6</div>
+      <div class="hire-details">
+        <h4>Dev App (optionnel)</h4>
+        <p>SAPIENS Tracker App si traction prouvee.</p>
+        <div class="hire-cost">Freelance &middot; Si traction confirmee</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SECTION 7: PROJECTIONS ═══ -->
+<section id="projections" style="border-top: 1px solid var(--border);">
+  <div class="container">
+    <div class="section-label">Section 7</div>
+    <h2 class="section-title">Projections &mdash; 3 Scenarios</h2>
+    <p class="section-sub">Conservateur, base, agressif. Les chiffres parlent.</p>
+
+    <div class="proj-tabs">
+      <button class="proj-tab active" data-scenario="all">Comparaison</button>
+      <button class="proj-tab" data-scenario="conservateur">Conservateur</button>
+      <button class="proj-tab" data-scenario="base">Base</button>
+      <button class="proj-tab" data-scenario="agressif">Agressif</button>
+    </div>
+
+    <div id="scenarioDetails" class="card mb-32" style="display:none;"></div>
+
+    <div class="chart-container" id="projChart"></div>
+
+    <div class="chart-legend">
+      <div class="chart-legend-item"><div class="chart-legend-dot" style="background:var(--stone);"></div> Conservateur (25%, 1,200&euro;)</div>
+      <div class="chart-legend-item"><div class="chart-legend-dot" style="background:var(--green);"></div> Base (35%, 1,500&euro;)</div>
+      <div class="chart-legend-item"><div class="chart-legend-dot" style="background:var(--gold);"></div> Agressif (40%, 1,800&euro;)</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SECTION 8: MILESTONES ═══ -->
+<section id="milestones" style="border-top: 1px solid var(--border);">
+  <div class="container">
+    <div class="section-label">Section 8</div>
+    <h2 class="section-title">Milestones Tracker</h2>
+    <p class="section-sub">Coche chaque milestone au fur et a mesure. Sauvegarde automatique.</p>
+
+    <div id="milestonesContainer"></div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="footer">
+  SAPIENS 360 &nbsp;&middot;&nbsp; Roadmap 100K &nbsp;&middot;&nbsp; Derniere MAJ : Avril 2026
+</footer>
+
+<script>
+// ══════════════════════════════════════════
+// NAV
+// ══════════════════════════════════════════
+document.querySelectorAll('.nav-tab[data-target]').forEach(function(tab) {
+  tab.addEventListener('click', function() {
+    document.querySelectorAll('.nav-tab').forEach(function(t) { t.classList.remove('active'); });
+    tab.classList.add('active');
+    var el = document.getElementById(tab.dataset.target);
+    if (el) {
+      var offset = document.querySelector('.sticky-nav').offsetHeight + 16;
+      window.scrollTo({ top: el.offsetTop - offset, behavior: 'smooth' });
+    }
+  });
+});
+
+// Scroll spy
+var navTabs = document.querySelectorAll('.nav-tab[data-target]');
+var sections = [];
+navTabs.forEach(function(t) {
+  var s = document.getElementById(t.dataset.target);
+  if (s) sections.push({ el: s, tab: t });
+});
+window.addEventListener('scroll', function() {
+  var scrollY = window.scrollY + 120;
+  var current = sections[0];
+  sections.forEach(function(s) { if (s.el.offsetTop <= scrollY) current = s; });
+  navTabs.forEach(function(t) { t.classList.remove('active'); });
+  if (current) current.tab.classList.add('active');
+});
+
+// ══════════════════════════════════════════
+// CALCULATOR
+// ══════════════════════════════════════════
+var callsSlider = document.getElementById('callsSlider');
+var closeSlider = document.getElementById('closeSlider');
+var priceInput = document.getElementById('priceInput');
+
+function fmt(n) {
+  return n.toLocaleString('fr-FR', { maximumFractionDigits: 0 });
+}
+
+function updateCalc() {
+  var calls = parseInt(callsSlider.value);
+  var close = parseInt(closeSlider.value) / 100;
+  var price = parseFloat(priceInput.value) || 0;
+
+  document.getElementById('callsValue').textContent = calls;
+  document.getElementById('closeValue').textContent = Math.round(close * 100) + '%';
+
+  var salesWeek = calls * close;
+  var revWeek = salesWeek * price;
+  var revMonth = revWeek * 4.33;
+
+  document.getElementById('weekSales').textContent = salesWeek.toFixed(1);
+  document.getElementById('weekRevenue').textContent = fmt(Math.round(revWeek)) + '\u20AC';
+  document.getElementById('monthRevenue').textContent = fmt(Math.round(revMonth)) + '\u20AC';
+  document.getElementById('revenueResult').textContent = fmt(Math.round(revMonth)) + '\u20AC';
+}
+
+callsSlider.addEventListener('input', updateCalc);
+closeSlider.addEventListener('input', updateCalc);
+priceInput.addEventListener('input', updateCalc);
+updateCalc();
+
+// ══════════════════════════════════════════
+// PROJECTIONS CHART
+// ══════════════════════════════════════════
+var projData = {
+  conservateur: [5, 8, 12, 18, 25, 35],
+  base: [8, 15, 25, 40, 60, 80],
+  agressif: [10, 20, 40, 60, 85, 100]
+};
+
+var scenarioDescriptions = {
+  conservateur: '<h4 style="color:var(--stone);margin-bottom:12px;">Conservateur &mdash; Close rate 25%, prix 1,200\u20AC</h4><p style="color:var(--stone);font-size:14px;">Progression lente mais stable. Pas de YouTube, pas d\'ads. Croissance uniquement organique Instagram + referrals. Atteint 35K a M6.</p>',
+  base: '<h4 style="color:var(--green);margin-bottom:12px;">Base &mdash; Close rate 35%, prix 1,500\u20AC</h4><p style="color:var(--stone);font-size:14px;">Script V8 applique, YouTube lance, referrals actifs. Equipe en place a M4. Atteint 80K a M6.</p>',
+  agressif: '<h4 style="color:var(--gold);margin-bottom:12px;">Agressif &mdash; Close rate 40%, prix 1,800\u20AC + ads</h4><p style="color:var(--stone);font-size:14px;">Execution parfaite. YouTube + ads + 3 closers. Tier premium des M3. Atteint 100K+ a M6.</p>'
+};
+
+function renderChart(show) {
+  var maxVal = 100;
+  var container = document.getElementById('projChart');
+  var html = '';
+  for (var i = 0; i < 6; i++) {
+    html += '<div class="chart-row"><div class="chart-label">M' + (i + 1) + '</div><div class="chart-bars">';
+    var scenarios = show === 'all' ? ['conservateur', 'base', 'agressif'] : [show];
+    scenarios.forEach(function(s) {
+      var val = projData[s][i];
+      var w = Math.max((val / maxVal) * 100, 2);
+      html += '<div class="chart-bar ' + s + '" style="width:' + w + '%;"><span class="chart-bar-value">' + fmt(val) + 'K</span></div>';
+    });
+    html += '</div></div>';
+  }
+  container.innerHTML = html;
+}
+
+document.querySelectorAll('.proj-tab').forEach(function(tab) {
+  tab.addEventListener('click', function() {
+    document.querySelectorAll('.proj-tab').forEach(function(t) { t.classList.remove('active'); });
+    tab.classList.add('active');
+    var s = tab.dataset.scenario;
+    renderChart(s);
+    var details = document.getElementById('scenarioDetails');
+    if (s !== 'all' && scenarioDescriptions[s]) {
+      details.innerHTML = scenarioDescriptions[s];
+      details.style.display = 'block';
+    } else {
+      details.style.display = 'none';
+    }
+  });
+});
+
+renderChart('all');
+
+// ══════════════════════════════════════════
+// MILESTONES
+// ══════════════════════════════════════════
+var milestonesData = [
+  { month: 'Mois 1', items: [
+    'Script V8 applique sur 100% des calls',
+    'Close rate > 15%',
+    'Offre 1,200\u20AC active',
+    'VSL nouvelle enregistree',
+    'Emails V2 deployes',
+    'CA > 5,000\u20AC'
+  ]},
+  { month: 'Mois 2', items: [
+    'Close rate > 25%',
+    'YouTube lance (4+ videos)',
+    'Referral system actif',
+    'CA > 10,000\u20AC',
+    '15 plans "quoi qu\'il arrive" crees'
+  ]},
+  { month: 'Mois 3', items: [
+    'Close rate > 35% (trigger Phase 2!)',
+    'Tier premium 1,800\u20AC+ lance',
+    'Assistant delivery recrute',
+    'CA > 25,000\u20AC'
+  ]},
+  { month: 'Mois 4', items: [
+    '2eme closer recrute et forme',
+    'YouTube 10+ videos publiees',
+    'Ads test lance',
+    'CA > 40,000\u20AC'
+  ]},
+  { month: 'Mois 5', items: [
+    'Content manager recrute',
+    'Offre groupe lancee',
+    'CA > 60,000\u20AC'
+  ]},
+  { month: 'Mois 6', items: [
+    '3eme closer',
+    'Ads scalees',
+    'CA > 80-100,000\u20AC',
+    'Equipe de 5-7 personnes'
+  ]}
+];
+
+var STORAGE_KEY = 'sapiens360_milestones';
+
+function loadChecked() {
+  try {
+    return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
+  } catch (e) { return {}; }
+}
+
+function saveChecked(checked) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(checked));
+}
+
+function renderMilestones() {
+  var checked = loadChecked();
+  var container = document.getElementById('milestonesContainer');
+  var html = '';
+  milestonesData.forEach(function(month, mi) {
+    var total = month.items.length;
+    var done = 0;
+    month.items.forEach(function(item, ii) {
+      if (checked[mi + '-' + ii]) done++;
+    });
+    var pct = total > 0 ? Math.round((done / total) * 100) : 0;
+
+    html += '<div class="milestone-month">';
+    html += '<h3>' + month.month + ' <span style="float:right;font-size:14px;font-family:Segoe UI,Arial,sans-serif;">' + done + '/' + total + '</span></h3>';
+    html += '<div class="milestone-progress"><div class="milestone-progress-bar" style="width:' + pct + '%;"></div></div>';
+    html += '<div class="milestone-pct">' + pct + '% complete</div>';
+
+    month.items.forEach(function(item, ii) {
+      var key = mi + '-' + ii;
+      var isDone = checked[key] ? ' done' : '';
+      html += '<div class="milestone-item' + isDone + '" data-key="' + key + '">';
+      html += '<div class="milestone-check"></div>';
+      html += '<span class="milestone-text">' + item + '</span>';
+      html += '</div>';
+    });
+
+    html += '</div>';
+  });
+  container.innerHTML = html;
+
+  container.querySelectorAll('.milestone-item').forEach(function(el) {
+    el.addEventListener('click', function() {
+      var key = el.dataset.key;
+      var checked = loadChecked();
+      if (checked[key]) { delete checked[key]; } else { checked[key] = true; }
+      saveChecked(checked);
+      renderMilestones();
+    });
+  });
+}
+
+renderMilestones();
+</script>
+</body>
+</html>

@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAPIENS 360 — Automation Bible</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #111;
+  --card: #161616;
+  --border: #2C4A3555;
+  --gold: #B8956A;
+  --green: #2C4A35;
+  --ivory: #FAF7F2;
+  --stone: #888;
+  --radius: 10px;
+  --transition: 0.25s ease;
+}
+
+html { scroll-behavior: smooth; scroll-padding-top: 120px; }
+
+body {
+  background: var(--bg);
+  color: var(--ivory);
+  font-family: 'Segoe UI', Arial, sans-serif;
+  font-size: 15px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4 { font-family: Georgia, 'Times New Roman', serif; font-weight: 400; }
+
+/* ── HERO ── */
+.hero {
+  text-align: center;
+  padding: 80px 24px 56px;
+  background: linear-gradient(180deg, #0a0a0a 0%, var(--bg) 100%);
+  border-bottom: 1px solid var(--border);
+}
+.hero-badge {
+  display: inline-block;
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold);
+  border: 1px solid var(--gold);
+  border-radius: 40px;
+  padding: 6px 20px;
+  margin-bottom: 28px;
+}
+.hero h1 {
+  font-size: clamp(28px, 5vw, 48px);
+  color: var(--ivory);
+  margin-bottom: 12px;
+  line-height: 1.15;
+}
+.hero h1 span { color: var(--gold); }
+.hero .subtitle {
+  font-size: clamp(13px, 2vw, 16px);
+  color: var(--stone);
+  max-width: 640px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* ── STICKY NAV ── */
+.sticky-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(17,17,17,0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 16px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.sticky-nav::-webkit-scrollbar { height: 0; }
+.nav-inner {
+  display: flex;
+  gap: 0;
+  max-width: 1100px;
+  margin: 0 auto;
+  min-width: max-content;
+}
+.nav-tab {
+  padding: 14px 18px;
+  font-size: 13px;
+  color: var(--stone);
+  cursor: pointer;
+  white-space: nowrap;
+  border-bottom: 2px solid transparent;
+  transition: color var(--transition), border-color var(--transition);
+  user-select: none;
+}
+.nav-tab:hover { color: var(--ivory); }
+.nav-tab.active { color: var(--gold); border-bottom-color: var(--gold); }
+
+/* ── LAYOUT ── */
+.container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+.section { padding: 64px 0; border-bottom: 1px solid var(--border); }
+.section:last-child { border-bottom: none; }
+
+.section-label {
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 8px;
+}
+.section-title {
+  font-size: clamp(22px, 3.5vw, 32px);
+  color: var(--ivory);
+  margin-bottom: 32px;
+}
+
+/* ── CARDS ── */
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 28px;
+  margin-bottom: 20px;
+}
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  user-select: none;
+}
+.card-header h3 {
+  font-size: 18px;
+  color: var(--ivory);
+}
+.card-header .tag {
+  font-size: 11px;
+  background: var(--green);
+  color: var(--gold);
+  padding: 3px 10px;
+  border-radius: 20px;
+  white-space: nowrap;
+  margin-left: 12px;
+  flex-shrink: 0;
+}
+.card-toggle {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(184,149,106,0.08);
+  color: var(--gold);
+  font-size: 18px;
+  transition: transform var(--transition);
+  flex-shrink: 0;
+  margin-left: 16px;
+}
+.card.open .card-toggle { transform: rotate(45deg); }
+.card-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease, padding 0.3s ease;
+  padding-top: 0;
+}
+.card.open .card-body {
+  max-height: 2000px;
+  padding-top: 20px;
+}
+.card-body p { color: var(--stone); margin-bottom: 12px; }
+.card-body strong { color: var(--ivory); }
+
+/* ── STEPS ── */
+.step-list { list-style: none; counter-reset: step; }
+.step-list li {
+  counter-increment: step;
+  padding: 10px 0 10px 44px;
+  position: relative;
+  color: var(--stone);
+  border-left: 1px solid var(--border);
+  margin-left: 14px;
+}
+.step-list li::before {
+  content: counter(step);
+  position: absolute;
+  left: -15px;
+  top: 8px;
+  width: 28px;
+  height: 28px;
+  background: var(--green);
+  color: var(--gold);
+  border-radius: 50%;
+  font-size: 12px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.step-list li:last-child { border-left-color: transparent; }
+
+/* ── TABLES ── */
+.table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin-bottom: 20px; }
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+thead th {
+  text-align: left;
+  padding: 12px 14px;
+  background: var(--green);
+  color: var(--gold);
+  font-family: Georgia, serif;
+  font-weight: 400;
+  font-size: 12px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  white-space: nowrap;
+  position: sticky;
+  top: 0;
+}
+tbody td {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border);
+  color: var(--stone);
+  vertical-align: top;
+}
+tbody tr:hover td { background: rgba(184,149,106,0.04); }
+.tag-inline {
+  display: inline-block;
+  font-size: 11px;
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  background: rgba(184,149,106,0.1);
+  color: var(--gold);
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+/* ── SEARCH ── */
+.search-wrap {
+  position: relative;
+  margin-bottom: 24px;
+  max-width: 420px;
+}
+.search-input {
+  width: 100%;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 12px 16px 12px 42px;
+  color: var(--ivory);
+  font-size: 14px;
+  outline: none;
+  transition: border-color var(--transition);
+}
+.search-input::placeholder { color: #555; }
+.search-input:focus { border-color: var(--gold); }
+.search-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--stone);
+  font-size: 14px;
+  pointer-events: none;
+}
+
+/* ── ARCHITECTURE DIAGRAM ── */
+.arch-diagram {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 40px 28px;
+  overflow-x: auto;
+}
+.arch-flow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  min-width: 360px;
+}
+.arch-node {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px 24px;
+  text-align: center;
+  min-width: 260px;
+  position: relative;
+}
+.arch-node.primary {
+  border-color: var(--gold);
+  background: rgba(184,149,106,0.06);
+}
+.arch-node .node-label {
+  font-family: Georgia, serif;
+  font-size: 15px;
+  color: var(--ivory);
+  margin-bottom: 4px;
+}
+.arch-node .node-detail {
+  font-size: 12px;
+  color: var(--stone);
+}
+.arch-arrow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 4px 0;
+  color: var(--stone);
+}
+.arch-arrow .arrow-line {
+  width: 1px;
+  height: 18px;
+  background: var(--stone);
+}
+.arch-arrow .arrow-label {
+  font-size: 10px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin: 2px 0;
+}
+.arch-arrow .arrow-tip {
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 6px solid var(--stone);
+}
+.arch-branches {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 8px;
+}
+.arch-branch {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 8px 16px;
+  font-size: 12px;
+  color: var(--stone);
+  text-align: center;
+}
+.arch-branch strong { color: var(--ivory); display: block; font-family: Georgia, serif; font-weight: 400; }
+
+/* ── BUG CARD ── */
+.bug-card {
+  background: rgba(184,149,106,0.06);
+  border: 1px solid var(--gold);
+  border-radius: var(--radius);
+  padding: 20px 24px;
+  margin-top: 24px;
+}
+.bug-card .bug-label {
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 8px;
+}
+.bug-card p { color: var(--stone); font-size: 14px; }
+
+/* ── TROUBLESHOOT ── */
+.troubleshoot-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 16px;
+}
+.troubleshoot-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+}
+.troubleshoot-card h4 {
+  font-size: 15px;
+  color: var(--ivory);
+  margin-bottom: 10px;
+}
+.troubleshoot-card p {
+  font-size: 13px;
+  color: var(--stone);
+  line-height: 1.6;
+}
+.troubleshoot-card .fix {
+  margin-top: 10px;
+  padding: 10px 14px;
+  background: rgba(44,74,53,0.25);
+  border-radius: 6px;
+  font-size: 12px;
+  color: var(--gold);
+}
+
+/* ── FOOTER ── */
+.footer {
+  text-align: center;
+  padding: 48px 24px;
+  color: #444;
+  font-size: 13px;
+  border-top: 1px solid var(--border);
+}
+.footer span { color: var(--gold); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  .hero { padding: 56px 16px 40px; }
+  .section { padding: 40px 0; }
+  .container { padding: 0 16px; }
+  .card { padding: 20px; }
+  .nav-tab { padding: 12px 14px; font-size: 12px; }
+  .troubleshoot-grid { grid-template-columns: 1fr; }
+  .arch-node { min-width: 200px; padding: 10px 16px; }
+}
+@media (max-width: 480px) {
+  .hero h1 { font-size: 24px; }
+  table { font-size: 12px; }
+  thead th, tbody td { padding: 8px 10px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════ HERO ═══════ -->
+<section class="hero">
+  <div class="hero-badge">Automation Bible</div>
+  <h1>SAPIENS 360 <span>ManyChat &amp; GHL Setup</span></h1>
+  <p class="subtitle">5 flows ManyChat, 12 workflows GHL, 41+ tags &mdash; tout le systeme automatise</p>
+</section>
+
+<!-- ═══════ STICKY NAV ═══════ -->
+<nav class="sticky-nav">
+  <div class="nav-inner">
+    <div class="nav-tab active" data-target="sec-overview">Vue d'ensemble</div>
+    <div class="nav-tab" data-target="sec-manychat">ManyChat Flows</div>
+    <div class="nav-tab" data-target="sec-ghl">GHL Workflows</div>
+    <div class="nav-tab" data-target="sec-tags">Tags Reference</div>
+    <div class="nav-tab" data-target="sec-fields">Custom Fields</div>
+    <div class="nav-tab" data-target="sec-webhooks">Webhooks</div>
+    <div class="nav-tab" data-target="sec-troubleshoot">Troubleshooting</div>
+  </div>
+</nav>
+
+<!-- ═══════ SECTION 1: VUE D'ENSEMBLE ═══════ -->
+<div class="container">
+  <section class="section" id="sec-overview">
+    <div class="section-label">Section 1</div>
+    <h2 class="section-title">Vue d'ensemble</h2>
+
+    <div class="arch-diagram">
+      <div class="arch-flow">
+        <div class="arch-node primary">
+          <div class="node-label">INSTAGRAM</div>
+          <div class="node-detail">@geo_le_sapiens</div>
+        </div>
+        <div class="arch-arrow">
+          <div class="arrow-line"></div>
+          <div class="arrow-label">DM / Comment</div>
+          <div class="arrow-tip"></div>
+        </div>
+        <div class="arch-node primary">
+          <div class="node-label">MANYCHAT</div>
+          <div class="node-detail">5 flows actifs</div>
+        </div>
+        <div class="arch-arrow">
+          <div class="arrow-line"></div>
+          <div class="arrow-label">Webhook</div>
+          <div class="arrow-tip"></div>
+        </div>
+        <div class="arch-node primary">
+          <div class="node-label">GHL (CRM)</div>
+          <div class="node-detail">12 workflows</div>
+        </div>
+
+        <div class="arch-branches">
+          <div class="arch-branch"><strong>Tags</strong>41+</div>
+          <div class="arch-branch"><strong>Custom Fields</strong>12+</div>
+          <div class="arch-branch"><strong>Workflows</strong>12</div>
+          <div class="arch-branch"><strong>Emails</strong>36+</div>
+        </div>
+
+        <div class="arch-arrow">
+          <div class="arrow-line"></div>
+          <div class="arrow-label">Webhook</div>
+          <div class="arrow-tip"></div>
+        </div>
+        <div class="arch-node">
+          <div class="node-label">CALENDLY</div>
+          <div class="node-detail">Booking &amp; reminders</div>
+        </div>
+        <div class="arch-arrow">
+          <div class="arrow-line"></div>
+          <div class="arrow-label">Webhook</div>
+          <div class="arrow-tip"></div>
+        </div>
+        <div class="arch-node">
+          <div class="node-label">WHOP</div>
+          <div class="node-detail">Paiement &amp; acces</div>
+        </div>
+        <div class="arch-arrow">
+          <div class="arrow-line"></div>
+          <div class="arrow-label">Webhook</div>
+          <div class="arrow-tip"></div>
+        </div>
+        <div class="arch-node">
+          <div class="node-label">NETLIFY</div>
+          <div class="node-detail">3 serverless functions</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════ SECTION 2: MANYCHAT FLOWS ═══════ -->
+  <section class="section" id="sec-manychat">
+    <div class="section-label">Section 2</div>
+    <h2 class="section-title">ManyChat &mdash; 5 Flows</h2>
+
+    <!-- Flow 1 -->
+    <div class="card open" data-card>
+      <div class="card-header" onclick="toggleCard(this)">
+        <div style="display:flex;align-items:center;flex-wrap:wrap;gap:8px">
+          <h3>Flow 1 &mdash; Commentaire "SAPIENS"</h3>
+          <span class="tag">90% du flux</span>
+        </div>
+        <div class="card-toggle">+</div>
+      </div>
+      <div class="card-body">
+        <p><strong>Trigger :</strong> Commentaire contenant SAPIENS / sapiens / PEAU / peau</p>
+        <ol class="step-list">
+          <li>Public reply auto (reponse sous le post)</li>
+          <li>DM capture email</li>
+          <li>Webhook GHL (creation/update contact)</li>
+          <li>DM lien VSL</li>
+          <li>Timer H+3 &mdash; Jad envoie vocal personnalise</li>
+          <li>Timer H+24 &mdash; DM relance</li>
+          <li>Timer H+72 &mdash; DM final</li>
+          <li>STOP</li>
+        </ol>
+        <p style="margin-top:12px"><strong>Tags appliques :</strong>
+          <span class="tag-inline">email-capture</span>
+          <span class="tag-inline">vsl-envoyee</span>
+          <span class="tag-inline">vocal-a-envoyer</span>
+          <span class="tag-inline">lead-froid-manychat</span>
+        </p>
+      </div>
+    </div>
+
+    <!-- Flow 2 -->
+    <div class="card" data-card>
+      <div class="card-header" onclick="toggleCard(this)">
+        <h3>Flow 2 &mdash; Nouveau Follow</h3>
+        <div class="card-toggle">+</div>
+      </div>
+      <div class="card-body">
+        <p><strong>Trigger :</strong> Nouveau follower @geo_le_sapiens</p>
+        <ol class="step-list">
+          <li>Delai 5 minutes</li>
+          <li>DM : "C'est quoi qui t'a amene ?"</li>
+          <li>Routing A/B/C/D selon reponse</li>
+          <li>Si probleme de peau &rarr; redirection vers Flow 1</li>
+        </ol>
+      </div>
+    </div>
+
+    <!-- Flow 3 -->
+    <div class="card" data-card>
+      <div class="card-header" onclick="toggleCard(this)">
+        <h3>Flow 3 &mdash; DM Entrant Spontane</h3>
+        <div class="card-toggle">+</div>
+      </div>
+      <div class="card-body">
+        <p><strong>Trigger :</strong> DM entrant (incoming message)</p>
+        <p><strong>Keywords detectes :</strong> rosacee, acne, eczema, psoriasis, peau, boutons, plaques, rougeurs, inflammation, dermato</p>
+        <ol class="step-list">
+          <li>Si keyword detecte &rarr; qualification &rarr; Flow 1</li>
+          <li>Si aucun keyword &rarr; tag <span class="tag-inline">dm-non-qualifie</span> &rarr; Jad traite manuellement</li>
+        </ol>
+      </div>
+    </div>
+
+    <!-- Flow 4 -->
+    <div class="card" data-card>
+      <div class="card-header" onclick="toggleCard(this)">
+        <h3>Flow 4 &mdash; Relance Post-VSL</h3>
+        <div class="card-toggle">+</div>
+      </div>
+      <div class="card-body">
+        <p><strong>Trigger :</strong> Tag <span class="tag-inline">vsl-envoyee</span> + 48h sans tag <span class="tag-inline">rdv-reserve</span></p>
+        <ol class="step-list">
+          <li>DM relance + lien Calendly</li>
+          <li>+72h si rien &rarr; tag <span class="tag-inline">lead-froid-post-vsl</span></li>
+          <li>STOP &rarr; GHL nurture prend le relais</li>
+        </ol>
+      </div>
+    </div>
+
+    <!-- Flow 5 -->
+    <div class="card" data-card>
+      <div class="card-header" onclick="toggleCard(this)">
+        <h3>Flow 5 &mdash; Quiz en Bio</h3>
+        <div class="card-toggle">+</div>
+      </div>
+      <div class="card-body">
+        <p><strong>Trigger :</strong> Click sur le lien quiz dans la bio Instagram</p>
+        <ol class="step-list">
+          <li>Q1 : Condition (psoriasis, acne, rosacee, eczema, digestion)</li>
+          <li>Q2 : Duree du probleme</li>
+          <li>Q3 : Tentatives passees</li>
+          <li>Q4 : Impact sur la vie <em>(champ libre &mdash; gold pour closing)</em></li>
+          <li>Q5 : Pret au changement</li>
+          <li>Capture email</li>
+          <li>Resultat personnalise</li>
+          <li>VSL + lien Calendly</li>
+          <li>Webhook GHL avec tous les champs</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════ SECTION 3: GHL WORKFLOWS ═══════ -->
+  <section class="section" id="sec-ghl">
+    <div class="section-label">Section 3</div>
+    <h2 class="section-title">GHL Workflows (12)</h2>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>WF</th>
+            <th>Nom</th>
+            <th>Trigger</th>
+            <th>Remove From</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>WF1</td><td>VSL Relance</td><td>Tag <span class="tag-inline">vsl-envoyee</span></td><td>&mdash;</td></tr>
+          <tr><td>WF2</td><td>Pre-Close Booking</td><td>Appointment Booked</td><td>WF1</td></tr>
+          <tr><td>WF3</td><td>Post-Call Rescue Jad</td><td>Tag <span class="tag-inline">call-sans-vente</span></td><td>WF1 + WF2</td></tr>
+          <tr><td>WF3b</td><td>Post-Call Rescue Geoffrey</td><td>Tag <span class="tag-inline">call-geoffrey-sans-vente</span></td><td>WF1 + WF2</td></tr>
+          <tr><td>WF4</td><td>No-Show Recovery</td><td>Appointment No Show</td><td>WF1 + WF2</td></tr>
+          <tr><td>WF5</td><td>Rebook</td><td>Appointment Booked + HAS no-show</td><td>WF2 + WF4</td></tr>
+          <tr><td>WF6</td><td>Onboarding</td><td>Tag <span class="tag-inline">client</span></td><td>All previous</td></tr>
+          <tr><td>WF7</td><td>Tracking Reminder</td><td>Tag <span class="tag-inline">client</span> + daily 19h</td><td>&mdash;</td></tr>
+          <tr><td>WF8</td><td>Referral Attribution</td><td>Tag <span class="tag-inline">referral</span></td><td>&mdash;</td></tr>
+          <tr><td>WF9</td><td>Testimonial Collection</td><td>Tag <span class="tag-inline">client</span> + J+14/30/60/90</td><td>&mdash;</td></tr>
+          <tr><td>Trans.</td><td>Notifications</td><td>Appointment events</td><td>&mdash;</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card" style="border-color: var(--green);">
+      <p style="color:var(--gold);font-size:13px;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px">Regle Anti-Overlap</p>
+      <p style="color:var(--stone)">Chaque workflow retire le contact des workflows precedents pour empecher les envois en double. Un contact ne peut etre que dans UN workflow a la fois.</p>
+    </div>
+
+    <!-- Workflow detail cards -->
+    <div style="margin-top:28px">
+      <div class="card" data-card>
+        <div class="card-header" onclick="toggleCard(this)">
+          <h3>WF1 &mdash; VSL Relance</h3>
+          <div class="card-toggle">+</div>
+        </div>
+        <div class="card-body">
+          <p><strong>Objectif :</strong> Relancer les leads qui ont recu la VSL mais n'ont pas encore reserve de call.</p>
+          <ol class="step-list">
+            <li>Email J+1 : Rappel VSL + lien Calendly</li>
+            <li>Email J+3 : Temoignage + urgence</li>
+            <li>Email J+5 : Derniere chance</li>
+            <li>Si aucune action &rarr; tag <span class="tag-inline">lead-froid-post-vsl</span></li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="card" data-card>
+        <div class="card-header" onclick="toggleCard(this)">
+          <h3>WF2 &mdash; Pre-Close Booking</h3>
+          <div class="card-toggle">+</div>
+        </div>
+        <div class="card-body">
+          <p><strong>Objectif :</strong> Preparer le prospect au closing call. Maximiser le show rate.</p>
+          <ol class="step-list">
+            <li>Email immediat : confirmation + consignes pre-call</li>
+            <li>Email J-1 : rappel + temoignage condition similaire</li>
+            <li>SMS J-0 H-2 : rappel final</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="card" data-card>
+        <div class="card-header" onclick="toggleCard(this)">
+          <h3>WF3/3b &mdash; Post-Call Rescue</h3>
+          <div class="card-toggle">+</div>
+        </div>
+        <div class="card-body">
+          <p><strong>Objectif :</strong> Recuperer les prospects qui n'ont pas close pendant le call.</p>
+          <p>WF3 = calls de Jad | WF3b = calls de Geoffrey</p>
+          <ol class="step-list">
+            <li>Email H+2 : recap valeur + reponse objection principale</li>
+            <li>Email J+1 : temoignage + urgence</li>
+            <li>Email J+3 : offre limitee / dernier push</li>
+            <li>Si rien &rarr; tag <span class="tag-inline">lead-froid-post-call</span></li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="card" data-card>
+        <div class="card-header" onclick="toggleCard(this)">
+          <h3>WF4 &mdash; No-Show Recovery</h3>
+          <div class="card-toggle">+</div>
+        </div>
+        <div class="card-body">
+          <p><strong>Objectif :</strong> Recuperer les no-shows et les remettre en booking.</p>
+          <ol class="step-list">
+            <li>Email immediat : "On t'attendait" + nouveau lien Calendly</li>
+            <li>Email J+1 : rappel + social proof</li>
+            <li>Tag <span class="tag-inline">no-show</span> applique automatiquement</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="card" data-card>
+        <div class="card-header" onclick="toggleCard(this)">
+          <h3>WF6 &mdash; Onboarding</h3>
+          <div class="card-toggle">+</div>
+        </div>
+        <div class="card-body">
+          <p><strong>Objectif :</strong> Accueillir le nouveau client et l'amener au premier resultat rapide.</p>
+          <ol class="step-list">
+            <li>Email immediat : bienvenue + acces Whop + consignes J1</li>
+            <li>Email J+1 : premiere action a faire</li>
+            <li>Email J+3 : check-in</li>
+            <li>Email J+7 : premier milestone</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="card" data-card>
+        <div class="card-header" onclick="toggleCard(this)">
+          <h3>WF9 &mdash; Testimonial Collection</h3>
+          <div class="card-toggle">+</div>
+        </div>
+        <div class="card-body">
+          <p><strong>Objectif :</strong> Collecter des temoignages a des moments strategiques.</p>
+          <ol class="step-list">
+            <li>J+14 : premier check-in + demande feedback</li>
+            <li>J+30 : demande temoignage video</li>
+            <li>J+60 : relance temoignage si pas fait</li>
+            <li>J+90 : demande photo avant/apres</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════ SECTION 4: TAGS REFERENCE ═══════ -->
+  <section class="section" id="sec-tags">
+    <div class="section-label">Section 4</div>
+    <h2 class="section-title">Tags Reference (41+)</h2>
+
+    <div class="search-wrap">
+      <span class="search-icon">&#9906;</span>
+      <input type="text" class="search-input" id="tagSearch" placeholder="Rechercher un tag..." oninput="filterTags()">
+    </div>
+
+    <div class="table-wrap">
+      <table id="tagsTable">
+        <thead>
+          <tr>
+            <th>Tag</th>
+            <th>Quand</th>
+            <th>Ajoute par</th>
+            <th>Signification</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><span class="tag-inline">optin-protocole</span></td><td>Formulaire rempli</td><td>GHL auto</td><td>Lead a optin</td></tr>
+          <tr><td><span class="tag-inline">quiz-complete</span></td><td>Quiz termine</td><td>GHL auto</td><td>Quiz fini</td></tr>
+          <tr><td><span class="tag-inline">quiz-psoriasis</span></td><td>Quiz condition</td><td>ManyChat webhook</td><td>Condition identifiee</td></tr>
+          <tr><td><span class="tag-inline">quiz-acne</span></td><td>Quiz condition</td><td>ManyChat webhook</td><td>Condition identifiee</td></tr>
+          <tr><td><span class="tag-inline">quiz-rosacee</span></td><td>Quiz condition</td><td>ManyChat webhook</td><td>Condition identifiee</td></tr>
+          <tr><td><span class="tag-inline">quiz-eczema</span></td><td>Quiz condition</td><td>ManyChat webhook</td><td>Condition identifiee</td></tr>
+          <tr><td><span class="tag-inline">quiz-digestion</span></td><td>Quiz condition</td><td>ManyChat webhook</td><td>Condition identifiee</td></tr>
+          <tr><td><span class="tag-inline">manychat-qualifie</span></td><td>Email capture</td><td>ManyChat webhook</td><td>Lead qualifie</td></tr>
+          <tr><td><span class="tag-inline">vsl-envoyee</span></td><td>VSL envoyee</td><td>ManyChat auto</td><td>VSL dans la boite</td></tr>
+          <tr><td><span class="tag-inline">vsl-vue</span></td><td>Page VSL visitee</td><td>Pixel Netlify</td><td>VSL regardee</td></tr>
+          <tr><td><span class="tag-inline">vocal-envoye</span></td><td>Vocal H+3</td><td>Jad manuel</td><td>Vocal fait</td></tr>
+          <tr><td><span class="tag-inline">rdv-reserve</span></td><td>Booking</td><td>Calendly webhook</td><td>Call planifie</td></tr>
+          <tr><td><span class="tag-inline">rdv-confirme</span></td><td>Confirmation</td><td>Jad / auto</td><td>Call confirme</td></tr>
+          <tr><td><span class="tag-inline">call-fait</span></td><td>Apres le call</td><td>Jad manuel</td><td>Call effectue</td></tr>
+          <tr><td><span class="tag-inline">client</span></td><td>Paiement confirme</td><td>Jad / Whop webhook</td><td>C'est un client !</td></tr>
+          <tr><td><span class="tag-inline">paiement-1x</span></td><td>Paiement en 1 fois</td><td>Jad</td><td>Tracker inclus</td></tr>
+          <tr><td><span class="tag-inline">paiement-3x</span></td><td>Paiement en 3 fois</td><td>Jad</td><td>Tracker non inclus</td></tr>
+          <tr><td><span class="tag-inline">call-sans-vente</span></td><td>Pas de close</td><td>Jad manuel</td><td>Active WF3</td></tr>
+          <tr><td><span class="tag-inline">call-geoffrey-sans-vente</span></td><td>Pas de close (Geoffrey)</td><td>Jad</td><td>Active WF3b</td></tr>
+          <tr><td><span class="tag-inline">no-show</span></td><td>Pas venu</td><td>Jad / auto</td><td>Active WF4</td></tr>
+          <tr><td><span class="tag-inline">referral</span></td><td>Vient d'un referral</td><td>Jad</td><td>Attribution</td></tr>
+          <tr><td><span class="tag-inline">lead-froid-manychat</span></td><td>Pas de reponse H+72</td><td>ManyChat auto</td><td>Lead froid MC</td></tr>
+          <tr><td><span class="tag-inline">lead-froid-post-vsl</span></td><td>Pas de booking 48h</td><td>ManyChat auto</td><td>Lead froid VSL</td></tr>
+          <tr><td><span class="tag-inline">lead-froid-post-call</span></td><td>Pas de reponse H+72</td><td>Jad</td><td>Lead froid call</td></tr>
+          <tr><td><span class="tag-inline">condition-psoriasis</span></td><td>Condition identifiee</td><td>Jad / ManyChat</td><td>Pour emails WF2</td></tr>
+          <tr><td><span class="tag-inline">condition-acne</span></td><td>Condition identifiee</td><td>Jad / ManyChat</td><td>Pour emails WF2</td></tr>
+          <tr><td><span class="tag-inline">condition-rosacee</span></td><td>Condition identifiee</td><td>Jad / ManyChat</td><td>Pour emails WF2</td></tr>
+          <tr><td><span class="tag-inline">condition-eczema</span></td><td>Condition identifiee</td><td>Jad / ManyChat</td><td>Pour emails WF2</td></tr>
+          <tr><td><span class="tag-inline">condition-digestion</span></td><td>Condition identifiee</td><td>Jad / ManyChat</td><td>Pour emails WF2</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ═══════ SECTION 5: CUSTOM FIELDS ═══════ -->
+  <section class="section" id="sec-fields">
+    <div class="section-label">Section 5</div>
+    <h2 class="section-title">Custom Fields GHL</h2>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Field</th>
+            <th>Type</th>
+            <th>Source</th>
+            <th>Usage</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><span class="tag-inline">condition</span></td><td>Text</td><td>ManyChat / Calendly</td><td>Personnaliser emails + closing</td></tr>
+          <tr><td><span class="tag-inline">duree_probleme</span></td><td>Text</td><td>ManyChat</td><td>Adapter reframe</td></tr>
+          <tr><td><span class="tag-inline">historique_tentatives</span></td><td>Text</td><td>ManyChat</td><td>Preuve "tout essaye"</td></tr>
+          <tr><td><span class="tag-inline">impact_vie</span></td><td>Text</td><td>Quiz Q4</td><td>Gold pour closing</td></tr>
+          <tr><td><span class="tag-inline">pret_changement</span></td><td>Text</td><td>Quiz Q5</td><td>Qualifier</td></tr>
+          <tr><td><span class="tag-inline">source</span></td><td>Text</td><td>ManyChat</td><td>Attribution</td></tr>
+          <tr><td><span class="tag-inline">source_referral</span></td><td>Text</td><td>Jad</td><td>Attribution parrain</td></tr>
+          <tr><td><span class="tag-inline">referral_date</span></td><td>Date</td><td>Jad</td><td>Tracking referral</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ═══════ SECTION 6: WEBHOOKS ═══════ -->
+  <section class="section" id="sec-webhooks">
+    <div class="section-label">Section 6</div>
+    <h2 class="section-title">Webhooks &amp; Integrations</h2>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>De</th>
+            <th>Vers</th>
+            <th>URL</th>
+            <th>Headers</th>
+            <th>Body</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>ManyChat</td>
+            <td>GHL</td>
+            <td style="font-family:monospace;font-size:12px">REST API /contacts/</td>
+            <td>Bearer token</td>
+            <td>firstName, email, tags, customField</td>
+          </tr>
+          <tr>
+            <td>Calendly</td>
+            <td>GHL</td>
+            <td style="font-family:monospace;font-size:12px">Netlify function<br>calendly-webhook</td>
+            <td>&mdash;</td>
+            <td>Contact, appointment, condition dropdown</td>
+          </tr>
+          <tr>
+            <td>Whop</td>
+            <td>GHL</td>
+            <td style="font-family:monospace;font-size:12px">Netlify function<br>whop-webhook</td>
+            <td>&mdash;</td>
+            <td>Email, plan, amount</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="bug-card">
+      <div class="bug-label">Bug Connu</div>
+      <p><strong>Form "Pre-Qualification SAPIENS 360 v3"</strong> ne write pas dans les custom fields.</p>
+      <p style="margin-top:8px"><strong>Fix :</strong> Un cron backfill script tourne toutes les 60 secondes pour rattraper les donnees manquantes.</p>
+    </div>
+  </section>
+
+  <!-- ═══════ SECTION 7: TROUBLESHOOTING ═══════ -->
+  <section class="section" id="sec-troubleshoot">
+    <div class="section-label">Section 7</div>
+    <h2 class="section-title">Troubleshooting</h2>
+
+    <div class="troubleshoot-grid">
+      <div class="troubleshoot-card">
+        <h4>ManyChat ne repond pas</h4>
+        <p>Le flow ne se declenche pas quand un utilisateur commente ou envoie un DM.</p>
+        <div class="fix">Verifier : flow actif &bull; triggers configures &bull; connexion Instagram valide &bull; permissions de page</div>
+      </div>
+
+      <div class="troubleshoot-card">
+        <h4>GHL emails non envoyes</h4>
+        <p>Le workflow est sense envoyer un email mais le contact ne recoit rien.</p>
+        <div class="fix">Verifier : workflow actif &bull; tag correct sur le contact &bull; deliverabilite du domaine &bull; email non en spam</div>
+      </div>
+
+      <div class="troubleshoot-card">
+        <h4>Calendly webhook en echec</h4>
+        <p>Les bookings ne remontent pas dans GHL.</p>
+        <div class="fix">Verifier : URL du webhook &bull; test event dans Calendly &bull; logs Netlify function &bull; mapping des champs</div>
+      </div>
+
+      <div class="troubleshoot-card">
+        <h4>Whop webhook en echec</h4>
+        <p>Les paiements ne sont pas detectes dans GHL.</p>
+        <div class="fix">Verifier : Netlify function active &bull; logs dans Netlify &bull; format du body Whop &bull; email match</div>
+      </div>
+
+      <div class="troubleshoot-card">
+        <h4>Tags non appliques</h4>
+        <p>Un contact devrait avoir un tag mais il manque.</p>
+        <div class="fix">Verifier : conditions du workflow &bull; regles anti-overlap &bull; le contact est-il dans le bon workflow ?</div>
+      </div>
+
+      <div class="troubleshoot-card">
+        <h4>Custom fields vides</h4>
+        <p>Les champs personnalises ne sont pas remplis.</p>
+        <div class="fix">Verifier : cron backfill actif &bull; mapping des noms (camelCase vs snake_case) &bull; webhook body format</div>
+      </div>
+
+      <div class="troubleshoot-card">
+        <h4>Emails en spam</h4>
+        <p>Les emails de GHL arrivent dans les spams du prospect.</p>
+        <div class="fix">Verifier : DKIM configure &bull; SPF valide &bull; DMARC en place &bull; domaine d'envoi warmup &bull; contenu non spammy</div>
+      </div>
+
+      <div class="troubleshoot-card">
+        <h4>Donnees formulaire manquantes</h4>
+        <p>Le formulaire est soumis mais les donnees n'apparaissent pas dans GHL.</p>
+        <div class="fix">Verifier : statut du cron backfill &bull; mapping des champs du form &bull; version du formulaire (v3) &bull; logs</div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ═══════ FOOTER ═══════ -->
+<footer class="footer">
+  <span>SAPIENS 360</span> &nbsp;|&nbsp; Automation Bible &nbsp;|&nbsp; Derniere MAJ : Avril 2026
+</footer>
+
+<!-- ═══════ JAVASCRIPT ═══════ -->
+<script>
+/* ── Tab Navigation ── */
+document.querySelectorAll('.nav-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    const target = document.getElementById(tab.dataset.target);
+    if (target) target.scrollIntoView({ behavior: 'smooth' });
+  });
+});
+
+/* ── Scroll-based active tab ── */
+const sections = document.querySelectorAll('.section[id]');
+const navTabs = document.querySelectorAll('.nav-tab[data-target]');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      navTabs.forEach(t => t.classList.remove('active'));
+      const match = document.querySelector(`.nav-tab[data-target="${entry.target.id}"]`);
+      if (match) match.classList.add('active');
+    }
+  });
+}, { rootMargin: '-120px 0px -60% 0px', threshold: 0 });
+sections.forEach(s => observer.observe(s));
+
+/* ── Collapsible Cards ── */
+function toggleCard(header) {
+  const card = header.closest('.card');
+  card.classList.toggle('open');
+}
+
+/* ── Tags Search ── */
+function filterTags() {
+  const query = document.getElementById('tagSearch').value.toLowerCase();
+  const rows = document.querySelectorAll('#tagsTable tbody tr');
+  rows.forEach(row => {
+    const text = row.textContent.toLowerCase();
+    row.style.display = text.includes(query) ? '' : 'none';
+  });
+}
+</script>
+</body>
+</html>

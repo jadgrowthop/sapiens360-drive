@@ -1,0 +1,1339 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAPIENS 360 — Dashboard KPI Hebdomadaire</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #111;
+  --card: #161616;
+  --border: #2C4A3555;
+  --gold: #B8956A;
+  --green: #2C4A35;
+  --ivory: #FAF7F2;
+  --stone: #888;
+  --red: #8B3A3A;
+  --yellow: #B8956A;
+  --bright-green: #4A7A5A;
+  --danger: #C0392B;
+  --warning: #D4A843;
+  --success: #27AE60;
+}
+
+body {
+  background: var(--bg);
+  color: var(--ivory);
+  font-family: 'Segoe UI', Arial, sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+h1, h2, h3, h4 { font-family: Georgia, 'Times New Roman', serif; font-weight: normal; }
+
+/* HERO */
+.hero {
+  text-align: center;
+  padding: 56px 24px 40px;
+  border-bottom: 1px solid var(--border);
+}
+.hero h1 {
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  color: var(--gold);
+  letter-spacing: 0.06em;
+  margin-bottom: 12px;
+}
+.hero p {
+  color: var(--stone);
+  font-size: 0.95rem;
+  max-width: 600px;
+  margin: 0 auto;
+  font-style: italic;
+}
+
+/* STICKY NAV */
+.sticky-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: #111e;
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.sticky-nav::-webkit-scrollbar { height: 0; }
+.nav-inner {
+  display: flex;
+  gap: 0;
+  min-width: max-content;
+  padding: 0 16px;
+}
+.nav-tab {
+  padding: 14px 18px;
+  font-size: 0.82rem;
+  color: var(--stone);
+  cursor: pointer;
+  white-space: nowrap;
+  border-bottom: 2px solid transparent;
+  transition: color 0.2s, border-color 0.2s;
+  user-select: none;
+  letter-spacing: 0.02em;
+}
+.nav-tab:hover { color: var(--ivory); }
+.nav-tab.active { color: var(--gold); border-bottom-color: var(--gold); }
+
+/* SECTIONS */
+.section {
+  display: none;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 40px 20px 60px;
+}
+.section.active { display: block; }
+.section-title {
+  font-size: clamp(1.3rem, 3vw, 1.8rem);
+  color: var(--gold);
+  margin-bottom: 8px;
+}
+.section-subtitle {
+  color: var(--stone);
+  font-size: 0.9rem;
+  margin-bottom: 32px;
+}
+
+/* CARDS */
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 28px;
+  margin-bottom: 20px;
+}
+
+/* KPI STAT CARDS */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  margin-bottom: 24px;
+}
+.kpi-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 28px;
+  position: relative;
+  overflow: hidden;
+}
+.kpi-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+}
+.kpi-card.red::before { background: var(--danger); }
+.kpi-card.yellow::before { background: var(--warning); }
+.kpi-card.green::before { background: var(--success); }
+.kpi-card.bright-green::before { background: #2ECC71; }
+
+.kpi-number-label { font-size: 0.75rem; color: var(--stone); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px; }
+.kpi-label { font-family: Georgia, serif; font-size: 1.1rem; color: var(--ivory); margin-bottom: 6px; }
+.kpi-badge {
+  display: inline-block;
+  font-size: 0.7rem;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  margin-bottom: 12px;
+}
+.kpi-badge.red { background: #8B3A3A33; color: #E74C3C; }
+.kpi-badge.yellow { background: #B8956A22; color: var(--gold); }
+.kpi-badge.green { background: #2C4A3533; color: #2ECC71; }
+
+.kpi-value {
+  font-family: Georgia, serif;
+  font-size: 2.2rem;
+  color: var(--gold);
+  margin-bottom: 8px;
+}
+.kpi-formula {
+  font-size: 0.82rem;
+  color: var(--stone);
+  margin-bottom: 12px;
+  font-style: italic;
+}
+.kpi-targets {
+  font-size: 0.8rem;
+  color: var(--stone);
+  line-height: 1.8;
+}
+.kpi-targets span { display: inline-block; padding: 1px 8px; border-radius: 4px; margin-right: 6px; font-size: 0.75rem; }
+.kpi-targets .t-red { background: #8B3A3A33; color: #E74C3C; }
+.kpi-targets .t-yellow { background: #B8956A22; color: var(--gold); }
+.kpi-targets .t-green { background: #2C4A3533; color: #2ECC71; }
+.kpi-levier {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+  font-size: 0.82rem;
+  color: var(--stone);
+}
+
+/* FORM */
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+.form-group-title {
+  font-family: Georgia, serif;
+  font-size: 1.1rem;
+  color: var(--gold);
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+}
+.form-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  gap: 12px;
+}
+.form-row label {
+  font-size: 0.85rem;
+  color: var(--stone);
+  flex: 1;
+}
+.form-row input[type="number"] {
+  width: 100px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--ivory);
+  padding: 8px 12px;
+  font-size: 0.9rem;
+  text-align: right;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.form-row input[type="number"]:focus { border-color: var(--gold); }
+.auto-calc {
+  font-size: 0.8rem;
+  color: var(--gold);
+  text-align: right;
+  margin-top: -6px;
+  margin-bottom: 12px;
+  font-style: italic;
+}
+
+.result-card {
+  background: #111;
+  border: 1px solid var(--gold);
+  border-radius: 10px;
+  padding: 24px;
+  margin-top: 20px;
+}
+.result-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border);
+}
+.result-row:last-child { border-bottom: none; }
+.result-label { color: var(--stone); font-size: 0.85rem; }
+.result-value { font-family: Georgia, serif; font-size: 1.3rem; color: var(--gold); }
+
+.btn-save {
+  display: block;
+  width: 100%;
+  max-width: 400px;
+  margin: 32px auto 0;
+  padding: 14px 32px;
+  background: var(--green);
+  color: var(--ivory);
+  border: 1px solid var(--gold);
+  border-radius: 8px;
+  font-family: Georgia, serif;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+.btn-save:hover { background: #3A5E47; }
+.btn-save:active { transform: scale(0.98); }
+.btn-save.saved { background: var(--gold); color: var(--bg); }
+
+/* SLIDERS */
+.slider-group { margin-bottom: 24px; }
+.slider-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+.slider-label span { color: var(--stone); font-size: 0.85rem; }
+.slider-label strong { color: var(--gold); font-family: Georgia, serif; font-size: 1.1rem; }
+input[type="range"] {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 6px;
+  background: #222;
+  border-radius: 3px;
+  outline: none;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  background: var(--gold);
+  cursor: pointer;
+}
+input[type="range"]::-moz-range-thumb {
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  background: var(--gold);
+  cursor: pointer;
+  border: none;
+}
+
+select {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--ivory);
+  padding: 8px 12px;
+  font-size: 0.9rem;
+  outline: none;
+}
+select:focus { border-color: var(--gold); }
+
+.revenue-display {
+  text-align: center;
+  padding: 32px;
+  margin-top: 24px;
+}
+.revenue-big {
+  font-family: Georgia, serif;
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  color: var(--gold);
+}
+.revenue-label { color: var(--stone); font-size: 0.85rem; margin-top: 4px; }
+.revenue-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  margin-top: 24px;
+}
+.revenue-cell { text-align: center; padding: 16px; }
+
+.target-box {
+  background: #111;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 24px;
+  margin-top: 32px;
+}
+.target-box h4 { color: var(--gold); margin-bottom: 16px; }
+.target-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid #1a1a1a;
+  font-size: 0.85rem;
+}
+.target-row:last-child { border-bottom: none; }
+.target-row .scenario { color: var(--stone); }
+.target-row .calls { color: var(--gold); font-family: Georgia, serif; font-size: 1rem; }
+
+/* FUNNEL */
+.funnel-container { max-width: 600px; margin: 0 auto; }
+.funnel-step {
+  position: relative;
+  padding: 20px 24px;
+  margin-bottom: 2px;
+  text-align: center;
+  border-radius: 6px;
+  transition: background 0.2s;
+}
+.funnel-step-name { font-family: Georgia, serif; font-size: 1rem; color: var(--ivory); margin-bottom: 4px; }
+.funnel-step-value { font-size: 0.85rem; color: var(--stone); }
+.funnel-rate {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin-top: 6px;
+}
+.funnel-rate.good { background: #2C4A3533; color: #2ECC71; }
+.funnel-rate.warn { background: #B8956A22; color: var(--gold); }
+.funnel-rate.bad { background: #8B3A3A33; color: #E74C3C; }
+.funnel-arrow {
+  text-align: center;
+  color: var(--stone);
+  font-size: 1.2rem;
+  margin: 4px 0;
+  opacity: 0.4;
+}
+
+/* TABLE */
+.table-wrap { overflow-x: auto; }
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+th {
+  text-align: left;
+  padding: 12px 16px;
+  color: var(--gold);
+  font-family: Georgia, serif;
+  font-weight: normal;
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+td {
+  padding: 10px 16px;
+  color: var(--ivory);
+  border-bottom: 1px solid #1a1a1a;
+}
+tr:hover td { background: #1a1a1a44; }
+.tag-code {
+  font-family: 'SF Mono', Consolas, monospace;
+  font-size: 0.8rem;
+  background: #111;
+  padding: 2px 8px;
+  border-radius: 4px;
+  color: var(--gold);
+}
+
+/* BAR CHARTS */
+.chart-container { margin-top: 32px; }
+.chart-title { font-family: Georgia, serif; color: var(--gold); font-size: 1rem; margin-bottom: 16px; }
+.chart-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+  gap: 12px;
+}
+.chart-label { width: 80px; font-size: 0.75rem; color: var(--stone); text-align: right; flex-shrink: 0; }
+.chart-bar-wrap { flex: 1; height: 22px; background: #1a1a1a; border-radius: 4px; overflow: hidden; }
+.chart-bar {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.5s ease;
+  min-width: 2px;
+}
+.chart-bar.gold { background: var(--gold); }
+.chart-bar.green { background: var(--success); }
+.chart-val { width: 60px; font-size: 0.8rem; color: var(--ivory); flex-shrink: 0; }
+
+/* DIAGNOSTIC */
+.diag-card {
+  background: var(--card);
+  border-left: 3px solid var(--danger);
+  border-radius: 0 10px 10px 0;
+  padding: 24px;
+  margin-bottom: 16px;
+  display: none;
+}
+.diag-card.visible { display: block; }
+.diag-card.ok { border-left-color: var(--success); }
+.diag-title { font-family: Georgia, serif; color: var(--ivory); font-size: 1.05rem; margin-bottom: 8px; }
+.diag-status { font-size: 0.8rem; margin-bottom: 12px; }
+.diag-status.bad { color: #E74C3C; }
+.diag-status.ok { color: #2ECC71; }
+.diag-check { font-size: 0.85rem; color: var(--stone); margin-bottom: 4px; padding-left: 16px; }
+.diag-action {
+  margin-top: 12px;
+  padding: 10px 16px;
+  background: #111;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  color: var(--gold);
+}
+
+.no-data-msg {
+  text-align: center;
+  color: var(--stone);
+  font-style: italic;
+  padding: 40px;
+}
+
+/* FOOTER */
+.footer {
+  text-align: center;
+  padding: 40px 24px;
+  border-top: 1px solid var(--border);
+  color: var(--stone);
+  font-size: 0.8rem;
+}
+
+/* TOAST */
+.toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: var(--green);
+  color: var(--ivory);
+  padding: 12px 28px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  border: 1px solid var(--gold);
+  opacity: 0;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  z-index: 9999;
+}
+.toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+/* DELETE BTN */
+.btn-delete {
+  background: none;
+  border: 1px solid #8B3A3A55;
+  color: #E74C3C;
+  padding: 4px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.75rem;
+  transition: background 0.2s;
+}
+.btn-delete:hover { background: #8B3A3A33; }
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .kpi-grid { grid-template-columns: 1fr; }
+  .form-grid { grid-template-columns: 1fr; }
+  .revenue-grid { grid-template-columns: 1fr 1fr; }
+  .nav-tab { padding: 12px 14px; font-size: 0.78rem; }
+  .section { padding: 28px 16px 48px; }
+  .kpi-card { padding: 20px; }
+  .card { padding: 20px; }
+  td, th { padding: 8px 10px; font-size: 0.8rem; }
+}
+
+@media (max-width: 480px) {
+  .form-row { flex-direction: column; align-items: flex-start; gap: 6px; }
+  .form-row input[type="number"] { width: 100%; }
+  .revenue-grid { grid-template-columns: 1fr; }
+  .target-row { flex-direction: column; gap: 4px; }
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<header class="hero">
+  <h1>SAPIENS 360 — Dashboard KPI Hebdomadaire</h1>
+  <p>Les 5 metriques qui comptent &mdash; calcul auto, historique, diagnostic</p>
+</header>
+
+<!-- STICKY NAV -->
+<nav class="sticky-nav">
+  <div class="nav-inner">
+    <div class="nav-tab active" data-tab="metriques">5 Metriques Cles</div>
+    <div class="nav-tab" data-tab="saisie">Saisie Hebdo</div>
+    <div class="nav-tab" data-tab="calculateur">Calculateur Revenue</div>
+    <div class="nav-tab" data-tab="funnel">Funnel Sante</div>
+    <div class="nav-tab" data-tab="pipeline">Pipeline Tags</div>
+    <div class="nav-tab" data-tab="historique">Historique</div>
+    <div class="nav-tab" data-tab="diagnostic">Diagnostic</div>
+  </div>
+</nav>
+
+<!-- SECTION 1: 5 METRIQUES -->
+<section class="section active" id="metriques">
+  <h2 class="section-title">Les 5 Metriques Qui Comptent</h2>
+  <p class="section-subtitle">Chaque semaine, regarde ces 5 chiffres. Le reste est du bruit.</p>
+
+  <div class="kpi-grid">
+    <!-- RPC -->
+    <div class="kpi-card green" id="kpi-rpc">
+      <div class="kpi-number-label">#1 — LA metrique</div>
+      <div class="kpi-label">Revenue per Call (RPC)</div>
+      <div class="kpi-badge green">PRIORITE ABSOLUE</div>
+      <div class="kpi-value" id="kpi-rpc-value">---</div>
+      <div class="kpi-formula">CA semaine &divide; nombre de calls reels</div>
+      <div class="kpi-targets">
+        <span class="t-red">&lt;200&euro;</span>
+        <span class="t-yellow">200-400&euro;</span>
+        <span class="t-green">400-600&euro;</span>
+        <span class="t-green">&gt;600&euro; &#9733;</span>
+      </div>
+      <div class="kpi-levier">&laquo;C'est le seul chiffre qui combine close rate + prix moyen.&raquo;</div>
+    </div>
+
+    <!-- CPBC -->
+    <div class="kpi-card yellow" id="kpi-cpbc">
+      <div class="kpi-number-label">#2</div>
+      <div class="kpi-label">Cost per Booked Call (CPBC)</div>
+      <div class="kpi-badge yellow">EFFICACITE</div>
+      <div class="kpi-value" id="kpi-cpbc-value">---</div>
+      <div class="kpi-formula">Temps setting &divide; nombre de bookings</div>
+      <div class="kpi-targets">
+        <span class="t-green">&lt;20 min/booking</span>
+        <span class="t-yellow">20-40 min</span>
+        <span class="t-red">&gt;40 min</span>
+      </div>
+      <div class="kpi-levier">Levier : ManyChat automation, flows pre-qualifies</div>
+    </div>
+
+    <!-- SHOW RATE -->
+    <div class="kpi-card green" id="kpi-show">
+      <div class="kpi-number-label">#3</div>
+      <div class="kpi-label">Show Rate</div>
+      <div class="kpi-badge green">CONVERSION</div>
+      <div class="kpi-value" id="kpi-show-value">---</div>
+      <div class="kpi-formula">Calls reels &divide; Calls bookes</div>
+      <div class="kpi-targets">
+        <span class="t-green">&gt;70%</span>
+        <span class="t-yellow">50-70%</span>
+        <span class="t-red">&lt;50%</span>
+      </div>
+      <div class="kpi-levier">Levier : Confirmations DM + email + hammer content</div>
+    </div>
+
+    <!-- CLOSE RATE -->
+    <div class="kpi-card green" id="kpi-close">
+      <div class="kpi-number-label">#4</div>
+      <div class="kpi-label">Close Rate</div>
+      <div class="kpi-badge green">CONVERSION</div>
+      <div class="kpi-value" id="kpi-close-value">---</div>
+      <div class="kpi-formula">Ventes &divide; Calls reels</div>
+      <div class="kpi-targets">
+        <span class="t-green">&gt;25%</span>
+        <span class="t-yellow">15-25%</span>
+        <span class="t-red">&lt;15%</span>
+      </div>
+      <div class="kpi-levier">Levier : Script V8, discovery profonde, silence apres le prix</div>
+    </div>
+
+    <!-- BOOKING RATE -->
+    <div class="kpi-card green" id="kpi-booking">
+      <div class="kpi-number-label">#5</div>
+      <div class="kpi-label">Booking Rate</div>
+      <div class="kpi-badge green">ACQUISITION</div>
+      <div class="kpi-value" id="kpi-booking-value">---</div>
+      <div class="kpi-formula">Bookings &divide; Leads qualifies</div>
+      <div class="kpi-targets">
+        <span class="t-green">20-30%</span>
+        <span class="t-yellow">10-20%</span>
+        <span class="t-red">&lt;10%</span>
+      </div>
+      <div class="kpi-levier">Levier : Vocal Geoffrey, setting optimise, VSL convaincante</div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 2: SAISIE HEBDO -->
+<section class="section" id="saisie">
+  <h2 class="section-title">Saisie Hebdomadaire</h2>
+  <p class="section-subtitle">Remplis chaque dimanche. Les ratios se calculent automatiquement.</p>
+
+  <div class="form-grid">
+    <!-- ACQUISITION -->
+    <div class="card">
+      <div class="form-group-title">Acquisition</div>
+      <div class="form-row"><label>Vues Instagram total</label><input type="number" id="f-vues" min="0"></div>
+      <div class="form-row"><label>Nouveaux followers</label><input type="number" id="f-followers" min="0"></div>
+      <div class="form-row"><label>Commentaires "SAPIENS"</label><input type="number" id="f-comments" min="0"></div>
+      <div class="form-row"><label>DMs entrants</label><input type="number" id="f-dms" min="0"></div>
+      <div class="form-row"><label>Quiz commences</label><input type="number" id="f-quiz-start" min="0"></div>
+      <div class="form-row"><label>Quiz completes</label><input type="number" id="f-quiz-complete" min="0"></div>
+      <div class="auto-calc" id="ac-quiz">Taux completion : ---</div>
+    </div>
+
+    <!-- QUALIFICATION -->
+    <div class="card">
+      <div class="form-group-title">Qualification</div>
+      <div class="form-row"><label>Leads qualifies ManyChat</label><input type="number" id="f-leads" min="0"></div>
+      <div class="form-row"><label>VSL envoyees</label><input type="number" id="f-vsl" min="0"></div>
+      <div class="form-row"><label>Vocaux envoyes</label><input type="number" id="f-vocaux" min="0"></div>
+      <div class="form-row"><label>Reponses aux vocaux</label><input type="number" id="f-reponses" min="0"></div>
+      <div class="auto-calc" id="ac-reponse">Taux reponse : ---</div>
+    </div>
+
+    <!-- CONVERSION -->
+    <div class="card">
+      <div class="form-group-title">Conversion</div>
+      <div class="form-row"><label>Bookings Calendly</label><input type="number" id="f-bookings" min="0"></div>
+      <div class="form-row"><label>Calls bookes</label><input type="number" id="f-calls-booked" min="0"></div>
+      <div class="form-row"><label>Calls reels</label><input type="number" id="f-calls-real" min="0"></div>
+      <div class="auto-calc" id="ac-show">Show Rate : ---</div>
+      <div class="form-row"><label>Ventes total</label><input type="number" id="f-ventes" min="0"></div>
+      <div class="auto-calc" id="ac-close">Close Rate : ---</div>
+      <div class="form-row"><label>dont ventes 1200&euro;</label><input type="number" id="f-ventes-1200" min="0"></div>
+      <div class="form-row"><label>dont ventes 1800&euro;</label><input type="number" id="f-ventes-1800" min="0"></div>
+    </div>
+
+    <!-- REVENUE AUTO -->
+    <div class="card">
+      <div class="form-group-title">Revenue (auto-calcule)</div>
+      <div class="result-card">
+        <div class="result-row">
+          <span class="result-label">CA brut semaine</span>
+          <span class="result-value" id="res-ca">---</span>
+        </div>
+        <div class="result-row">
+          <span class="result-label">RPC (Revenue per Call)</span>
+          <span class="result-value" id="res-rpc">---</span>
+        </div>
+        <div class="result-row">
+          <span class="result-label">Booking Rate</span>
+          <span class="result-value" id="res-booking">---</span>
+        </div>
+      </div>
+
+      <div style="margin-top:24px;">
+        <div class="form-group-title">Retention</div>
+        <div class="form-row"><label>Clients actifs</label><input type="number" id="f-clients" min="0"></div>
+        <div class="form-row"><label>Referrals recus</label><input type="number" id="f-referrals" min="0"></div>
+        <div class="form-row"><label>NPS moyen</label><input type="number" id="f-nps" min="0" max="10" step="0.1"></div>
+      </div>
+    </div>
+  </div>
+
+  <button class="btn-save" id="btn-save" onclick="saveWeekData()">Sauvegarder la semaine</button>
+</section>
+
+<!-- SECTION 3: CALCULATEUR REVENUE -->
+<section class="section" id="calculateur">
+  <h2 class="section-title">Calculateur Revenue</h2>
+  <p class="section-subtitle">Joue avec les parametres pour voir l'impact sur le revenue.</p>
+
+  <div class="card">
+    <div class="slider-group">
+      <div class="slider-label">
+        <span>Calls par semaine</span>
+        <strong id="sl-calls-val">10</strong>
+      </div>
+      <input type="range" id="sl-calls" min="1" max="30" value="10" oninput="updateCalculator()">
+    </div>
+
+    <div class="slider-group">
+      <div class="slider-label">
+        <span>Close rate</span>
+        <strong id="sl-close-val">25%</strong>
+      </div>
+      <input type="range" id="sl-close" min="5" max="60" value="25" oninput="updateCalculator()">
+    </div>
+
+    <div class="slider-group">
+      <div class="slider-label">
+        <span>Prix moyen</span>
+        <strong id="sl-prix-val">1200&euro;</strong>
+      </div>
+      <select id="sl-prix" onchange="updateCalculator()">
+        <option value="1200">1 200&euro;</option>
+        <option value="1500">1 500&euro;</option>
+        <option value="1800">1 800&euro;</option>
+      </select>
+    </div>
+
+    <div class="revenue-display">
+      <div class="revenue-label">Revenue par semaine</div>
+      <div class="revenue-big" id="rev-week">3 000&euro;</div>
+    </div>
+
+    <div class="revenue-grid">
+      <div class="revenue-cell card">
+        <div class="revenue-label">Par semaine</div>
+        <div class="revenue-big" style="font-size:1.6rem" id="rev-w2">3 000&euro;</div>
+      </div>
+      <div class="revenue-cell card">
+        <div class="revenue-label">Par mois</div>
+        <div class="revenue-big" style="font-size:1.6rem" id="rev-m">12 990&euro;</div>
+      </div>
+      <div class="revenue-cell card">
+        <div class="revenue-label">Par an</div>
+        <div class="revenue-big" style="font-size:1.6rem" id="rev-y">156 000&euro;</div>
+      </div>
+      <div class="revenue-cell card">
+        <div class="revenue-label">Ventes / semaine</div>
+        <div class="revenue-big" style="font-size:1.6rem" id="rev-sales">2.5</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="target-box">
+    <h4>Pour atteindre 100 000&euro;/mois</h4>
+    <div id="target-rows"></div>
+  </div>
+</section>
+
+<!-- SECTION 4: FUNNEL SANTE -->
+<section class="section" id="funnel">
+  <h2 class="section-title">Sante du Funnel</h2>
+  <p class="section-subtitle">Chaque etape montre le taux reel vs la cible. Vert = sain, Rouge = a fixer.</p>
+
+  <div class="funnel-container" id="funnel-visual">
+    <div class="no-data-msg" id="funnel-no-data">Remplis la saisie hebdo pour alimenter le funnel.</div>
+  </div>
+</section>
+
+<!-- SECTION 5: PIPELINE TAGS -->
+<section class="section" id="pipeline">
+  <h2 class="section-title">Pipeline Tags GHL</h2>
+  <p class="section-subtitle">Reference complete des tags GoHighLevel et leur declencheur.</p>
+
+  <div class="card table-wrap">
+    <table>
+      <thead>
+        <tr><th>Etape</th><th>Tag GHL</th><th>Ajoute par</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Optin formulaire</td><td><span class="tag-code">optin-protocole</span></td><td>GHL auto</td></tr>
+        <tr><td>Quiz complete</td><td><span class="tag-code">quiz-complete</span></td><td>GHL auto</td></tr>
+        <tr><td>ManyChat qualifie</td><td><span class="tag-code">manychat-qualifie</span></td><td>ManyChat webhook</td></tr>
+        <tr><td>VSL envoyee</td><td><span class="tag-code">vsl-envoyee</span></td><td>ManyChat auto</td></tr>
+        <tr><td>VSL vue</td><td><span class="tag-code">vsl-vue</span></td><td>Pixel page VSL</td></tr>
+        <tr><td>Vocal envoye</td><td><span class="tag-code">vocal-envoye</span></td><td>Jad manuel</td></tr>
+        <tr><td>Booking</td><td><span class="tag-code">rdv-reserve</span></td><td>Calendly webhook</td></tr>
+        <tr><td>Confirme</td><td><span class="tag-code">rdv-confirme</span></td><td>Jad manuel ou auto</td></tr>
+        <tr><td>Call fait</td><td><span class="tag-code">call-fait</span></td><td>Jad manuel post-call</td></tr>
+        <tr><td>Close</td><td><span class="tag-code">client</span></td><td>Jad post-paiement</td></tr>
+        <tr><td>No-show</td><td><span class="tag-code">no-show</span></td><td>Jad manuel</td></tr>
+        <tr><td>Call sans vente</td><td><span class="tag-code">call-sans-vente</span></td><td>Jad manuel</td></tr>
+        <tr><td>Referral</td><td><span class="tag-code">referral</span></td><td>Jad manuel</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- SECTION 6: HISTORIQUE -->
+<section class="section" id="historique">
+  <h2 class="section-title">Historique</h2>
+  <p class="section-subtitle">Donnees sauvegardees semaine par semaine.</p>
+
+  <div class="card table-wrap">
+    <table id="history-table">
+      <thead>
+        <tr><th>Semaine</th><th>CA</th><th>RPC</th><th>Show Rate</th><th>Close Rate</th><th>Booking Rate</th><th></th></tr>
+      </thead>
+      <tbody id="history-body">
+      </tbody>
+    </table>
+    <div class="no-data-msg" id="history-no-data">Aucune donnee sauvegardee.</div>
+  </div>
+
+  <div class="chart-container" id="charts-container" style="display:none">
+    <div class="card">
+      <div class="chart-title">CA par semaine</div>
+      <div id="chart-ca"></div>
+    </div>
+    <div class="card" style="margin-top:20px">
+      <div class="chart-title">Close Rate par semaine</div>
+      <div id="chart-close"></div>
+    </div>
+    <div class="card" style="margin-top:20px">
+      <div class="chart-title">RPC par semaine</div>
+      <div id="chart-rpc"></div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 7: DIAGNOSTIC -->
+<section class="section" id="diagnostic">
+  <h2 class="section-title">Diagnostic &mdash; Quoi Fixer?</h2>
+  <p class="section-subtitle">Base sur tes donnees de la semaine. Remplis d'abord la saisie hebdo.</p>
+
+  <div id="diag-no-data" class="no-data-msg">Remplis la saisie hebdo pour obtenir un diagnostic.</div>
+
+  <div class="diag-card" id="diag-rpc">
+    <div class="diag-title">Revenue per Call (RPC)</div>
+    <div class="diag-status" id="diag-rpc-status"></div>
+    <div class="diag-check">Verifier : discovery &gt; 12 min?</div>
+    <div class="diag-check">Verifier : silence apres le prix?</div>
+    <div class="diag-check">Verifier : value stack presente?</div>
+    <div class="diag-action">Action : re-ecouter le dernier call avec Read.ai</div>
+  </div>
+
+  <div class="diag-card" id="diag-show">
+    <div class="diag-title">Show Rate</div>
+    <div class="diag-status" id="diag-show-status"></div>
+    <div class="diag-check">Verifier : confirmation DM + email envoyes?</div>
+    <div class="diag-check">Verifier : hammer content partage?</div>
+    <div class="diag-action">Action : ajouter DM H-1 + contenu temoignage</div>
+  </div>
+
+  <div class="diag-card" id="diag-close">
+    <div class="diag-title">Close Rate</div>
+    <div class="diag-status" id="diag-close-status"></div>
+    <div class="diag-check">Verifier : script V8 applique?</div>
+    <div class="diag-check">Verifier : discovery assez longue?</div>
+    <div class="diag-check">Verifier : objections isolees correctement?</div>
+    <div class="diag-action">Action : re-lire la Bible des Objections</div>
+  </div>
+
+  <div class="diag-card" id="diag-booking">
+    <div class="diag-title">Booking Rate</div>
+    <div class="diag-status" id="diag-booking-status"></div>
+    <div class="diag-check">Verifier : vocal envoye?</div>
+    <div class="diag-check">Verifier : ManyChat actif?</div>
+    <div class="diag-check">Verifier : VSL vue?</div>
+    <div class="diag-action">Action : optimiser le vocal + verifier ManyChat flows</div>
+  </div>
+
+  <div class="diag-card ok" id="diag-ok" style="border-left-color:var(--success)">
+    <div class="diag-title">Tout est sain cette semaine</div>
+    <div class="diag-status ok">Toutes les metriques sont dans les cibles. Continue comme ca.</div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  SAPIENS 360 &nbsp;|&nbsp; Dashboard KPI &nbsp;|&nbsp; Derniere MAJ : Avril 2026
+</footer>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+// === NAV ===
+const tabs = document.querySelectorAll('.nav-tab');
+const sections = document.querySelectorAll('.section');
+
+tabs.forEach(tab => {
+  tab.addEventListener('click', () => {
+    tabs.forEach(t => t.classList.remove('active'));
+    sections.forEach(s => s.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById(tab.dataset.tab).classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+});
+
+// === TOAST ===
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+// === WEEK KEY ===
+function getWeekKey() {
+  const now = new Date();
+  const start = new Date(now.getFullYear(), 0, 1);
+  const diff = (now - start + ((start.getTimezoneOffset() - now.getTimezoneOffset()) * 60000)) / 86400000;
+  const week = Math.ceil((diff + start.getDay() + 1) / 7);
+  return now.getFullYear() + '-W' + String(week).padStart(2, '0');
+}
+
+// === FORMAT ===
+function fmt(n) {
+  if (n === null || n === undefined || isNaN(n)) return '---';
+  return n.toLocaleString('fr-FR');
+}
+function fmtEur(n) {
+  if (n === null || n === undefined || isNaN(n)) return '---';
+  return n.toLocaleString('fr-FR') + '\u20AC';
+}
+function fmtPct(n) {
+  if (n === null || n === undefined || isNaN(n)) return '---';
+  return n.toFixed(1) + '%';
+}
+
+// === FORM AUTO-CALC ===
+const formFields = [
+  'f-vues','f-followers','f-comments','f-dms','f-quiz-start','f-quiz-complete',
+  'f-leads','f-vsl','f-vocaux','f-reponses',
+  'f-bookings','f-calls-booked','f-calls-real','f-ventes','f-ventes-1200','f-ventes-1800',
+  'f-clients','f-referrals','f-nps'
+];
+
+function getVal(id) {
+  const el = document.getElementById(id);
+  if (!el) return 0;
+  const v = parseFloat(el.value);
+  return isNaN(v) ? 0 : v;
+}
+
+function recalcForm() {
+  const quizStart = getVal('f-quiz-start');
+  const quizComplete = getVal('f-quiz-complete');
+  document.getElementById('ac-quiz').textContent = 'Taux completion : ' + (quizStart > 0 ? fmtPct(quizComplete / quizStart * 100) : '---');
+
+  const vocaux = getVal('f-vocaux');
+  const reponses = getVal('f-reponses');
+  document.getElementById('ac-reponse').textContent = 'Taux reponse : ' + (vocaux > 0 ? fmtPct(reponses / vocaux * 100) : '---');
+
+  const booked = getVal('f-calls-booked');
+  const real = getVal('f-calls-real');
+  const showRate = booked > 0 ? (real / booked * 100) : null;
+  document.getElementById('ac-show').textContent = 'Show Rate : ' + (showRate !== null ? fmtPct(showRate) : '---');
+
+  const ventes = getVal('f-ventes');
+  const closeRate = real > 0 ? (ventes / real * 100) : null;
+  document.getElementById('ac-close').textContent = 'Close Rate : ' + (closeRate !== null ? fmtPct(closeRate) : '---');
+
+  const v1200 = getVal('f-ventes-1200');
+  const v1800 = getVal('f-ventes-1800');
+  const ca = v1200 * 1200 + v1800 * 1800;
+  document.getElementById('res-ca').textContent = fmtEur(ca);
+
+  const rpc = real > 0 ? ca / real : null;
+  document.getElementById('res-rpc').textContent = rpc !== null ? fmtEur(Math.round(rpc)) : '---';
+
+  const leads = getVal('f-leads');
+  const bookings = getVal('f-bookings');
+  const bookingRate = leads > 0 ? (bookings / leads * 100) : null;
+  document.getElementById('res-booking').textContent = bookingRate !== null ? fmtPct(bookingRate) : '---';
+
+  // Update KPI cards on metriques tab
+  updateKPICards(rpc, showRate, closeRate, bookingRate);
+  // Update funnel
+  updateFunnel();
+  // Update diagnostic
+  updateDiagnostic(rpc, showRate, closeRate, bookingRate);
+}
+
+formFields.forEach(id => {
+  const el = document.getElementById(id);
+  if (el) el.addEventListener('input', recalcForm);
+});
+
+// === KPI CARDS UPDATE ===
+function updateKPICards(rpc, showRate, closeRate, bookingRate) {
+  // RPC
+  const rpcCard = document.getElementById('kpi-rpc');
+  const rpcVal = document.getElementById('kpi-rpc-value');
+  if (rpc !== null && !isNaN(rpc)) {
+    rpcVal.textContent = fmtEur(Math.round(rpc));
+    rpcCard.className = 'kpi-card ' + (rpc < 200 ? 'red' : rpc < 400 ? 'yellow' : rpc < 600 ? 'green' : 'bright-green');
+  } else {
+    rpcVal.textContent = '---';
+  }
+
+  // Show
+  const showCard = document.getElementById('kpi-show');
+  const showVal = document.getElementById('kpi-show-value');
+  if (showRate !== null && !isNaN(showRate)) {
+    showVal.textContent = fmtPct(showRate);
+    showCard.className = 'kpi-card ' + (showRate < 50 ? 'red' : showRate < 70 ? 'yellow' : 'green');
+  } else {
+    showVal.textContent = '---';
+  }
+
+  // Close
+  const closeCard = document.getElementById('kpi-close');
+  const closeVal = document.getElementById('kpi-close-value');
+  if (closeRate !== null && !isNaN(closeRate)) {
+    closeVal.textContent = fmtPct(closeRate);
+    closeCard.className = 'kpi-card ' + (closeRate < 15 ? 'red' : closeRate < 25 ? 'yellow' : 'green');
+  } else {
+    closeVal.textContent = '---';
+  }
+
+  // Booking
+  const bookCard = document.getElementById('kpi-booking');
+  const bookVal = document.getElementById('kpi-booking-value');
+  if (bookingRate !== null && !isNaN(bookingRate)) {
+    bookVal.textContent = fmtPct(bookingRate);
+    bookCard.className = 'kpi-card ' + (bookingRate < 10 ? 'red' : bookingRate < 20 ? 'yellow' : 'green');
+  } else {
+    bookVal.textContent = '---';
+  }
+}
+
+// === SAVE ===
+function saveWeekData() {
+  const data = {};
+  formFields.forEach(id => { data[id] = getVal(id); });
+
+  const v1200 = data['f-ventes-1200'] || 0;
+  const v1800 = data['f-ventes-1800'] || 0;
+  const ca = v1200 * 1200 + v1800 * 1800;
+  const real = data['f-calls-real'] || 0;
+  const booked = data['f-calls-booked'] || 0;
+  const ventes = data['f-ventes'] || 0;
+  const leads = data['f-leads'] || 0;
+  const bookings = data['f-bookings'] || 0;
+
+  data._ca = ca;
+  data._rpc = real > 0 ? ca / real : null;
+  data._showRate = booked > 0 ? (real / booked * 100) : null;
+  data._closeRate = real > 0 ? (ventes / real * 100) : null;
+  data._bookingRate = leads > 0 ? (bookings / leads * 100) : null;
+
+  const key = getWeekKey();
+  data._week = key;
+  data._savedAt = new Date().toISOString();
+
+  let history = JSON.parse(localStorage.getItem('sapiens360_kpi') || '{}');
+  history[key] = data;
+  localStorage.setItem('sapiens360_kpi', JSON.stringify(history));
+
+  const btn = document.getElementById('btn-save');
+  btn.classList.add('saved');
+  btn.textContent = 'Sauvegarde (' + key + ')';
+  setTimeout(() => { btn.classList.remove('saved'); btn.textContent = 'Sauvegarder la semaine'; }, 2000);
+  showToast('Semaine ' + key + ' sauvegardee');
+  loadHistory();
+}
+
+// === LOAD HISTORY ===
+function loadHistory() {
+  const history = JSON.parse(localStorage.getItem('sapiens360_kpi') || '{}');
+  const body = document.getElementById('history-body');
+  const noData = document.getElementById('history-no-data');
+  const chartsC = document.getElementById('charts-container');
+  body.innerHTML = '';
+
+  const weeks = Object.keys(history).sort();
+  if (weeks.length === 0) {
+    noData.style.display = 'block';
+    chartsC.style.display = 'none';
+    return;
+  }
+  noData.style.display = 'none';
+  chartsC.style.display = 'block';
+
+  weeks.forEach(w => {
+    const d = history[w];
+    const tr = document.createElement('tr');
+    tr.innerHTML =
+      '<td>' + w + '</td>' +
+      '<td>' + fmtEur(d._ca || 0) + '</td>' +
+      '<td>' + (d._rpc !== null ? fmtEur(Math.round(d._rpc)) : '---') + '</td>' +
+      '<td>' + (d._showRate !== null ? fmtPct(d._showRate) : '---') + '</td>' +
+      '<td>' + (d._closeRate !== null ? fmtPct(d._closeRate) : '---') + '</td>' +
+      '<td>' + (d._bookingRate !== null ? fmtPct(d._bookingRate) : '---') + '</td>' +
+      '<td><button class="btn-delete" onclick="deleteWeek(\'' + w + '\')">Suppr.</button></td>';
+    body.appendChild(tr);
+  });
+
+  // Charts
+  renderBarChart('chart-ca', weeks, weeks.map(w => history[w]._ca || 0), 'gold', function(v) { return fmtEur(v); });
+  renderBarChart('chart-close', weeks, weeks.map(w => history[w]._closeRate || 0), 'green', function(v) { return fmtPct(v); });
+  renderBarChart('chart-rpc', weeks, weeks.map(w => history[w]._rpc || 0), 'gold', function(v) { return fmtEur(Math.round(v)); });
+}
+
+function deleteWeek(w) {
+  let history = JSON.parse(localStorage.getItem('sapiens360_kpi') || '{}');
+  delete history[w];
+  localStorage.setItem('sapiens360_kpi', JSON.stringify(history));
+  loadHistory();
+  showToast('Semaine ' + w + ' supprimee');
+}
+
+// === BAR CHART ===
+function renderBarChart(containerId, labels, values, colorClass, formatter) {
+  const container = document.getElementById(containerId);
+  container.innerHTML = '';
+  const max = Math.max(...values, 1);
+  labels.forEach((label, i) => {
+    const pct = (values[i] / max * 100);
+    const row = document.createElement('div');
+    row.className = 'chart-row';
+    row.innerHTML =
+      '<div class="chart-label">' + label + '</div>' +
+      '<div class="chart-bar-wrap"><div class="chart-bar ' + colorClass + '" style="width:' + pct + '%"></div></div>' +
+      '<div class="chart-val">' + formatter(values[i]) + '</div>';
+    container.appendChild(row);
+  });
+}
+
+// === CALCULATOR ===
+function updateCalculator() {
+  const calls = parseInt(document.getElementById('sl-calls').value);
+  const closeRate = parseInt(document.getElementById('sl-close').value) / 100;
+  const prix = parseInt(document.getElementById('sl-prix').value);
+
+  document.getElementById('sl-calls-val').textContent = calls;
+  document.getElementById('sl-close-val').textContent = (closeRate * 100) + '%';
+  document.getElementById('sl-prix-val').innerHTML = prix.toLocaleString('fr-FR') + '&euro;';
+
+  const salesWeek = calls * closeRate;
+  const revWeek = salesWeek * prix;
+  const revMonth = revWeek * 4.33;
+  const revYear = revWeek * 52;
+
+  document.getElementById('rev-week').textContent = fmtEur(Math.round(revWeek));
+  document.getElementById('rev-w2').textContent = fmtEur(Math.round(revWeek));
+  document.getElementById('rev-m').textContent = fmtEur(Math.round(revMonth));
+  document.getElementById('rev-y').textContent = fmtEur(Math.round(revYear));
+  document.getElementById('rev-sales').textContent = salesWeek.toFixed(1);
+
+  // 100K target
+  const scenarios = [
+    { prix: 1200, close: 0.25, label: '1 200\u20AC, 25% close' },
+    { prix: 1200, close: 0.30, label: '1 200\u20AC, 30% close' },
+    { prix: 1500, close: 0.25, label: '1 500\u20AC, 25% close' },
+    { prix: 1500, close: 0.30, label: '1 500\u20AC, 30% close' },
+    { prix: 1800, close: 0.25, label: '1 800\u20AC, 25% close' },
+    { prix: 1800, close: 0.30, label: '1 800\u20AC, 30% close' },
+  ];
+
+  const targetDiv = document.getElementById('target-rows');
+  targetDiv.innerHTML = '';
+  scenarios.forEach(s => {
+    const salesNeededMonth = 100000 / s.prix;
+    const salesNeededWeek = salesNeededMonth / 4.33;
+    const callsNeeded = Math.ceil(salesNeededWeek / s.close);
+    const row = document.createElement('div');
+    row.className = 'target-row';
+    row.innerHTML = '<span class="scenario">' + s.label + '</span><span class="calls">' + callsNeeded + ' calls/semaine</span>';
+    targetDiv.appendChild(row);
+  });
+}
+
+// === FUNNEL ===
+function updateFunnel() {
+  const container = document.getElementById('funnel-visual');
+  const noData = document.getElementById('funnel-no-data');
+  const vues = getVal('f-vues');
+  const comments = getVal('f-comments');
+  const dms = getVal('f-dms');
+  const leads = getVal('f-leads');
+  const vsl = getVal('f-vsl');
+  const bookings = getVal('f-bookings');
+  const real = getVal('f-calls-real');
+  const ventes = getVal('f-ventes');
+  const v1200 = getVal('f-ventes-1200');
+  const v1800 = getVal('f-ventes-1800');
+  const ca = v1200 * 1200 + v1800 * 1800;
+
+  if (vues === 0 && comments === 0 && leads === 0) {
+    noData.style.display = 'block';
+    return;
+  }
+  noData.style.display = 'none';
+
+  const engagements = comments + dms;
+
+  const steps = [
+    { name: 'Instagram Vues', value: fmt(vues), rate: null, target: null },
+    { name: 'Commentaires + DMs', value: fmt(engagements), rate: vues > 0 ? (engagements / vues * 100) : null, target: [0.02, 0.05], pct: true },
+    { name: 'Leads Qualifies ManyChat', value: fmt(leads), rate: engagements > 0 ? (leads / engagements * 100) : null, target: [60, 70] },
+    { name: 'VSL + Vocaux', value: fmt(vsl), rate: leads > 0 ? (vsl / leads * 100) : null, target: [15, 20] },
+    { name: 'Bookings Calendly', value: fmt(bookings), rate: vsl > 0 ? (bookings / vsl * 100) : null, target: [30, 40] },
+    { name: 'Calls Reels', value: fmt(real), rate: bookings > 0 ? (real / bookings * 100) : null, target: [70, 100] },
+    { name: 'VENTES', value: fmt(ventes), rate: real > 0 ? (ventes / real * 100) : null, target: [25, 30] },
+    { name: 'REVENU', value: fmtEur(ca), rate: null, target: null },
+  ];
+
+  // Build funnel HTML (keep noData element)
+  let html = '';
+  steps.forEach((step, i) => {
+    const widthPct = 100 - (i * 10);
+    const bgAlpha = (0.08 + i * 0.03).toFixed(2);
+    html += '<div class="funnel-step" style="background:rgba(184,149,106,' + bgAlpha + '); width:' + widthPct + '%; margin:0 auto;">';
+    html += '<div class="funnel-step-name">' + step.name + '</div>';
+    html += '<div class="funnel-step-value">' + step.value + '</div>';
+    if (step.rate !== null) {
+      let rateClass = 'warn';
+      if (step.target) {
+        if (step.rate >= step.target[0]) rateClass = 'good';
+        if (step.rate < step.target[0] * 0.7) rateClass = 'bad';
+      }
+      html += '<span class="funnel-rate ' + rateClass + '">' + step.rate.toFixed(2) + '% (cible: ' + step.target[0] + '-' + step.target[1] + '%)</span>';
+    }
+    html += '</div>';
+    if (i < steps.length - 1) {
+      html += '<div class="funnel-arrow">\u2193</div>';
+    }
+  });
+
+  container.innerHTML = '<div class="no-data-msg" id="funnel-no-data" style="display:none">Remplis la saisie hebdo pour alimenter le funnel.</div>' + html;
+}
+
+// === DIAGNOSTIC ===
+function updateDiagnostic(rpc, showRate, closeRate, bookingRate) {
+  const noData = document.getElementById('diag-no-data');
+  const hasData = (rpc !== null || showRate !== null || closeRate !== null || bookingRate !== null);
+
+  if (!hasData) {
+    noData.style.display = 'block';
+    ['diag-rpc','diag-show','diag-close','diag-booking','diag-ok'].forEach(id => {
+      document.getElementById(id).classList.remove('visible');
+    });
+    return;
+  }
+  noData.style.display = 'none';
+
+  let issues = 0;
+
+  // RPC
+  const diagRpc = document.getElementById('diag-rpc');
+  const diagRpcS = document.getElementById('diag-rpc-status');
+  if (rpc !== null && rpc < 200) {
+    diagRpc.classList.add('visible');
+    diagRpcS.textContent = 'RPC actuel : ' + fmtEur(Math.round(rpc)) + ' — CRITIQUE (cible > 200\u20AC)';
+    diagRpcS.className = 'diag-status bad';
+    issues++;
+  } else {
+    diagRpc.classList.remove('visible');
+  }
+
+  // Show Rate
+  const diagShow = document.getElementById('diag-show');
+  const diagShowS = document.getElementById('diag-show-status');
+  if (showRate !== null && showRate < 70) {
+    diagShow.classList.add('visible');
+    diagShowS.textContent = 'Show Rate actuel : ' + fmtPct(showRate) + ' — ' + (showRate < 50 ? 'CRITIQUE' : 'A AMELIORER') + ' (cible > 70%)';
+    diagShowS.className = 'diag-status bad';
+    issues++;
+  } else {
+    diagShow.classList.remove('visible');
+  }
+
+  // Close Rate
+  const diagClose = document.getElementById('diag-close');
+  const diagCloseS = document.getElementById('diag-close-status');
+  if (closeRate !== null && closeRate < 15) {
+    diagClose.classList.add('visible');
+    diagCloseS.textContent = 'Close Rate actuel : ' + fmtPct(closeRate) + ' — CRITIQUE (cible > 25%)';
+    diagCloseS.className = 'diag-status bad';
+    issues++;
+  } else {
+    diagClose.classList.remove('visible');
+  }
+
+  // Booking Rate
+  const diagBook = document.getElementById('diag-booking');
+  const diagBookS = document.getElementById('diag-booking-status');
+  if (bookingRate !== null && bookingRate < 15) {
+    diagBook.classList.add('visible');
+    diagBookS.textContent = 'Booking Rate actuel : ' + fmtPct(bookingRate) + ' — ' + (bookingRate < 10 ? 'CRITIQUE' : 'A AMELIORER') + ' (cible > 20%)';
+    diagBookS.className = 'diag-status bad';
+    issues++;
+  } else {
+    diagBook.classList.remove('visible');
+  }
+
+  // All OK
+  const diagOk = document.getElementById('diag-ok');
+  if (issues === 0 && hasData) {
+    diagOk.classList.add('visible');
+  } else {
+    diagOk.classList.remove('visible');
+  }
+}
+
+// === INIT ===
+updateCalculator();
+loadHistory();
+
+// Load current week data if exists
+(function() {
+  const history = JSON.parse(localStorage.getItem('sapiens360_kpi') || '{}');
+  const key = getWeekKey();
+  if (history[key]) {
+    const d = history[key];
+    formFields.forEach(id => {
+      const el = document.getElementById(id);
+      if (el && d[id] !== undefined) el.value = d[id] || '';
+    });
+    recalcForm();
+  }
+})();
+</script>
+</body>
+</html>

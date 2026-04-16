@@ -1,0 +1,1226 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAPIENS 360 — Offer Bible</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #111;
+  --card: #161616;
+  --border: #2C4A3555;
+  --gold: #B8956A;
+  --green: #2C4A35;
+  --ivory: #FAF7F2;
+  --stone: #888;
+  --red: #C0392B;
+  --green-text: #27AE60;
+  --red-text: #E74C3C;
+  --gold-text: #B8956A;
+}
+
+html { scroll-behavior: smooth; scroll-padding-top: 70px; }
+
+body {
+  background: var(--bg);
+  color: var(--ivory);
+  font-family: 'Segoe UI', Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4 { font-family: Georgia, 'Times New Roman', serif; font-weight: 400; }
+
+/* ── Hero ── */
+.hero {
+  text-align: center;
+  padding: 80px 20px 60px;
+  background: linear-gradient(180deg, #0a0a0a 0%, #111 100%);
+  border-bottom: 1px solid var(--border);
+}
+.hero-label {
+  font-family: Georgia, serif;
+  color: var(--gold);
+  letter-spacing: 6px;
+  font-size: 14px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.hero-title {
+  font-size: clamp(48px, 10vw, 96px);
+  color: #fff;
+  line-height: 1;
+  margin-bottom: 16px;
+}
+.hero-title .gold-char { color: var(--gold); }
+.hero-subtitle {
+  font-family: Georgia, serif;
+  font-size: 22px;
+  color: var(--ivory);
+  margin-bottom: 12px;
+}
+.hero-desc {
+  color: var(--stone);
+  font-size: 15px;
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+/* ── Sticky Nav ── */
+.sticky-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: #0d0d0d;
+  border-bottom: 1px solid var(--border);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.sticky-nav::-webkit-scrollbar { display: none; }
+.nav-inner {
+  display: flex;
+  gap: 0;
+  min-width: max-content;
+  padding: 0 12px;
+}
+.nav-tab {
+  padding: 14px 18px;
+  font-size: 13px;
+  color: var(--stone);
+  text-decoration: none;
+  white-space: nowrap;
+  border-bottom: 2px solid transparent;
+  transition: color .2s, border-color .2s;
+  cursor: pointer;
+}
+.nav-tab:hover { color: var(--ivory); }
+.nav-tab.active { color: var(--gold); border-bottom-color: var(--gold); }
+
+/* ── Layout ── */
+.container { max-width: 900px; margin: 0 auto; padding: 0 20px; }
+.section { padding: 60px 0; border-bottom: 1px solid var(--border); }
+.section-title {
+  font-size: 28px;
+  margin-bottom: 8px;
+  color: #fff;
+}
+.section-num {
+  font-size: 13px;
+  color: var(--gold);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+/* ── Cards ── */
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 28px;
+  margin-bottom: 16px;
+}
+.card-title {
+  font-family: Georgia, serif;
+  font-size: 18px;
+  color: #fff;
+  margin-bottom: 10px;
+}
+.card-value {
+  font-size: 13px;
+  color: var(--gold);
+  margin-bottom: 12px;
+  letter-spacing: 1px;
+}
+
+/* ── Stat cards ── */
+.stat-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 24px 0; }
+.stat-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 24px;
+  text-align: center;
+}
+.stat-card .label { font-size: 12px; color: var(--stone); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 8px; }
+.stat-card .value { font-family: Georgia, serif; font-size: 24px; color: var(--gold); margin-bottom: 4px; }
+.stat-card .note { font-size: 13px; color: var(--stone); }
+
+/* ── Quote box ── */
+.quote-box {
+  border-left: 3px solid var(--gold);
+  background: #1a1610;
+  padding: 20px 24px;
+  margin: 24px 0;
+  border-radius: 0 8px 8px 0;
+  font-style: italic;
+  color: var(--ivory);
+  font-size: 15px;
+}
+
+/* ── Pillar grid ── */
+.pillar-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 24px 0; }
+.pillar-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 22px;
+}
+.pillar-card .pillar-num { font-size: 12px; color: var(--gold); letter-spacing: 2px; margin-bottom: 6px; }
+.pillar-card h4 { font-size: 16px; color: #fff; margin-bottom: 6px; }
+.pillar-card p { font-size: 14px; color: var(--stone); }
+
+/* ── Bullet lists ── */
+ul.bullets { list-style: none; padding: 0; }
+ul.bullets li {
+  position: relative;
+  padding-left: 18px;
+  margin-bottom: 8px;
+  font-size: 14px;
+  color: var(--ivory);
+  line-height: 1.55;
+}
+ul.bullets li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 8px;
+  width: 6px;
+  height: 6px;
+  background: var(--gold);
+  border-radius: 50%;
+}
+
+/* ── Plans list ── */
+.plans-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+.plans-list span {
+  background: #1c1c1c;
+  border: 1px solid var(--border);
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-size: 13px;
+  color: var(--ivory);
+}
+
+/* ── Value Stack ── */
+.stack-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid #1f1f1f;
+  font-size: 15px;
+}
+.stack-row .item { color: var(--ivory); }
+.stack-row .val { color: var(--gold); font-family: Georgia, serif; font-size: 17px; }
+.stack-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 0;
+  margin-top: 8px;
+  border-top: 2px solid var(--gold);
+  font-size: 18px;
+  font-family: Georgia, serif;
+}
+.stack-total .item { color: #fff; font-size: 20px; }
+.stack-total .val { color: var(--gold); font-size: 24px; }
+.price-highlight {
+  text-align: center;
+  margin: 28px 0 12px;
+  padding: 24px;
+  background: linear-gradient(135deg, #1a1a12 0%, #161616 100%);
+  border: 1px solid var(--gold);
+  border-radius: 12px;
+}
+.price-highlight .big { font-family: Georgia, serif; font-size: 42px; color: var(--gold); }
+.price-highlight .sub { font-size: 14px; color: var(--stone); margin-top: 6px; }
+.roi-box {
+  text-align: center;
+  background: var(--green);
+  padding: 16px;
+  border-radius: 8px;
+  margin-top: 16px;
+  color: #fff;
+  font-size: 15px;
+}
+.roi-box strong { font-size: 18px; }
+
+/* ── Copy button ── */
+.script-block {
+  position: relative;
+  background: #1a1a1a;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 20px 20px 20px 20px;
+  margin: 16px 0;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--ivory);
+}
+.copy-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: var(--gold);
+  color: #111;
+  border: none;
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background .2s, transform .1s;
+}
+.copy-btn:hover { background: #caa77e; }
+.copy-btn:active { transform: scale(.95); }
+.copy-btn.copied { background: var(--green-text); color: #fff; }
+
+/* ── Timer ── */
+.timer-container {
+  text-align: center;
+  margin: 28px 0;
+  padding: 32px;
+  background: #1a0a0a;
+  border: 2px solid var(--red-text);
+  border-radius: 12px;
+}
+.timer-container h3 { color: var(--red-text); font-size: 22px; margin-bottom: 6px; }
+.timer-display {
+  font-family: Georgia, serif;
+  font-size: 80px;
+  color: var(--red-text);
+  line-height: 1.1;
+  margin: 16px 0;
+}
+.timer-subtext { color: var(--stone); font-style: italic; margin-bottom: 16px; font-size: 15px; }
+.timer-btn {
+  background: var(--red-text);
+  color: #fff;
+  border: none;
+  padding: 14px 40px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background .2s;
+}
+.timer-btn:hover { background: #c0392b; }
+.timer-btn:disabled { opacity: .5; cursor: default; }
+
+/* ── Competitor table ── */
+.comp-table-wrap { overflow-x: auto; margin: 24px 0; }
+.comp-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 700px;
+  font-size: 14px;
+}
+.comp-table th {
+  background: #1a1a1a;
+  padding: 12px 14px;
+  text-align: left;
+  font-weight: 600;
+  color: var(--ivory);
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+.comp-table th:first-child { border-radius: 8px 0 0 0; }
+.comp-table th:last-child { border-radius: 0 8px 0 0; }
+.comp-table td {
+  padding: 11px 14px;
+  border-bottom: 1px solid #1f1f1f;
+  text-align: center;
+}
+.comp-table td:first-child { text-align: left; color: var(--ivory); }
+.comp-table tr:hover td { background: #1a1a1a; }
+.comp-table .yes { color: var(--green-text); font-size: 16px; }
+.comp-table .no { color: var(--red-text); font-size: 16px; }
+.comp-table .maybe { color: var(--gold-text); font-size: 16px; }
+.comp-table .sapiens-col { background: #111d15; font-weight: 600; }
+
+/* ── Vocab columns ── */
+.vocab-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 24px 0; }
+.vocab-col {
+  border-radius: 10px;
+  padding: 24px;
+  background: var(--card);
+}
+.vocab-col.do { border-left: 4px solid var(--green-text); }
+.vocab-col.dont { border-left: 4px solid var(--red-text); }
+.vocab-col h4 { margin-bottom: 14px; font-size: 16px; }
+.vocab-col ul { list-style: none; padding: 0; }
+.vocab-col ul li { padding: 6px 0; font-size: 14px; color: var(--ivory); }
+.vocab-col.do ul li::before { content: '"; '; color: var(--green-text); }
+.vocab-col.dont ul li::before { content: '"; '; color: var(--red-text); }
+
+/* ── Danger box ── */
+.danger-box {
+  background: #1a0a0a;
+  border: 1px solid var(--red-text);
+  border-radius: 10px;
+  padding: 24px;
+  margin: 20px 0;
+}
+.danger-box .danger-title {
+  color: var(--red-text);
+  font-family: Georgia, serif;
+  font-size: 16px;
+  margin-bottom: 12px;
+}
+.danger-box p, .danger-box li { font-size: 14px; color: var(--ivory); }
+
+/* ── Rules list ── */
+.rules-list { list-style: none; padding: 0; counter-reset: rules; }
+.rules-list li {
+  counter-increment: rules;
+  padding: 12px 0 12px 0;
+  border-bottom: 1px solid #1f1f1f;
+  font-size: 14px;
+  color: var(--ivory);
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+.rules-list li::before {
+  content: counter(rules);
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  background: var(--red-text);
+  color: #fff;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+/* ── Phase cards ── */
+.phase-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 24px 0; }
+.phase-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 24px;
+}
+.phase-card .phase-label { font-size: 12px; color: var(--gold); letter-spacing: 2px; margin-bottom: 6px; }
+.phase-card h4 { color: #fff; font-size: 17px; margin-bottom: 12px; }
+
+/* ── Payment links ── */
+.payment-card {
+  background: var(--card);
+  border: 1px solid var(--gold);
+  border-radius: 10px;
+  padding: 24px;
+  margin-bottom: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.payment-card .info h4 { color: #fff; font-size: 18px; margin-bottom: 4px; }
+.payment-card .info p { color: var(--stone); font-size: 13px; }
+.payment-card .copy-link-btn {
+  background: var(--gold);
+  color: #111;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background .2s;
+}
+.payment-card .copy-link-btn:hover { background: #caa77e; }
+
+/* ── Decision tree ── */
+.decision-tree {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin: 16px 0;
+}
+.decision-branch {
+  background: var(--card);
+  border-radius: 8px;
+  padding: 18px;
+  border: 1px solid var(--border);
+}
+.decision-branch .branch-label {
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+.decision-branch .branch-label.yes { color: var(--green-text); }
+.decision-branch .branch-label.no { color: var(--red-text); }
+
+/* ── Garantie conditions ── */
+.condition-list { list-style: none; padding: 0; margin: 20px 0; }
+.condition-list li {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  padding: 14px 0;
+  border-bottom: 1px solid #1f1f1f;
+}
+.condition-num {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--gold);
+  color: #111;
+  border-radius: 50%;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+/* ── Bonus expire badge ── */
+.expire-badge {
+  display: inline-block;
+  background: var(--red-text);
+  color: #fff;
+  padding: 3px 10px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-left: 8px;
+}
+
+/* ── Warning note ── */
+.warning-note {
+  background: #1a1710;
+  border: 1px solid var(--gold);
+  border-radius: 8px;
+  padding: 16px 20px;
+  margin: 16px 0;
+  font-size: 14px;
+  color: var(--gold);
+}
+
+/* ── Footer ── */
+.footer {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--stone);
+  font-size: 13px;
+  border-top: 1px solid var(--border);
+}
+
+/* ── Collapsible on mobile ── */
+.collapse-toggle {
+  display: none;
+  width: 100%;
+  background: none;
+  border: none;
+  color: var(--gold);
+  font-size: 12px;
+  padding: 8px 0 0;
+  cursor: pointer;
+  text-align: right;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .stat-row { grid-template-columns: 1fr; }
+  .pillar-grid { grid-template-columns: 1fr; }
+  .vocab-grid { grid-template-columns: 1fr; }
+  .decision-tree { grid-template-columns: 1fr; }
+  .phase-grid { grid-template-columns: 1fr; }
+  .comp-table { font-size: 13px; }
+  .nav-tab { padding: 12px 14px; font-size: 12px; }
+  .section { padding: 40px 0; }
+  .hero { padding: 60px 16px 40px; }
+  .collapse-toggle { display: block; }
+  .section-content.collapsed { display: none; }
+}
+
+@media (max-width: 480px) {
+  .payment-card { flex-direction: column; text-align: center; }
+  .timer-display { font-size: 56px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══════ HERO ══════ -->
+<header class="hero">
+  <div class="hero-label">SAPIENS</div>
+  <h1 class="hero-title">3<span class="gold-char">6</span>0</h1>
+  <p class="hero-subtitle">L'Offre Complete</p>
+  <p class="hero-desc">Tout ce que tu dois savoir pour presenter, vendre et delivrer SAPIENS 360</p>
+</header>
+
+<!-- ══════ STICKY NAV ══════ -->
+<nav class="sticky-nav" id="stickyNav">
+  <div class="nav-inner">
+    <a class="nav-tab active" href="#vue-densemble">Vue d'ensemble</a>
+    <a class="nav-tab" href="#offre-1200">Offre 1,200&euro;</a>
+    <a class="nav-tab" href="#value-stack">Value Stack</a>
+    <a class="nav-tab" href="#garantie">Garantie 30j</a>
+    <a class="nav-tab" href="#prix-call">Prix sur le Call</a>
+    <a class="nav-tab" href="#concurrents">Concurrents</a>
+    <a class="nav-tab" href="#vocabulaire">Vocabulaire</a>
+    <a class="nav-tab" href="#regles">Regles</a>
+  </div>
+</nav>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- SECTION 1 — VUE D'ENSEMBLE -->
+<!-- ══════════════════════════════════════════════════════ -->
+<section class="section" id="vue-densemble">
+  <div class="container">
+    <p class="section-num">Section 01</p>
+    <h2 class="section-title">Vue d'ensemble</h2>
+    <p style="color:var(--stone);margin-top:8px;">Phase actuelle : <strong style="color:var(--gold);">VALIDATION</strong></p>
+
+    <div class="stat-row">
+      <div class="stat-card">
+        <div class="label">Actuellement</div>
+        <div class="value">1,200&euro;</div>
+        <div class="note">1 offre unique &mdash; phase validation</div>
+      </div>
+      <div class="stat-card">
+        <div class="label">Prochain palier</div>
+        <div class="value">1,800-2,400&euro;</div>
+        <div class="note">Apres 50% close rate &times; 3 semaines</div>
+      </div>
+    </div>
+
+    <div class="quote-box">
+      SAPIENS 360 is the first clinical protocol in French that unifies skin, intestine, sleep, energy, hormones, and weight in one terrain treatment.
+    </div>
+
+    <h3 style="font-family:Georgia,serif;font-size:20px;color:#fff;margin:28px 0 16px;">5 Piliers de Differentiation</h3>
+    <div class="pillar-grid">
+      <div class="pillar-card">
+        <div class="pillar-num">01</div>
+        <h4>Traiter la cause, pas les symptomes</h4>
+        <p>Axe intestin-immunite-peau, pas cremes</p>
+      </div>
+      <div class="pillar-card">
+        <div class="pillar-num">02</div>
+        <h4>Lire tous les symptomes ensemble</h4>
+        <p>Pas specialistes separes, vue systemique</p>
+      </div>
+      <div class="pillar-card">
+        <div class="pillar-num">03</div>
+        <h4>Cetose therapeutique objective</h4>
+        <p>Mesurable via tracker sanguin (1.5-3.0 mmol/L)</p>
+      </div>
+      <div class="pillar-card">
+        <div class="pillar-num">04</div>
+        <h4>Coaching humain direct</h4>
+        <p>Geoffrey sur WhatsApp quotidien, pas programme en ligne</p>
+      </div>
+      <div class="pillar-card" style="grid-column:1/-1;">
+        <div class="pillar-num">05</div>
+        <h4>Resultats durables</h4>
+        <p>3 phases vers 20-30 ans d'autonomie</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- SECTION 2 — OFFRE 1,200 -->
+<!-- ══════════════════════════════════════════════════════ -->
+<section class="section" id="offre-1200">
+  <div class="container">
+    <p class="section-num">Section 02</p>
+    <h2 class="section-title">SAPIENS 360 INTEGRAL &mdash; L'Offre a 1,200&euro;</h2>
+    <p style="color:var(--stone);margin-top:6px;">Valeur percue : <strong style="color:var(--gold);">12,300&euro;</strong> &nbsp;|&nbsp; Prix : <strong style="color:#fff;">1,200&euro;</strong> <span style="color:var(--stone);">(ou 3&times;400&euro;)</span></p>
+
+    <!-- Bloc 1 -->
+    <div class="card" style="margin-top:28px;">
+      <div class="card-value">BLOC 1 &mdash; VALEUR PERCUE : 4,800&euro;</div>
+      <div class="card-title">Support Humain Direct</div>
+      <ul class="bullets">
+        <li>12 calls 1:1 hebdo avec Geoffrey (45-60 min) sur 90 jours</li>
+        <li>Acces WhatsApp 24/7 (reponse &lt;4h les 30 premiers jours, &lt;24h apres)</li>
+        <li>Diagnostic complet (questionnaire 40 questions)</li>
+        <li>Analyse bilans sanguins personnalisee</li>
+        <li>Protocole personnalise (unique a chaque personne)</li>
+        <li>Ajustements hebdomadaires en temps reel</li>
+        <li>Livraison tracker Keto-Mojo + 60 bandelettes (1&times; paiement uniquement)</li>
+      </ul>
+    </div>
+
+    <!-- Bloc 2 -->
+    <div class="card">
+      <div class="card-value">BLOC 2 &mdash; VALEUR PERCUE : 1,800&euro;</div>
+      <div class="card-title">Cle-en-Main</div>
+      <ul class="bullets">
+        <li>Menu semaine 1 complet (21 repas avec photos, temps prep, couts)</li>
+        <li>Liste courses imprimable par rayon</li>
+        <li>Guide sourcing viande, oeufs, beurre bio</li>
+        <li>120+ recettes (par phase, temps, budget, condition)</li>
+        <li>Kit urgence J1 (hydratation, electrolytes, protocole keto-flu)</li>
+        <li>Rappels WhatsApp auto (mesure, hydratation, sommeil) 30 premiers jours</li>
+      </ul>
+    </div>
+
+    <!-- Bloc 3 -->
+    <div class="card">
+      <div class="card-value">BLOC 3 &mdash; VALEUR PERCUE : 2,400&euro;</div>
+      <div class="card-title">15 Plans "Quoi Qu'il Arrive"</div>
+      <div class="plans-list">
+        <span>Plan Maintenance Annuel</span>
+        <span>Protocole Crise Aigue</span>
+        <span>Plan Voyage Court</span>
+        <span>Plan Voyage Long</span>
+        <span>Plan Evenement Social</span>
+        <span>Plan Fetes</span>
+        <span>Plan Stress Intense</span>
+        <span>Plan Maladie</span>
+        <span>Plan Sport Intense</span>
+        <span>Plan Cycles Hormonaux Feminins</span>
+        <span>Plan Grossesse & Post-Partum</span>
+        <span>Plan Reintroduction Alimentaire</span>
+        <span>Plan Retour Apres Pause</span>
+        <span>Plan Examens Medicaux</span>
+        <span>Plan Famille Difficile</span>
+      </div>
+    </div>
+
+    <!-- Bloc 4 -->
+    <div class="card">
+      <div class="card-value">BLOC 4 &mdash; VALEUR PERCUE : 1,500&euro;</div>
+      <div class="card-title">Masterclasses & Formation</div>
+      <ul class="bullets">
+        <li>Acces Skool a vie (12 modules, 40h+, 3 phases, MAJ a vie)</li>
+        <li>Masterclass Microbiome (90 min)</li>
+        <li>Masterclass Cortisol & Inflammation (60 min)</li>
+        <li>Masterclass Hormones Feminines (90 min)</li>
+        <li>Masterclass Interpretation Bilans (2h)</li>
+        <li>Masterclass Supplements (60 min)</li>
+        <li>Masterclass Mental & Identite (60 min)</li>
+        <li>Lives Q&A Geoffrey hebdo (dimanche 10h) &mdash; acces a vie</li>
+      </ul>
+    </div>
+
+    <!-- Bloc 5 -->
+    <div class="card">
+      <div class="card-value">BLOC 5 &mdash; VALEUR PERCUE : 900&euro;</div>
+      <div class="card-title">Ressources & Outils a Vie</div>
+      <ul class="bullets">
+        <li>Pack Conversations Difficiles (scripts conjoint, mere, collegues, medecin)</li>
+        <li>Pack Accompagnement Partenaire (PDF 20 min pour conjoints)</li>
+        <li>80+ base supplements (marques sures vs douteuses, interactions)</li>
+        <li>50+ etudes de cas anonymisees</li>
+        <li>300+ dictionnaire alimentaire (vert/orange/rouge par phase)</li>
+        <li>Templates communication medicale</li>
+        <li>Templates suivi progres (Notion/Sheets)</li>
+        <li>Acces communaute privee a vie</li>
+      </ul>
+    </div>
+
+    <!-- Bloc 6 -->
+    <div class="card" style="border-color:var(--red-text);">
+      <div class="card-value" style="color:var(--red-text);">BLOC 6 &mdash; VALEUR PERCUE : 900&euro; <span class="expire-badge">Expire fin du call</span></div>
+      <div class="card-title">Bonus Action Rapide</div>
+      <ul class="bullets">
+        <li><strong>Bonus 1 :</strong> Session SOS urgence (1 call 30 min, utilisable 12 mois) &mdash; 300&euro;</li>
+        <li><strong>Bonus 2 :</strong> Kit Physique Premium (tracker, 60 bandelettes, lancettes, journal, the anti-inflammatoire) &mdash; 250&euro;</li>
+        <li><strong>Bonus 3 :</strong> Analyse video de tes photos "avant" par Geoffrey &mdash; 150&euro;</li>
+        <li><strong>Bonus 4 :</strong> Pass invite pour un proche (Skool + lives gratuits) &mdash; 200&euro;</li>
+      </ul>
+    </div>
+
+    <!-- Bloc 7 -->
+    <div class="card" style="border-color:var(--green-text);">
+      <div class="card-value" style="color:var(--green-text);">BLOC 7 &mdash; RISQUE ZERO</div>
+      <div class="card-title">Garantie Reset 30 Jours</div>
+      <div class="quote-box" style="margin-top:12px;">
+        Pendant 30 jours, Geoffrey suit ton protocole avec toi chaque jour sur WhatsApp. Si tu ne ressens pas de transformation significative en energie, sommeil, digestion ou peau &mdash; on te rembourse integralement. Sans condition.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- SECTION 3 — VALUE STACK -->
+<!-- ══════════════════════════════════════════════════════ -->
+<section class="section" id="value-stack">
+  <div class="container">
+    <p class="section-num">Section 03</p>
+    <h2 class="section-title">Value Stack Visuel</h2>
+
+    <div class="card" style="margin-top:24px;">
+      <div class="stack-row"><span class="item">12 calls &times; 400&euro;</span><span class="val">4,800&euro;</span></div>
+      <div class="stack-row"><span class="item">Contenu cle-en-main</span><span class="val">1,800&euro;</span></div>
+      <div class="stack-row"><span class="item">15 plans "Quoi Qu'il Arrive"</span><span class="val">2,400&euro;</span></div>
+      <div class="stack-row"><span class="item">Masterclasses + communaute</span><span class="val">1,500&euro;</span></div>
+      <div class="stack-row"><span class="item">Ressources & outils</span><span class="val">900&euro;</span></div>
+      <div class="stack-row"><span class="item">Bonus rapides</span><span class="val">900&euro;</span></div>
+      <div class="stack-total"><span class="item">Total valeur percue</span><span class="val">12,300&euro;</span></div>
+    </div>
+
+    <div class="price-highlight">
+      <div class="big">1,200&euro;</div>
+      <div class="sub">ou 3 &times; 400&euro; / mois</div>
+    </div>
+
+    <div class="roi-box">
+      ROI sur 20 ans : <strong>100,000-160,000&euro;</strong> &nbsp;&mdash;&nbsp; x83 retour
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- SECTION 4 — GARANTIE -->
+<!-- ══════════════════════════════════════════════════════ -->
+<section class="section" id="garantie">
+  <div class="container">
+    <p class="section-num">Section 04</p>
+    <h2 class="section-title">Garantie Reset 30 Jours &mdash; Detail</h2>
+
+    <h3 style="font-family:Georgia,serif;font-size:18px;color:#fff;margin:24px 0 12px;">3 conditions pour la garantie</h3>
+    <ul class="condition-list">
+      <li>
+        <span class="condition-num">1</span>
+        <div><strong style="color:#fff;">Tracking quotidien fait</strong><br><span style="color:var(--stone);">Minimum 25/30 jours</span></div>
+      </li>
+      <li>
+        <span class="condition-num">2</span>
+        <div><strong style="color:#fff;">Zone therapeutique atteinte</strong><br><span style="color:var(--stone);">Minimum 22/30 jours a 1.5-3.0 mmol/L</span></div>
+      </li>
+      <li>
+        <span class="condition-num">3</span>
+        <div><strong style="color:#fff;">Protocole Geoffrey suivi</strong><br><span style="color:var(--stone);">Pas de triche cachee</span></div>
+      </li>
+    </ul>
+
+    <div class="quote-box">
+      Si les 3 conditions sont remplies + aucune transformation : remboursement integral, sans question.
+    </div>
+
+    <h3 style="font-family:Georgia,serif;font-size:18px;color:#fff;margin:28px 0 12px;">Pourquoi ca marche</h3>
+    <ul class="bullets">
+      <li>Les prospects non-serieux se disqualifient d'eux-memes</li>
+      <li>Geoffrey a une visibilite en temps reel</li>
+      <li>Positionnement premium, pas gimmick</li>
+    </ul>
+
+    <h3 style="font-family:Georgia,serif;font-size:18px;color:#fff;margin:28px 0 12px;">Script garantie sur le call</h3>
+    <div class="script-block" id="script-garantie">
+      <button class="copy-btn" onclick="copyCode('script-garantie')">Copier</button>
+      <div class="script-text">Et on prend un vrai risque avec toi. Pendant 30 jours, Geoffrey suit ton protocole avec toi chaque jour sur WhatsApp. Si a la fin de ces 30 jours tu n'as pas ressenti de transformation &mdash; energie, sommeil, digestion, peau &mdash; on te rembourse integralement. Sans question.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- SECTION 5 — PRIX SUR LE CALL -->
+<!-- ══════════════════════════════════════════════════════ -->
+<section class="section" id="prix-call">
+  <div class="container">
+    <p class="section-num">Section 05</p>
+    <h2 class="section-title">Presenter le Prix sur le Call</h2>
+
+    <!-- Pre-validation -->
+    <h3 style="font-family:Georgia,serif;font-size:18px;color:#fff;margin:24px 0 12px;">Pre-validation <span style="color:var(--stone);font-size:14px;">(avant le prix)</span></h3>
+    <div class="script-block" id="script-prevalidation">
+      <button class="copy-btn" onclick="copyCode('script-prevalidation')">Copier</button>
+      <div class="script-text">Apres tout ce que tu as essaye, ca a du sens que tu penses 'encore une deception'. C'est ce que tu ressens ?</div>
+    </div>
+
+    <!-- Ancrage valeur -->
+    <h3 style="font-family:Georgia,serif;font-size:18px;color:#fff;margin:24px 0 12px;">Ancrage valeur <span style="color:var(--stone);font-size:14px;">(1 min)</span></h3>
+    <div class="script-block" id="script-ancrage">
+      <button class="copy-btn" onclick="copyCode('script-ancrage')">Copier</button>
+      <div class="script-text">Laisse-moi te montrer ce qui est inclus. 12 calls &mdash; ca seul, c'est 4,800&euro; de valeur. WhatsApp quotidien. Analyse de tes bilans. Protocole personnalise. Menus cles en main. 15 plans de vie. 7 masterclasses a vie. Tout fait pour toi. 120 recettes. Communaute a vie. Resultats garantis ou remboursement. Ca totalise 12,300&euro;...</div>
+    </div>
+
+    <!-- Annonce prix -->
+    <h3 style="font-family:Georgia,serif;font-size:18px;color:#fff;margin:24px 0 12px;">Annonce prix</h3>
+    <div class="script-block" id="script-prix">
+      <button class="copy-btn" onclick="copyCode('script-prix')">Copier</button>
+      <div class="script-text">L'investissement pour SAPIENS Integral est de 1,200&euro;. Deux options : 1,200&euro; en une fois (tu recois le kit tracker premium livre cette semaine &mdash; 250&euro; de valeur), ou 3&times;400&euro; par mois (meme contenu mais tu geres le kit toi-meme).</div>
+    </div>
+
+    <!-- Garantie -->
+    <h3 style="font-family:Georgia,serif;font-size:18px;color:#fff;margin:24px 0 12px;">Garantie <span style="color:var(--stone);font-size:14px;">(4 lignes, ZERO "cetose")</span></h3>
+    <div class="script-block" id="script-garantie-call">
+      <button class="copy-btn" onclick="copyCode('script-garantie-call')">Copier</button>
+      <div class="script-text">Et on prend un vrai risque avec toi. Pendant 30 jours, Geoffrey suit ton protocole avec toi chaque jour sur WhatsApp. Si a la fin de 30 jours tu n'as pas ressenti de transformation &mdash; energie, sommeil, digestion, peau &mdash; on te rembourse integralement. Sans question.</div>
+    </div>
+
+    <!-- 10 SEC TIMER -->
+    <div class="timer-container" id="timerSection">
+      <h3>SILENCE &mdash; 10 SECONDES</h3>
+      <div class="timer-display" id="timerDisplay">10</div>
+      <div class="timer-subtext">Celui qui parle en premier perd.</div>
+      <button class="timer-btn" id="timerBtn" onclick="startTimer()">START</button>
+    </div>
+
+    <!-- Si "c'est cher" -->
+    <h3 style="font-family:Georgia,serif;font-size:18px;color:#fff;margin:28px 0 12px;">Si elle dit "c'est cher"</h3>
+    <div class="script-block" id="script-cher">
+      <button class="copy-btn" onclick="copyCode('script-cher')">Copier</button>
+      <div class="script-text">Je comprends. Dis-moi &mdash; si on met le prix de cote un instant &mdash; est-ce que ce que je t'ai presente, c'est exactement ce dont tu as besoin pour stabiliser ta peau ?</div>
+    </div>
+
+    <div class="decision-tree">
+      <div class="decision-branch">
+        <div class="branch-label yes">Si OUI</div>
+        <p style="font-size:14px;color:var(--ivory);">Probleme financier, pas conviction.<br>Proposer 3&times;400&euro;.</p>
+      </div>
+      <div class="decision-branch">
+        <div class="branch-label no">Si NON</div>
+        <p style="font-size:14px;color:var(--ivory);">Probleme de valeur.<br>Retourner a la decouverte.</p>
+      </div>
+    </div>
+
+    <!-- Cout de l'inaction -->
+    <h3 style="font-family:Georgia,serif;font-size:18px;color:#fff;margin:28px 0 12px;">Cout de l'inaction</h3>
+    <div class="script-block" id="script-inaction">
+      <button class="copy-btn" onclick="copyCode('script-inaction')">Copier</button>
+      <div class="script-text">En [X] ans, tu as depense combien en cremes, consultations, complements ? [Laisser repondre] Et ca n'a pas fonctionne. 1,200&euro; pour regler le fond du probleme une bonne fois &mdash; c'est moins que ce que tu as deja depense pour traiter les symptomes.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- SECTION 6 — CONCURRENTS -->
+<!-- ══════════════════════════════════════════════════════ -->
+<section class="section" id="concurrents">
+  <div class="container">
+    <p class="section-num">Section 06</p>
+    <h2 class="section-title">Matrice Concurrents</h2>
+
+    <div class="comp-table-wrap" style="margin-top:24px;">
+      <table class="comp-table">
+        <thead>
+          <tr>
+            <th>Critere</th>
+            <th class="sapiens-col">SAPIENS 360</th>
+            <th>Dermatologue</th>
+            <th>Naturopathe</th>
+            <th>Programme Online</th>
+            <th>Med. Fonctionnelle</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Traite la cause racine</td><td class="sapiens-col yes">&#10003;</td><td class="no">&#10007;</td><td class="maybe">&#9888;</td><td class="no">&#10007;</td><td class="maybe">&#9888;</td></tr>
+          <tr><td>Lit tous les symptomes ensemble</td><td class="sapiens-col yes">&#10003;</td><td class="no">&#10007;</td><td class="maybe">&#9888;</td><td class="no">&#10007;</td><td class="yes">&#10003;</td></tr>
+          <tr><td>Protocole objectif mesurable</td><td class="sapiens-col yes">&#10003;</td><td class="no">&#10007;</td><td class="no">&#10007;</td><td class="no">&#10007;</td><td class="maybe">&#9888;</td></tr>
+          <tr><td>Ajustement en temps reel</td><td class="sapiens-col yes">&#10003;</td><td class="no">&#10007;</td><td class="no">&#10007;</td><td class="no">&#10007;</td><td class="maybe">&#9888;</td></tr>
+          <tr><td>Coaching humain direct</td><td class="sapiens-col yes">&#10003;</td><td class="maybe">&#9888;</td><td class="maybe">&#9888;</td><td class="no">&#10007;</td><td class="yes">&#10003;</td></tr>
+          <tr><td>Visibilite des resultats</td><td class="sapiens-col yes">&#10003;</td><td class="no">&#10007;</td><td class="maybe">&#9888;</td><td class="no">&#10007;</td><td class="maybe">&#9888;</td></tr>
+          <tr><td>Garantie ecrite</td><td class="sapiens-col yes">&#10003;</td><td class="no">&#10007;</td><td class="no">&#10007;</td><td class="maybe">&#9888;</td><td class="no">&#10007;</td></tr>
+          <tr><td>Autonomie post-protocole</td><td class="sapiens-col yes">&#10003;</td><td class="no">&#10007;</td><td class="maybe">&#9888;</td><td class="maybe">&#9888;</td><td class="maybe">&#9888;</td></tr>
+          <tr><td>Formation clinique</td><td class="sapiens-col yes">&#10003;</td><td class="no">&#10007;</td><td class="no">&#10007;</td><td class="no">&#10007;</td><td class="maybe">&#9888;</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- SECTION 7 — VOCABULAIRE -->
+<!-- ══════════════════════════════════════════════════════ -->
+<section class="section" id="vocabulaire">
+  <div class="container">
+    <p class="section-num">Section 07</p>
+    <h2 class="section-title">Vocabulaire DO / DON'T</h2>
+
+    <div class="vocab-grid">
+      <div class="vocab-col do">
+        <h4 style="color:var(--green-text);">UTILISER</h4>
+        <ul>
+          <li>Terrain biologique</li>
+          <li>Cause racine</li>
+          <li>Errance medicale</li>
+          <li>Inflammation systemique</li>
+          <li>Protocole clinique adapte</li>
+          <li>Alimentation terrain</li>
+          <li>Reequilibrage</li>
+          <li>Protocole alimentaire</li>
+          <li>Stabilisation en profondeur</li>
+          <li>Axe intestin-immunite-peau</li>
+        </ul>
+      </div>
+      <div class="vocab-col dont">
+        <h4 style="color:var(--red-text);">NE JAMAIS DIRE</h4>
+        <ul>
+          <li>Cetose <em style="color:var(--stone);font-size:12px;">&mdash; JAMAIS avant le OUI</em></li>
+          <li>Regime</li>
+          <li>Detox</li>
+          <li>Toxines</li>
+          <li>Guerison</li>
+          <li>Miracle</li>
+          <li>100% naturel</li>
+          <li>Revolutionnaire</li>
+          <li>Cliniquement prouve</li>
+          <li>Traitement</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="danger-box">
+      <div class="danger-title">REGLE D'OR</div>
+      <p style="font-size:15px;"><strong>Le mot "cetose" ne doit JAMAIS etre prononce pendant un call de closing tant qu'elle n'a pas dit OUI.</strong></p>
+      <p style="color:var(--stone);margin-top:8px;font-size:13px;">Ce mot cree une peur de privation qui tue la vente. Utiliser "protocole alimentaire" ou "alimentation terrain" a la place.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- SECTION 8 — REGLES -->
+<!-- ══════════════════════════════════════════════════════ -->
+<section class="section" id="regles">
+  <div class="container">
+    <p class="section-num">Section 08</p>
+    <h2 class="section-title">Regles Absolues</h2>
+
+    <div class="danger-box" style="margin-top:24px;">
+      <ol class="rules-list">
+        <li>JAMAIS proposer un prix plus bas en premier</li>
+        <li>JAMAIS mentionner un downsell tant que toutes les objections ne sont pas epuisees</li>
+        <li>JAMAIS negocier le prix &mdash; ajouter de la valeur</li>
+        <li>TOUJOURS ancrer a 12,300&euro; de valeur avant de dire 1,200&euro;</li>
+        <li>TOUJOURS poser "si on met le prix de cote" avant de repondre a l'objection prix</li>
+        <li>SILENCE apres le prix &mdash; minimum 10 secondes</li>
+        <li>JAMAIS dire "cetose" avant le OUI</li>
+        <li>TOUJOURS annoncer le prix avec confiance totale (voix descendante)</li>
+        <li>TOUJOURS avoir les temoignages prepares par condition</li>
+        <li>JAMAIS raccrocher avant que le paiement soit fait</li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- SECTION 9 — LIENS DE PAIEMENT -->
+<!-- ══════════════════════════════════════════════════════ -->
+<section class="section" id="paiement">
+  <div class="container">
+    <p class="section-num">Section 09</p>
+    <h2 class="section-title">Liens de Paiement</h2>
+
+    <div class="payment-card" style="margin-top:24px;">
+      <div class="info">
+        <h4>1&times; 1,200&euro;</h4>
+        <p>Paiement unique &mdash; Kit tracker premium inclus</p>
+      </div>
+      <button class="copy-link-btn" onclick="copyText(this, '[LIEN WHOP 1x1200]')">Copier le lien</button>
+    </div>
+
+    <div class="payment-card">
+      <div class="info">
+        <h4>3&times; 400&euro; / mois</h4>
+        <p>Paiement en 3 fois &mdash; Meme contenu, kit en auto-gestion</p>
+      </div>
+      <button class="copy-link-btn" onclick="copyText(this, '[LIEN WHOP 3x400]')">Copier le lien</button>
+    </div>
+
+    <div class="warning-note">
+      Les anciens liens 900&euro; et 1,800&euro; sont en pause. Ne pas les utiliser.
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- SECTION 10 — PROTOCOLE 3 PHASES -->
+<!-- ══════════════════════════════════════════════════════ -->
+<section class="section" id="protocole">
+  <div class="container">
+    <p class="section-num">Section 10</p>
+    <h2 class="section-title">Le Protocole en 3 Phases</h2>
+    <p style="color:var(--stone);margin-top:4px;margin-bottom:24px;">Resume pour le call</p>
+
+    <div class="phase-grid">
+      <div class="phase-card">
+        <div class="phase-label">PHASE 1</div>
+        <h4>Reset Terrain <span style="color:var(--stone);font-size:14px;font-family:'Segoe UI',Arial,sans-serif;">(J1-30)</span></h4>
+        <ul class="bullets" style="margin-top:12px;">
+          <li>Cetose therapeutique (1.5-3.0 mmol/L mesuree quotidiennement)</li>
+          <li>Elimination stricte (zero glucides, gluten, sucre)</li>
+          <li>Resultats attendus : 3-5kg perte poids, sommeil ameliore, energie, inflammation reduite, peau visible</li>
+        </ul>
+      </div>
+      <div class="phase-card">
+        <div class="phase-label">PHASE 2</div>
+        <h4>Stabilisation <span style="color:var(--stone);font-size:14px;font-family:'Segoe UI',Arial,sans-serif;">(J31-60)</span></h4>
+        <ul class="bullets" style="margin-top:12px;">
+          <li>Reintroduction alimentaire progressive (1 aliment a la fois)</li>
+          <li>Travail sommeil & stress</li>
+          <li>Protocoles gestion sociale</li>
+        </ul>
+      </div>
+      <div class="phase-card">
+        <div class="phase-label">PHASE 3</div>
+        <h4>Autonomie <span style="color:var(--stone);font-size:14px;font-family:'Segoe UI',Arial,sans-serif;">(J61-90)</span></h4>
+        <ul class="bullets" style="margin-top:12px;">
+          <li>Plan annuel personnalise construit</li>
+          <li>Apprendre a lire ses signaux avant poussee</li>
+          <li>Protocole crise maitrise</li>
+          <li>Handoff complet &mdash; cliente autonome</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════ FOOTER ══════ -->
+<footer class="footer">
+  SAPIENS 360 &nbsp;|&nbsp; Drive &mdash; Outil interne &nbsp;|&nbsp; Derniere MAJ : Avril 2026
+</footer>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- JAVASCRIPT -->
+<!-- ══════════════════════════════════════════════════════ -->
+<script>
+/* ── Copy to clipboard ── */
+function copyCode(id) {
+  var block = document.getElementById(id);
+  var text = block.querySelector('.script-text').innerText;
+  var btn = block.querySelector('.copy-btn');
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = 'Copie !';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = 'Copier';
+      btn.classList.remove('copied');
+    }, 2000);
+  });
+}
+
+function copyText(btn, text) {
+  navigator.clipboard.writeText(text).then(function() {
+    var orig = btn.textContent;
+    btn.textContent = 'Copie !';
+    btn.style.background = '#27AE60';
+    btn.style.color = '#fff';
+    setTimeout(function() {
+      btn.textContent = orig;
+      btn.style.background = '';
+      btn.style.color = '';
+    }, 2000);
+  });
+}
+
+/* ── 10s Silence Timer ── */
+var timerInterval = null;
+function startTimer() {
+  var display = document.getElementById('timerDisplay');
+  var btn = document.getElementById('timerBtn');
+  var container = document.getElementById('timerSection');
+  var count = 10;
+
+  btn.disabled = true;
+  btn.textContent = 'EN COURS...';
+  display.textContent = count;
+
+  timerInterval = setInterval(function() {
+    count--;
+    display.textContent = count;
+
+    if (count <= 3) {
+      display.style.color = '#ff4444';
+    }
+
+    if (count <= 0) {
+      clearInterval(timerInterval);
+      display.textContent = '0';
+      display.style.color = '#27AE60';
+      container.style.borderColor = '#27AE60';
+      btn.textContent = 'RECOMMENCER';
+      btn.disabled = false;
+      btn.onclick = function() {
+        display.style.color = '#E74C3C';
+        container.style.borderColor = '#E74C3C';
+        startTimer();
+      };
+    }
+  }, 1000);
+}
+
+/* ── Sticky Nav: Active Tab on Scroll (IntersectionObserver) ── */
+(function() {
+  var sections = document.querySelectorAll('.section[id]');
+  var tabs = document.querySelectorAll('.nav-tab');
+  var tabMap = {};
+
+  tabs.forEach(function(tab) {
+    var href = tab.getAttribute('href');
+    if (href) tabMap[href.replace('#', '')] = tab;
+  });
+
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        tabs.forEach(function(t) { t.classList.remove('active'); });
+        var tab = tabMap[entry.target.id];
+        if (tab) {
+          tab.classList.add('active');
+          /* Scroll tab into view on mobile */
+          tab.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+        }
+      }
+    });
+  }, { rootMargin: '-80px 0px -60% 0px', threshold: 0 });
+
+  sections.forEach(function(s) { observer.observe(s); });
+})();
+
+/* ── Smooth scroll for nav links ── */
+document.querySelectorAll('.nav-tab').forEach(function(tab) {
+  tab.addEventListener('click', function(e) {
+    e.preventDefault();
+    var target = document.querySelector(this.getAttribute('href'));
+    if (target) target.scrollIntoView({ behavior: 'smooth' });
+  });
+});
+
+/* ── Mobile: collapsible sections ── */
+(function() {
+  if (window.innerWidth > 768) return;
+  document.querySelectorAll('.section').forEach(function(sec) {
+    var title = sec.querySelector('.section-title');
+    if (!title) return;
+
+    var content = document.createElement('div');
+    content.className = 'section-content';
+    var children = Array.from(sec.querySelector('.container').children);
+    var startIdx = children.indexOf(title) + 1;
+
+    for (var i = startIdx; i < children.length; i++) {
+      content.appendChild(children[i]);
+    }
+    sec.querySelector('.container').appendChild(content);
+
+    var toggle = document.createElement('button');
+    toggle.className = 'collapse-toggle';
+    toggle.textContent = 'Replier';
+    toggle.setAttribute('aria-expanded', 'true');
+    title.insertAdjacentElement('afterend', toggle);
+
+    toggle.addEventListener('click', function() {
+      var expanded = toggle.getAttribute('aria-expanded') === 'true';
+      content.classList.toggle('collapsed');
+      toggle.textContent = expanded ? 'Deployer' : 'Replier';
+      toggle.setAttribute('aria-expanded', String(!expanded));
+    });
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,1369 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAPIENS 360 — Bible des Objections</title>
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg: #111;
+  --card: #161616;
+  --border: #2C4A3555;
+  --gold: #B8956A;
+  --green: #2C4A35;
+  --ivory: #FAF7F2;
+  --stone: #888;
+  --gold-glow: #B8956A44;
+  --green-glow: #2C4A3544;
+  --danger: #8B2020;
+  --danger-bg: #1a0808;
+  --danger-border: #8B202055;
+}
+
+body {
+  background: var(--bg);
+  color: var(--ivory);
+  font-family: 'Segoe UI', Arial, sans-serif;
+  line-height: 1.6;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Hero ── */
+.hero {
+  text-align: center;
+  padding: 60px 24px 40px;
+  border-bottom: 1px solid var(--border);
+}
+.hero-brand {
+  font-family: Georgia, serif;
+  font-size: 14px;
+  color: var(--gold);
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.hero-title {
+  font-family: Georgia, serif;
+  font-size: clamp(28px, 5vw, 48px);
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.15;
+  margin-bottom: 8px;
+}
+.hero-title .gold { color: var(--gold); }
+.hero-subtitle {
+  color: var(--stone);
+  font-size: 15px;
+  max-width: 600px;
+  margin: 0 auto;
+  font-style: italic;
+}
+
+/* ── Search Bar ── */
+.search-wrap {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  padding: 14px 24px;
+}
+.search-inner {
+  max-width: 720px;
+  margin: 0 auto;
+  position: relative;
+}
+.search-inner svg {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--stone);
+  pointer-events: none;
+}
+.search-input {
+  width: 100%;
+  padding: 14px 16px 14px 48px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  color: var(--ivory);
+  font-size: 15px;
+  font-family: inherit;
+  outline: none;
+  transition: border-color .2s;
+}
+.search-input::placeholder { color: var(--stone); }
+.search-input:focus { border-color: var(--gold); }
+
+/* ── Sticky Nav ── */
+.sticky-nav {
+  position: sticky;
+  top: 57px;
+  z-index: 99;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.sticky-nav::-webkit-scrollbar { display: none; }
+.nav-tabs {
+  display: flex;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 16px;
+  gap: 4px;
+  min-width: max-content;
+}
+.nav-tab {
+  padding: 12px 18px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--stone);
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: color .2s, border-color .2s;
+  font-family: inherit;
+}
+.nav-tab:hover { color: var(--ivory); }
+.nav-tab.active {
+  color: var(--gold);
+  border-bottom-color: var(--gold);
+}
+
+/* ── Sections ── */
+.content {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 24px 80px;
+}
+.section {
+  padding-top: 40px;
+}
+.section-header {
+  font-family: Georgia, serif;
+  font-size: clamp(22px, 3.5vw, 30px);
+  color: #fff;
+  margin-bottom: 8px;
+}
+.section-header .gold { color: var(--gold); }
+.section-desc {
+  color: var(--stone);
+  font-size: 14px;
+  margin-bottom: 28px;
+}
+
+/* ── Cards ── */
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 16px;
+  transition: border-color .2s;
+}
+.card:hover { border-color: var(--gold-glow); }
+
+.step-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: var(--green);
+  color: var(--gold);
+  font-family: Georgia, serif;
+  font-weight: 700;
+  font-size: 15px;
+  border-radius: 50%;
+  margin-right: 12px;
+  flex-shrink: 0;
+}
+.step-title {
+  font-family: Georgia, serif;
+  font-size: 18px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+.step-body {
+  color: var(--ivory);
+  font-size: 14px;
+  line-height: 1.7;
+  padding-left: 44px;
+}
+.step-body .script {
+  display: block;
+  background: #0d0d0d;
+  border-left: 3px solid var(--gold);
+  padding: 12px 16px;
+  margin: 8px 0;
+  border-radius: 0 8px 8px 0;
+  font-style: italic;
+  color: var(--ivory);
+  position: relative;
+}
+
+/* ── Danger Box ── */
+.danger-box {
+  background: var(--danger-bg);
+  border: 1px solid var(--danger-border);
+  border-left: 4px solid var(--danger);
+  border-radius: 10px;
+  padding: 20px 24px;
+  margin: 24px 0;
+}
+.danger-box .danger-label {
+  color: #cc4444;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.danger-box p {
+  color: #daa;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* ── Objection Row ── */
+.objection-item {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px 24px;
+  margin-bottom: 12px;
+  transition: border-color .2s;
+}
+.objection-item:hover { border-color: var(--gold-glow); }
+.objection-top {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+.objection-rank {
+  font-family: Georgia, serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--gold);
+  width: 32px;
+  text-align: center;
+  flex-shrink: 0;
+}
+.objection-text {
+  font-family: Georgia, serif;
+  font-size: 17px;
+  color: #fff;
+  flex: 1;
+}
+.freq-dots {
+  display: flex;
+  gap: 4px;
+  flex-shrink: 0;
+}
+.freq-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--gold);
+}
+.freq-dot.empty {
+  background: transparent;
+  border: 1px solid var(--stone);
+}
+.objection-response {
+  background: #0d0d0d;
+  border-left: 3px solid var(--gold);
+  padding: 14px 16px;
+  border-radius: 0 8px 8px 0;
+  font-style: italic;
+  color: var(--ivory);
+  font-size: 14px;
+  line-height: 1.7;
+  position: relative;
+  margin-left: 44px;
+}
+.copy-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: var(--green);
+  border: 1px solid var(--border);
+  color: var(--gold);
+  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background .2s;
+}
+.copy-btn:hover { background: #3a5d44; }
+.copy-btn.copied { background: var(--gold); color: #111; }
+
+/* ── Archetype Tabs ── */
+.arch-tabs {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+.arch-tab {
+  padding: 8px 16px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--stone);
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all .2s;
+  white-space: nowrap;
+}
+.arch-tab:hover { color: var(--ivory); border-color: var(--gold-glow); }
+.arch-tab.active {
+  color: var(--gold);
+  border-color: var(--gold);
+  background: #1a1510;
+}
+.arch-panel { display: none; }
+.arch-panel.active { display: block; }
+
+.arch-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 28px;
+}
+.arch-name {
+  font-family: Georgia, serif;
+  font-size: 20px;
+  color: var(--gold);
+  margin-bottom: 4px;
+}
+.arch-demo {
+  font-size: 13px;
+  color: var(--stone);
+  margin-bottom: 16px;
+}
+.arch-row {
+  margin-bottom: 14px;
+}
+.arch-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--stone);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.arch-value {
+  font-size: 14px;
+  color: var(--ivory);
+  line-height: 1.6;
+}
+.killer-phrase {
+  background: #0d0d0d;
+  border-left: 3px solid var(--gold);
+  padding: 14px 16px;
+  border-radius: 0 8px 8px 0;
+  font-style: italic;
+  color: var(--gold);
+  font-size: 15px;
+  margin-top: 12px;
+  position: relative;
+}
+
+/* ── Decision Tree ── */
+.tree-branch {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 12px;
+}
+.branch-label {
+  font-family: Georgia, serif;
+  font-size: 16px;
+  color: var(--gold);
+  margin-bottom: 8px;
+}
+.branch-body {
+  font-size: 14px;
+  color: var(--ivory);
+  line-height: 1.7;
+}
+.branch-body .script {
+  display: block;
+  background: #0d0d0d;
+  border-left: 3px solid var(--gold);
+  padding: 12px 16px;
+  margin: 8px 0;
+  border-radius: 0 8px 8px 0;
+  font-style: italic;
+  position: relative;
+}
+.branch-arrow {
+  color: var(--gold);
+  margin: 0 6px;
+}
+
+/* ── Collapsible ── */
+.collapsible-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  padding: 18px 24px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  margin-bottom: 4px;
+  transition: border-color .2s;
+  user-select: none;
+}
+.collapsible-header:hover { border-color: var(--gold-glow); }
+.collapsible-header .ch-title {
+  font-family: Georgia, serif;
+  font-size: 17px;
+  color: #fff;
+}
+.collapsible-header .ch-arrow {
+  color: var(--gold);
+  font-size: 18px;
+  transition: transform .2s;
+}
+.collapsible-header.open .ch-arrow { transform: rotate(180deg); }
+.collapsible-header.open { border-radius: 12px 12px 0 0; margin-bottom: 0; border-bottom: none; }
+.collapsible-body {
+  display: none;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-top: none;
+  border-radius: 0 0 12px 12px;
+  padding: 20px 24px;
+  margin-bottom: 12px;
+}
+.collapsible-body.open { display: block; }
+
+/* ── Framework Cards ── */
+.fw-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 28px;
+  margin-bottom: 16px;
+}
+.fw-card.gold-accent {
+  border-color: var(--gold);
+  background: #1a1510;
+}
+.fw-name {
+  font-family: Georgia, serif;
+  font-size: 18px;
+  color: var(--gold);
+  margin-bottom: 6px;
+}
+.fw-subtitle {
+  font-size: 13px;
+  color: var(--stone);
+  margin-bottom: 16px;
+}
+.fw-list {
+  list-style: none;
+  padding: 0;
+}
+.fw-list li {
+  padding: 6px 0;
+  font-size: 14px;
+  color: var(--ivory);
+  border-bottom: 1px solid #ffffff08;
+  display: flex;
+  gap: 10px;
+}
+.fw-list li:last-child { border-bottom: none; }
+.fw-list .fw-num {
+  color: var(--gold);
+  font-weight: 700;
+  font-family: Georgia, serif;
+  flex-shrink: 0;
+  width: 20px;
+}
+.fw-quote {
+  background: #0d0d0d;
+  border-left: 3px solid var(--gold);
+  padding: 14px 16px;
+  border-radius: 0 8px 8px 0;
+  font-style: italic;
+  color: var(--stone);
+  font-size: 14px;
+  margin-top: 16px;
+}
+.fw-big-quote {
+  font-family: Georgia, serif;
+  font-size: clamp(20px, 3vw, 28px);
+  color: var(--gold);
+  text-align: center;
+  padding: 32px 24px;
+  line-height: 1.4;
+}
+
+/* ── Escalation Steps ── */
+.escalation-step {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 12px;
+  position: relative;
+}
+.esc-step-num {
+  position: absolute;
+  top: -12px;
+  left: 24px;
+  background: var(--green);
+  color: var(--gold);
+  font-family: Georgia, serif;
+  font-weight: 700;
+  font-size: 12px;
+  padding: 3px 12px;
+  border-radius: 20px;
+  letter-spacing: 1px;
+}
+.esc-title {
+  font-family: Georgia, serif;
+  font-size: 16px;
+  color: #fff;
+  margin-bottom: 4px;
+  margin-top: 4px;
+}
+.esc-source {
+  font-size: 12px;
+  color: var(--stone);
+  margin-bottom: 10px;
+}
+.esc-body {
+  font-size: 14px;
+  color: var(--ivory);
+  line-height: 1.7;
+}
+.esc-body .script {
+  display: block;
+  background: #0d0d0d;
+  border-left: 3px solid var(--gold);
+  padding: 12px 16px;
+  margin: 8px 0;
+  border-radius: 0 8px 8px 0;
+  font-style: italic;
+  position: relative;
+}
+
+/* ── Footer ── */
+.footer {
+  text-align: center;
+  padding: 40px 24px;
+  border-top: 1px solid var(--border);
+  color: var(--stone);
+  font-size: 13px;
+}
+.footer .gold { color: var(--gold); }
+
+/* ── No Results ── */
+.no-results {
+  text-align: center;
+  padding: 60px 24px;
+  color: var(--stone);
+  font-size: 16px;
+  display: none;
+}
+
+/* ── Utility ── */
+.hidden { display: none !important; }
+.mt-16 { margin-top: 16px; }
+.mt-24 { margin-top: 24px; }
+.mb-8 { margin-bottom: 8px; }
+
+/* ── Responsive ── */
+@media (max-width: 680px) {
+  .hero { padding: 40px 16px 28px; }
+  .content { padding: 0 16px 60px; }
+  .search-wrap { padding: 10px 16px; }
+  .nav-tab { padding: 10px 12px; font-size: 12px; }
+  .objection-response { margin-left: 0; margin-top: 10px; }
+  .step-body { padding-left: 0; margin-top: 8px; }
+  .card, .objection-item, .tree-branch, .escalation-step, .fw-card, .arch-card { padding: 18px; }
+  .arch-tabs { gap: 4px; }
+  .arch-tab { padding: 6px 12px; font-size: 11px; }
+  .sticky-nav { top: 53px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════ HERO ══════════════ -->
+<header class="hero">
+  <div class="hero-brand">SAPIENS 360</div>
+  <h1 class="hero-title">Bible des <span class="gold">Objections</span></h1>
+  <p class="hero-subtitle">"Chaque objection, chaque reponse — par frequence, par archetype, par framework"</p>
+</header>
+
+<!-- ══════════════ SEARCH ══════════════ -->
+<div class="search-wrap">
+  <div class="search-inner">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    <input class="search-input" type="text" id="globalSearch" placeholder="Rechercher une objection, un mot-cle, un archetype..." autocomplete="off">
+  </div>
+</div>
+
+<!-- ══════════════ STICKY NAV ══════════════ -->
+<nav class="sticky-nav">
+  <div class="nav-tabs">
+    <button class="nav-tab active" data-target="sec-protocole">Protocole Universel</button>
+    <button class="nav-tab" data-target="sec-top12">Top 12</button>
+    <button class="nav-tab" data-target="sec-archetypes">Par Archetype</button>
+    <button class="nav-tab" data-target="sec-cher">"C'est cher"</button>
+    <button class="nav-tab" data-target="sec-reflechis">"Je reflechis"</button>
+    <button class="nav-tab" data-target="sec-conjoint">Conjoint</button>
+    <button class="nav-tab" data-target="sec-mefiance">Mefiance</button>
+    <button class="nav-tab" data-target="sec-frameworks">Frameworks</button>
+  </div>
+</nav>
+
+<!-- ══════════════ CONTENT ══════════════ -->
+<main class="content">
+
+  <div class="no-results" id="noResults">Aucun resultat pour cette recherche.</div>
+
+  <!-- ── SECTION 1: Protocole Universel ── -->
+  <section class="section searchable" id="sec-protocole" data-keywords="protocole universel diffuser isoler traiter temp check objection processus etapes">
+    <h2 class="section-header">Protocole <span class="gold">Universel</span></h2>
+    <p class="section-desc">4 etapes a suivre pour TOUTE objection — sans exception.</p>
+
+    <div class="card" data-keywords="diffuser comprends">
+      <div class="step-title"><span class="step-number">1</span>DIFFUSER</div>
+      <div class="step-body">
+        <span class="script">"Je comprends totalement."</span>
+        Desamorcer la tension. Valider sans conceder. Ne pas argumenter.
+      </div>
+    </div>
+
+    <div class="card" data-keywords="isoler obstacle prete demarrer">
+      <div class="step-title"><span class="step-number">2</span>ISOLER</div>
+      <div class="step-body">
+        <span class="script">"Si [cette chose] n'etait pas un obstacle, tu serais prete a demarrer aujourd'hui?"</span>
+        Si elle dit oui — tu as la vraie objection. Si elle dit non — cherche la vraie.
+      </div>
+    </div>
+
+    <div class="card" data-keywords="traiter objection scripts specifiques">
+      <div class="step-title"><span class="step-number">3</span>TRAITER</div>
+      <div class="step-body">
+        Traiter l'objection isolee avec le script specifique (voir sections suivantes).
+      </div>
+    </div>
+
+    <div class="card" data-keywords="temp check temperature maintenant">
+      <div class="step-title"><span class="step-number">4</span>RE-TEMP CHECK</div>
+      <div class="step-body">
+        <span class="script">"Maintenant qu'on a vu ca, ou t'en es?"</span>
+        Mesurer le shift. Si pas de mouvement — il reste une objection cachee.
+      </div>
+    </div>
+
+    <div class="danger-box" data-keywords="danger jamais isoler cacher raisons">
+      <div class="danger-label">DANGER</div>
+      <p>Ne JAMAIS traiter une objection avant de l'avoir isolee. "C'est trop cher" peut cacher 5 raisons differentes.</p>
+    </div>
+  </section>
+
+  <!-- ── SECTION 2: Top 12 ── -->
+  <section class="section searchable" id="sec-top12" data-keywords="top 12 objections frequence classement ranking">
+    <h2 class="section-header">Top <span class="gold">12</span> Objections</h2>
+    <p class="section-desc">Classees par frequence d'apparition en call.</p>
+
+    <div class="objection-item searchable" data-keywords="reflechir decision change prete">
+      <div class="objection-top">
+        <span class="objection-rank">1</span>
+        <span class="objection-text">"Je dois reflechir"</span>
+        <span class="freq-dots"><span class="freq-dot"></span><span class="freq-dot"></span><span class="freq-dot"></span><span class="freq-dot"></span><span class="freq-dot"></span></span>
+      </div>
+      <div class="objection-response">
+        <button class="copy-btn" onclick="copyScript(this)">Copier</button>
+        "Il y a 10 minutes, tu m'as dit que tu etais prete a prendre une decision. Qu'est-ce qui a change depuis?"<br><br>
+        &rarr; Force la vraie objection.
+      </div>
+    </div>
+
+    <div class="objection-item searchable" data-keywords="cher trop cher prix valeur budget investissement argent">
+      <div class="objection-top">
+        <span class="objection-rank">2</span>
+        <span class="objection-text">"C'est trop cher"</span>
+        <span class="freq-dots"><span class="freq-dot"></span><span class="freq-dot"></span><span class="freq-dot"></span><span class="freq-dot"></span><span class="freq-dot empty"></span></span>
+      </div>
+      <div class="objection-response">
+        <button class="copy-btn" onclick="copyScript(this)">Copier</button>
+        "Je comprends. C'est que la valeur ne te convainc pas? Ou c'est que le budget est serre en ce moment?"
+      </div>
+    </div>
+
+    <div class="objection-item searchable" data-keywords="conjoint parler mari femme couple">
+      <div class="objection-top">
+        <span class="objection-rank">3</span>
+        <span class="objection-text">"Je dois en parler a mon conjoint"</span>
+        <span class="freq-dots"><span class="freq-dot"></span><span class="freq-dot"></span><span class="freq-dot"></span><span class="freq-dot"></span><span class="freq-dot empty"></span></span>
+      </div>
+      <div class="objection-response">
+        <button class="copy-btn" onclick="copyScript(this)">Copier</button>
+        "Si ton conjoint te disait 'fais ce qui est le mieux pour toi', tu serais prete a demarrer aujourd'hui?"
+      </div>
+    </div>
+
+    <div class="objection-item searchable" data-keywords="tout essaye deja essaye symptome cause">
+      <div class="objection-top">
+        <span class="objection-rank">4</span>
+        <span class="objection-text">"J'ai deja tout essaye"</span>
+        <span class="freq-dots"><span class="freq-dot"></span><span class="freq-dot"></span><span class="freq-dot"></span><span class="freq-dot empty"></span><span class="freq-dot empty"></span></span>
+      </div>
+      <div class="objection-response">
+        <button class="copy-btn" onclick="copyScript(this)">Copier</button>
+        "C'est exactement pour ca que tu es la. Tout ce que tu as essaye traitait le symptome. Ici on traite ce qui produit le symptome."
+      </div>
+    </div>
+
+    <div class="objection-item searchable" data-keywords="pas le bon moment timing attendre">
+      <div class="objection-top">
+        <span class="objection-rank">5</span>
+        <span class="objection-text">"C'est pas le bon moment"</span>
+        <span class="freq-dots"><span class="freq-dot"></span><span class="freq-dot"></span><span class="freq-dot"></span><span class="freq-dot empty"></span><span class="freq-dot empty"></span></span>
+      </div>
+      <div class="objection-response">
+        <button class="copy-btn" onclick="copyScript(this)">Copier</button>
+        "Ca fait combien de temps que tu attends le bon moment?" [Silence]
+      </div>
+    </div>
+
+    <div class="objection-item searchable" data-keywords="charlatans arnaque confiance escroquerie">
+      <div class="objection-top">
+        <span class="objection-rank">6</span>
+        <span class="objection-text">"Vous pourriez etre des charlatans"</span>
+        <span class="freq-dots"><span class="freq-dot"></span><span class="freq-dot"></span><span class="freq-dot empty"></span><span class="freq-dot empty"></span><span class="freq-dot empty"></span></span>
+      </div>
+      <div class="objection-response">
+        <button class="copy-btn" onclick="copyScript(this)">Copier</button>
+        "Si j'etais a ta place, je penserais pareil. Mais on est les seuls a proposer une garantie. Un charlatan ne ferait jamais ca."
+      </div>
+    </div>
+
+    <div class="objection-item searchable" data-keywords="dermato dermatolgue chronique peau medecin">
+      <div class="objection-top">
+        <span class="objection-rank">7</span>
+        <span class="objection-text">"Mon dermato dit que c'est chronique"</span>
+        <span class="freq-dots"><span class="freq-dot"></span><span class="freq-dot"></span><span class="freq-dot empty"></span><span class="freq-dot empty"></span><span class="freq-dot empty"></span></span>
+      </div>
+      <div class="objection-response">
+        <button class="copy-btn" onclick="copyScript(this)">Copier</button>
+        "Chronique ne veut pas dire irreversible. Ton dermato traite la peau. Nous on traite ce qui fait flamber la peau."
+      </div>
+    </div>
+
+    <div class="objection-item searchable" data-keywords="carte bancaire paiement pas ma carte">
+      <div class="objection-top">
+        <span class="objection-rank">8</span>
+        <span class="objection-text">"J'ai pas ma carte"</span>
+        <span class="freq-dots"><span class="freq-dot"></span><span class="freq-dot"></span><span class="freq-dot empty"></span><span class="freq-dot empty"></span><span class="freq-dot empty"></span></span>
+      </div>
+      <div class="objection-response">
+        <button class="copy-btn" onclick="copyScript(this)">Copier</button>
+        "Pas de souci. Tu peux aller la chercher? Je reste en ligne."
+      </div>
+    </div>
+
+    <div class="objection-item searchable" data-keywords="savoir plus information details">
+      <div class="objection-top">
+        <span class="objection-rank">9</span>
+        <span class="objection-text">"Je veux en savoir plus d'abord"</span>
+        <span class="freq-dots"><span class="freq-dot"></span><span class="freq-dot"></span><span class="freq-dot empty"></span><span class="freq-dot empty"></span><span class="freq-dot empty"></span></span>
+      </div>
+      <div class="objection-response">
+        <button class="copy-btn" onclick="copyScript(this)">Copier</button>
+        "Bien sur. C'est quoi specifiquement que tu aimerais savoir?"
+      </div>
+    </div>
+
+    <div class="objection-item searchable" data-keywords="cetose metabolique keto regime">
+      <div class="objection-top">
+        <span class="objection-rank">10</span>
+        <span class="objection-text">"C'est quoi exactement la cetose?"</span>
+        <span class="freq-dots"><span class="freq-dot"></span><span class="freq-dot"></span><span class="freq-dot empty"></span><span class="freq-dot empty"></span><span class="freq-dot empty"></span></span>
+      </div>
+      <div class="objection-response">
+        <button class="copy-btn" onclick="copyScript(this)">Copier</button>
+        "C'est un etat metabolique qui a un effet anti-inflammatoire profond. Le detail de comment on y arrive — les dosages, les ajustements — c'est vraiment du cas par cas. C'est pour ca que Geoffrey ajuste chaque semaine."
+      </div>
+    </div>
+
+    <div class="objection-item searchable" data-keywords="confiance alimentation nourriture manger">
+      <div class="objection-top">
+        <span class="objection-rank">11</span>
+        <span class="objection-text">"J'ai pas confiance en l'alimentation pour ca"</span>
+        <span class="freq-dots"><span class="freq-dot"></span><span class="freq-dot empty"></span><span class="freq-dot empty"></span><span class="freq-dot empty"></span><span class="freq-dot empty"></span></span>
+      </div>
+      <div class="objection-response">
+        <button class="copy-btn" onclick="copyScript(this)">Copier</button>
+        "70% de ton systeme immunitaire est dans ton intestin. Ce que tu manges determine directement ta reponse inflammatoire. C'est pas une croyance — c'est de la biologie."
+      </div>
+    </div>
+
+    <div class="objection-item searchable" data-keywords="marche pas fonctionne pas resultat garantie">
+      <div class="objection-top">
+        <span class="objection-rank">12</span>
+        <span class="objection-text">"Et si ca marche pas?"</span>
+        <span class="freq-dots"><span class="freq-dot"></span><span class="freq-dot empty"></span><span class="freq-dot empty"></span><span class="freq-dot empty"></span><span class="freq-dot empty"></span></span>
+      </div>
+      <div class="objection-response">
+        <button class="copy-btn" onclick="copyScript(this)">Copier</button>
+        "C'est pour ca qu'on a la garantie. Si apres 30 jours d'application serieuse ca n'a pas bouge — remboursement integral."
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SECTION 3: Archetypes ── -->
+  <section class="section searchable" id="sec-archetypes" data-keywords="archetype profil persona type client segment">
+    <h2 class="section-header">Par <span class="gold">Archetype</span></h2>
+    <p class="section-desc">Chaque profil a ses objections typiques et son angle de traitement.</p>
+
+    <div class="arch-tabs">
+      <button class="arch-tab active" data-arch="arch1">Jeune Femme en Crise</button>
+      <button class="arch-tab" data-arch="arch2">Homme Pragmatique</button>
+      <button class="arch-tab" data-arch="arch3">Maman Solo</button>
+      <button class="arch-tab" data-arch="arch4">Malade Chronique</button>
+      <button class="arch-tab" data-arch="arch5">Perfectionniste Quadra</button>
+    </div>
+
+    <div class="arch-panel active" id="arch1" data-keywords="jeune femme crise 25 35 emotionnel identitaire cher reflechir">
+      <div class="arch-card">
+        <div class="arch-name">Jeune Femme en Crise</div>
+        <div class="arch-demo">25-35 ans, femme</div>
+        <div class="arch-row">
+          <div class="arch-label">Objections typiques</div>
+          <div class="arch-value">"C'est cher" (70%) &middot; "Je reflechis" (60%)</div>
+        </div>
+        <div class="arch-row">
+          <div class="arch-label">Angle</div>
+          <div class="arch-value">Emotionnel + identitaire. Parler de la personne qu'elle veut devenir, pas du protocole.</div>
+        </div>
+        <div class="killer-phrase">
+          <button class="copy-btn" onclick="copyScript(this)">Copier</button>
+          "La version de toi qui s'en est sortie — elle aurait fait quoi la maintenant?"
+        </div>
+      </div>
+    </div>
+
+    <div class="arch-panel" id="arch2" data-keywords="homme pragmatique 50 65 scientifique donnees resultats mesurables tout essaye charlatans intestin">
+      <div class="arch-card">
+        <div class="arch-name">Homme Pragmatique</div>
+        <div class="arch-demo">50-65 ans, homme</div>
+        <div class="arch-row">
+          <div class="arch-label">Objections typiques</div>
+          <div class="arch-value">"J'ai tout essaye" (80%) &middot; "Charlatans?" (50%)</div>
+        </div>
+        <div class="arch-row">
+          <div class="arch-label">Angle</div>
+          <div class="arch-value">100% scientifique, donnees, resultats mesurables. Zero emotion, que du factuel.</div>
+        </div>
+        <div class="killer-phrase">
+          <button class="copy-btn" onclick="copyScript(this)">Copier</button>
+          "En 20 ans, personne n'a regarde votre intestin. On le fait. Et on mesure."
+        </div>
+      </div>
+    </div>
+
+    <div class="arch-panel" id="arch3" data-keywords="maman solo precaire 35 50 budget gratuit partenariat temoignage">
+      <div class="arch-card">
+        <div class="arch-name">Maman Solo Precaire</div>
+        <div class="arch-demo">35-50 ans, femme</div>
+        <div class="arch-row">
+          <div class="arch-label">Objections typiques</div>
+          <div class="arch-value">"J'ai pas le budget" (95%)</div>
+        </div>
+        <div class="arch-row">
+          <div class="arch-label">Angle</div>
+          <div class="arch-value">NE PAS insister. Proposer partenariat gratuit contre temoignage.</div>
+        </div>
+        <div class="killer-phrase">
+          <button class="copy-btn" onclick="copyScript(this)">Copier</button>
+          "On prend 2 profils partenaires par mois. Tu donnes ton temps et ton engagement, on te donne le protocole."
+        </div>
+      </div>
+    </div>
+
+    <div class="arch-panel" id="arch4" data-keywords="malade chronique 30 45 medecin valider credibilite scientifique zero pression observer">
+      <div class="arch-card">
+        <div class="arch-name">Malade Chronique</div>
+        <div class="arch-demo">30-45 ans</div>
+        <div class="arch-row">
+          <div class="arch-label">Objections typiques</div>
+          <div class="arch-value">"Si ca marche pas?" (90%) &middot; "Mon medecin doit valider" (60%)</div>
+        </div>
+        <div class="arch-row">
+          <div class="arch-label">Angle</div>
+          <div class="arch-value">Credibilite scientifique, zero pression, cadence lente. Laisser le prospect arriver a la conclusion.</div>
+        </div>
+        <div class="killer-phrase">
+          <button class="copy-btn" onclick="copyScript(this)">Copier</button>
+          "On ne te demande pas de croire. On te demande d'observer pendant 30 jours."
+        </div>
+      </div>
+    </div>
+
+    <div class="arch-panel" id="arch5" data-keywords="perfectionniste quadra 38 52 comprendre personnalisation tracking transparence donnees tracker">
+      <div class="arch-card">
+        <div class="arch-name">Perfectionniste Quadra</div>
+        <div class="arch-demo">38-52 ans, femme</div>
+        <div class="arch-row">
+          <div class="arch-label">Objections typiques</div>
+          <div class="arch-value">"Je veux comprendre" (80%) &middot; "Je reflechis" (50%)</div>
+        </div>
+        <div class="arch-row">
+          <div class="arch-label">Angle</div>
+          <div class="arch-value">Personnalisation, donnees, tracking, transparence. Nourrir le besoin de controle.</div>
+        </div>
+        <div class="killer-phrase">
+          <button class="copy-btn" onclick="copyScript(this)">Copier</button>
+          "Le tracker te donne des donnees objectives — pas des suppositions."
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SECTION 4: Deep Dive "C'est trop cher" ── -->
+  <section class="section searchable" id="sec-cher" data-keywords="cher prix trop cher budget valeur investissement cout argent paiement downsell essentiel 3 fois 400">
+    <h2 class="section-header">Deep Dive — <span class="gold">"C'est trop cher"</span></h2>
+    <p class="section-desc">Arbre de decision complet avec branches.</p>
+
+    <div class="tree-branch">
+      <div class="branch-label">Step 1 — Isoler</div>
+      <div class="branch-body">
+        <span class="script">
+          <button class="copy-btn" onclick="copyScript(this)">Copier</button>
+          "C'est que la valeur ne te convainc pas? Ou c'est que le budget est serre?"
+        </span>
+      </div>
+    </div>
+
+    <div class="collapsible-header" onclick="toggleCollapse(this)">
+      <span class="ch-title">Branche A — Probleme de valeur</span>
+      <span class="ch-arrow">&#9660;</span>
+    </div>
+    <div class="collapsible-body" data-keywords="valeur discovery douleur ans attendre">
+      <p style="color:var(--stone);font-size:13px;margin-bottom:10px;">Tu as rate la discovery. Revenir aux douleurs.</p>
+      <div class="branch-body">
+        <span class="script">
+          <button class="copy-btn" onclick="copyScript(this)">Copier</button>
+          "Tu m'as dit que ca fait [X ans], que [reprendre ses douleurs]. Qu'est-ce qui va changer si tu attends encore?"
+        </span>
+      </div>
+    </div>
+
+    <div class="collapsible-header" onclick="toggleCollapse(this)">
+      <span class="ch-title">Branche B — Probleme de budget</span>
+      <span class="ch-arrow">&#9660;</span>
+    </div>
+    <div class="collapsible-body" data-keywords="budget 3 fois 400 downsell essentiel 1200 paiement facilite">
+      <div class="branch-body">
+        <span class="script">
+          <button class="copy-btn" onclick="copyScript(this)">Copier</button>
+          "On a une option en 3 fois, c'est 3x400 euros. Ca te permettrait de commencer sans tout debloquer d'un coup."
+        </span>
+        <p class="mt-16" style="color:var(--stone);font-size:13px;">&rarr; Si 3x encore trop &rarr; Downsell Essentiel (DERNIER recours) :</p>
+        <span class="script">
+          <button class="copy-btn" onclick="copyScript(this)">Copier</button>
+          "On a une formule a 1,200 euros sans les calls individuels. En groupe."
+        </span>
+      </div>
+    </div>
+
+    <div class="collapsible-header" onclick="toggleCollapse(this)">
+      <span class="ch-title">Branche C — Ancrer le cout de l'inaction</span>
+      <span class="ch-arrow">&#9660;</span>
+    </div>
+    <div class="collapsible-body" data-keywords="cout inaction cremes consultations complements depense">
+      <div class="branch-body">
+        <span class="script">
+          <button class="copy-btn" onclick="copyScript(this)">Copier</button>
+          "En [X ans], tu as depense combien en cremes, consultations, complements? [Laisser chiffrer] Et ca n'a pas fonctionne. 1,200 euros pour regler le fond du probleme — c'est moins que ce que tu as deja depense."
+        </span>
+      </div>
+    </div>
+
+    <div class="danger-box" data-keywords="danger downsell 3 fois 1200 minimum">
+      <div class="danger-label">DANGER</div>
+      <p>NE JAMAIS downsell avant d'avoir propose le 3x400 euros. NE JAMAIS descendre en dessous de 1,200 euros.</p>
+    </div>
+  </section>
+
+  <!-- ── SECTION 5: Deep Dive "Je dois reflechir" ── -->
+  <section class="section searchable" id="sec-reflechis" data-keywords="reflechir reflechis decision peur action prete engagement version alexy miner cout inaction">
+    <h2 class="section-header">Deep Dive — <span class="gold">"Je dois reflechir"</span></h2>
+    <p class="section-desc">Escalade en 5 etapes — du plus doux au plus confrontant.</p>
+
+    <div class="escalation-step">
+      <span class="esc-step-num">STEP 1</span>
+      <div class="esc-title">Rappeler l'engagement</div>
+      <div class="esc-source">Source : Alexy Mouly</div>
+      <div class="esc-body">
+        <span class="script">
+          <button class="copy-btn" onclick="copyScript(this)">Copier</button>
+          "Il y a 10 minutes, tu m'as dit que tu etais prete a prendre une decision. Qu'est-ce qui a change depuis?"
+        </span>
+      </div>
+    </div>
+
+    <div class="escalation-step">
+      <span class="esc-step-num">STEP 2</span>
+      <div class="esc-title">Clarifier</div>
+      <div class="esc-source">Source : Jeremy Miner (NEPQ)</div>
+      <div class="esc-body">
+        <span class="script">
+          <button class="copy-btn" onclick="copyScript(this)">Copier</button>
+          "Quand tu dis 'reflechir', tu veux reflechir a quoi exactement? Personne ne s'assoit pendant une heure en se disant 'j'y reflechis.' C'est un point precis. Quel est ce point?"
+        </span>
+      </div>
+    </div>
+
+    <div class="escalation-step">
+      <span class="esc-step-num">STEP 3</span>
+      <div class="esc-title">Version A vs Version B</div>
+      <div class="esc-source">Source : Alexy Mouly</div>
+      <div class="esc-body">
+        <span class="script">
+          <button class="copy-btn" onclick="copyScript(this)">Copier</button>
+          "Toutes les decisions que tu as prises jusqu'ici t'ont emmenee la ou tu en es — avec [condition] depuis [X ans]. La version de toi qui a encore [condition] dans 2 ans, elle aurait fait quoi la? Et la version de toi qui s'en est sortie?"
+        </span>
+      </div>
+    </div>
+
+    <div class="escalation-step">
+      <span class="esc-step-num">STEP 4</span>
+      <div class="esc-title">Cout de l'inaction</div>
+      <div class="esc-source"></div>
+      <div class="esc-body">
+        <span class="script">
+          <button class="copy-btn" onclick="copyScript(this)">Copier</button>
+          "Cette peur que tu as la maintenant, tu l'auras demain matin, dans une semaine, dans 6 mois. Elle disparait pas en reflechissant. Elle disparait en passant a l'action."
+        </span>
+      </div>
+    </div>
+
+    <div class="escalation-step">
+      <span class="esc-step-num">STEP 5</span>
+      <div class="esc-title">CTA</div>
+      <div class="esc-source"></div>
+      <div class="esc-body">
+        <span class="script">
+          <button class="copy-btn" onclick="copyScript(this)">Copier</button>
+          "Vu tout ce qu'on vient de poser — tu veux rester comme avant, ou on trouve une solution pour avancer maintenant?"
+        </span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SECTION 6: Deep Dive "Conjoint" ── -->
+  <section class="section searchable" id="sec-conjoint" data-keywords="conjoint mari femme parler couple appel trois informer contre">
+    <h2 class="section-header">Deep Dive — <span class="gold">Conjoint</span></h2>
+    <p class="section-desc">Script complet pour "Je dois en parler a mon conjoint".</p>
+
+    <div class="card">
+      <div class="step-title"><span class="step-number">1</span>Question d'isolation</div>
+      <div class="step-body">
+        <span class="script">
+          <button class="copy-btn" onclick="copyScript(this)">Copier</button>
+          "Si ton conjoint te disait 'fais ce qui est le mieux pour toi', tu serais prete?"
+        </span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="step-title"><span class="step-number">2</span>Si elle dit OUI</div>
+      <div class="step-body">
+        <span class="script">
+          <button class="copy-btn" onclick="copyScript(this)">Copier</button>
+          "Donc c'est pas qu'il serait contre, c'est que tu veux l'informer. Comment tu penses qu'il va reagir?"
+        </span>
+        <p class="mt-16">Laisser repondre. 80% du temps elle se convainc elle-meme.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="step-title"><span class="step-number">3</span>Offrir un appel a 3</div>
+      <div class="step-body">
+        <span class="script">
+          <button class="copy-btn" onclick="copyScript(this)">Copier</button>
+          "Est-ce que ca aiderait qu'on fasse un appel a 3?"
+        </span>
+        <p class="mt-16">Option nucleaire — a utiliser si les steps 1 et 2 n'ont pas suffi.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SECTION 7: Mefiance / Tout essaye ── -->
+  <section class="section searchable" id="sec-mefiance" data-keywords="mefiance confiance charlatans tout essaye marche pas dermato chronique irreversible garantie temoignage">
+    <h2 class="section-header">Mefiance & <span class="gold">"Tout essaye"</span></h2>
+    <p class="section-desc">Regroupement des objections de credibilite et de doute.</p>
+
+    <div class="card" data-keywords="marche pas fonctionne pas resultat garantie remboursement">
+      <div class="step-title" style="margin-bottom:12px;">"Et si ca marche pas?"</div>
+      <div class="step-body" style="padding-left:0;">
+        <strong style="color:var(--gold);font-size:13px;">Reframe :</strong>
+        <span class="script">
+          <button class="copy-btn" onclick="copyScript(this)">Copier</button>
+          "Tout ce que tu as essaye avant n'avait pas de garantie. Nous, on en a une. Si apres 30 jours d'application serieuse ca n'a pas bouge — remboursement integral."
+        </span>
+        <strong style="color:var(--gold);font-size:13px;" class="mt-16">Temoignage :</strong>
+        <p>Enchainer immediatement sur un cas similaire : "[Prenom] avait exactement la meme situation. Voila ce qui s'est passe..."</p>
+      </div>
+    </div>
+
+    <div class="card" data-keywords="charlatans arnaque escroquerie garantie communaute resultats preuves">
+      <div class="step-title" style="margin-bottom:12px;">"Vous pourriez etre des charlatans"</div>
+      <div class="step-body" style="padding-left:0;">
+        <strong style="color:var(--gold);font-size:13px;">3 preuves :</strong>
+        <span class="script">
+          <button class="copy-btn" onclick="copyScript(this)">Copier</button>
+          "1. On est les seuls a offrir une garantie de remboursement. Un charlatan ne ferait jamais ca.
+2. Notre communaute — tu peux parler directement aux membres.
+3. Les resultats sont documentes — photos, suivi semaine par semaine."
+        </span>
+      </div>
+    </div>
+
+    <div class="card" data-keywords="dermato chronique irreversible peau medecin traiter intestin">
+      <div class="step-title" style="margin-bottom:12px;">"Mon dermato dit que c'est chronique"</div>
+      <div class="step-body" style="padding-left:0;">
+        <span class="script">
+          <button class="copy-btn" onclick="copyScript(this)">Copier</button>
+          "Chronique ne veut pas dire irreversible. Chronique veut dire que le declencheur est toujours la. Ton dermato traite le symptome — la peau. Nous on identifie et on retire le declencheur."
+        </span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SECTION 8: Frameworks ── -->
+  <section class="section searchable" id="sec-frameworks" data-keywords="frameworks reference cole gordon buying beliefs jeremy miner nepq alexy mouly question maitre auto-persuasion tonalites">
+    <h2 class="section-header"><span class="gold">Frameworks</span> Reference</h2>
+    <p class="section-desc">Les 3 systemes qui sous-tendent notre approche objection.</p>
+
+    <div class="fw-card" data-keywords="cole gordon 7 buying beliefs pain doubt cost desire money support trust douleur doute confiance">
+      <div class="fw-name">Cole Gordon</div>
+      <div class="fw-subtitle">7 Buying Beliefs</div>
+      <ul class="fw-list">
+        <li><span class="fw-num">1.</span>PAIN — La douleur est assez forte?</li>
+        <li><span class="fw-num">2.</span>DOUBT — Pourquoi elle ne peut pas seule?</li>
+        <li><span class="fw-num">3.</span>COST — Cout inaction > cout investissement?</li>
+        <li><span class="fw-num">4.</span>DESIRE — Vision claire du resultat?</li>
+        <li><span class="fw-num">5.</span>MONEY — Ressources + volonte?</li>
+        <li><span class="fw-num">6.</span>SUPPORT — Conjoint?</li>
+        <li><span class="fw-num">7.</span>TRUST — Confiance methode + messager?</li>
+      </ul>
+      <div class="fw-quote">Si une belief manque &rarr; c'est la que l'objection vient.</div>
+    </div>
+
+    <div class="fw-card" data-keywords="jeremy miner nepq auto-persuasion persuasion tonalites curieux confus challenging empathique playful questions affirmations">
+      <div class="fw-name">Jeremy Miner</div>
+      <div class="fw-subtitle">NEPQ (Neuro-Emotional Persuasion Questions)</div>
+      <ul class="fw-list">
+        <li><span class="fw-num">&bull;</span>Auto-persuasion > persuasion externe</li>
+        <li><span class="fw-num">&bull;</span>Quand TU dis &rarr; "biaise, t'es le vendeur"</li>
+        <li><span class="fw-num">&bull;</span>Quand ELLE dit &rarr; conclusion interne = vrai shift</li>
+        <li><span class="fw-num">&bull;</span>Transformer affirmations en questions</li>
+      </ul>
+      <p style="color:var(--gold);font-size:14px;font-weight:600;margin-top:16px;margin-bottom:8px;">5 tonalites :</p>
+      <ul class="fw-list">
+        <li><span class="fw-num">1.</span>Curieux</li>
+        <li><span class="fw-num">2.</span>Confus</li>
+        <li><span class="fw-num">3.</span>Challenging</li>
+        <li><span class="fw-num">4.</span>Empathique</li>
+        <li><span class="fw-num">5.</span>Playful</li>
+      </ul>
+    </div>
+
+    <div class="fw-card gold-accent" data-keywords="alexy mouly question maitre decision personne devenir isoler resultat reframe symptome cause cout inaction logique peur cta plaintes blocages justifies crucifies">
+      <div class="fw-name">Alexy Mouly</div>
+      <div class="fw-subtitle">Question Maitre</div>
+
+      <div class="fw-big-quote">"Quelle decision prendrait la personne que tu veux devenir?"</div>
+
+      <ul class="fw-list">
+        <li><span class="fw-num">1.</span>Isoler</li>
+        <li><span class="fw-num">2.</span>Retour au resultat</li>
+        <li><span class="fw-num">3.</span>Reframe symptome vs cause</li>
+        <li><span class="fw-num">4.</span>Cout inaction</li>
+        <li><span class="fw-num">5.</span>Logique vs peur</li>
+        <li><span class="fw-num">6.</span>CTA</li>
+      </ul>
+
+      <div class="fw-quote" style="margin-top:20px;">"Les objections sont des PLAINTES, pas des vrais blocages."</div>
+      <div class="fw-quote">"Quand tu justifies, tu te crucifies." — JAMAIS justifier, poser une question.</div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ══════════════ FOOTER ══════════════ -->
+<footer class="footer">
+  <span class="gold">SAPIENS 360</span> &nbsp;|&nbsp; Bible des Objections &nbsp;|&nbsp; Derniere MAJ : Avril 2026
+</footer>
+
+<!-- ══════════════ JAVASCRIPT ══════════════ -->
+<script>
+(function(){
+  // ── Tab Navigation ──
+  const tabs = document.querySelectorAll('.nav-tab');
+  const sections = document.querySelectorAll('.content > .section');
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      const target = tab.dataset.target;
+      // Update active tab
+      tabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      // Scroll to section
+      const el = document.getElementById(target);
+      if(el){
+        const navH = document.querySelector('.sticky-nav').offsetHeight;
+        const searchH = document.querySelector('.search-wrap').offsetHeight;
+        const top = el.getBoundingClientRect().top + window.scrollY - navH - searchH - 12;
+        window.scrollTo({top, behavior:'smooth'});
+      }
+    });
+  });
+
+  // ── Scroll spy ──
+  function updateActiveTab(){
+    const navH = document.querySelector('.sticky-nav').offsetHeight;
+    const searchH = document.querySelector('.search-wrap').offsetHeight;
+    const offset = navH + searchH + 40;
+    let current = '';
+    sections.forEach(s => {
+      if(s.getBoundingClientRect().top <= offset) current = s.id;
+    });
+    if(current){
+      tabs.forEach(t => {
+        t.classList.toggle('active', t.dataset.target === current);
+      });
+    }
+  }
+  window.addEventListener('scroll', updateActiveTab, {passive:true});
+
+  // ── Archetype Tabs ──
+  const archTabs = document.querySelectorAll('.arch-tab');
+  const archPanels = document.querySelectorAll('.arch-panel');
+  archTabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      archTabs.forEach(t => t.classList.remove('active'));
+      archPanels.forEach(p => p.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById(tab.dataset.arch).classList.add('active');
+    });
+  });
+
+  // ── Global Search ──
+  const searchInput = document.getElementById('globalSearch');
+  const noResults = document.getElementById('noResults');
+
+  function getAllSearchables(){
+    return document.querySelectorAll('.searchable, .card, .objection-item, .tree-branch, .escalation-step, .fw-card, .arch-panel, .danger-box, .collapsible-header, .collapsible-body');
+  }
+
+  searchInput.addEventListener('input', function(){
+    const q = this.value.trim().toLowerCase();
+    if(!q){
+      // Show everything
+      document.querySelectorAll('.hidden').forEach(el => el.classList.remove('hidden'));
+      noResults.style.display = 'none';
+      // Reset archetype panels
+      archPanels.forEach((p,i) => p.classList.toggle('active', i===0));
+      archTabs.forEach((t,i) => t.classList.toggle('active', i===0));
+      return;
+    }
+
+    let anyVisible = false;
+
+    // For each section
+    sections.forEach(sec => {
+      const sectionKw = (sec.dataset.keywords || '') + ' ' + sec.textContent;
+      const sectionMatch = sectionKw.toLowerCase().includes(q);
+
+      if(sectionMatch){
+        sec.classList.remove('hidden');
+        anyVisible = true;
+        // Show all children
+        sec.querySelectorAll('.hidden').forEach(el => el.classList.remove('hidden'));
+      } else {
+        // Check children individually
+        let childMatch = false;
+        sec.querySelectorAll('[data-keywords]').forEach(child => {
+          const ckw = (child.dataset.keywords || '') + ' ' + child.textContent;
+          if(ckw.toLowerCase().includes(q)){
+            child.classList.remove('hidden');
+            childMatch = true;
+          } else {
+            child.classList.add('hidden');
+          }
+        });
+        if(childMatch){
+          sec.classList.remove('hidden');
+          anyVisible = true;
+        } else {
+          sec.classList.add('hidden');
+        }
+      }
+    });
+
+    // Show all archetype panels matching
+    archPanels.forEach(p => {
+      const pk = (p.dataset.keywords || '') + ' ' + p.textContent;
+      if(pk.toLowerCase().includes(q)){
+        p.classList.add('active');
+        p.classList.remove('hidden');
+      }
+    });
+
+    noResults.style.display = anyVisible ? 'none' : 'block';
+  });
+
+  // ── Copy Script ──
+  window.copyScript = function(btn){
+    const parent = btn.parentElement;
+    const text = parent.textContent.replace('Copier','').replace('Copie !','').trim();
+    navigator.clipboard.writeText(text).then(() => {
+      btn.textContent = 'Copie !';
+      btn.classList.add('copied');
+      setTimeout(() => {
+        btn.textContent = 'Copier';
+        btn.classList.remove('copied');
+      }, 1500);
+    });
+  };
+
+  // ── Collapsible ──
+  window.toggleCollapse = function(header){
+    const body = header.nextElementSibling;
+    header.classList.toggle('open');
+    body.classList.toggle('open');
+  };
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAPIENS 360 — Drive Central</title>
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg: #111;
+  --card: #161616;
+  --border: #2C4A3555;
+  --gold: #B8956A;
+  --green: #2C4A35;
+  --ivory: #FAF7F2;
+  --stone: #888;
+  --gold-glow: #B8956A44;
+  --green-glow: #2C4A3544;
+}
+
+body {
+  background: var(--bg);
+  color: var(--ivory);
+  font-family: 'Segoe UI', Arial, sans-serif;
+  line-height: 1.6;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Hero ── */
+.hero {
+  text-align: center;
+  padding: 60px 24px 40px;
+  border-bottom: 1px solid var(--border);
+}
+.hero-brand {
+  font-family: Georgia, serif;
+  font-size: 14px;
+  color: var(--gold);
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.hero-number {
+  font-family: Georgia, serif;
+  font-size: 60px;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.1;
+  margin-bottom: 4px;
+}
+.hero-number .gold-six { color: var(--gold); }
+.hero-subtitle {
+  font-family: Georgia, serif;
+  font-size: 18px;
+  color: var(--stone);
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+.hero-desc {
+  color: var(--stone);
+  font-size: 15px;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+/* ── Controls ── */
+.controls {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 28px 24px 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  justify-content: center;
+}
+.filter-btn {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--stone);
+  padding: 8px 22px;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: 'Segoe UI', Arial, sans-serif;
+}
+.filter-btn:hover { border-color: var(--gold); color: var(--ivory); }
+.filter-btn.active { background: var(--gold); color: #111; border-color: var(--gold); font-weight: 600; }
+.search-wrap {
+  position: relative;
+  flex: 1;
+  min-width: 220px;
+  max-width: 400px;
+}
+.search-wrap svg {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0.4;
+}
+#search {
+  width: 100%;
+  background: var(--card);
+  border: 1px solid var(--border);
+  color: var(--ivory);
+  padding: 9px 14px 9px 38px;
+  border-radius: 6px;
+  font-size: 14px;
+  outline: none;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  transition: border-color 0.2s;
+}
+#search::placeholder { color: var(--stone); }
+#search:focus { border-color: var(--gold); }
+
+/* ── Morning Routine ── */
+.routines {
+  max-width: 1200px;
+  margin: 32px auto 0;
+  padding: 0 24px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.routine-card {
+  background: var(--card);
+  border-radius: 10px;
+  padding: 24px;
+  transition: transform 0.2s;
+}
+.routine-card:hover { transform: translateY(-2px); }
+.routine-card.jad { border: 1px solid var(--gold); }
+.routine-card.geoffrey { border: 1px solid var(--green); }
+.routine-title {
+  font-family: Georgia, serif;
+  font-size: 18px;
+  margin-bottom: 14px;
+}
+.routine-card.jad .routine-title { color: var(--gold); }
+.routine-card.geoffrey .routine-title { color: #5A9E6F; }
+.routine-link {
+  display: block;
+  color: var(--ivory);
+  text-decoration: none;
+  padding: 6px 0;
+  font-size: 14px;
+  transition: color 0.15s;
+  border-bottom: 1px solid #ffffff08;
+}
+.routine-link:hover { color: var(--gold); }
+.routine-link::before {
+  content: "\2192";
+  margin-right: 8px;
+  opacity: 0.4;
+}
+
+/* ── Section ── */
+.main-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px 60px;
+}
+
+/* ── Group Headers ── */
+.group-header {
+  margin-top: 40px;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  user-select: none;
+}
+.group-header h2 {
+  font-family: Georgia, serif;
+  font-size: 13px;
+  color: var(--gold);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  font-weight: 400;
+}
+.group-header::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+.group-header .chevron {
+  display: none;
+  font-size: 12px;
+  color: var(--stone);
+  transition: transform 0.2s;
+}
+@media (max-width: 768px) {
+  .group-header .chevron { display: inline; }
+}
+.group-header.collapsed .chevron { transform: rotate(-90deg); }
+
+/* ── Card Grid ── */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  overflow: hidden;
+  transition: max-height 0.35s ease, opacity 0.25s ease;
+}
+.card-grid.collapsed-grid {
+  max-height: 0 !important;
+  opacity: 0;
+  overflow: hidden;
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 20px;
+  text-decoration: none;
+  color: var(--ivory);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: relative;
+  transition: border-color 0.25s, box-shadow 0.25s, transform 0.2s;
+}
+.card:hover {
+  border-color: var(--gold);
+  box-shadow: 0 0 20px var(--gold-glow);
+  transform: translateY(-2px);
+}
+.card-number {
+  position: absolute;
+  top: 12px;
+  left: 14px;
+  font-size: 11px;
+  color: var(--stone);
+  font-weight: 600;
+  opacity: 0.5;
+}
+.card-title {
+  font-family: Georgia, serif;
+  font-size: 16px;
+  color: var(--gold);
+  margin-top: 8px;
+  padding-right: 60px;
+}
+.card-desc {
+  font-size: 13px;
+  color: var(--stone);
+  line-height: 1.5;
+}
+.card-role {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 4px;
+  position: absolute;
+  top: 12px;
+  right: 14px;
+}
+.card-role.jad { background: var(--gold); color: #111; }
+.card-role.geoffrey { background: var(--green); color: #cde4d0; }
+.card-role.both { background: transparent; border: 1px solid var(--stone); color: var(--stone); }
+.card.hidden { display: none; }
+
+/* ── Footer ── */
+.footer {
+  text-align: center;
+  padding: 40px 24px;
+  border-top: 1px solid var(--border);
+  color: var(--stone);
+  font-size: 13px;
+  line-height: 1.8;
+}
+.footer strong { color: var(--ivory); font-weight: 400; }
+
+/* ── Responsive ── */
+@media (max-width: 1024px) {
+  .card-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 768px) {
+  .hero { padding: 40px 20px 28px; }
+  .hero-number { font-size: 48px; }
+  .routines { grid-template-columns: 1fr; }
+  .card-grid { grid-template-columns: 1fr; }
+  .controls { padding: 20px 16px 0; }
+  .main-content { padding: 0 16px 40px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════ HERO ═══════════════════ -->
+<section class="hero">
+  <div class="hero-brand">SAPIENS</div>
+  <div class="hero-number">3<span class="gold-six">6</span>0</div>
+  <div class="hero-subtitle">Drive Central</div>
+  <p class="hero-desc">Tous les outils SAPIENS 360 &mdash; un clic, pret a l'emploi</p>
+</section>
+
+<!-- ═══════════════════ CONTROLS ═══════════════════ -->
+<div class="controls">
+  <button class="filter-btn active" data-filter="tous">Tous</button>
+  <button class="filter-btn" data-filter="jad">Jad</button>
+  <button class="filter-btn" data-filter="geoffrey">Geoffrey</button>
+  <div class="search-wrap">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    <input type="text" id="search" placeholder="Rechercher un outil...">
+  </div>
+</div>
+
+<!-- ═══════════════════ MORNING ROUTINES ═══════════════════ -->
+<div class="routines">
+  <div class="routine-card jad">
+    <div class="routine-title">Routine Jad</div>
+    <a href="01_SCRIPT_SETTING.html" class="routine-link">Script Setting</a>
+    <a href="02_SCRIPT_CLOSING.html" class="routine-link">Script Closing</a>
+    <a href="05_ICP_ARCHETYPES.html" class="routine-link">ICP Archetypes</a>
+    <a href="14_KPI_DASHBOARD.html" class="routine-link">KPI Dashboard</a>
+  </div>
+  <div class="routine-card geoffrey">
+    <div class="routine-title">Routine Geoffrey</div>
+    <a href="09_DELIVERY_BIBLE.html" class="routine-link">Delivery Bible</a>
+    <a href="08_ONBOARDING_CLIENT.html" class="routine-link">Onboarding Client</a>
+    <a href="14_KPI_DASHBOARD.html" class="routine-link">KPI Dashboard</a>
+  </div>
+</div>
+
+<!-- ═══════════════════ MAIN GRID ═══════════════════ -->
+<div class="main-content">
+
+  <!-- Outils Sales Quotidiens -->
+  <div class="group-header" onclick="toggleGroup(this)">
+    <h2>Outils Sales Quotidiens</h2>
+    <span class="chevron">&#9660;</span>
+  </div>
+  <div class="card-grid">
+    <a href="01_SCRIPT_SETTING.html" class="card" data-role="jad">
+      <span class="card-number">01</span>
+      <span class="card-role jad">Jad</span>
+      <div class="card-title">Script Setting & Qualification</div>
+      <div class="card-desc">ManyChat, qualification, scorecard, red flags</div>
+    </a>
+    <a href="02_SCRIPT_CLOSING.html" class="card" data-role="jad">
+      <span class="card-number">02</span>
+      <span class="card-role jad">Jad</span>
+      <div class="card-title">Script Closing V8</div>
+      <div class="card-desc">8 phases, mode call live, timer silence, objections</div>
+    </a>
+    <a href="03_OBJECTION_BIBLE.html" class="card" data-role="jad">
+      <span class="card-number">03</span>
+      <span class="card-role jad">Jad</span>
+      <div class="card-title">Bible des Objections</div>
+      <div class="card-desc">12 objections rankees, par archetype, frameworks</div>
+    </a>
+    <a href="04_RELANCE_SYSTEM.html" class="card" data-role="jad">
+      <span class="card-number">04</span>
+      <span class="card-role jad">Jad</span>
+      <div class="card-title">Systeme de Relance</div>
+      <div class="card-desc">Post-call, no-show, rescue, nurture, referral</div>
+    </a>
+    <a href="05_ICP_ARCHETYPES.html" class="card" data-role="jad">
+      <span class="card-number">05</span>
+      <span class="card-role jad">Jad</span>
+      <div class="card-title">ICP & 5 Archetypes</div>
+      <div class="card-desc">Avatar Lea, 5 fiches, detection, cheat sheet</div>
+    </a>
+  </div>
+
+  <!-- Emails & Automation -->
+  <div class="group-header" onclick="toggleGroup(this)">
+    <h2>Emails & Automation</h2>
+    <span class="chevron">&#9660;</span>
+  </div>
+  <div class="card-grid">
+    <a href="06_EMAILS_MASTER.html" class="card" data-role="jad">
+      <span class="card-number">06</span>
+      <span class="card-role jad">Jad</span>
+      <div class="card-title">Tous les Emails GHL</div>
+      <div class="card-desc">WF1-WF5, temoignages par condition, boutons copier</div>
+    </a>
+    <a href="07_AUTOMATION_BIBLE.html" class="card" data-role="jad">
+      <span class="card-number">07</span>
+      <span class="card-role jad">Jad</span>
+      <div class="card-title">ManyChat & GHL Setup</div>
+      <div class="card-desc">5 flows, workflows, tags, webhooks, troubleshooting</div>
+    </a>
+  </div>
+
+  <!-- Delivery Client -->
+  <div class="group-header" onclick="toggleGroup(this)">
+    <h2>Delivery Client</h2>
+    <span class="chevron">&#9660;</span>
+  </div>
+  <div class="card-grid">
+    <a href="08_ONBOARDING_CLIENT.html" class="card" data-role="geoffrey">
+      <span class="card-number">08</span>
+      <span class="card-role geoffrey">Geoffrey</span>
+      <div class="card-title">Process Onboarding</div>
+      <div class="card-desc">Timeline H+0 a J+3, checklists, templates</div>
+    </a>
+    <a href="09_DELIVERY_BIBLE.html" class="card" data-role="geoffrey">
+      <span class="card-number">09</span>
+      <span class="card-role geoffrey">Geoffrey</span>
+      <div class="card-title">Delivery Semaine par Semaine</div>
+      <div class="card-desc">S1-S12, tracking cetose, interventions, templates</div>
+    </a>
+  </div>
+
+  <!-- Offre & Produit -->
+  <div class="group-header" onclick="toggleGroup(this)">
+    <h2>Offre & Produit</h2>
+    <span class="chevron">&#9660;</span>
+  </div>
+  <div class="card-grid">
+    <a href="10_OFFER_BIBLE.html" class="card" data-role="both">
+      <span class="card-number">10</span>
+      <span class="card-role both">Both</span>
+      <div class="card-title">L'Offre Complete</div>
+      <div class="card-desc">Value stack, garantie, prix, concurrents, vocabulaire</div>
+    </a>
+  </div>
+
+  <!-- Contenu & Acquisition -->
+  <div class="group-header" onclick="toggleGroup(this)">
+    <h2>Contenu & Acquisition</h2>
+    <span class="chevron">&#9660;</span>
+  </div>
+  <div class="card-grid">
+    <a href="11_CONTENT_ENGINE.html" class="card" data-role="both">
+      <span class="card-number">11</span>
+      <span class="card-role both">Both</span>
+      <div class="card-title">Machine a Contenu</div>
+      <div class="card-desc">300 idees reels, 50 YouTube, hooks, calendrier</div>
+    </a>
+    <a href="12_VSL_SCRIPT.html" class="card" data-role="geoffrey">
+      <span class="card-number">12</span>
+      <span class="card-role geoffrey">Geoffrey</span>
+      <div class="card-title">Script VSL</div>
+      <div class="card-desc">Script 8-9 min, mode teleprompter, notes production</div>
+    </a>
+  </div>
+
+  <!-- Operations & Process -->
+  <div class="group-header" onclick="toggleGroup(this)">
+    <h2>Operations & Process</h2>
+    <span class="chevron">&#9660;</span>
+  </div>
+  <div class="card-grid">
+    <a href="13_ALL_PROCESSES.html" class="card" data-role="both">
+      <span class="card-number">13</span>
+      <span class="card-role both">Both</span>
+      <div class="card-title">Tous les Process</div>
+      <div class="card-desc">Flowcharts, lifecycle lead, routines, checklists</div>
+    </a>
+    <a href="14_KPI_DASHBOARD.html" class="card" data-role="both">
+      <span class="card-number">14</span>
+      <span class="card-role both">Both</span>
+      <div class="card-title">Dashboard KPI</div>
+      <div class="card-desc">Calculateur revenue, metriques, historique, diagnostic</div>
+    </a>
+    <a href="15_ECOSYSTEM_MAP.html" class="card" data-role="both">
+      <span class="card-number">15</span>
+      <span class="card-role both">Both</span>
+      <div class="card-title">Carte Ecosysteme</div>
+      <div class="card-desc">Map outils, flux donnees, integrations, couts</div>
+    </a>
+  </div>
+
+  <!-- Strategie & Croissance -->
+  <div class="group-header" onclick="toggleGroup(this)">
+    <h2>Strategie & Croissance</h2>
+    <span class="chevron">&#9660;</span>
+  </div>
+  <div class="card-grid">
+    <a href="16_ROADMAP_100K.html" class="card" data-role="both">
+      <span class="card-number">16</span>
+      <span class="card-role both">Both</span>
+      <div class="card-title">Roadmap 100K/mois</div>
+      <div class="card-desc">3 phases, calculateur, milestones, projections</div>
+    </a>
+    <a href="17_AUDIT_STATE.html" class="card" data-role="both">
+      <span class="card-number">17</span>
+      <span class="card-role both">Both</span>
+      <div class="card-title">Audit & Etat des Lieux</div>
+      <div class="card-desc">Vert/jaune/rouge, priorites P0/P1/P2, go-live</div>
+    </a>
+    <a href="18_REFERRAL_SYSTEM.html" class="card" data-role="both">
+      <span class="card-number">18</span>
+      <span class="card-role both">Both</span>
+      <div class="card-title">Systeme Referral</div>
+      <div class="card-desc">Scripts, recompenses, tracking, templates clients</div>
+    </a>
+  </div>
+
+  <!-- Training -->
+  <div class="group-header" onclick="toggleGroup(this)">
+    <h2>Training</h2>
+    <span class="chevron">&#9660;</span>
+  </div>
+  <div class="card-grid">
+    <a href="19_CLOSER_MASTERY.html" class="card" data-role="jad">
+      <span class="card-number">19</span>
+      <span class="card-role jad">Jad</span>
+      <div class="card-title">Closer Mastery 30j</div>
+      <div class="card-desc">Programme 30 jours, mode call, frameworks</div>
+    </a>
+    <a href="20_CALL_ANALYSIS.html" class="card" data-role="jad">
+      <span class="card-number">20</span>
+      <span class="card-role jad">Jad</span>
+      <div class="card-title">Analyse des Calls</div>
+      <div class="card-desc">Patterns, verbatims, scorecard auto-evaluation</div>
+    </a>
+    <a href="21_MASTER_STRATEGY.html" class="card" data-role="both">
+      <span class="card-number">21</span>
+      <span class="card-role both">Both</span>
+      <div class="card-title">Master Refonte</div>
+      <div class="card-desc">Document strategique complet, reference ultime</div>
+    </a>
+  </div>
+
+</div>
+
+<!-- ═══════════════════ FOOTER ═══════════════════ -->
+<footer class="footer">
+  <strong>SAPIENS 360 DRIVE</strong> &mdash; 22 outils | Derniere MAJ: Avril 2026<br>
+  Jad Naintre & Geoffrey Laguardia
+</footer>
+
+<!-- ═══════════════════ JAVASCRIPT ═══════════════════ -->
+<script>
+(function() {
+  const cards = document.querySelectorAll('.card');
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const searchInput = document.getElementById('search');
+  let activeRole = 'tous';
+
+  // Role filter
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      activeRole = btn.dataset.filter;
+      applyFilters();
+    });
+  });
+
+  // Search filter
+  searchInput.addEventListener('input', () => applyFilters());
+
+  function applyFilters() {
+    const query = searchInput.value.toLowerCase().trim();
+    cards.forEach(card => {
+      const role = card.dataset.role;
+      const text = card.textContent.toLowerCase();
+      const roleMatch = activeRole === 'tous' || role === activeRole || role === 'both';
+      const searchMatch = !query || text.includes(query);
+      card.classList.toggle('hidden', !(roleMatch && searchMatch));
+    });
+    // Hide group headers if all cards in their grid are hidden
+    document.querySelectorAll('.group-header').forEach(header => {
+      const grid = header.nextElementSibling;
+      if (grid && grid.classList.contains('card-grid')) {
+        const visibleCards = grid.querySelectorAll('.card:not(.hidden)');
+        header.style.display = visibleCards.length === 0 ? 'none' : '';
+        grid.style.display = visibleCards.length === 0 ? 'none' : '';
+      }
+    });
+  }
+
+  // Group collapse/expand (mobile)
+  window.toggleGroup = function(header) {
+    if (window.innerWidth > 768) return;
+    header.classList.toggle('collapsed');
+    const grid = header.nextElementSibling;
+    if (grid && grid.classList.contains('card-grid')) {
+      grid.classList.toggle('collapsed-grid');
+    }
+  };
+})();
+</script>
+</body>
+</html>

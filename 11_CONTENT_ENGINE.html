@@ -1,0 +1,1876 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAPIENS 360 — Machine a Contenu</title>
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg: #111;
+  --card: #161616;
+  --border: #2C4A3555;
+  --gold: #B8956A;
+  --green: #2C4A35;
+  --ivory: #FAF7F2;
+  --stone: #888;
+  --gold-glow: #B8956A44;
+  --green-glow: #2C4A3544;
+  --revelation: #E06C4F;
+  --mecanisme: #5B9BD5;
+  --identite: #C77DBA;
+  --preuve: #6BC77A;
+  --decision: #B8956A;
+}
+
+body {
+  background: var(--bg);
+  color: var(--ivory);
+  font-family: 'Segoe UI', Arial, sans-serif;
+  line-height: 1.6;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Hero ── */
+.hero {
+  text-align: center;
+  padding: 60px 24px 36px;
+  border-bottom: 1px solid var(--border);
+}
+.hero-brand {
+  font-family: Georgia, serif;
+  font-size: 14px;
+  color: var(--gold);
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.hero-title {
+  font-family: Georgia, serif;
+  font-size: clamp(32px, 6vw, 56px);
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.1;
+  margin-bottom: 8px;
+}
+.hero-title .gold { color: var(--gold); }
+.hero-subtitle {
+  font-family: Georgia, serif;
+  font-size: 17px;
+  color: var(--stone);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+.hero-desc {
+  color: var(--stone);
+  font-size: 15px;
+  max-width: 640px;
+  margin: 0 auto;
+  line-height: 1.7;
+}
+.hero-desc strong { color: var(--ivory); }
+
+/* ── Search + Filter Bar ── */
+.search-bar {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 28px 24px 0;
+}
+.search-input {
+  width: 100%;
+  padding: 14px 20px 14px 48px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  color: var(--ivory);
+  font-size: 15px;
+  font-family: inherit;
+  outline: none;
+  transition: border-color .2s;
+}
+.search-input:focus { border-color: var(--gold); }
+.search-input::placeholder { color: #555; }
+.search-wrap {
+  position: relative;
+}
+.search-icon {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #555;
+  font-size: 18px;
+  pointer-events: none;
+}
+
+.filter-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 16px;
+  justify-content: center;
+}
+.filter-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+}
+.filter-group-label {
+  font-size: 11px;
+  color: var(--stone);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-right: 4px;
+}
+.filter-btn {
+  padding: 6px 16px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--stone);
+  font-size: 12px;
+  font-family: inherit;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all .2s;
+}
+.filter-btn:hover { border-color: var(--gold); color: var(--ivory); }
+.filter-btn.active { background: var(--gold); color: #111; border-color: var(--gold); font-weight: 600; }
+.filter-btn[data-type="revelation"].active { background: var(--revelation); border-color: var(--revelation); }
+.filter-btn[data-type="mecanisme"].active { background: var(--mecanisme); border-color: var(--mecanisme); }
+.filter-btn[data-type="identite"].active { background: var(--identite); border-color: var(--identite); }
+.filter-btn[data-type="preuve"].active { background: var(--preuve); border-color: var(--preuve); color: #111; }
+.filter-btn[data-type="decision"].active { background: var(--decision); border-color: var(--decision); }
+
+.separator {
+  width: 1px;
+  height: 24px;
+  background: var(--border);
+  margin: 0 8px;
+}
+
+/* ── Sticky Nav ── */
+.sticky-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(17,17,17,.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  margin-top: 24px;
+}
+.nav-tabs {
+  display: flex;
+  max-width: 900px;
+  margin: 0 auto;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.nav-tabs::-webkit-scrollbar { display: none; }
+.nav-tab {
+  flex-shrink: 0;
+  padding: 14px 20px;
+  background: none;
+  border: none;
+  color: var(--stone);
+  font-family: inherit;
+  font-size: 13px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: all .2s;
+  white-space: nowrap;
+}
+.nav-tab:hover { color: var(--ivory); }
+.nav-tab.active { color: var(--gold); border-bottom-color: var(--gold); }
+
+/* ── Sections ── */
+.section {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 48px 24px;
+  display: none;
+}
+.section.active { display: block; }
+.section-title {
+  font-family: Georgia, serif;
+  font-size: 28px;
+  color: #fff;
+  margin-bottom: 8px;
+}
+.section-subtitle {
+  color: var(--stone);
+  font-size: 14px;
+  margin-bottom: 32px;
+}
+
+/* ── Cards ── */
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 16px;
+}
+.card-title {
+  font-family: Georgia, serif;
+  font-size: 18px;
+  color: var(--gold);
+  margin-bottom: 12px;
+}
+
+/* ── Stat Cards ── */
+.stat-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px;
+  margin-bottom: 24px;
+}
+.stat-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 20px;
+  text-align: center;
+}
+.stat-number {
+  font-family: Georgia, serif;
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--gold);
+}
+.stat-label {
+  font-size: 12px;
+  color: var(--stone);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: 4px;
+}
+
+/* ── Tables ── */
+.table-wrap {
+  overflow-x: auto;
+  margin-bottom: 24px;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+th {
+  text-align: left;
+  padding: 12px 16px;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--gold);
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+td {
+  padding: 12px 16px;
+  border-bottom: 1px solid #1a1a1a;
+  color: var(--ivory);
+}
+tr:last-child td { border-bottom: none; }
+
+/* ── Badges ── */
+.badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.badge-revelation { background: var(--revelation); color: #fff; }
+.badge-mecanisme { background: var(--mecanisme); color: #fff; }
+.badge-identite { background: var(--identite); color: #fff; }
+.badge-preuve { background: var(--preuve); color: #111; }
+.badge-decision { background: var(--decision); color: #111; }
+.badge-tofu { background: #333; color: var(--revelation); border: 1px solid var(--revelation); }
+.badge-mofu { background: #333; color: var(--mecanisme); border: 1px solid var(--mecanisme); }
+.badge-bofu { background: #333; color: var(--preuve); border: 1px solid var(--preuve); }
+
+/* ── Hooks List ── */
+.hook-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 16px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  margin-bottom: 8px;
+  transition: border-color .2s;
+}
+.hook-item:hover { border-color: var(--gold); }
+.hook-item.hidden { display: none; }
+.hook-num {
+  font-family: Georgia, serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: #333;
+  min-width: 36px;
+  text-align: center;
+  flex-shrink: 0;
+  line-height: 1.4;
+}
+.hook-content { flex: 1; }
+.hook-text {
+  font-size: 15px;
+  color: var(--ivory);
+  margin-bottom: 6px;
+  line-height: 1.5;
+}
+.hook-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.copy-btn {
+  margin-left: auto;
+  flex-shrink: 0;
+  padding: 6px 14px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--stone);
+  font-size: 11px;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all .2s;
+}
+.copy-btn:hover { border-color: var(--gold); color: var(--gold); }
+.copy-btn.copied { border-color: var(--preuve); color: var(--preuve); }
+
+/* ── YouTube Cards ── */
+.yt-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  margin-bottom: 12px;
+  overflow: hidden;
+  transition: border-color .2s;
+}
+.yt-card:hover { border-color: var(--gold); }
+.yt-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px 20px;
+  cursor: pointer;
+  user-select: none;
+}
+.yt-num {
+  font-family: Georgia, serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--gold);
+  min-width: 32px;
+}
+.yt-title {
+  flex: 1;
+  font-size: 15px;
+  color: var(--ivory);
+  font-weight: 500;
+}
+.yt-duration {
+  font-size: 12px;
+  color: var(--stone);
+  background: #1a1a1a;
+  padding: 4px 10px;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+.yt-toggle {
+  color: var(--stone);
+  font-size: 18px;
+  transition: transform .2s;
+  flex-shrink: 0;
+}
+.yt-card.open .yt-toggle { transform: rotate(180deg); }
+.yt-body {
+  display: none;
+  padding: 0 20px 20px 66px;
+}
+.yt-card.open .yt-body { display: block; }
+.yt-keyword {
+  font-size: 12px;
+  color: var(--mecanisme);
+  margin-bottom: 10px;
+}
+.yt-outline {
+  list-style: none;
+  padding: 0;
+}
+.yt-outline li {
+  padding: 4px 0;
+  font-size: 14px;
+  color: var(--stone);
+  position: relative;
+  padding-left: 16px;
+}
+.yt-outline li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 12px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--green);
+}
+
+/* ── Gold Rules ── */
+.rule-card {
+  background: var(--card);
+  border: 1px solid var(--gold);
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 12px;
+  position: relative;
+}
+.rule-num {
+  font-family: Georgia, serif;
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--gold-glow);
+  position: absolute;
+  top: 12px;
+  right: 20px;
+  line-height: 1;
+}
+.rule-text {
+  font-size: 15px;
+  color: var(--ivory);
+  line-height: 1.6;
+  padding-right: 40px;
+}
+
+/* ── Format Guidelines ── */
+.format-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 12px;
+}
+.format-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+.format-title {
+  font-family: Georgia, serif;
+  font-size: 16px;
+  color: var(--ivory);
+}
+.do-dont {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.do-col, .dont-col {
+  font-size: 13px;
+  line-height: 1.7;
+}
+.do-col strong { color: var(--preuve); }
+.dont-col strong { color: var(--revelation); }
+.do-col li, .dont-col li {
+  color: var(--stone);
+  margin-bottom: 4px;
+}
+
+/* ── Stories ── */
+.story-block {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: 0;
+  margin-bottom: 2px;
+}
+.story-time {
+  font-family: Georgia, serif;
+  font-size: 14px;
+  color: var(--gold);
+  padding: 12px 0;
+  text-align: right;
+  padding-right: 16px;
+  border-right: 2px solid var(--border);
+}
+.story-content {
+  padding: 12px 16px;
+  font-size: 14px;
+  color: var(--ivory);
+}
+.story-type {
+  font-size: 11px;
+  color: var(--stone);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* ── Calendrier ── */
+.cal-block {
+  display: grid;
+  grid-template-columns: 60px auto 1fr;
+  gap: 0;
+  align-items: center;
+  padding: 14px 0;
+  border-bottom: 1px solid #1a1a1a;
+}
+.cal-block:last-child { border-bottom: none; }
+.cal-time {
+  font-family: Georgia, serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: #fff;
+}
+.cal-badge { padding: 0 16px; }
+.cal-desc {
+  font-size: 14px;
+  color: var(--stone);
+}
+
+/* ── Info Box ── */
+.info-box {
+  background: rgba(44,74,53,.15);
+  border: 1px solid var(--green);
+  border-radius: 10px;
+  padding: 20px 24px;
+  margin: 24px 0;
+  font-size: 14px;
+  color: var(--ivory);
+  line-height: 1.7;
+}
+.info-box strong { color: var(--gold); }
+
+/* ── YouTube Rules Box ── */
+.yt-rules {
+  background: rgba(184,149,106,.08);
+  border: 1px solid var(--gold);
+  border-radius: 10px;
+  padding: 20px 24px;
+  margin-top: 24px;
+}
+.yt-rules-title {
+  font-family: Georgia, serif;
+  font-size: 16px;
+  color: var(--gold);
+  margin-bottom: 10px;
+}
+.yt-rules ul {
+  list-style: none;
+  padding: 0;
+}
+.yt-rules li {
+  padding: 4px 0;
+  font-size: 14px;
+  color: var(--ivory);
+  padding-left: 20px;
+  position: relative;
+}
+.yt-rules li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 11px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--gold);
+}
+
+/* ── Footer ── */
+.footer {
+  text-align: center;
+  padding: 40px 24px;
+  border-top: 1px solid var(--border);
+  color: var(--stone);
+  font-size: 13px;
+  letter-spacing: 2px;
+}
+.footer span { color: var(--gold); }
+
+/* ── Diagnostic Card ── */
+.diag-card {
+  background: rgba(224,108,79,.08);
+  border: 1px solid var(--revelation);
+  border-radius: 10px;
+  padding: 20px 24px;
+  margin-bottom: 24px;
+}
+.diag-card strong { color: var(--revelation); }
+
+/* ── No Results ── */
+.no-results {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--stone);
+  font-size: 15px;
+  display: none;
+}
+
+/* ── Responsive ── */
+@media (max-width: 640px) {
+  .hero { padding: 40px 16px 28px; }
+  .section { padding: 32px 16px; }
+  .stat-row { grid-template-columns: 1fr 1fr; }
+  .do-dont { grid-template-columns: 1fr; }
+  .cal-block { grid-template-columns: 50px auto 1fr; }
+  .cal-time { font-size: 16px; }
+  .hook-item { flex-wrap: wrap; }
+  .copy-btn { margin-left: 48px; }
+  .nav-tab { padding: 12px 14px; font-size: 12px; }
+  .yt-header { flex-wrap: wrap; gap: 8px; }
+  .yt-body { padding-left: 20px; }
+  .story-block { grid-template-columns: 60px 1fr; }
+  .filter-row { gap: 6px; }
+  .separator { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════ HERO ═══════ -->
+<div class="hero">
+  <div class="hero-brand">SAPIENS 360</div>
+  <div class="hero-title">Machine a <span class="gold">Contenu</span></div>
+  <div class="hero-subtitle">Content Engine</div>
+  <div class="hero-desc">
+    <strong>300 idees reels + 50 hooks + 12 YouTube</strong> — calendrier quotidien pret a l'emploi.<br>
+    Strategie de contenu organique complete pour Geoffrey et SAPIENS 360.
+  </div>
+</div>
+
+<!-- ═══════ SEARCH + FILTERS ═══════ -->
+<div class="search-bar">
+  <div class="search-wrap">
+    <span class="search-icon">&#x1F50D;</span>
+    <input type="text" class="search-input" id="searchInput" placeholder="Rechercher un hook, une idee, un mot-cle...">
+  </div>
+  <div class="filter-row">
+    <div class="filter-group">
+      <span class="filter-group-label">Type</span>
+      <button class="filter-btn active" data-type="tous" onclick="setTypeFilter('tous')">Tous</button>
+      <button class="filter-btn" data-type="revelation" onclick="setTypeFilter('revelation')">Revelation</button>
+      <button class="filter-btn" data-type="mecanisme" onclick="setTypeFilter('mecanisme')">Mecanisme</button>
+      <button class="filter-btn" data-type="identite" onclick="setTypeFilter('identite')">Identite</button>
+      <button class="filter-btn" data-type="preuve" onclick="setTypeFilter('preuve')">Preuve</button>
+      <button class="filter-btn" data-type="decision" onclick="setTypeFilter('decision')">Decision</button>
+    </div>
+    <div class="separator"></div>
+    <div class="filter-group">
+      <span class="filter-group-label">Plateforme</span>
+      <button class="filter-btn platform-btn active" data-platform="all" onclick="setPlatformFilter('all')">Tous</button>
+      <button class="filter-btn platform-btn" data-platform="reels" onclick="setPlatformFilter('reels')">Reels</button>
+      <button class="filter-btn platform-btn" data-platform="youtube" onclick="setPlatformFilter('youtube')">YouTube</button>
+      <button class="filter-btn platform-btn" data-platform="stories" onclick="setPlatformFilter('stories')">Stories</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════ STICKY NAV ═══════ -->
+<nav class="sticky-nav">
+  <div class="nav-tabs">
+    <button class="nav-tab active" onclick="showSection('strategie')">Strategie</button>
+    <button class="nav-tab" onclick="showSection('calendrier')">Calendrier</button>
+    <button class="nav-tab" onclick="showSection('hooks')">Hooks (50)</button>
+    <button class="nav-tab" onclick="showSection('youtube')">YouTube (12)</button>
+    <button class="nav-tab" onclick="showSection('stories')">Stories</button>
+    <button class="nav-tab" onclick="showSection('regles')">Regles</button>
+  </div>
+</nav>
+
+<!-- ═══════ SECTION: STRATEGIE ═══════ -->
+<div class="section active" id="sec-strategie">
+  <div class="section-title">Strategie Vue d'ensemble</div>
+  <div class="section-subtitle">Architecture de contenu organique SAPIENS 360</div>
+
+  <div class="diag-card">
+    <strong>Diagnostic:</strong> 900K vues/mois mais sous-monetisees. Le probleme n'est pas la visibilite — c'est le mix. Trop de TOFU (audience froide), pas assez de BOFU (contenu de conversion). Le contenu attire mais ne convertit pas.
+  </div>
+
+  <div class="stat-row">
+    <div class="stat-card">
+      <div class="stat-number">35</div>
+      <div class="stat-label">Reels / semaine</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">5</div>
+      <div class="stat-label">Reels / jour</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">2</div>
+      <div class="stat-label">YouTube / sem</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">5-8</div>
+      <div class="stat-label">Stories / jour</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Content Mix — Repartition Strategique</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Type</th>
+            <th>Funnel</th>
+            <th>%</th>
+            <th>Reels/sem</th>
+            <th>Objectif</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="badge badge-revelation">Revelation</span></td>
+            <td><span class="badge badge-tofu">TOFU</span></td>
+            <td>25%</td>
+            <td>9</td>
+            <td>Casser une croyance, audience froide</td>
+          </tr>
+          <tr>
+            <td><span class="badge badge-mecanisme">Mecanisme</span></td>
+            <td><span class="badge badge-mofu">MOFU</span></td>
+            <td>20%</td>
+            <td>7</td>
+            <td>Eduquer axe intestin-immunite-peau</td>
+          </tr>
+          <tr>
+            <td><span class="badge badge-identite">Identite</span></td>
+            <td><span class="badge badge-mofu">MOFU</span></td>
+            <td>15%</td>
+            <td>5</td>
+            <td>Lea se reconnait — "c'est moi"</td>
+          </tr>
+          <tr>
+            <td><span class="badge badge-preuve">Preuve</span></td>
+            <td><span class="badge badge-bofu">BOFU</span></td>
+            <td>25%</td>
+            <td>9</td>
+            <td>Temoignages, avant/apres, resultats</td>
+          </tr>
+          <tr>
+            <td><span class="badge badge-decision">Decision</span></td>
+            <td><span class="badge badge-bofu">BOFU</span></td>
+            <td>15%</td>
+            <td>5</td>
+            <td>CTA direct — "commente SAPIENS"</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">YouTube — Strategie Long Format</div>
+    <p style="font-size:14px;color:var(--stone);margin-bottom:8px;">2 videos/semaine, 8-15 min, facecam Geoffrey, SEO-focused. Le but: construire l'autorite et le SEO. Zero pitch dans la video.</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Stories — Engagement Quotidien</div>
+    <p style="font-size:14px;color:var(--stone);">5-8 stories/jour. Mix: routine perso Geoffrey (matin, cuisine, sport), education rapide (1 fait), preuve sociale (screenshots, resultats), interactif (sondage, quiz, question box). Les stories creent la proximite. Le contenu cree l'autorite.</p>
+  </div>
+</div>
+
+<!-- ═══════ SECTION: CALENDRIER ═══════ -->
+<div class="section" id="sec-calendrier">
+  <div class="section-title">Calendrier Quotidien</div>
+  <div class="section-subtitle">Planning de publication — 5 reels/jour + stories</div>
+
+  <div class="card">
+    <div class="card-title">Reels — Planning Quotidien</div>
+    <div class="cal-block">
+      <div class="cal-time">7h</div>
+      <div class="cal-badge"><span class="badge badge-revelation">Revelation</span></div>
+      <div class="cal-desc">Casser une croyance, audience froide. Hook fort. ZERO CTA.</div>
+    </div>
+    <div class="cal-block">
+      <div class="cal-time">11h</div>
+      <div class="cal-badge"><span class="badge badge-preuve">Preuve</span></div>
+      <div class="cal-desc">Temoignage, screenshot, avant/apres. CTA: "Tu veux le meme resultat?"</div>
+    </div>
+    <div class="cal-block">
+      <div class="cal-time">14h</div>
+      <div class="cal-badge"><span class="badge badge-mecanisme">Mecanisme</span></div>
+      <div class="cal-desc">Eduquer, aha moment. CTA leger: "commente SAPIENS"</div>
+    </div>
+    <div class="cal-block">
+      <div class="cal-time">18h</div>
+      <div class="cal-badge"><span class="badge badge-identite">Identite</span></div>
+      <div class="cal-desc">Lea se reconnait. Empathique. CTA: "Si tu te reconnais..."</div>
+    </div>
+    <div class="cal-block">
+      <div class="cal-time">21h</div>
+      <div class="cal-badge"><span class="badge badge-decision">Decision</span></div>
+      <div class="cal-desc">CTA direct, ton certain. "Commente SAPIENS"</div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:20px;">
+    <div class="card-title">Stories — Planning Quotidien</div>
+    <div class="story-block">
+      <div class="story-time">7-8h</div>
+      <div class="story-content">
+        <div class="story-type">Perso</div>
+        Routine Geoffrey: reveil, cuisine, sport, preparation
+      </div>
+    </div>
+    <div class="story-block">
+      <div class="story-time">12-13h</div>
+      <div class="story-content">
+        <div class="story-type">Education</div>
+        1 fait surprenant sur l'axe intestin-peau
+      </div>
+    </div>
+    <div class="story-block">
+      <div class="story-time">15-16h</div>
+      <div class="story-content">
+        <div class="story-type">Preuve Sociale</div>
+        Screenshot de message, resultat client, avant/apres
+      </div>
+    </div>
+    <div class="story-block">
+      <div class="story-time">20-21h</div>
+      <div class="story-content">
+        <div class="story-type">Interactif</div>
+        Sondage, quiz, question box — engagement direct
+      </div>
+    </div>
+  </div>
+
+  <div class="info-box">
+    <strong>Rappel:</strong> Les heures de Lea sont 7h, 12h, 15h, 19h, 21h. Poster aux moments ou elle scroll. Le week-end, privilegier les stories perso et les contenus IDENTITE (Lea a plus de temps pour consommer du contenu long).
+  </div>
+</div>
+
+<!-- ═══════ SECTION: HOOKS ═══════ -->
+<div class="section" id="sec-hooks">
+  <div class="section-title">Banque de 50 Hooks</div>
+  <div class="section-subtitle">Clique pour copier — filtre par type avec les boutons ci-dessus</div>
+
+  <div id="hooksList">
+    <!-- REVELATION -->
+    <div class="hook-item" data-type="revelation" data-platform="reels">
+      <div class="hook-num">01</div>
+      <div class="hook-content">
+        <div class="hook-text">"Ton dermatologue ne t'a jamais dit ca."</div>
+        <div class="hook-meta"><span class="badge badge-revelation">Revelation</span></div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+    <div class="hook-item" data-type="revelation" data-platform="reels">
+      <div class="hook-num">02</div>
+      <div class="hook-content">
+        <div class="hook-text">"La rosacee n'est pas une maladie de peau."</div>
+        <div class="hook-meta"><span class="badge badge-revelation">Revelation</span></div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+    <div class="hook-item" data-type="revelation" data-platform="reels">
+      <div class="hook-num">03</div>
+      <div class="hook-content">
+        <div class="hook-text">"Stop. Tu traites le mauvais probleme."</div>
+        <div class="hook-meta"><span class="badge badge-revelation">Revelation</span></div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+    <div class="hook-item" data-type="revelation" data-platform="reels">
+      <div class="hook-num">04</div>
+      <div class="hook-content">
+        <div class="hook-text">"Vos bilans sont normaux. Ah oui? Alors pourquoi ta peau flambe?"</div>
+        <div class="hook-meta"><span class="badge badge-revelation">Revelation</span></div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+    <div class="hook-item" data-type="revelation" data-platform="reels">
+      <div class="hook-num">05</div>
+      <div class="hook-content">
+        <div class="hook-text">"Si tes bilans sont bons mais que ta peau ne l'est pas — lis ca."</div>
+        <div class="hook-meta"><span class="badge badge-revelation">Revelation</span></div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+    <div class="hook-item" data-type="revelation" data-platform="reels">
+      <div class="hook-num">06</div>
+      <div class="hook-content">
+        <div class="hook-text">"Le probleme n'est pas ta peau. C'est ce qui se passe en dessous."</div>
+        <div class="hook-meta"><span class="badge badge-revelation">Revelation</span></div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+    <div class="hook-item" data-type="revelation" data-platform="reels">
+      <div class="hook-num">07</div>
+      <div class="hook-content">
+        <div class="hook-text">"Pourquoi les cremes ne peuvent pas resoudre ton probleme de peau."</div>
+        <div class="hook-meta"><span class="badge badge-revelation">Revelation</span></div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+    <div class="hook-item" data-type="revelation" data-platform="reels">
+      <div class="hook-num">08</div>
+      <div class="hook-content">
+        <div class="hook-text">"Ce que le dermato, le naturo, et le pharmacien ne voient pas."</div>
+        <div class="hook-meta"><span class="badge badge-revelation">Revelation</span></div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+    <div class="hook-item" data-type="revelation" data-platform="reels">
+      <div class="hook-num">09</div>
+      <div class="hook-content">
+        <div class="hook-text">"Tu n'as pas la mauvaise peau. Tu as le mauvais angle de traitement."</div>
+        <div class="hook-meta"><span class="badge badge-revelation">Revelation</span></div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+    <div class="hook-item" data-type="revelation" data-platform="reels">
+      <div class="hook-num">10</div>
+      <div class="hook-content">
+        <div class="hook-text">"70% de ton systeme immunitaire est dans ton intestin. Et ca change tout."</div>
+        <div class="hook-meta"><span class="badge badge-revelation">Revelation</span></div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+
+    <!-- IDENTITE -->
+    <div class="hook-item" data-type="identite" data-platform="reels">
+      <div class="hook-num">11</div>
+      <div class="hook-content">
+        <div class="hook-text">"Si ta peau flambe sans logique — ce n'est pas dans ta tete."</div>
+        <div class="hook-meta"><span class="badge badge-identite">Identite</span></div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+    <div class="hook-item" data-type="identite" data-platform="reels">
+      <div class="hook-num">12</div>
+      <div class="hook-content">
+        <div class="hook-text">"Tu as fait des efforts que 95% des gens ne feraient jamais."</div>
+        <div class="hook-meta"><span class="badge badge-identite">Identite</span></div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+    <div class="hook-item" data-type="identite" data-platform="reels">
+      <div class="hook-num">13</div>
+      <div class="hook-content">
+        <div class="hook-text">"'J'ai appris a vivre avec.' Non. Tu fais semblant."</div>
+        <div class="hook-meta"><span class="badge badge-identite">Identite</span></div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+    <div class="hook-item" data-type="identite" data-platform="reels">
+      <div class="hook-num">14</div>
+      <div class="hook-content">
+        <div class="hook-text">"Le matin devant le miroir — quand ta peau decide de ta journee."</div>
+        <div class="hook-meta"><span class="badge badge-identite">Identite</span></div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+    <div class="hook-item" data-type="identite" data-platform="reels">
+      <div class="hook-num">15</div>
+      <div class="hook-content">
+        <div class="hook-text">"Annuler des plans parce que ta peau flambe — ca te parle?"</div>
+        <div class="hook-meta"><span class="badge badge-identite">Identite</span></div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+    <div class="hook-item" data-type="identite" data-platform="reels">
+      <div class="hook-num">16</div>
+      <div class="hook-content">
+        <div class="hook-text">"Ce n'est pas ta faute si ca revient."</div>
+        <div class="hook-meta"><span class="badge badge-identite">Identite</span></div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+    <div class="hook-item" data-type="identite" data-platform="reels">
+      <div class="hook-num">17</div>
+      <div class="hook-content">
+        <div class="hook-text">"'Mon corps me trahit.' Non. Personne ne t'a appris son langage."</div>
+        <div class="hook-meta"><span class="badge badge-identite">Identite</span></div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+    <div class="hook-item" data-type="identite" data-platform="reels">
+      <div class="hook-num">18</div>
+      <div class="hook-content">
+        <div class="hook-text">"La phrase que tu ne devrais plus jamais accepter: 'C'est chronique.'"</div>
+        <div class="hook-meta"><span class="badge badge-identite">Identite</span></div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+    <div class="hook-item" data-type="identite" data-platform="reels">
+      <div class="hook-num">19</div>
+      <div class="hook-content">
+        <div class="hook-text">"Tu ne devrais pas avoir a choisir tes vetements en fonction de ta peau."</div>
+        <div class="hook-meta"><span class="badge badge-identite">Identite</span></div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+    <div class="hook-item" data-type="identite" data-platform="reels">
+      <div class="hook-num">20</div>
+      <div class="hook-content">
+        <div class="hook-text">"Si tu te reconnais dans cette phrase, commente SAPIENS."</div>
+        <div class="hook-meta"><span class="badge badge-identite">Identite</span></div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+
+    <!-- MECANISME -->
+    <div class="hook-item" data-type="mecanisme" data-platform="reels">
+      <div class="hook-num">21</div>
+      <div class="hook-content">
+        <div class="hook-text">"Pourquoi ca s'ameliore toujours. Puis ca revient. Toujours."</div>
+        <div class="hook-meta"><span class="badge badge-mecanisme">Mecanisme</span></div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+    <div class="hook-item" data-type="mecanisme" data-platform="reels">
+      <div class="hook-num">22</div>
+      <div class="hook-content">
+        <div class="hook-text">"Ta peau flambe? Regarde ton intestin."</div>
+        <div class="hook-meta"><span class="badge badge-mecanisme">Mecanisme</span></div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+    <div class="hook-item" data-type="mecanisme" data-platform="reels">
+      <div class="hook-num">23</div>
+      <div class="hook-content">
+        <div class="hook-text">"L'inflammation de bas grade: ce que tes bilans ne mesurent pas."</div>
+        <div class="hook-meta"><span class="badge badge-mecanisme">Mecanisme</span></div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+    <div class="hook-item" data-type="mecanisme" data-platform="reels">
+      <div class="hook-num">24</div>
+      <div class="hook-content">
+        <div class="hook-text">"Le cycle espoir → rechute → epuisement — explique en 30 secondes."</div>
+        <div class="hook-meta"><span class="badge badge-mecanisme">Mecanisme</span></div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+    <div class="hook-item" data-type="mecanisme" data-platform="reels">
+      <div class="hook-num">25</div>
+      <div class="hook-content">
+        <div class="hook-text">"Cremes + antibiotiques = traiter le messager, pas la source."</div>
+        <div class="hook-meta"><span class="badge badge-mecanisme">Mecanisme</span></div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+    <div class="hook-item" data-type="mecanisme" data-platform="reels">
+      <div class="hook-num">26</div>
+      <div class="hook-content">
+        <div class="hook-text">"Stress et peau: le vrai lien (ce n'est PAS ce que tu crois)."</div>
+        <div class="hook-meta"><span class="badge badge-mecanisme">Mecanisme</span></div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+    <div class="hook-item" data-type="mecanisme" data-platform="reels">
+      <div class="hook-num">27</div>
+      <div class="hook-content">
+        <div class="hook-text">"Pourquoi le sans gluten n'a pas marche pour toi."</div>
+        <div class="hook-meta"><span class="badge badge-mecanisme">Mecanisme</span></div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+    <div class="hook-item" data-type="mecanisme" data-platform="reels">
+      <div class="hook-num">28</div>
+      <div class="hook-content">
+        <div class="hook-text">"Les probiotiques du commerce — pourquoi ca ne suffit pas."</div>
+        <div class="hook-meta"><span class="badge badge-mecanisme">Mecanisme</span></div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+    <div class="hook-item" data-type="mecanisme" data-platform="reels">
+      <div class="hook-num">29</div>
+      <div class="hook-content">
+        <div class="hook-text">"'C'est genetique.' Pas exactement. Voila la nuance."</div>
+        <div class="hook-meta"><span class="badge badge-mecanisme">Mecanisme</span></div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+    <div class="hook-item" data-type="mecanisme" data-platform="reels">
+      <div class="hook-num">30</div>
+      <div class="hook-content">
+        <div class="hook-text">"L'erreur #1 qui fait flamber ta peau."</div>
+        <div class="hook-meta"><span class="badge badge-mecanisme">Mecanisme</span></div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+
+    <!-- PREUVE -->
+    <div class="hook-item" data-type="preuve" data-platform="reels">
+      <div class="hook-num">31</div>
+      <div class="hook-content">
+        <div class="hook-text">"[Prenom] avait de l'eczema depuis 5 ans. En 2 mois, c'etait parti."</div>
+        <div class="hook-meta"><span class="badge badge-preuve">Preuve</span></div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+    <div class="hook-item" data-type="preuve" data-platform="reels">
+      <div class="hook-num">32</div>
+      <div class="hook-content">
+        <div class="hook-text">"Son dermato ne comprend pas pourquoi ses plaques ont disparu."</div>
+        <div class="hook-meta"><span class="badge badge-preuve">Preuve</span></div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+    <div class="hook-item" data-type="preuve" data-platform="reels">
+      <div class="hook-num">33</div>
+      <div class="hook-content">
+        <div class="hook-text">"Avant/apres — 6 semaines de protocole SAPIENS."</div>
+        <div class="hook-meta"><span class="badge badge-preuve">Preuve</span></div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+    <div class="hook-item" data-type="preuve" data-platform="reels">
+      <div class="hook-num">34</div>
+      <div class="hook-content">
+        <div class="hook-text">"Pour la premiere fois, j'avais une explication logique."</div>
+        <div class="hook-meta"><span class="badge badge-preuve">Preuve</span></div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+    <div class="hook-item" data-type="preuve" data-platform="reels">
+      <div class="hook-num">35</div>
+      <div class="hook-content">
+        <div class="hook-text">"Ce message qu'on a recu ce matin." [screenshot]</div>
+        <div class="hook-meta"><span class="badge badge-preuve">Preuve</span></div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+    <div class="hook-item" data-type="preuve" data-platform="reels">
+      <div class="hook-num">36</div>
+      <div class="hook-content">
+        <div class="hook-text">"Le protocole ne m'a pas promis de me guerir. Il m'a explique."</div>
+        <div class="hook-meta"><span class="badge badge-preuve">Preuve</span></div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+    <div class="hook-item" data-type="preuve" data-platform="reels">
+      <div class="hook-num">37</div>
+      <div class="hook-content">
+        <div class="hook-text">"100+ femmes accompagnees. 4.9/5. Voila pourquoi."</div>
+        <div class="hook-meta"><span class="badge badge-preuve">Preuve</span></div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+    <div class="hook-item" data-type="preuve" data-platform="reels">
+      <div class="hook-num">38</div>
+      <div class="hook-content">
+        <div class="hook-text">"J'avais arrete de chercher. Et puis j'ai trouve Geoffrey."</div>
+        <div class="hook-meta"><span class="badge badge-preuve">Preuve</span></div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+    <div class="hook-item" data-type="preuve" data-platform="reels">
+      <div class="hook-num">39</div>
+      <div class="hook-content">
+        <div class="hook-text">"Son tracker a la semaine 3 vs a la semaine 8."</div>
+        <div class="hook-meta"><span class="badge badge-preuve">Preuve</span></div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+    <div class="hook-item" data-type="preuve" data-platform="reels">
+      <div class="hook-num">40</div>
+      <div class="hook-content">
+        <div class="hook-text">"Je ne verifie plus ma peau en me levant le matin."</div>
+        <div class="hook-meta"><span class="badge badge-preuve">Preuve</span></div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+
+    <!-- DECISION -->
+    <div class="hook-item" data-type="decision" data-platform="reels">
+      <div class="hook-num">41</div>
+      <div class="hook-content">
+        <div class="hook-text">"On prend 5 profils ce mois-ci. Commente SAPIENS."</div>
+        <div class="hook-meta"><span class="badge badge-decision">Decision</span></div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+    <div class="hook-item" data-type="decision" data-platform="reels">
+      <div class="hook-num">42</div>
+      <div class="hook-content">
+        <div class="hook-text">"Tu as tout essaye. Essaie la cause racine. Commente SAPIENS."</div>
+        <div class="hook-meta"><span class="badge badge-decision">Decision</span></div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+    <div class="hook-item" data-type="decision" data-platform="reels">
+      <div class="hook-num">43</div>
+      <div class="hook-content">
+        <div class="hook-text">"30 minutes. Gratuites. Sans engagement. Commente SAPIENS."</div>
+        <div class="hook-meta"><span class="badge badge-decision">Decision</span></div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+    <div class="hook-item" data-type="decision" data-platform="reels">
+      <div class="hook-num">44</div>
+      <div class="hook-content">
+        <div class="hook-text">"La peau n'est pas le probleme. La peau est le messager. Commente SAPIENS."</div>
+        <div class="hook-meta"><span class="badge badge-decision">Decision</span></div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+    <div class="hook-item" data-type="decision" data-platform="reels">
+      <div class="hook-num">45</div>
+      <div class="hook-content">
+        <div class="hook-text">"Si ca fait plus d'un an — il est temps. Commente SAPIENS."</div>
+        <div class="hook-meta"><span class="badge badge-decision">Decision</span></div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+    <div class="hook-item" data-type="decision" data-platform="reels">
+      <div class="hook-num">46</div>
+      <div class="hook-content">
+        <div class="hook-text">"On prend le risque. Pas toi. Commente SAPIENS."</div>
+        <div class="hook-meta"><span class="badge badge-decision">Decision</span></div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+    <div class="hook-item" data-type="decision" data-platform="reels">
+      <div class="hook-num">47</div>
+      <div class="hook-content">
+        <div class="hook-text">"Un appel. Une explication. Zero engagement. Commente SAPIENS."</div>
+        <div class="hook-meta"><span class="badge badge-decision">Decision</span></div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+    <div class="hook-item" data-type="decision" data-platform="reels">
+      <div class="hook-num">48</div>
+      <div class="hook-content">
+        <div class="hook-text">"Ton corps merite mieux que des cremes. Commente SAPIENS."</div>
+        <div class="hook-meta"><span class="badge badge-decision">Decision</span></div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+    <div class="hook-item" data-type="decision" data-platform="reels">
+      <div class="hook-num">49</div>
+      <div class="hook-content">
+        <div class="hook-text">"Tu veux comprendre ce qui se passe vraiment? Commente SAPIENS."</div>
+        <div class="hook-meta"><span class="badge badge-decision">Decision</span></div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+    <div class="hook-item" data-type="decision" data-platform="reels">
+      <div class="hook-num">50</div>
+      <div class="hook-content">
+        <div class="hook-text">"Arrete de traiter les symptomes. Commente SAPIENS."</div>
+        <div class="hook-meta"><span class="badge badge-decision">Decision</span></div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+  </div>
+
+  <div class="no-results" id="noResultsHooks">Aucun hook ne correspond a ta recherche.</div>
+</div>
+
+<!-- ═══════ SECTION: YOUTUBE ═══════ -->
+<div class="section" id="sec-youtube">
+  <div class="section-title">12 Idees YouTube</div>
+  <div class="section-subtitle">Videos long format — 8-15 min, facecam Geoffrey, SEO-focused</div>
+
+  <div id="youtubeList">
+    <div class="yt-card" data-type="revelation" data-platform="youtube">
+      <div class="yt-header" onclick="toggleYt(this)">
+        <div class="yt-num">01</div>
+        <div class="yt-title">Rosacee: pourquoi ton dermatologue ne regarde pas au bon endroit</div>
+        <div class="yt-duration">12 min</div>
+        <div class="yt-toggle">&#9660;</div>
+      </div>
+      <div class="yt-body">
+        <div class="yt-keyword">SEO: rosacee cause intestin, rosacee traitement naturel</div>
+        <ul class="yt-outline">
+          <li>Introduction: pourquoi 80% des traitements echouent</li>
+          <li>L'axe intestin-peau: mecanisme detaille</li>
+          <li>Etude de cas: avant/apres d'une cliente rosacee</li>
+          <li>Les 3 axes du protocole SAPIENS pour la rosacee</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="yt-card" data-type="mecanisme" data-platform="youtube">
+      <div class="yt-header" onclick="toggleYt(this)">
+        <div class="yt-num">02</div>
+        <div class="yt-title">L'axe intestin-immunite-peau: explication complete</div>
+        <div class="yt-duration">15 min</div>
+        <div class="yt-toggle">&#9660;</div>
+      </div>
+      <div class="yt-body">
+        <div class="yt-keyword">SEO: lien intestin peau, microbiote et peau, gut skin axis</div>
+        <ul class="yt-outline">
+          <li>70% du systeme immunitaire = intestin (sourcer)</li>
+          <li>Permeabilite intestinale → inflammation systemique → peau</li>
+          <li>Schema visuel du mecanisme complet</li>
+          <li>Pourquoi les cremes ne traitent que le messager</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="yt-card" data-type="preuve" data-platform="youtube">
+      <div class="yt-header" onclick="toggleYt(this)">
+        <div class="yt-num">03</div>
+        <div class="yt-title">J'ai gueri ma peau en changeant ce que je mangeais — voici la science</div>
+        <div class="yt-duration">10 min</div>
+        <div class="yt-toggle">&#9660;</div>
+      </div>
+      <div class="yt-body">
+        <div class="yt-keyword">SEO: alimentation et peau, regime peau claire, nutrition dermatologie</div>
+        <ul class="yt-outline">
+          <li>Storytelling: parcours personnel ou client</li>
+          <li>Les aliments inflammatoires: mecanisme scientifique</li>
+          <li>Protocole alimentaire en 3 phases</li>
+          <li>Resultats documentes semaine par semaine</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="yt-card" data-type="revelation" data-platform="youtube">
+      <div class="yt-header" onclick="toggleYt(this)">
+        <div class="yt-num">04</div>
+        <div class="yt-title">Acne adulte apres 25 ans: la vraie cause (ce n'est pas hormonal)</div>
+        <div class="yt-duration">12 min</div>
+        <div class="yt-toggle">&#9660;</div>
+      </div>
+      <div class="yt-body">
+        <div class="yt-keyword">SEO: acne adulte cause, acne apres 25 ans, acne hormonal traitement</div>
+        <ul class="yt-outline">
+          <li>Demystifier le "c'est hormonal" — le raccourci dangereux</li>
+          <li>Le vrai triangle: intestin + inflammation + hormones</li>
+          <li>Pourquoi Roaccutane ne resout pas le fond</li>
+          <li>L'approche integrative: traiter la cause, pas le symptome</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="yt-card" data-type="mecanisme" data-platform="youtube">
+      <div class="yt-header" onclick="toggleYt(this)">
+        <div class="yt-num">05</div>
+        <div class="yt-title">Pourquoi tes bilans sont 'normaux' mais ta peau flambe</div>
+        <div class="yt-duration">10 min</div>
+        <div class="yt-toggle">&#9660;</div>
+      </div>
+      <div class="yt-body">
+        <div class="yt-keyword">SEO: bilans sanguins normaux mais malade, inflammation silencieuse</div>
+        <ul class="yt-outline">
+          <li>Les limites des bilans standards (ce qu'ils ne mesurent pas)</li>
+          <li>L'inflammation de bas grade: invisible mais reelle</li>
+          <li>Les marqueurs a demander a son medecin</li>
+          <li>Comment le protocole SAPIENS complete le diagnostic</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="yt-card" data-type="mecanisme" data-platform="youtube">
+      <div class="yt-header" onclick="toggleYt(this)">
+        <div class="yt-num">06</div>
+        <div class="yt-title">Le regime qui a tout change pour ma peau (protocole carnivore therapeutique)</div>
+        <div class="yt-duration">15 min</div>
+        <div class="yt-toggle">&#9660;</div>
+      </div>
+      <div class="yt-body">
+        <div class="yt-keyword">SEO: regime carnivore peau, elimination diet dermatologie, carnivore therapeutique</div>
+        <ul class="yt-outline">
+          <li>Pourquoi l'elimination radicale fonctionne (science)</li>
+          <li>Le protocole carnivore therapeutique: phase par phase</li>
+          <li>Reintroduction progressive: identifier les declencheurs</li>
+          <li>Etude de cas avec timeline de resultats</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="yt-card" data-type="preuve" data-platform="youtube">
+      <div class="yt-header" onclick="toggleYt(this)">
+        <div class="yt-num">07</div>
+        <div class="yt-title">Psoriasis: comment j'ai accompagne [prenom] en 90 jours</div>
+        <div class="yt-duration">12 min</div>
+        <div class="yt-toggle">&#9660;</div>
+      </div>
+      <div class="yt-body">
+        <div class="yt-keyword">SEO: psoriasis traitement naturel, psoriasis guerison, psoriasis intestin</div>
+        <ul class="yt-outline">
+          <li>Profil client: historique medical, traitements essayes</li>
+          <li>Diagnostic SAPIENS: ce que les bilans ne montraient pas</li>
+          <li>Protocole semaine par semaine avec photos</li>
+          <li>Resultat a J90 et suivi 6 mois</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="yt-card" data-type="mecanisme" data-platform="youtube">
+      <div class="yt-header" onclick="toggleYt(this)">
+        <div class="yt-num">08</div>
+        <div class="yt-title">Eczema chronique: la connexion intestin que personne ne t'explique</div>
+        <div class="yt-duration">12 min</div>
+        <div class="yt-toggle">&#9660;</div>
+      </div>
+      <div class="yt-body">
+        <div class="yt-keyword">SEO: eczema chronique cause, eczema intestin, eczema microbiote</div>
+        <ul class="yt-outline">
+          <li>L'eczema n'est pas une maladie de peau — c'est un signal</li>
+          <li>Le lien prouve entre dysbiose et eczema atopique</li>
+          <li>Pourquoi les corticoides aggravent le probleme a long terme</li>
+          <li>L'approche en 3 piliers: restaurer, nourrir, proteger</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="yt-card" data-type="revelation" data-platform="youtube">
+      <div class="yt-header" onclick="toggleYt(this)">
+        <div class="yt-num">09</div>
+        <div class="yt-title">Les 5 erreurs qui font flamber ta peau (et que tout le monde fait)</div>
+        <div class="yt-duration">10 min</div>
+        <div class="yt-toggle">&#9660;</div>
+      </div>
+      <div class="yt-body">
+        <div class="yt-keyword">SEO: erreurs peau, peau qui flambe, soins peau erreurs</div>
+        <ul class="yt-outline">
+          <li>Erreur 1: Multiplier les produits (surcharge cutanee)</li>
+          <li>Erreur 2: Traiter le symptome sans chercher la cause</li>
+          <li>Erreur 3: Eliminer sans plan de reintroduction</li>
+          <li>Erreur 4: Ignorer le stress (cortisol → inflammation)</li>
+          <li>Erreur 5: Arreter le protocole des que ca va mieux</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="yt-card" data-type="mecanisme" data-platform="youtube">
+      <div class="yt-header" onclick="toggleYt(this)">
+        <div class="yt-num">10</div>
+        <div class="yt-title">Cortisol et peau: pourquoi le stress aggrave mais n'est PAS la cause</div>
+        <div class="yt-duration">10 min</div>
+        <div class="yt-toggle">&#9660;</div>
+      </div>
+      <div class="yt-body">
+        <div class="yt-keyword">SEO: stress et peau, cortisol eczema, stress acne, stress rosacee</div>
+        <ul class="yt-outline">
+          <li>Le mecanisme cortisol → permeabilite intestinale → peau</li>
+          <li>Pourquoi "gere ton stress" n'est pas une solution</li>
+          <li>Les vrais leviers: sommeil, HRV, nutrition anti-stress</li>
+          <li>Le stress est l'accelerateur, pas le moteur</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="yt-card" data-type="identite" data-platform="youtube">
+      <div class="yt-header" onclick="toggleYt(this)">
+        <div class="yt-num">11</div>
+        <div class="yt-title">Mon histoire: de sportif de haut niveau a praticien du terrain biologique</div>
+        <div class="yt-duration">15 min</div>
+        <div class="yt-toggle">&#9660;</div>
+      </div>
+      <div class="yt-body">
+        <div class="yt-keyword">SEO: naturopathe peau, praticien terrain biologique, Geoffrey SAPIENS</div>
+        <ul class="yt-outline">
+          <li>Parcours sport de haut niveau: blessures, systeme medical</li>
+          <li>La decouverte du terrain biologique: le declic</li>
+          <li>Pourquoi la peau est devenue sa specialite</li>
+          <li>La mission SAPIENS: donner une explication, pas une promesse</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="yt-card" data-type="mecanisme" data-platform="youtube">
+      <div class="yt-header" onclick="toggleYt(this)">
+        <div class="yt-num">12</div>
+        <div class="yt-title">Le cycle amelioration → rechute → epuisement: comment en sortir</div>
+        <div class="yt-duration">12 min</div>
+        <div class="yt-toggle">&#9660;</div>
+      </div>
+      <div class="yt-body">
+        <div class="yt-keyword">SEO: rechute eczema, peau qui revient, cycle inflammation peau</div>
+        <ul class="yt-outline">
+          <li>Pourquoi le cycle se repete: l'illusion de la remission</li>
+          <li>La difference entre supprimer et resoudre</li>
+          <li>Le protocole de sortie: stabiliser le terrain, pas masquer</li>
+          <li>Temoignage: "Ca faisait 7 ans que je tournais en boucle"</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="no-results" id="noResultsYt">Aucune video ne correspond a ta recherche.</div>
+
+  <div class="yt-rules">
+    <div class="yt-rules-title">Regles YouTube</div>
+    <ul>
+      <li>ZERO pitch dans la video — jamais de vente directe</li>
+      <li>Lien VSL en description (premiere ligne)</li>
+      <li>Lien Calendly en description (deuxieme ligne)</li>
+      <li>Pinned comment: "Tu as des questions? Commente et je te reponds."</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ═══════ SECTION: STORIES ═══════ -->
+<div class="section" id="sec-stories">
+  <div class="section-title">Strategie Stories</div>
+  <div class="section-subtitle">5-8 stories/jour — proximite, education, preuve, interaction</div>
+
+  <div class="card">
+    <div class="card-title">Planning Quotidien Stories</div>
+    <div class="story-block">
+      <div class="story-time">7-8h</div>
+      <div class="story-content">
+        <div class="story-type">Perso Geoffrey</div>
+        Routine matinale, cuisine, preparation repas, sport. Montrer l'homme derriere le praticien. Ton decontracte, pas de filtre.
+      </div>
+    </div>
+    <div class="story-block">
+      <div class="story-time">12-13h</div>
+      <div class="story-content">
+        <div class="story-type">Education rapide</div>
+        1 fait surprenant sur l'axe intestin-peau. Format: texte sur fond uni ou facecam 15 sec. Ex: "Savais-tu que 70% de ton systeme immunitaire est dans ton intestin?"
+      </div>
+    </div>
+    <div class="story-block">
+      <div class="story-time">15-16h</div>
+      <div class="story-content">
+        <div class="story-type">Preuve sociale</div>
+        Screenshot de message client, resultat avant/apres, capture d'avis Google. Flouter les infos perso. Ajouter un sticker "Resultat SAPIENS".
+      </div>
+    </div>
+    <div class="story-block">
+      <div class="story-time">20-21h</div>
+      <div class="story-content">
+        <div class="story-type">Interactif</div>
+        Sondage, quiz, question box. Maximiser les reponses. Ex: sondage "Tu as deja eu un traitement qui a empire ta peau? OUI / NON"
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Templates Interactifs</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Format</th><th>Exemple</th><th>Objectif</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Sondage</td>
+            <td>"Ta peau flambe plus en hiver ou en ete?"</td>
+            <td>Engagement + data ICP</td>
+          </tr>
+          <tr>
+            <td>Quiz</td>
+            <td>"Combien de % de ton systeme immunitaire est dans ton intestin? A) 30% B) 50% C) 70%"</td>
+            <td>Education + retention</td>
+          </tr>
+          <tr>
+            <td>Question Box</td>
+            <td>"Pose-moi ta question peau — je reponds en story"</td>
+            <td>Contenu genere par l'audience</td>
+          </tr>
+          <tr>
+            <td>Slider Emoji</td>
+            <td>"A quel point ta peau impacte ta confiance?" [slider]</td>
+            <td>Identification emotionnelle</td>
+          </tr>
+          <tr>
+            <td>Avant/Apres</td>
+            <td>"Semaine 1 → Semaine 6" [two photos]</td>
+            <td>Preuve + desir</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="info-box">
+    <strong>Regle cle:</strong> Les stories ne vendent pas. Elles creent la proximite et la confiance. Le seul CTA autorise en stories: "Ecris-moi SAPIENS en DM" ou lien vers un reel. Jamais de lien Calendly direct en stories.
+  </div>
+</div>
+
+<!-- ═══════ SECTION: REGLES ═══════ -->
+<div class="section" id="sec-regles">
+  <div class="section-title">Regles d'Or du Contenu</div>
+  <div class="section-subtitle">7 principes non-negociables pour chaque piece de contenu</div>
+
+  <div class="rule-card">
+    <div class="rule-num">01</div>
+    <div class="rule-text"><strong style="color:var(--gold)">Hook en 0-3 secondes.</strong> Jamais "Bonjour aujourd'hui on va parler de..." — la premiere phrase doit accrocher, choquer ou intriguer. Si tu ne captes pas l'attention en 3 secondes, le reste n'existe pas.</div>
+  </div>
+  <div class="rule-card">
+    <div class="rule-num">02</div>
+    <div class="rule-text"><strong style="color:var(--gold)">Tester 3 hooks par concept</strong> avant de conclure que le sujet ne marche pas. Le meme contenu avec un hook different peut faire x10 en vues. Le hook est le levier #1.</div>
+  </div>
+  <div class="rule-card">
+    <div class="rule-num">03</div>
+    <div class="rule-text"><strong style="color:var(--gold)">Dupliquer les formats gagnants.</strong> Un reel a 100K+ vues? Refaire 5 fois avec des angles differents. L'algorithme recompense la repetition des formats qui marchent.</div>
+  </div>
+  <div class="rule-card">
+    <div class="rule-num">04</div>
+    <div class="rule-text"><strong style="color:var(--gold)">Poster aux heures de Lea:</strong> 7h, 12h, 15h, 19h, 21h. Ce sont les moments ou elle scroll. Adapter le type de contenu a l'heure (revelation le matin, decision le soir).</div>
+  </div>
+  <div class="rule-card">
+    <div class="rule-num">05</div>
+    <div class="rule-text"><strong style="color:var(--gold)">Chaque reel = UNE seule idee.</strong> Pas deux. Pas trois. Une idee, un angle, un message. La clarte bat la completude. Toujours.</div>
+  </div>
+  <div class="rule-card">
+    <div class="rule-num">06</div>
+    <div class="rule-text"><strong style="color:var(--gold)">Boucles ouvertes (Antoine BM):</strong> "Je te montre le resultat a la fin" — creer de la curiosite pour maintenir le watch time. Ouvrir une boucle dans les 3 premieres secondes, la fermer a la fin.</div>
+  </div>
+  <div class="rule-card">
+    <div class="rule-num">07</div>
+    <div class="rule-text"><strong style="color:var(--gold)">Jamais de jargon medical complexe.</strong> "Dysbiose intestinale" → "ton intestin est deregle". "Permeabilite intestinale" → "ton intestin laisse passer des choses qu'il ne devrait pas". Parler comme Lea parle.</div>
+  </div>
+
+  <div style="margin-top:40px;">
+    <div class="section-title" style="font-size:22px;">Guidelines par Type de Contenu</div>
+    <div class="section-subtitle">DO / DON'T pour chaque categorie</div>
+
+    <div class="format-card">
+      <div class="format-header">
+        <span class="badge badge-revelation">Revelation</span>
+        <span class="format-title">TOFU — Casser les croyances</span>
+      </div>
+      <div class="do-dont">
+        <div class="do-col">
+          <strong>DO</strong>
+          <ul style="padding-left:16px;">
+            <li>Facecam 15-30 sec</li>
+            <li>1 idee forte, polarisante</li>
+            <li>Hook choc en 0-3 sec</li>
+            <li>Ton affirme, certain</li>
+          </ul>
+        </div>
+        <div class="dont-col">
+          <strong>DON'T</strong>
+          <ul style="padding-left:16px;">
+            <li>ZERO CTA (pas de "commente SAPIENS")</li>
+            <li>Pas de jargon medical</li>
+            <li>Pas de pitch, pas de lien</li>
+            <li>Ne pas expliquer — juste reveler</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="format-card">
+      <div class="format-header">
+        <span class="badge badge-mecanisme">Mecanisme</span>
+        <span class="format-title">MOFU — Eduquer</span>
+      </div>
+      <div class="do-dont">
+        <div class="do-col">
+          <strong>DO</strong>
+          <ul style="padding-left:16px;">
+            <li>Facecam 30-60 sec</li>
+            <li>Pedagogique, clair</li>
+            <li>Schemas visuels si possible</li>
+            <li>CTA leger: "commente SAPIENS"</li>
+          </ul>
+        </div>
+        <div class="dont-col">
+          <strong>DON'T</strong>
+          <ul style="padding-left:16px;">
+            <li>Pas de cours magistral</li>
+            <li>Pas plus de 60 sec</li>
+            <li>Pas de jargon non traduit</li>
+            <li>Ne pas essayer de tout expliquer</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="format-card">
+      <div class="format-header">
+        <span class="badge badge-identite">Identite</span>
+        <span class="format-title">MOFU — Lea se reconnait</span>
+      </div>
+      <div class="do-dont">
+        <div class="do-col">
+          <strong>DO</strong>
+          <ul style="padding-left:16px;">
+            <li>Facecam empathique</li>
+            <li>Decrire la realite de Lea</li>
+            <li>Ton doux, comprenant</li>
+            <li>CTA: "Si tu te reconnais..."</li>
+          </ul>
+        </div>
+        <div class="dont-col">
+          <strong>DON'T</strong>
+          <ul style="padding-left:16px;">
+            <li>Pas de pitie, pas de condescendance</li>
+            <li>Pas de solution dans ce format</li>
+            <li>Ne pas minimiser la souffrance</li>
+            <li>Pas de promesse de guerison</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="format-card">
+      <div class="format-header">
+        <span class="badge badge-preuve">Preuve</span>
+        <span class="format-title">BOFU — Resultats</span>
+      </div>
+      <div class="do-dont">
+        <div class="do-col">
+          <strong>DO</strong>
+          <ul style="padding-left:16px;">
+            <li>Screenshots, temoignages, avant/apres</li>
+            <li>Laisser le client parler</li>
+            <li>Montrer le processus, pas juste le resultat</li>
+            <li>CTA: "Tu veux le meme resultat?"</li>
+          </ul>
+        </div>
+        <div class="dont-col">
+          <strong>DON'T</strong>
+          <ul style="padding-left:16px;">
+            <li>Pas de faux temoignages</li>
+            <li>Pas de promesse de temps precise</li>
+            <li>Ne pas exagerer les resultats</li>
+            <li>Pas de "guerison" — dire "amelioration"</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="format-card">
+      <div class="format-header">
+        <span class="badge badge-decision">Decision</span>
+        <span class="format-title">BOFU — Conversion</span>
+      </div>
+      <div class="do-dont">
+        <div class="do-col">
+          <strong>DO</strong>
+          <ul style="padding-left:16px;">
+            <li>15-20 sec max</li>
+            <li>Direct, ton certain</li>
+            <li>CTA fort: "Commente SAPIENS"</li>
+            <li>Urgence naturelle (places limitees)</li>
+          </ul>
+        </div>
+        <div class="dont-col">
+          <strong>DON'T</strong>
+          <ul style="padding-left:16px;">
+            <li>Pas de longue explication</li>
+            <li>Pas de fausse urgence</li>
+            <li>Pas de "derniere chance" tous les jours</li>
+            <li>Pas de prix en public</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════ FOOTER ═══════ -->
+<div class="footer">
+  <span>SAPIENS 360</span> | Machine a Contenu | Derniere MAJ: Avril 2026
+</div>
+
+<!-- ═══════ JAVASCRIPT ═══════ -->
+<script>
+// ── State ──
+let activeType = 'tous';
+let activePlatform = 'all';
+let searchQuery = '';
+
+// ── Tab Navigation ──
+function showSection(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  const sec = document.getElementById('sec-' + id);
+  if (sec) sec.classList.add('active');
+  const tabs = document.querySelectorAll('.nav-tab');
+  const names = ['strategie','calendrier','hooks','youtube','stories','regles'];
+  const idx = names.indexOf(id);
+  if (idx >= 0 && tabs[idx]) tabs[idx].classList.add('active');
+}
+
+// ── Type Filter ──
+function setTypeFilter(type) {
+  activeType = type;
+  document.querySelectorAll('.filter-group:first-child .filter-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.type === type);
+  });
+  applyFilters();
+}
+
+// ── Platform Filter ──
+function setPlatformFilter(platform) {
+  activePlatform = platform;
+  document.querySelectorAll('.platform-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.platform === platform);
+  });
+  // Auto-switch to relevant tab
+  if (platform === 'reels') showSection('hooks');
+  else if (platform === 'youtube') showSection('youtube');
+  else if (platform === 'stories') showSection('stories');
+  applyFilters();
+}
+
+// ── Search ──
+document.getElementById('searchInput').addEventListener('input', function() {
+  searchQuery = this.value.toLowerCase().trim();
+  applyFilters();
+});
+
+// ── Apply All Filters ──
+function applyFilters() {
+  // Filter hooks
+  let hooksVisible = 0;
+  document.querySelectorAll('#hooksList .hook-item').forEach(item => {
+    const type = item.dataset.type;
+    const platform = item.dataset.platform;
+    const text = item.querySelector('.hook-text').textContent.toLowerCase();
+    const typeMatch = activeType === 'tous' || type === activeType;
+    const platformMatch = activePlatform === 'all' || platform === activePlatform;
+    const searchMatch = !searchQuery || text.includes(searchQuery);
+    const show = typeMatch && platformMatch && searchMatch;
+    item.classList.toggle('hidden', !show);
+    if (show) hooksVisible++;
+  });
+  document.getElementById('noResultsHooks').style.display = hooksVisible === 0 ? 'block' : 'none';
+
+  // Filter YouTube
+  let ytVisible = 0;
+  document.querySelectorAll('#youtubeList .yt-card').forEach(card => {
+    const type = card.dataset.type;
+    const platform = card.dataset.platform;
+    const text = card.querySelector('.yt-title').textContent.toLowerCase();
+    const typeMatch = activeType === 'tous' || type === activeType;
+    const platformMatch = activePlatform === 'all' || platform === activePlatform;
+    const searchMatch = !searchQuery || text.includes(searchQuery);
+    const show = typeMatch && platformMatch && searchMatch;
+    card.style.display = show ? '' : 'none';
+    if (show) ytVisible++;
+  });
+  document.getElementById('noResultsYt').style.display = ytVisible === 0 ? 'block' : 'none';
+}
+
+// ── Copy Hook ──
+function copyHook(btn) {
+  const text = btn.closest('.hook-item').querySelector('.hook-text').textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = 'Copie !';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.textContent = 'Copier';
+      btn.classList.remove('copied');
+    }, 1500);
+  });
+}
+
+// ── Toggle YouTube Card ──
+function toggleYt(header) {
+  header.closest('.yt-card').classList.toggle('open');
+}
+</script>
+
+</body>
+</html>

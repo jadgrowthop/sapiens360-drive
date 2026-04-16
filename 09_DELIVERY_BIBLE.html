@@ -1,0 +1,1362 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAPIENS 360 — Delivery Bible</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #111;
+  --card: #161616;
+  --border: #2C4A3555;
+  --gold: #B8956A;
+  --green: #2C4A35;
+  --ivory: #FAF7F2;
+  --stone: #888;
+  --red: #C0392B;
+  --orange: #E67E22;
+  --yellow: #F1C40F;
+  --green-bright: #27AE60;
+  --radius: 12px;
+  --radius-sm: 8px;
+}
+
+body {
+  background: var(--bg);
+  color: var(--ivory);
+  font-family: 'Segoe UI', Arial, sans-serif;
+  font-size: 15px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4 { font-family: Georgia, 'Times New Roman', serif; font-weight: 700; }
+h1 { font-size: clamp(1.8rem, 4vw, 2.8rem); }
+h2 { font-size: clamp(1.3rem, 3vw, 2rem); }
+h3 { font-size: clamp(1.1rem, 2.5vw, 1.5rem); }
+h4 { font-size: clamp(1rem, 2vw, 1.2rem); }
+
+a { color: var(--gold); text-decoration: none; }
+
+.container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+
+/* ── HERO ── */
+.hero {
+  text-align: center;
+  padding: 60px 20px 40px;
+  border-bottom: 1px solid var(--border);
+}
+.hero-badge {
+  display: inline-block;
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold);
+  border: 1px solid var(--gold);
+  padding: 6px 18px;
+  border-radius: 30px;
+  margin-bottom: 24px;
+}
+.hero h1 { color: var(--ivory); margin-bottom: 16px; }
+.hero h1 span { color: var(--gold); }
+.hero-sub {
+  color: var(--stone);
+  font-size: 16px;
+  font-style: italic;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* ── STICKY NAV ── */
+.sticky-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: #111e;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.sticky-nav::-webkit-scrollbar { display: none; }
+
+.nav-inner {
+  display: flex;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 12px;
+  gap: 0;
+}
+
+.nav-tab {
+  flex-shrink: 0;
+  padding: 14px 16px;
+  font-size: 13px;
+  color: var(--stone);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: all .2s;
+  white-space: nowrap;
+  user-select: none;
+}
+.nav-tab:hover { color: var(--ivory); }
+.nav-tab.active { color: var(--gold); border-bottom-color: var(--gold); }
+
+/* ── SECTIONS ── */
+.section {
+  display: none;
+  padding: 48px 0 64px;
+  animation: fadeIn .3s;
+}
+.section.active { display: block; }
+
+@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+.section-title {
+  margin-bottom: 8px;
+  color: var(--gold);
+}
+.section-subtitle {
+  color: var(--stone);
+  margin-bottom: 36px;
+  font-size: 15px;
+}
+
+/* ── CARDS ── */
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 28px;
+  margin-bottom: 24px;
+}
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.card h3 { color: var(--ivory); }
+.card h4 { color: var(--gold); margin-bottom: 10px; }
+
+.card ul {
+  list-style: none;
+  padding: 0;
+}
+.card ul li {
+  padding: 6px 0 6px 20px;
+  position: relative;
+  color: #ccc;
+}
+.card ul li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 14px;
+  width: 6px;
+  height: 6px;
+  background: var(--gold);
+  border-radius: 50%;
+}
+
+/* ── PHASE CARDS ── */
+.phase-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+  margin-bottom: 32px;
+}
+.phase-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 28px;
+  position: relative;
+  overflow: hidden;
+}
+.phase-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--gold);
+}
+.phase-card.phase-2::before { background: var(--green-bright); }
+.phase-card.phase-3::before { background: #8E44AD; }
+
+.phase-number {
+  font-family: Georgia, serif;
+  font-size: 48px;
+  color: var(--gold);
+  opacity: .15;
+  position: absolute;
+  top: 12px;
+  right: 20px;
+  line-height: 1;
+}
+.phase-card.phase-2 .phase-number { color: var(--green-bright); }
+.phase-card.phase-3 .phase-number { color: #8E44AD; }
+
+.phase-card h3 { margin-bottom: 14px; }
+.phase-card ul li { font-size: 14px; }
+
+/* ── TAG ── */
+.tag {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .5px;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 4px;
+  vertical-align: middle;
+}
+.tag-gold { background: var(--gold); color: #111; }
+.tag-green { background: var(--green); color: var(--ivory); }
+.tag-red { background: var(--red); color: #fff; }
+.tag-orange { background: var(--orange); color: #111; }
+.tag-purple { background: #8E44AD; color: #fff; }
+
+/* ── WEEK CARDS ── */
+.week-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin-bottom: 28px;
+  overflow: hidden;
+}
+.week-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 28px;
+  cursor: pointer;
+  user-select: none;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.week-header h3 { font-size: 1.15rem; }
+.week-body {
+  padding: 0 28px 28px;
+}
+.week-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+@media (max-width: 700px) { .week-grid { grid-template-columns: 1fr; } }
+
+.week-col h4 {
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 12px;
+}
+.results-box, .redflags-box {
+  margin-top: 20px;
+  padding: 16px;
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+}
+.results-box {
+  background: #2C4A3520;
+  border: 1px solid #2C4A3555;
+}
+.results-box h4 { color: var(--green-bright); }
+.redflags-box {
+  background: #C0392B15;
+  border: 1px solid #C0392B33;
+}
+.redflags-box h4 { color: var(--red); }
+
+/* ── TABLE ── */
+.table-wrap { overflow-x: auto; margin: 24px 0; }
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+th {
+  text-align: left;
+  padding: 12px 16px;
+  background: #1a1a1a;
+  color: var(--gold);
+  font-family: Georgia, serif;
+  font-weight: 600;
+  border-bottom: 1px solid var(--border);
+}
+td {
+  padding: 12px 16px;
+  border-bottom: 1px solid #222;
+  color: #ccc;
+}
+tr.zone-red td { border-left: 3px solid var(--red); }
+tr.zone-orange td { border-left: 3px solid var(--orange); }
+tr.zone-green td { border-left: 3px solid var(--green-bright); }
+tr.zone-yellow td { border-left: 3px solid var(--yellow); }
+
+.zone-dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
+/* ── PROCESS STEPS ── */
+.process-steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  margin: 28px 0;
+}
+.step-card {
+  background: #1a1a1a;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 20px;
+  text-align: center;
+  position: relative;
+}
+.step-num {
+  font-family: Georgia, serif;
+  font-size: 32px;
+  color: var(--gold);
+  opacity: .3;
+  margin-bottom: 8px;
+}
+.step-card p { font-size: 14px; color: #bbb; }
+
+/* ── TEMPLATE CARDS ── */
+.template-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  margin-bottom: 20px;
+  position: relative;
+}
+.template-card h4 { margin-bottom: 12px; }
+.template-text {
+  background: #1a1a1a;
+  border: 1px solid #282828;
+  border-radius: var(--radius-sm);
+  padding: 16px;
+  font-size: 14px;
+  color: #ccc;
+  line-height: 1.7;
+  font-style: italic;
+}
+.copy-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: var(--green);
+  color: var(--ivory);
+  border: none;
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all .2s;
+}
+.copy-btn:hover { background: var(--gold); color: #111; }
+.copy-btn.copied { background: var(--green-bright); }
+
+/* ── CALL STRUCTURE ── */
+.call-timeline {
+  position: relative;
+  padding-left: 32px;
+  margin: 20px 0;
+}
+.call-timeline::before {
+  content: '';
+  position: absolute;
+  left: 8px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--border);
+}
+.call-step {
+  position: relative;
+  padding: 8px 0 16px 0;
+}
+.call-step::before {
+  content: '';
+  position: absolute;
+  left: -28px;
+  top: 14px;
+  width: 10px;
+  height: 10px;
+  background: var(--gold);
+  border-radius: 50%;
+}
+.call-step .call-time {
+  font-size: 12px;
+  color: var(--stone);
+  margin-bottom: 2px;
+}
+.call-step .call-label {
+  font-size: 14px;
+  color: #ccc;
+}
+
+/* ── INTERVENTION ── */
+.intervention-card {
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 28px;
+  margin-bottom: 20px;
+  border-left: 4px solid var(--orange);
+}
+.intervention-card.severe { border-left-color: var(--red); }
+.intervention-card.mild { border-left-color: var(--yellow); }
+
+/* ── CHECKLIST ── */
+.checklist-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid #222;
+  cursor: pointer;
+  user-select: none;
+}
+.checklist-item:last-child { border-bottom: none; }
+.checklist-box {
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  border: 2px solid var(--stone);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all .2s;
+  margin-top: 2px;
+}
+.checklist-item.checked .checklist-box {
+  background: var(--green);
+  border-color: var(--green);
+}
+.checklist-item.checked .checklist-box::after {
+  content: '';
+  width: 6px;
+  height: 10px;
+  border: 2px solid #fff;
+  border-top: none;
+  border-left: none;
+  transform: rotate(45deg);
+  margin-top: -2px;
+}
+.checklist-item.checked .checklist-label {
+  text-decoration: line-through;
+  color: var(--stone);
+}
+.checklist-label { font-size: 14px; color: #ccc; }
+
+/* ── FOOTER ── */
+.footer {
+  text-align: center;
+  padding: 40px 20px;
+  border-top: 1px solid var(--border);
+  color: var(--stone);
+  font-size: 13px;
+}
+.footer span { color: var(--gold); }
+
+/* ── MOBILE ── */
+@media (max-width: 600px) {
+  .phase-grid { grid-template-columns: 1fr; }
+  .nav-tab { padding: 12px 12px; font-size: 12px; }
+  .card, .phase-card, .week-body { padding: 20px; }
+  .week-header { padding: 16px 20px; }
+  .process-steps { grid-template-columns: 1fr 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ HERO ═══ -->
+<header class="hero">
+  <div class="hero-badge">Delivery Bible</div>
+  <h1><span>SAPIENS 360</span> — Delivery Semaine par Semaine</h1>
+  <p class="hero-sub">3 phases, 12 semaines, chaque action de Geoffrey documentee</p>
+</header>
+
+<!-- ═══ STICKY NAV ═══ -->
+<nav class="sticky-nav">
+  <div class="nav-inner">
+    <div class="nav-tab active" data-tab="overview">Vue d'ensemble</div>
+    <div class="nav-tab" data-tab="phase1">Phase 1 (S1-4)</div>
+    <div class="nav-tab" data-tab="phase2">Phase 2 (S5-8)</div>
+    <div class="nav-tab" data-tab="phase3">Phase 3 (S9-12)</div>
+    <div class="nav-tab" data-tab="tracking">Tracking Cetose</div>
+    <div class="nav-tab" data-tab="interventions">Interventions</div>
+    <div class="nav-tab" data-tab="whatsapp">Templates WhatsApp</div>
+    <div class="nav-tab" data-tab="calls">Calls 1:1</div>
+    <div class="nav-tab" data-tab="alumni">Alumni</div>
+    <div class="nav-tab" data-tab="temoignages">Temoignages</div>
+  </div>
+</nav>
+
+<main class="container">
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- SECTION: VUE D'ENSEMBLE                         -->
+<!-- ═══════════════════════════════════════════════ -->
+<section class="section active" id="overview">
+  <h2 class="section-title">Les 3 Phases du Protocole</h2>
+  <p class="section-subtitle">12 semaines structurees. Chaque phase a ses objectifs, ses calls, son rythme.</p>
+
+  <div class="phase-grid">
+    <!-- Phase 1 -->
+    <div class="phase-card">
+      <div class="phase-number">1</div>
+      <h3 style="color:var(--gold)">Phase 1 — Reset Terrain</h3>
+      <p style="color:var(--stone);font-size:13px;margin-bottom:14px">Jours 1-30</p>
+      <ul>
+        <li>Cetose therapeutique (1.5-3.0 mmol/L mesuree quotidiennement)</li>
+        <li>Elimination stricte (zero glucides, gluten, sucre — focus proteine/graisse)</li>
+        <li>Resultats attendus : 3-5 kg perte poids, sommeil ameliore, energie, inflammation reduite, peau visible</li>
+        <li><strong style="color:var(--ivory)">4 calls 1:1</strong> avec Geoffrey (S1, S2, S3, S4)</li>
+        <li>WhatsApp quotidien : reponse &lt;4h</li>
+      </ul>
+    </div>
+    <!-- Phase 2 -->
+    <div class="phase-card phase-2">
+      <div class="phase-number">2</div>
+      <h3 style="color:var(--green-bright)">Phase 2 — Stabilisation</h3>
+      <p style="color:var(--stone);font-size:13px;margin-bottom:14px">Jours 31-60</p>
+      <ul>
+        <li>Reintroduction alimentaire progressive (1 aliment a la fois)</li>
+        <li>Travail sommeil &amp; stress commence</li>
+        <li>Protocoles gestion sociale activent</li>
+        <li><strong style="color:var(--ivory)">2 calls 1:1</strong> (S6, S8)</li>
+        <li>WhatsApp : reponse &lt;24h</li>
+      </ul>
+    </div>
+    <!-- Phase 3 -->
+    <div class="phase-card phase-3">
+      <div class="phase-number">3</div>
+      <h3 style="color:#8E44AD">Phase 3 — Autonomie</h3>
+      <p style="color:var(--stone);font-size:13px;margin-bottom:14px">Jours 61-90</p>
+      <ul>
+        <li>Plan annuel personnalise construit</li>
+        <li>Apprendre a lire signaux faibles avant poussee</li>
+        <li>Protocole crise maitrise</li>
+        <li><strong style="color:var(--ivory)">2 calls finaux</strong> (S10, S12)</li>
+        <li>Handoff complet — cliente autonome</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <h4>Resume des Calls</h4>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Semaine</th><th>Type</th><th>Duree</th><th>Focus</th></tr>
+        <tr><td>S1</td><td><span class="tag tag-gold">Installation</span></td><td>1h</td><td>Protocole, menu, tracker cetose</td></tr>
+        <tr><td>S2</td><td><span class="tag tag-green">Suivi</span></td><td>45 min</td><td>Ajustements, questions</td></tr>
+        <tr><td>S3</td><td><span class="tag tag-green">Suivi</span></td><td>45 min</td><td>Milestone 21j, renforcement mental</td></tr>
+        <tr><td>S4</td><td><span class="tag tag-gold">Bilan P1</span></td><td>1h</td><td>Bilan complet, transition Phase 2</td></tr>
+        <tr><td>S6</td><td><span class="tag tag-green">Suivi</span></td><td>45 min</td><td>Reintroduction alimentaire</td></tr>
+        <tr><td>S8</td><td><span class="tag tag-green">Suivi</span></td><td>45 min</td><td>Gestion sociale, stress, plan annuel</td></tr>
+        <tr><td>S10</td><td><span class="tag tag-purple">Autonomie</span></td><td>45 min</td><td>Plan long terme personnalise</td></tr>
+        <tr><td>S12</td><td><span class="tag tag-gold">Bilan Final</span></td><td>1h</td><td>Bilan 90j, handoff, temoignage</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- SECTION: PHASE 1 (S1-4)                         -->
+<!-- ═══════════════════════════════════════════════ -->
+<section class="section" id="phase1">
+  <h2 class="section-title">Phase 1 — Reset Terrain</h2>
+  <p class="section-subtitle">Semaines 1-4. Cetose therapeutique, elimination stricte, suivi quotidien.</p>
+
+  <!-- WEEK 1 -->
+  <div class="week-card">
+    <div class="week-header" onclick="toggleWeek(this)">
+      <h3>Semaine 1 (J1-7) : Lancement</h3>
+      <span class="tag tag-gold">Call 1 — 1h</span>
+    </div>
+    <div class="week-body">
+      <div class="week-grid">
+        <div class="week-col">
+          <h4 style="color:var(--gold)">Geoffrey fait</h4>
+          <ul>
+            <li>Call 1 (1h) : installer le protocole, menu S1, tracker</li>
+            <li>Verifier mesure cetose J1 a 18h</li>
+            <li>Repondre a chaque photo/mesure WhatsApp le soir (19h-20h)</li>
+            <li>Ajuster si hors zone</li>
+          </ul>
+        </div>
+        <div class="week-col">
+          <h4 style="color:var(--green-bright)">Client fait</h4>
+          <ul>
+            <li>Commence le protocole alimentaire strict</li>
+            <li>Mesure cetose quotidienne a 18h (pique doigt, photo, envoie a Geoffrey)</li>
+            <li>Suit le menu S1</li>
+          </ul>
+        </div>
+      </div>
+      <div class="results-box">
+        <h4>Resultats attendus</h4>
+        <p>Keto-flu possible J2-4, debut transition metabolique</p>
+      </div>
+      <div class="redflags-box">
+        <h4>Red Flags</h4>
+        <p>Si pas de mesure J2 &rarr; relancer. Si cetose &lt;0.5 J5 &rarr; revoir l'alimentation.</p>
+      </div>
+      <div style="margin-top:20px">
+        <h4 style="color:var(--stone);font-size:13px;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px">Checklist Geoffrey</h4>
+        <div class="checklist" data-id="w1">
+          <div class="checklist-item" data-key="w1-1"><div class="checklist-box"></div><div class="checklist-label">Call 1 realise — protocole installe</div></div>
+          <div class="checklist-item" data-key="w1-2"><div class="checklist-box"></div><div class="checklist-label">Mesure cetose J1 recue et verifiee</div></div>
+          <div class="checklist-item" data-key="w1-3"><div class="checklist-box"></div><div class="checklist-label">Reponse WhatsApp chaque soir J1-J7</div></div>
+          <div class="checklist-item" data-key="w1-4"><div class="checklist-box"></div><div class="checklist-label">Ajustements faits si hors zone</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WEEK 2 -->
+  <div class="week-card">
+    <div class="week-header" onclick="toggleWeek(this)">
+      <h3>Semaine 2 (J8-14) : Stabilisation initiale</h3>
+      <span class="tag tag-green">Call 2 — 45 min</span>
+    </div>
+    <div class="week-body">
+      <div class="week-grid">
+        <div class="week-col">
+          <h4 style="color:var(--gold)">Geoffrey fait</h4>
+          <ul>
+            <li>Call 2 (45 min) : ajustements protocole, repondre aux questions</li>
+            <li>Surveiller la courbe cetose (doit monter vers 1.0-2.0)</li>
+            <li>Envoyer encouragements si progres visible</li>
+          </ul>
+        </div>
+        <div class="week-col">
+          <h4 style="color:var(--green-bright)">Client fait</h4>
+          <ul>
+            <li>Continue protocole, ajustements Geoffrey</li>
+            <li>Keto-flu devrait passer</li>
+          </ul>
+        </div>
+      </div>
+      <div class="results-box">
+        <h4>Resultats attendus</h4>
+        <p>Energie qui remonte, sommeil ameliore, premieres ameliorations digestives</p>
+      </div>
+      <div class="redflags-box">
+        <h4>Red Flags</h4>
+        <p>Si cetose instable &rarr; verifier les aliments caches (sauces, assaisonnements)</p>
+      </div>
+      <div style="margin-top:20px">
+        <h4 style="color:var(--stone);font-size:13px;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px">Checklist Geoffrey</h4>
+        <div class="checklist" data-id="w2">
+          <div class="checklist-item" data-key="w2-1"><div class="checklist-box"></div><div class="checklist-label">Call 2 realise</div></div>
+          <div class="checklist-item" data-key="w2-2"><div class="checklist-box"></div><div class="checklist-label">Courbe cetose verifiee — tendance 1.0-2.0</div></div>
+          <div class="checklist-item" data-key="w2-3"><div class="checklist-box"></div><div class="checklist-label">Message encouragement envoye</div></div>
+          <div class="checklist-item" data-key="w2-4"><div class="checklist-box"></div><div class="checklist-label">Aliments caches verifies si instable</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WEEK 3 -->
+  <div class="week-card">
+    <div class="week-header" onclick="toggleWeek(this)">
+      <h3>Semaine 3 (J15-21) : Premiers resultats visibles</h3>
+      <span class="tag tag-green">Call 3 — 45 min</span>
+    </div>
+    <div class="week-body">
+      <div class="week-grid">
+        <div class="week-col">
+          <h4 style="color:var(--gold)">Geoffrey fait</h4>
+          <ul>
+            <li>Call 3 (45 min) : milestone 21 jours, renforcement mental</li>
+            <li>Identifier les patterns de la cliente (quand elle sort de zone)</li>
+            <li>Commencer a documenter les progres (photos comparaison)</li>
+          </ul>
+        </div>
+        <div class="week-col">
+          <h4 style="color:var(--green-bright)">Client fait</h4>
+          <ul>
+            <li>Premiers changements cutanes visibles pour certains profils</li>
+            <li>Routine installee</li>
+          </ul>
+        </div>
+      </div>
+      <div class="results-box">
+        <h4>Resultats attendus</h4>
+        <p>Amelioration peau commence (varie selon condition), energie stable</p>
+      </div>
+      <div class="redflags-box">
+        <h4>Red Flags</h4>
+        <p>Si aucun changement peau &rarr; normal pour certaines conditions, rassurer</p>
+      </div>
+      <div style="margin-top:20px">
+        <h4 style="color:var(--stone);font-size:13px;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px">Checklist Geoffrey</h4>
+        <div class="checklist" data-id="w3">
+          <div class="checklist-item" data-key="w3-1"><div class="checklist-box"></div><div class="checklist-label">Call 3 realise — milestone 21j celebre</div></div>
+          <div class="checklist-item" data-key="w3-2"><div class="checklist-box"></div><div class="checklist-label">Patterns identifies et documentes</div></div>
+          <div class="checklist-item" data-key="w3-3"><div class="checklist-box"></div><div class="checklist-label">Photos comparaison prises</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WEEK 4 -->
+  <div class="week-card">
+    <div class="week-header" onclick="toggleWeek(this)">
+      <h3>Semaine 4 (J22-30) : Bilan Phase 1</h3>
+      <span class="tag tag-gold">Call 4 — 1h (BILAN)</span>
+    </div>
+    <div class="week-body">
+      <div class="week-grid">
+        <div class="week-col">
+          <h4 style="color:var(--gold)">Geoffrey fait</h4>
+          <ul>
+            <li>Call 4 (1h) : BILAN COMPLET Phase 1 — mesures, photos avant/apres, ressenti</li>
+            <li>Preparer la transition Phase 2</li>
+            <li>Demander temoignage J+30 si resultats positifs</li>
+            <li>Evaluer la garantie (25/30 jours tracking? 22/30 en zone?)</li>
+          </ul>
+        </div>
+        <div class="week-col">
+          <h4 style="color:var(--green-bright)">Client fait</h4>
+          <ul>
+            <li>Bilan personnel : qu'est-ce qui a change?</li>
+            <li>Decision garantie si applicable</li>
+          </ul>
+        </div>
+      </div>
+      <div class="results-box">
+        <h4>Resultats attendus</h4>
+        <p>Transformation significative energie/sommeil/digestion/peau pour 80%+ des clients</p>
+      </div>
+      <div class="redflags-box">
+        <h4>Red Flags</h4>
+        <p>Si zero amelioration + conditions garantie remplies &rarr; processus remboursement</p>
+      </div>
+      <div style="margin-top:20px">
+        <h4 style="color:var(--stone);font-size:13px;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px">Checklist Geoffrey</h4>
+        <div class="checklist" data-id="w4">
+          <div class="checklist-item" data-key="w4-1"><div class="checklist-box"></div><div class="checklist-label">Call 4 bilan complet realise</div></div>
+          <div class="checklist-item" data-key="w4-2"><div class="checklist-box"></div><div class="checklist-label">Photos avant/apres J30 prises</div></div>
+          <div class="checklist-item" data-key="w4-3"><div class="checklist-box"></div><div class="checklist-label">Temoignage J+30 demande</div></div>
+          <div class="checklist-item" data-key="w4-4"><div class="checklist-box"></div><div class="checklist-label">Garantie evaluee</div></div>
+          <div class="checklist-item" data-key="w4-5"><div class="checklist-box"></div><div class="checklist-label">Transition Phase 2 preparee</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- SECTION: PHASE 2 (S5-8)                         -->
+<!-- ═══════════════════════════════════════════════ -->
+<section class="section" id="phase2">
+  <h2 class="section-title">Phase 2 — Stabilisation &amp; Adaptation</h2>
+  <p class="section-subtitle">Semaines 5-8. Reintroduction, gestion sociale, travail stress/sommeil.</p>
+
+  <!-- WEEK 5-6 -->
+  <div class="week-card">
+    <div class="week-header" onclick="toggleWeek(this)">
+      <h3>Semaines 5-6 : Reintroduction alimentaire</h3>
+      <span class="tag tag-green">Call S6 — 45 min</span>
+    </div>
+    <div class="week-body">
+      <div class="week-grid">
+        <div class="week-col">
+          <h4 style="color:var(--gold)">Geoffrey fait</h4>
+          <ul>
+            <li>Definir l'ordre de reintroduction (priorite selon profil)</li>
+            <li>Tester 1 aliment a la fois (3 jours par aliment)</li>
+            <li>Observer reaction : peau, digestion, energie, cetose</li>
+            <li>Si reaction &rarr; retirer et noter dans le dossier client</li>
+            <li>Call S6 (45 min) : bilan reintroduction mi-parcours</li>
+          </ul>
+        </div>
+        <div class="week-col">
+          <h4 style="color:var(--green-bright)">Client fait</h4>
+          <ul>
+            <li>Reintroduit 1 aliment tous les 3 jours</li>
+            <li>Note ses reactions (journal alimentaire)</li>
+            <li>Continue mesure cetose (frequence reduite a 3-4x/semaine)</li>
+          </ul>
+        </div>
+      </div>
+      <div class="results-box">
+        <h4>Resultats attendus</h4>
+        <p>Carte alimentaire personnelle en construction. Le client comprend ce qui lui convient ou pas.</p>
+      </div>
+      <div class="redflags-box">
+        <h4>Red Flags</h4>
+        <p>Rechute inflammation apres reintroduction &rarr; retirer l'aliment, revenir au protocole strict 3 jours.</p>
+      </div>
+      <div style="margin-top:20px">
+        <h4 style="color:var(--stone);font-size:13px;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px">Checklist Geoffrey</h4>
+        <div class="checklist" data-id="w56">
+          <div class="checklist-item" data-key="w56-1"><div class="checklist-box"></div><div class="checklist-label">Ordre reintroduction defini et communique</div></div>
+          <div class="checklist-item" data-key="w56-2"><div class="checklist-box"></div><div class="checklist-label">Reactions documentees pour chaque aliment teste</div></div>
+          <div class="checklist-item" data-key="w56-3"><div class="checklist-box"></div><div class="checklist-label">Call S6 realise</div></div>
+          <div class="checklist-item" data-key="w56-4"><div class="checklist-box"></div><div class="checklist-label">Carte alimentaire en cours de construction</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WEEK 7-8 -->
+  <div class="week-card">
+    <div class="week-header" onclick="toggleWeek(this)">
+      <h3>Semaines 7-8 : Gestion sociale + stress</h3>
+      <span class="tag tag-green">Call S8 — 45 min</span>
+    </div>
+    <div class="week-body">
+      <div class="week-grid">
+        <div class="week-col">
+          <h4 style="color:var(--gold)">Geoffrey fait</h4>
+          <ul>
+            <li>Protocoles restaurant, evenements, voyages</li>
+            <li>Travail sommeil et gestion du cortisol</li>
+            <li>Call S8 (45 min) : bilan Phase 2</li>
+            <li>Debut : preparer le plan annuel</li>
+          </ul>
+        </div>
+        <div class="week-col">
+          <h4 style="color:var(--green-bright)">Client fait</h4>
+          <ul>
+            <li>Applique les protocoles sociaux</li>
+            <li>Routine sommeil en place</li>
+            <li>Gere les situations reelles (restos, sorties)</li>
+          </ul>
+        </div>
+      </div>
+      <div class="results-box">
+        <h4>Resultats attendus</h4>
+        <p>Client capable de naviguer les situations sociales. Sommeil et stress en amelioration.</p>
+      </div>
+      <div class="redflags-box">
+        <h4>Red Flags</h4>
+        <p>Rechute systematique en situation sociale &rarr; renforcer les protocoles specifiques.</p>
+      </div>
+      <div style="margin-top:20px">
+        <h4 style="color:var(--stone);font-size:13px;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px">Checklist Geoffrey</h4>
+        <div class="checklist" data-id="w78">
+          <div class="checklist-item" data-key="w78-1"><div class="checklist-box"></div><div class="checklist-label">Protocoles sociaux transmis</div></div>
+          <div class="checklist-item" data-key="w78-2"><div class="checklist-box"></div><div class="checklist-label">Routine sommeil installee</div></div>
+          <div class="checklist-item" data-key="w78-3"><div class="checklist-box"></div><div class="checklist-label">Call S8 realise</div></div>
+          <div class="checklist-item" data-key="w78-4"><div class="checklist-box"></div><div class="checklist-label">Preparation plan annuel commencee</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- SECTION: PHASE 3 (S9-12)                        -->
+<!-- ═══════════════════════════════════════════════ -->
+<section class="section" id="phase3">
+  <h2 class="section-title">Phase 3 — Autonomie</h2>
+  <p class="section-subtitle">Semaines 9-12. Plan long terme, protocole crise, handoff complet.</p>
+
+  <!-- WEEK 9-10 -->
+  <div class="week-card">
+    <div class="week-header" onclick="toggleWeek(this)">
+      <h3>Semaines 9-10 : Construction plan long terme</h3>
+      <span class="tag tag-purple">Call S10 — 45 min</span>
+    </div>
+    <div class="week-body">
+      <div class="week-grid">
+        <div class="week-col">
+          <h4 style="color:var(--gold)">Geoffrey fait</h4>
+          <ul>
+            <li>Plan annuel personnalise base sur les 8 semaines de donnees</li>
+            <li>Protocoles "quoi qu'il arrive" personalises</li>
+            <li>Call S10 (45 min) : presentation et ajustement du plan</li>
+          </ul>
+        </div>
+        <div class="week-col">
+          <h4 style="color:var(--green-bright)">Client fait</h4>
+          <ul>
+            <li>Revoit son plan annuel avec Geoffrey</li>
+            <li>Pose ses dernieres questions</li>
+            <li>S'entraine a lire ses signaux seule</li>
+          </ul>
+        </div>
+      </div>
+      <div class="results-box">
+        <h4>Resultats attendus</h4>
+        <p>Plan annuel complet, client confiant dans sa capacite a gerer seul.</p>
+      </div>
+      <div style="margin-top:20px">
+        <h4 style="color:var(--stone);font-size:13px;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px">Checklist Geoffrey</h4>
+        <div class="checklist" data-id="w910">
+          <div class="checklist-item" data-key="w910-1"><div class="checklist-box"></div><div class="checklist-label">Plan annuel personnalise redige</div></div>
+          <div class="checklist-item" data-key="w910-2"><div class="checklist-box"></div><div class="checklist-label">Protocoles crise documentes</div></div>
+          <div class="checklist-item" data-key="w910-3"><div class="checklist-box"></div><div class="checklist-label">Call S10 realise</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WEEK 11-12 -->
+  <div class="week-card">
+    <div class="week-header" onclick="toggleWeek(this)">
+      <h3>Semaines 11-12 : Handoff et autonomie</h3>
+      <span class="tag tag-gold">Call S12 — 1h (BILAN FINAL)</span>
+    </div>
+    <div class="week-body">
+      <div class="week-grid">
+        <div class="week-col">
+          <h4 style="color:var(--gold)">Geoffrey fait</h4>
+          <ul>
+            <li>Client sait lire ses signaux faibles</li>
+            <li>Protocole crise maitrise et teste</li>
+            <li>Call final S12 (1h) : bilan complet 90 jours</li>
+            <li>Photos avant/apres finales</li>
+            <li>Temoignage J+90 demande</li>
+            <li>Acces alumni communaute configure</li>
+          </ul>
+        </div>
+        <div class="week-col">
+          <h4 style="color:var(--green-bright)">Client fait</h4>
+          <ul>
+            <li>Bilan personnel 90 jours</li>
+            <li>Confirme maitrise des protocoles</li>
+            <li>Enregistre temoignage</li>
+            <li>Rejoint la communaute alumni</li>
+          </ul>
+        </div>
+      </div>
+      <div class="results-box">
+        <h4>Resultats attendus</h4>
+        <p>Client 100% autonome. Transformation documentee. Temoignage collecte. Transition alumni effectuee.</p>
+      </div>
+      <div style="margin-top:20px">
+        <h4 style="color:var(--stone);font-size:13px;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px">Checklist Geoffrey</h4>
+        <div class="checklist" data-id="w1112">
+          <div class="checklist-item" data-key="w1112-1"><div class="checklist-box"></div><div class="checklist-label">Call S12 bilan final realise</div></div>
+          <div class="checklist-item" data-key="w1112-2"><div class="checklist-box"></div><div class="checklist-label">Photos avant/apres finales collectees</div></div>
+          <div class="checklist-item" data-key="w1112-3"><div class="checklist-box"></div><div class="checklist-label">Temoignage J+90 enregistre</div></div>
+          <div class="checklist-item" data-key="w1112-4"><div class="checklist-box"></div><div class="checklist-label">Acces alumni active</div></div>
+          <div class="checklist-item" data-key="w1112-5"><div class="checklist-box"></div><div class="checklist-label">Handoff complet — dossier clos</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- SECTION: TRACKING CETOSE                        -->
+<!-- ═══════════════════════════════════════════════ -->
+<section class="section" id="tracking">
+  <h2 class="section-title">Tracking Cetose Quotidien</h2>
+  <p class="section-subtitle">Le processus exact, chaque jour, pour chaque client.</p>
+
+  <div class="card">
+    <h4>Process Quotidien</h4>
+    <div class="process-steps">
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <h4 style="font-size:14px;color:var(--ivory)">Client mesure a 18h</h4>
+        <p>Pique doigt &rarr; bandelette &rarr; valeur mmol/L</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <h4 style="font-size:14px;color:var(--ivory)">Photo WhatsApp</h4>
+        <p>Client envoie photo avec valeur a Geoffrey</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <h4 style="font-size:14px;color:var(--ivory)">Geoffrey review 19h-20h</h4>
+        <p>Repond a CHAQUE client, chaque soir</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">4</div>
+        <h4 style="font-size:14px;color:var(--ivory)">Google Sheets</h4>
+        <p>Client, date, valeur, zone couleur, notes</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h4>Reference Zones Cetose</h4>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Zone</th><th>Valeur mmol/L</th><th>Couleur</th><th>Action</th></tr>
+        <tr class="zone-red">
+          <td><span class="zone-dot" style="background:var(--red)"></span>Hors zone</td>
+          <td>&lt; 0.5</td>
+          <td><span class="tag tag-red">Rouge</span></td>
+          <td>Revoir alimentation IMMEDIATEMENT</td>
+        </tr>
+        <tr class="zone-orange">
+          <td><span class="zone-dot" style="background:var(--orange)"></span>Zone basse</td>
+          <td>0.5 - 1.4</td>
+          <td><span class="tag tag-orange">Orange</span></td>
+          <td>Ajuster — probablement aliments caches</td>
+        </tr>
+        <tr class="zone-green">
+          <td><span class="zone-dot" style="background:var(--green-bright)"></span>Zone therapeutique</td>
+          <td>1.5 - 3.0</td>
+          <td><span class="tag" style="background:var(--green-bright);color:#fff">Vert</span></td>
+          <td>Parfait — maintenir</td>
+        </tr>
+        <tr class="zone-yellow">
+          <td><span class="zone-dot" style="background:var(--yellow)"></span>Zone haute</td>
+          <td>3.1 - 5.0</td>
+          <td><span class="tag" style="background:var(--yellow);color:#111">Jaune</span></td>
+          <td>Surveiller — reduire graisses si besoin</td>
+        </tr>
+        <tr class="zone-red">
+          <td><span class="zone-dot" style="background:var(--red)"></span>Danger</td>
+          <td>&gt; 5.0</td>
+          <td><span class="tag tag-red">Rouge</span></td>
+          <td>Appeler le client IMMEDIATEMENT</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- SECTION: INTERVENTIONS                          -->
+<!-- ═══════════════════════════════════════════════ -->
+<section class="section" id="interventions">
+  <h2 class="section-title">Protocoles d'Intervention</h2>
+  <p class="section-subtitle">Quand et comment intervenir selon la duree hors zone.</p>
+
+  <div class="intervention-card mild">
+    <h3 style="color:var(--yellow);margin-bottom:12px">2 jours hors zone</h3>
+    <p style="margin-bottom:12px;color:#ccc">Intervention legere — message WhatsApp</p>
+    <div class="template-text">
+      "Hey [prenom], j'ai vu que tu etais hors zone hier et aujourd'hui. Qu'est-ce que tu as mange de different?"
+    </div>
+    <ul style="margin-top:16px">
+      <li>Identifier la cause &rarr; ajuster</li>
+      <li>Pas de panique, ton neutre et bienveillant</li>
+    </ul>
+  </div>
+
+  <div class="intervention-card">
+    <h3 style="color:var(--orange);margin-bottom:12px">4 jours hors zone</h3>
+    <p style="margin-bottom:12px;color:#ccc">Intervention moderee — appel non programme</p>
+    <ul>
+      <li>Appel de 15 min non programme</li>
+      <li>Revoir le protocole ensemble</li>
+      <li>Identifier le pattern (stress? aliment? oubli?)</li>
+    </ul>
+  </div>
+
+  <div class="intervention-card severe">
+    <h3 style="color:var(--red);margin-bottom:12px">7+ jours hors zone</h3>
+    <p style="margin-bottom:12px;color:#ccc">Intervention urgente — call de remise a niveau</p>
+    <ul>
+      <li>Call urgent 30 min</li>
+      <li>Reset Phase 1 partiel si necessaire</li>
+      <li>Evaluer l'engagement de la cliente</li>
+      <li>Decision : continuer, adapter, ou arreter</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- SECTION: TEMPLATES WHATSAPP                     -->
+<!-- ═══════════════════════════════════════════════ -->
+<section class="section" id="whatsapp">
+  <h2 class="section-title">Templates WhatsApp Geoffrey</h2>
+  <p class="section-subtitle">Messages pre-ecrits. Cliquer pour copier.</p>
+
+  <div class="template-card">
+    <button class="copy-btn" onclick="copyTemplate(this)">Copier</button>
+    <h4 style="color:var(--green-bright)">Zone OK</h4>
+    <div class="template-text">[Prenom], parfait! [valeur] mmol/L — pile dans la zone. Continue comme ca!</div>
+  </div>
+
+  <div class="template-card">
+    <button class="copy-btn" onclick="copyTemplate(this)">Copier</button>
+    <h4 style="color:var(--orange)">Zone basse</h4>
+    <div class="template-text">[Prenom], [valeur] aujourd'hui — un peu en dessous de la zone. Qu'est-ce que tu as mange? On ajuste demain.</div>
+  </div>
+
+  <div class="template-card">
+    <button class="copy-btn" onclick="copyTemplate(this)">Copier</button>
+    <h4 style="color:var(--yellow)">Zone haute</h4>
+    <div class="template-text">[Prenom], [valeur] — un peu haut. Pas de panique, reduis legerement les graisses demain et on surveille.</div>
+  </div>
+
+  <div class="template-card">
+    <button class="copy-btn" onclick="copyTemplate(this)">Copier</button>
+    <h4 style="color:var(--red)">Mesure manquee</h4>
+    <div class="template-text">[Prenom], j'ai pas recu ta mesure aujourd'hui. Tout va bien? N'oublie pas — c'est ca qui me permet de t'aider.</div>
+  </div>
+
+  <div class="template-card">
+    <button class="copy-btn" onclick="copyTemplate(this)">Copier</button>
+    <h4 style="color:var(--gold)">Encouragement progres</h4>
+    <div class="template-text">[Prenom], regarde ta courbe cette semaine — [observation positive]. C'est exactement comme ca que le terrain se stabilise.</div>
+  </div>
+
+  <div class="template-card">
+    <button class="copy-btn" onclick="copyTemplate(this)">Copier</button>
+    <h4 style="color:var(--gold)">Encouragement moment difficile</h4>
+    <div class="template-text">[Prenom], c'est normal d'avoir des moments comme ca. Le plus important c'est que tu continues a mesurer et a communiquer. On traverse ca ensemble.</div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- SECTION: CALLS 1:1                              -->
+<!-- ═══════════════════════════════════════════════ -->
+<section class="section" id="calls">
+  <h2 class="section-title">Structure Calls 1:1</h2>
+  <p class="section-subtitle">Template minute par minute pour chaque type de call.</p>
+
+  <!-- Call S1 -->
+  <div class="card">
+    <div class="card-header">
+      <h3>Call Semaine 1 — Installation</h3>
+      <span class="tag tag-gold">1h</span>
+    </div>
+    <div class="call-timeline">
+      <div class="call-step">
+        <div class="call-time">0 - 10 min</div>
+        <div class="call-label">Retour diagnostic — recapitulatif situation, objectifs</div>
+      </div>
+      <div class="call-step">
+        <div class="call-time">10 - 25 min</div>
+        <div class="call-label">Explication protocole — pourquoi cetose, comment ca marche</div>
+      </div>
+      <div class="call-step">
+        <div class="call-time">25 - 35 min</div>
+        <div class="call-label">Menu S1 + liste de courses</div>
+      </div>
+      <div class="call-step">
+        <div class="call-time">35 - 45 min</div>
+        <div class="call-label">Tracker cetose — installation, demo pique doigt, photo</div>
+      </div>
+      <div class="call-step">
+        <div class="call-time">45 - 55 min</div>
+        <div class="call-label">Regles du jeu — WhatsApp, mesure 18h, engagement</div>
+      </div>
+      <div class="call-step">
+        <div class="call-time">55 - 60 min</div>
+        <div class="call-label">Questions ouvertes</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Calls S2-S11 -->
+  <div class="card">
+    <div class="card-header">
+      <h3>Calls S2-S11 — Suivi standard</h3>
+      <span class="tag tag-green">45 min</span>
+    </div>
+    <div class="call-timeline">
+      <div class="call-step">
+        <div class="call-time">0 - 5 min</div>
+        <div class="call-label">Comment tu vas? — check-in emotionnel et physique</div>
+      </div>
+      <div class="call-step">
+        <div class="call-time">5 - 15 min</div>
+        <div class="call-label">Revue des donnees cetose de la semaine — courbe, tendances</div>
+      </div>
+      <div class="call-step">
+        <div class="call-time">15 - 25 min</div>
+        <div class="call-label">Ajustements protocole — alimentation, timing, supplements</div>
+      </div>
+      <div class="call-step">
+        <div class="call-time">25 - 35 min</div>
+        <div class="call-label">Progres peau / energie / sommeil — observations et data</div>
+      </div>
+      <div class="call-step">
+        <div class="call-time">35 - 40 min</div>
+        <div class="call-label">Plan semaine prochaine — objectifs et focus</div>
+      </div>
+      <div class="call-step">
+        <div class="call-time">40 - 45 min</div>
+        <div class="call-label">Questions ouvertes</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Call S12 -->
+  <div class="card">
+    <div class="card-header">
+      <h3>Call S12 — Bilan Final 90 Jours</h3>
+      <span class="tag tag-gold">1h</span>
+    </div>
+    <div class="call-timeline">
+      <div class="call-step">
+        <div class="call-time">0 - 15 min</div>
+        <div class="call-label">Bilan complet 90 jours — chaque dimension mesuree</div>
+      </div>
+      <div class="call-step">
+        <div class="call-time">15 - 25 min</div>
+        <div class="call-label">Photos avant/apres — review ensemble, celebrer</div>
+      </div>
+      <div class="call-step">
+        <div class="call-time">25 - 40 min</div>
+        <div class="call-label">Plan annuel personnalise — remise du document</div>
+      </div>
+      <div class="call-step">
+        <div class="call-time">40 - 50 min</div>
+        <div class="call-label">Protocoles autonomie — crise, signaux faibles, urgences</div>
+      </div>
+      <div class="call-step">
+        <div class="call-time">50 - 55 min</div>
+        <div class="call-label">Temoignage — demander video/vocal/ecrit</div>
+      </div>
+      <div class="call-step">
+        <div class="call-time">55 - 60 min</div>
+        <div class="call-label">Alumni + au revoir — acces communaute, lives, cloture</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- SECTION: ALUMNI                                 -->
+<!-- ═══════════════════════════════════════════════ -->
+<section class="section" id="alumni">
+  <h2 class="section-title">Process Alumni Post-90 Jours</h2>
+  <p class="section-subtitle">Ce qui continue apres la fin du protocole.</p>
+
+  <div class="card">
+    <h4>Ce que le client garde</h4>
+    <ul>
+      <li>Acces communaute Skool a vie</li>
+      <li>Lives groupe hebdomadaires (dimanche 10h)</li>
+      <li>Plan annuel personnalise (document remis a S12)</li>
+      <li>Protocoles crise et autonomie</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h4>Ce qui s'arrete</h4>
+    <ul>
+      <li>Pas de calls 1:1 (sauf SOS bonus pour paiement 1x)</li>
+      <li>Pas de suivi WhatsApp quotidien</li>
+      <li>Pas de tracking cetose par Geoffrey</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h4>Actions Geoffrey post-handoff</h4>
+    <ul>
+      <li>Encourager participation communaute dans les lives</li>
+      <li>Demander temoignage final + photos si pas encore fait</li>
+      <li>Inviter au programme referral si applicable</li>
+      <li>Check-in surprise a J+120 (message bienveillant)</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- SECTION: TEMOIGNAGES                            -->
+<!-- ═══════════════════════════════════════════════ -->
+<section class="section" id="temoignages">
+  <h2 class="section-title">Templates Demande Temoignage</h2>
+  <p class="section-subtitle">4 moments cles. Cliquer pour copier.</p>
+
+  <div class="template-card">
+    <button class="copy-btn" onclick="copyTemplate(this)">Copier</button>
+    <h4>J+14 — Premiers resultats</h4>
+    <div class="template-text">[Prenom], 2 semaines! Comment tu te sens? Si tu vois deja des changements, est-ce que tu serais d'accord pour partager en quelques mots ce que tu observes? Ca aide enormement les futures participantes.</div>
+  </div>
+
+  <div class="template-card">
+    <button class="copy-btn" onclick="copyTemplate(this)">Copier</button>
+    <h4>J+30 — Fin Phase 1</h4>
+    <div class="template-text">[Prenom], 30 jours! On a fait le bilan — et les resultats sont la. Est-ce que tu serais d'accord pour enregistrer un petit vocal de 30 secondes sur ton experience? Ce serait enorme pour nous.</div>
+  </div>
+
+  <div class="template-card">
+    <button class="copy-btn" onclick="copyTemplate(this)">Copier</button>
+    <h4>J+60 — Mi-parcours</h4>
+    <div class="template-text">[Prenom], 2 mois de protocole. Tu te souviens comment c'etait avant? Si tu veux bien partager avant/apres photos + un court message, ca serait incroyable.</div>
+  </div>
+
+  <div class="template-card">
+    <button class="copy-btn" onclick="copyTemplate(this)">Copier</button>
+    <h4>J+90 — Fin protocole</h4>
+    <div class="template-text">[Prenom], 90 jours. On a fait un sacre chemin ensemble. J'aimerais beaucoup avoir ton temoignage video (meme 1 min sur WhatsApp suffit). Ca me permettrait de montrer aux personnes comme toi qu'il y a une vraie solution.</div>
+  </div>
+</section>
+
+</main>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="footer">
+  <span>SAPIENS 360</span> | Delivery Bible | Derniere MAJ : Avril 2026
+</footer>
+
+<script>
+/* ── TAB NAVIGATION ── */
+const tabs = document.querySelectorAll('.nav-tab');
+const sections = document.querySelectorAll('.section');
+
+tabs.forEach(tab => {
+  tab.addEventListener('click', () => {
+    tabs.forEach(t => t.classList.remove('active'));
+    sections.forEach(s => s.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById(tab.dataset.tab).classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+});
+
+/* ── WEEK CARD TOGGLE ── */
+function toggleWeek(header) {
+  const body = header.nextElementSibling;
+  if (body.style.display === 'none') {
+    body.style.display = 'block';
+  } else {
+    body.style.display = 'none';
+  }
+}
+
+/* ── COPY TEMPLATE ── */
+function copyTemplate(btn) {
+  const text = btn.parentElement.querySelector('.template-text').textContent.trim();
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = 'Copie!';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.textContent = 'Copier';
+      btn.classList.remove('copied');
+    }, 2000);
+  });
+}
+
+/* ── CHECKLISTS WITH LOCALSTORAGE ── */
+const checklistItems = document.querySelectorAll('.checklist-item');
+
+checklistItems.forEach(item => {
+  const key = 'sapiens-delivery-' + item.dataset.key;
+  if (localStorage.getItem(key) === 'true') {
+    item.classList.add('checked');
+  }
+  item.addEventListener('click', () => {
+    item.classList.toggle('checked');
+    localStorage.setItem(key, item.classList.contains('checked'));
+  });
+});
+</script>
+</body>
+</html>

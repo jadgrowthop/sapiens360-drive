@@ -1,0 +1,1091 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAPIENS 360 — Tous les Process</title>
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg: #111;
+  --card: #161616;
+  --border: #2C4A3555;
+  --gold: #B8956A;
+  --green: #2C4A35;
+  --ivory: #FAF7F2;
+  --stone: #888;
+  --font-serif: Georgia, 'Times New Roman', serif;
+  --font-sans: 'Segoe UI', Arial, sans-serif;
+  --radius: 10px;
+  --glow: 0 0 30px rgba(184,149,106,0.08);
+}
+
+html { scroll-behavior: smooth; scroll-padding-top: 120px; }
+
+body {
+  background: var(--bg);
+  color: var(--ivory);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── HERO ── */
+.hero {
+  text-align: center;
+  padding: 72px 24px 40px;
+  border-bottom: 1px solid var(--border);
+}
+.hero-badge {
+  display: inline-block;
+  font-family: var(--font-sans);
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold);
+  border: 1px solid var(--gold);
+  padding: 5px 18px;
+  border-radius: 20px;
+  margin-bottom: 24px;
+}
+.hero h1 {
+  font-family: var(--font-serif);
+  font-size: clamp(28px, 5vw, 48px);
+  color: var(--ivory);
+  font-weight: 400;
+  margin-bottom: 12px;
+}
+.hero h1 span { color: var(--gold); }
+.hero p {
+  color: var(--stone);
+  font-size: 16px;
+  max-width: 600px;
+  margin: 0 auto;
+  font-style: italic;
+}
+
+/* ── ROLE FILTER ── */
+.role-filter {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  padding: 20px 24px 0;
+  flex-wrap: wrap;
+}
+.role-btn {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 8px 24px;
+  border-radius: 24px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--stone);
+  cursor: pointer;
+  transition: all 0.25s;
+}
+.role-btn:hover { border-color: var(--gold); color: var(--ivory); }
+.role-btn.active {
+  background: var(--gold);
+  color: #111;
+  border-color: var(--gold);
+  font-weight: 600;
+}
+
+/* ── STICKY NAV ── */
+.sticky-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(17,17,17,0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 12px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.sticky-nav::-webkit-scrollbar { display: none; }
+.nav-inner {
+  display: flex;
+  gap: 0;
+  min-width: max-content;
+  justify-content: center;
+}
+.nav-tab {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  letter-spacing: 0.5px;
+  color: var(--stone);
+  text-decoration: none;
+  padding: 14px 16px;
+  white-space: nowrap;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s;
+}
+.nav-tab:hover { color: var(--ivory); }
+.nav-tab.active { color: var(--gold); border-bottom-color: var(--gold); }
+
+/* ── SECTIONS ── */
+.content { max-width: 960px; margin: 0 auto; padding: 0 20px 80px; }
+
+.process-section {
+  margin-top: 56px;
+  padding-top: 24px;
+  animation: fadeUp 0.4s ease;
+}
+.process-section.hidden { display: none; }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.section-num {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 8px;
+}
+.section-title {
+  font-family: var(--font-serif);
+  font-size: clamp(22px, 3.5vw, 32px);
+  color: var(--ivory);
+  font-weight: 400;
+  margin-bottom: 8px;
+}
+.section-role-tag {
+  display: inline-block;
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 3px 12px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+}
+.tag-jad { background: rgba(184,149,106,0.15); color: var(--gold); }
+.tag-geoffrey { background: rgba(44,74,53,0.4); color: #6DBF7B; }
+.tag-both { background: rgba(184,149,106,0.1); color: var(--stone); }
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 28px;
+  margin-bottom: 20px;
+  box-shadow: var(--glow);
+}
+
+.card h3 {
+  font-family: var(--font-serif);
+  font-size: 18px;
+  color: var(--gold);
+  font-weight: 400;
+  margin-bottom: 14px;
+}
+.card h4 {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin: 18px 0 10px;
+}
+.card h4:first-child { margin-top: 0; }
+
+.card p, .card li {
+  color: rgba(250,247,242,0.8);
+  font-size: 14px;
+  line-height: 1.7;
+}
+.card ul, .card ol { padding-left: 20px; }
+.card li { margin-bottom: 6px; }
+
+/* ── CHECKLISTS ── */
+.checklist { list-style: none; padding-left: 0; }
+.checklist li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  cursor: pointer;
+  user-select: none;
+}
+.checklist li:last-child { border-bottom: none; }
+.check-box {
+  width: 18px;
+  height: 18px;
+  min-width: 18px;
+  border: 1.5px solid var(--stone);
+  border-radius: 4px;
+  margin-top: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+.checklist li.checked .check-box {
+  background: var(--gold);
+  border-color: var(--gold);
+}
+.checklist li.checked .check-box::after {
+  content: '';
+  width: 5px;
+  height: 9px;
+  border: solid #111;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+  margin-top: -2px;
+}
+.checklist li.checked .check-text {
+  text-decoration: line-through;
+  opacity: 0.5;
+}
+
+/* ── FLOWCHART ── */
+.flowchart {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  padding: 32px 0;
+}
+.flow-node {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px 28px;
+  text-align: center;
+  max-width: 380px;
+  width: 100%;
+  position: relative;
+}
+.flow-node.highlight {
+  border-color: var(--gold);
+  box-shadow: 0 0 20px rgba(184,149,106,0.12);
+}
+.flow-node.green-highlight {
+  border-color: var(--green);
+  box-shadow: 0 0 20px rgba(44,74,53,0.2);
+}
+.flow-node .node-label {
+  font-family: var(--font-sans);
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--stone);
+  margin-bottom: 4px;
+}
+.flow-node .node-title {
+  font-family: var(--font-serif);
+  font-size: 15px;
+  color: var(--ivory);
+}
+.flow-node .node-detail {
+  font-size: 12px;
+  color: var(--stone);
+  margin-top: 4px;
+}
+.flow-arrow {
+  width: 2px;
+  height: 28px;
+  background: var(--gold);
+  position: relative;
+}
+.flow-arrow::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 6px solid var(--gold);
+}
+
+/* Branch container */
+.flow-branches {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 16px;
+  width: 100%;
+  max-width: 840px;
+  margin-top: 4px;
+}
+.flow-branch {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+}
+.flow-branch .flow-node {
+  max-width: 260px;
+  font-size: 13px;
+}
+.branch-label {
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 6px 14px;
+  border-radius: 16px;
+  margin-bottom: 8px;
+}
+.branch-close { background: rgba(44,74,53,0.3); color: #6DBF7B; }
+.branch-noclose { background: rgba(184,149,106,0.15); color: var(--gold); }
+.branch-noshow { background: rgba(200,60,60,0.15); color: #E07070; }
+
+.flow-arrow-small {
+  width: 2px;
+  height: 18px;
+  background: rgba(255,255,255,0.15);
+  position: relative;
+}
+.flow-arrow-small::after {
+  content: '';
+  position: absolute;
+  bottom: -3px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 5px solid rgba(255,255,255,0.15);
+}
+
+/* ── TIMELINE ── */
+.timeline { position: relative; padding-left: 28px; }
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 8px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--gold), var(--green));
+}
+.timeline-item {
+  position: relative;
+  margin-bottom: 20px;
+}
+.timeline-item::before {
+  content: '';
+  position: absolute;
+  left: -24px;
+  top: 6px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--gold);
+  border: 2px solid var(--bg);
+}
+.timeline-item .t-time {
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 2px;
+}
+.timeline-item .t-label {
+  font-size: 14px;
+  color: var(--ivory);
+}
+
+/* ── RULES ── */
+.rules-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 12px;
+  margin-top: 12px;
+}
+.rule-chip {
+  background: rgba(184,149,106,0.08);
+  border: 1px solid rgba(184,149,106,0.15);
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 13px;
+  color: var(--ivory);
+  text-align: center;
+}
+
+/* ── PHASE TABLE ── */
+.phase-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 12px;
+}
+.phase-table th, .phase-table td {
+  text-align: left;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border);
+  font-size: 13px;
+}
+.phase-table th {
+  font-family: var(--font-sans);
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--stone);
+}
+.phase-table td { color: rgba(250,247,242,0.85); }
+.phase-table .time-col { color: var(--gold); white-space: nowrap; font-variant-numeric: tabular-nums; }
+
+/* ── LINKS ── */
+.detail-link {
+  display: inline-block;
+  margin-top: 16px;
+  font-size: 13px;
+  color: var(--gold);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(184,149,106,0.3);
+  padding-bottom: 2px;
+  transition: border-color 0.2s;
+}
+.detail-link:hover { border-bottom-color: var(--gold); }
+.detail-link::after { content: ' \2192'; }
+
+/* ── FOOTER ── */
+.footer {
+  text-align: center;
+  padding: 40px 24px;
+  border-top: 1px solid var(--border);
+  margin-top: 60px;
+}
+.footer p {
+  font-size: 12px;
+  color: var(--stone);
+  letter-spacing: 1px;
+}
+
+/* ── MOBILE ── */
+@media (max-width: 768px) {
+  .flow-branches { grid-template-columns: 1fr; }
+  .flow-branch .flow-node { max-width: 100%; }
+  .nav-inner { justify-content: flex-start; }
+  .nav-tab { padding: 12px 12px; font-size: 11px; }
+  .card { padding: 20px; }
+  .phase-table { font-size: 12px; }
+  .phase-table th, .phase-table td { padding: 8px 8px; }
+  .rules-grid { grid-template-columns: 1fr 1fr; }
+  .hero { padding: 48px 20px 32px; }
+}
+@media (max-width: 480px) {
+  .rules-grid { grid-template-columns: 1fr; }
+  .role-filter { gap: 8px; }
+  .role-btn { padding: 6px 16px; font-size: 12px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════ HERO ═══════════ -->
+<header class="hero">
+  <div class="hero-badge">Operations Bible</div>
+  <h1><span>SAPIENS 360</span> — Tous les Process</h1>
+  <p>Du premier DM au J+90 — chaque etape, chaque role, chaque action</p>
+</header>
+
+<!-- ═══════════ ROLE FILTER ═══════════ -->
+<div class="role-filter">
+  <button class="role-btn active" data-filter="tous">Tous</button>
+  <button class="role-btn" data-filter="jad">Jad</button>
+  <button class="role-btn" data-filter="geoffrey">Geoffrey</button>
+</div>
+
+<!-- ═══════════ STICKY NAV ═══════════ -->
+<nav class="sticky-nav">
+  <div class="nav-inner">
+    <a class="nav-tab" href="#lifecycle">Lifecycle Lead</a>
+    <a class="nav-tab" href="#routine-jad">Routine Jad</a>
+    <a class="nav-tab" href="#routine-geoffrey">Routine Geoffrey</a>
+    <a class="nav-tab" href="#setting">Setting</a>
+    <a class="nav-tab" href="#pre-call">Pre-Call</a>
+    <a class="nav-tab" href="#closing">Closing</a>
+    <a class="nav-tab" href="#post-call">Post-Call</a>
+    <a class="nav-tab" href="#onboarding">Onboarding</a>
+    <a class="nav-tab" href="#delivery">Delivery</a>
+    <a class="nav-tab" href="#contenu">Contenu</a>
+    <a class="nav-tab" href="#review-hebdo">Review Hebdo</a>
+    <a class="nav-tab" href="#referral">Referral</a>
+  </div>
+</nav>
+
+<main class="content">
+
+<!-- ═══════════ SECTION 1: LIFECYCLE LEAD ═══════════ -->
+<section class="process-section" id="lifecycle" data-role="both">
+  <div class="section-num">Section 01</div>
+  <h2 class="section-title">Lifecycle Lead Complet</h2>
+  <span class="section-role-tag tag-both">Jad + Geoffrey</span>
+
+  <div class="card">
+    <div class="flowchart">
+      <div class="flow-node">
+        <div class="node-label">Source</div>
+        <div class="node-title">INSTAGRAM</div>
+        <div class="node-detail">900K vues/mois</div>
+      </div>
+      <div class="flow-arrow"></div>
+      <div class="flow-node">
+        <div class="node-label">Comment "SAPIENS"</div>
+        <div class="node-title">MANYCHAT</div>
+        <div class="node-detail">Auto 3 messages</div>
+      </div>
+      <div class="flow-arrow"></div>
+      <div class="flow-node">
+        <div class="node-label">Email capture + VSL envoyee</div>
+        <div class="node-title">JAD : VOCAL H+3</div>
+        <div class="node-detail">Qualification (condition, duree)</div>
+      </div>
+      <div class="flow-arrow"></div>
+      <div class="flow-node highlight">
+        <div class="node-label">2-4 echanges</div>
+        <div class="node-title">JAD : SETTING</div>
+        <div class="node-detail">Envoi Calendly</div>
+      </div>
+      <div class="flow-arrow"></div>
+      <div class="flow-node">
+        <div class="node-label">Pre-call emails auto (WF2)</div>
+        <div class="node-title">BOOKING CALENDLY</div>
+      </div>
+      <div class="flow-arrow"></div>
+      <div class="flow-node highlight">
+        <div class="node-label">30-45 min</div>
+        <div class="node-title">JAD : CALL CLOSING</div>
+      </div>
+
+      <!-- Branches -->
+      <div style="display:flex;gap:0;justify-content:center;margin-top:8px;">
+        <div style="width:2px;height:24px;background:var(--gold);"></div>
+      </div>
+
+      <div class="flow-branches">
+        <!-- Branch 1: CLOSE -->
+        <div class="flow-branch">
+          <span class="branch-label branch-close">CLOSE</span>
+          <div class="flow-arrow-small"></div>
+          <div class="flow-node green-highlight">
+            <div class="node-title">Whop + Tag "client"</div>
+            <div class="node-detail">Geoffrey notifie</div>
+          </div>
+          <div class="flow-arrow-small"></div>
+          <div class="flow-node green-highlight">
+            <div class="node-title">GEOFFREY : ONBOARDING</div>
+            <div class="node-detail">H+0 a J+3</div>
+          </div>
+          <div class="flow-arrow-small"></div>
+          <div class="flow-node green-highlight">
+            <div class="node-title">DELIVERY 90 jours</div>
+            <div class="node-detail">3 phases</div>
+          </div>
+          <div class="flow-arrow-small"></div>
+          <div class="flow-node">
+            <div class="node-title">ALUMNI</div>
+            <div class="node-detail">Communaute a vie</div>
+          </div>
+        </div>
+
+        <!-- Branch 2: PAS DE CLOSE -->
+        <div class="flow-branch">
+          <span class="branch-label branch-noclose">Pas de close</span>
+          <div class="flow-arrow-small"></div>
+          <div class="flow-node">
+            <div class="node-title">WF3 Rescue</div>
+            <div class="node-detail">H+2 a H+72</div>
+          </div>
+          <div class="flow-arrow-small"></div>
+          <div class="flow-node">
+            <div class="node-title">Nurture email</div>
+            <div class="node-detail">Long terme</div>
+          </div>
+        </div>
+
+        <!-- Branch 3: NO-SHOW -->
+        <div class="flow-branch">
+          <span class="branch-label branch-noshow">No-show</span>
+          <div class="flow-arrow-small"></div>
+          <div class="flow-node">
+            <div class="node-title">WF4 Recovery</div>
+            <div class="node-detail">H+2 a H+48</div>
+          </div>
+          <div class="flow-arrow-small"></div>
+          <div class="flow-node">
+            <div class="node-title">Rebook ou nurture</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ SECTION 2: ROUTINE JAD ═══════════ -->
+<section class="process-section" id="routine-jad" data-role="jad">
+  <div class="section-num">Section 02</div>
+  <h2 class="section-title">Routine Quotidienne Jad</h2>
+  <span class="section-role-tag tag-jad">Jad</span>
+
+  <div class="card">
+    <h4>Matin (8h-10h)</h4>
+    <ul class="checklist" data-list="jad-matin">
+      <li><span class="check-box"></span><span class="check-text">Checker les notifications ManyChat (nouveaux leads)</span></li>
+      <li><span class="check-box"></span><span class="check-text">Envoyer les vocaux H+3 en batch (10-15 vocaux)</span></li>
+      <li><span class="check-box"></span><span class="check-text">Repondre aux DMs qualifies de la veille</span></li>
+      <li><span class="check-box"></span><span class="check-text">Verifier les bookings du jour (preparer les calls)</span></li>
+      <li><span class="check-box"></span><span class="check-text">Preparer fiche archetype pour chaque call du jour</span></li>
+    </ul>
+
+    <h4>Journee (10h-18h)</h4>
+    <ul class="checklist" data-list="jad-journee">
+      <li><span class="check-box"></span><span class="check-text">Calls de closing (selon Calendly)</span></li>
+      <li><span class="check-box"></span><span class="check-text">Post-call: tagger GHL, envoyer relances, noter scores</span></li>
+      <li><span class="check-box"></span><span class="check-text">Relances en cours (H+2, H+24, H+48)</span></li>
+      <li><span class="check-box"></span><span class="check-text">Setting leads chauds (reponses rapides)</span></li>
+    </ul>
+
+    <h4>Soir (18h-20h)</h4>
+    <ul class="checklist" data-list="jad-soir">
+      <li><span class="check-box"></span><span class="check-text">Debrief calls du jour (auto-evaluation /100)</span></li>
+      <li><span class="check-box"></span><span class="check-text">Planifier le contenu du lendemain avec Geoffrey</span></li>
+      <li><span class="check-box"></span><span class="check-text">Mettre a jour le dashboard KPI</span></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ═══════════ SECTION 3: ROUTINE GEOFFREY ═══════════ -->
+<section class="process-section" id="routine-geoffrey" data-role="geoffrey">
+  <div class="section-num">Section 03</div>
+  <h2 class="section-title">Routine Quotidienne Geoffrey</h2>
+  <span class="section-role-tag tag-geoffrey">Geoffrey</span>
+
+  <div class="card">
+    <h4>Matin (7h-9h)</h4>
+    <ul class="checklist" data-list="geoffrey-matin">
+      <li><span class="check-box"></span><span class="check-text">Enregistrer vocaux bienvenue (nouveaux clients)</span></li>
+      <li><span class="check-box"></span><span class="check-text">Checker les mesures cetose de la veille (clients)</span></li>
+      <li><span class="check-box"></span><span class="check-text">Repondre aux WhatsApp clients urgents</span></li>
+    </ul>
+
+    <h4>Journee (9h-17h)</h4>
+    <ul class="checklist" data-list="geoffrey-journee">
+      <li><span class="check-box"></span><span class="check-text">Calls 1:1 avec clients (selon planning)</span></li>
+      <li><span class="check-box"></span><span class="check-text">Creer du contenu (filmer reels, YouTube)</span></li>
+      <li><span class="check-box"></span><span class="check-text">Preparer protocoles clients nouveaux</span></li>
+    </ul>
+
+    <h4>Soir (19h-20h)</h4>
+    <ul class="checklist" data-list="geoffrey-soir">
+      <li><span class="check-box"></span><span class="check-text">Review TOUTES les mesures cetose du jour</span></li>
+      <li><span class="check-box"></span><span class="check-text">Repondre a chaque client (zone OK, zone basse, zone haute)</span></li>
+      <li><span class="check-box"></span><span class="check-text">Noter dans Google Sheets</span></li>
+    </ul>
+
+    <div style="margin-top:20px;padding:14px 18px;background:rgba(44,74,53,0.15);border-radius:8px;border-left:3px solid var(--green);">
+      <strong style="color:#6DBF7B;font-size:13px;letter-spacing:1px;">DIMANCHE 10H</strong>
+      <p style="margin-top:4px;font-size:14px;">Live groupe Q&amp;A (Skool)</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ SECTION 4: SETTING ═══════════ -->
+<section class="process-section" id="setting" data-role="jad">
+  <div class="section-num">Section 04</div>
+  <h2 class="section-title">Process Setting</h2>
+  <span class="section-role-tag tag-jad">Jad</span>
+
+  <div class="card">
+    <h3>6 etapes</h3>
+    <ol>
+      <li>Lead commente/DM &rarr; ManyChat qualifie <em style="color:var(--stone);">(auto)</em></li>
+      <li>Email capture &rarr; VSL envoyee <em style="color:var(--stone);">(auto)</em></li>
+      <li>H+3 : Jad envoie vocal personnalise (au nom Geoffrey)</li>
+      <li>Lead repond &rarr; 2-4 echanges qualification max</li>
+      <li>Si qualifie &rarr; envoyer Calendly</li>
+      <li>Si pas de booking H+48 &rarr; relance auto (Flow 4)</li>
+    </ol>
+
+    <h4>Regles</h4>
+    <div class="rules-grid">
+      <div class="rule-chip">Max 4-5 echanges</div>
+      <div class="rule-chip">Jamais donner le prix</div>
+      <div class="rule-chip">Vocal obligatoire</div>
+      <div class="rule-chip">Repondre en &lt;10 min</div>
+    </div>
+
+    <a href="01_SCRIPT_SETTING.html" class="detail-link">Detail complet : 01_SCRIPT_SETTING.html</a>
+  </div>
+</section>
+
+<!-- ═══════════ SECTION 5: PRE-CALL ═══════════ -->
+<section class="process-section" id="pre-call" data-role="jad">
+  <div class="section-num">Section 05</div>
+  <h2 class="section-title">Process Pre-Call</h2>
+  <span class="section-role-tag tag-jad">Jad</span>
+
+  <div class="card">
+    <h3>Automatique (GHL)</h3>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="t-time">J+0</div>
+        <div class="t-label">Email confirmation + temoignage condition-matched (WF2)</div>
+      </div>
+      <div class="timeline-item">
+        <div class="t-time">J-1</div>
+        <div class="t-label">Email rappel + micro-engagement</div>
+      </div>
+      <div class="timeline-item">
+        <div class="t-time">H-1</div>
+        <div class="t-label">Email rappel final + lien Zoom</div>
+      </div>
+      <div class="timeline-item">
+        <div class="t-time">Si confirmations manuelles actives</div>
+        <div class="t-label">SMS H-1</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Jad fait</h3>
+    <ul class="checklist" data-list="precall-jad">
+      <li><span class="check-box"></span><span class="check-text">Verifier les bookings du jour</span></li>
+      <li><span class="check-box"></span><span class="check-text">Pour chaque call : lire les custom fields (condition, duree, source)</span></li>
+      <li><span class="check-box"></span><span class="check-text">Identifier l'archetype probable</span></li>
+      <li><span class="check-box"></span><span class="check-text">Preparer le temoignage correspondant</span></li>
+      <li><span class="check-box"></span><span class="check-text">Avoir le script ouvert (02_SCRIPT_CLOSING.html)</span></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ═══════════ SECTION 6: CLOSING ═══════════ -->
+<section class="process-section" id="closing" data-role="jad">
+  <div class="section-num">Section 06</div>
+  <h2 class="section-title">Process Closing</h2>
+  <span class="section-role-tag tag-jad">Jad</span>
+
+  <div class="card">
+    <h3>11 Phases — Timing</h3>
+    <table class="phase-table">
+      <thead>
+        <tr><th>Timing</th><th>Phase</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="time-col">Min 0-3</td><td>Rapport + Cadrage</td></tr>
+        <tr><td class="time-col">Min 3-8</td><td>Situation + Tentatives</td></tr>
+        <tr><td class="time-col">Min 8-10</td><td>Qualification financiere</td></tr>
+        <tr><td class="time-col">Min 10-22</td><td>Impact emotionnel <strong style="color:var(--gold);">(12 min MINIMUM)</strong></td></tr>
+        <tr><td class="time-col">Min 22-23</td><td>Cadrage pre-offre</td></tr>
+        <tr><td class="time-col">Min 23-25</td><td>Recap + Transition</td></tr>
+        <tr><td class="time-col">Min 25-31</td><td>Presentation protocole</td></tr>
+        <tr><td class="time-col">Min 31-33</td><td>Preuve sociale</td></tr>
+        <tr><td class="time-col">Min 33-37</td><td>Prix + SILENCE 10 sec</td></tr>
+        <tr><td class="time-col">Min 37-43</td><td>Objections</td></tr>
+        <tr><td class="time-col">Min 43-46</td><td>Close</td></tr>
+      </tbody>
+    </table>
+
+    <a href="02_SCRIPT_CLOSING.html" class="detail-link">Detail complet : 02_SCRIPT_CLOSING.html</a>
+  </div>
+</section>
+
+<!-- ═══════════ SECTION 7: POST-CALL ═══════════ -->
+<section class="process-section" id="post-call" data-role="jad">
+  <div class="section-num">Section 07</div>
+  <h2 class="section-title">Process Post-Call</h2>
+  <span class="section-role-tag tag-jad">Jad</span>
+
+  <div class="card">
+    <h3 style="color:#6DBF7B;">Branche 1 : CLOSE</h3>
+    <ul class="checklist" data-list="postcall-close">
+      <li><span class="check-box"></span><span class="check-text">Confirmer paiement Whop</span></li>
+      <li><span class="check-box"></span><span class="check-text">Tagger GHL : "client" + "condition-[X]"</span></li>
+      <li><span class="check-box"></span><span class="check-text">WhatsApp Geoffrey (handoff)</span></li>
+      <li><span class="check-box"></span><span class="check-text">Demander referral</span></li>
+      <li><span class="check-box"></span><span class="check-text">Message bienvenue cliente</span></li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3 style="color:var(--gold);">Branche 2 : PAS DE CLOSE</h3>
+    <ul class="checklist" data-list="postcall-noclose">
+      <li><span class="check-box"></span><span class="check-text">Tagger : "call-sans-vente" + raison</span></li>
+      <li><span class="check-box"></span><span class="check-text">WF3 Rescue s'active auto</span></li>
+      <li><span class="check-box"></span><span class="check-text">Relance manuelle H+2 (message perso)</span></li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3 style="color:#E07070;">Branche 3 : NO-SHOW</h3>
+    <ul class="checklist" data-list="postcall-noshow">
+      <li><span class="check-box"></span><span class="check-text">Tagger : "no-show"</span></li>
+      <li><span class="check-box"></span><span class="check-text">WF4 Recovery s'active auto</span></li>
+      <li><span class="check-box"></span><span class="check-text">SMS immediat</span></li>
+    </ul>
+
+    <a href="04_RELANCE_SYSTEM.html" class="detail-link">Detail complet : 04_RELANCE_SYSTEM.html</a>
+  </div>
+</section>
+
+<!-- ═══════════ SECTION 8: ONBOARDING ═══════════ -->
+<section class="process-section" id="onboarding" data-role="geoffrey">
+  <div class="section-num">Section 08</div>
+  <h2 class="section-title">Process Onboarding</h2>
+  <span class="section-role-tag tag-geoffrey">Geoffrey</span>
+
+  <div class="card">
+    <h3>Timeline Onboarding</h3>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="t-time">H+0</div>
+        <div class="t-label">Notification paiement recu</div>
+      </div>
+      <div class="timeline-item">
+        <div class="t-time">H+15 min</div>
+        <div class="t-label">Vocal de bienvenue personnalise</div>
+      </div>
+      <div class="timeline-item">
+        <div class="t-time">H+30 min</div>
+        <div class="t-label">Acces Skool + envoi diagnostic</div>
+      </div>
+      <div class="timeline-item">
+        <div class="t-time">J+1</div>
+        <div class="t-label">Envoi tracker quotidien</div>
+      </div>
+      <div class="timeline-item">
+        <div class="t-time">J+2</div>
+        <div class="t-label">Premier call 1:1</div>
+      </div>
+      <div class="timeline-item">
+        <div class="t-time">J+3</div>
+        <div class="t-label">Debut protocole</div>
+      </div>
+    </div>
+
+    <a href="08_ONBOARDING_CLIENT.html" class="detail-link">Detail complet : 08_ONBOARDING_CLIENT.html</a>
+  </div>
+</section>
+
+<!-- ═══════════ SECTION 9: DELIVERY ═══════════ -->
+<section class="process-section" id="delivery" data-role="geoffrey">
+  <div class="section-num">Section 09</div>
+  <h2 class="section-title">Process Delivery</h2>
+  <span class="section-role-tag tag-geoffrey">Geoffrey</span>
+
+  <div class="card">
+    <h3>90 jours — 3 Phases</h3>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-top:16px;">
+      <div style="background:rgba(44,74,53,0.12);border:1px solid rgba(44,74,53,0.3);border-radius:8px;padding:20px;text-align:center;">
+        <div style="font-size:11px;letter-spacing:2px;color:var(--stone);text-transform:uppercase;margin-bottom:6px;">Phase 1 — S1-S4</div>
+        <div style="font-family:var(--font-serif);font-size:18px;color:#6DBF7B;">Reset</div>
+      </div>
+      <div style="background:rgba(184,149,106,0.08);border:1px solid rgba(184,149,106,0.15);border-radius:8px;padding:20px;text-align:center;">
+        <div style="font-size:11px;letter-spacing:2px;color:var(--stone);text-transform:uppercase;margin-bottom:6px;">Phase 2 — S5-S8</div>
+        <div style="font-family:var(--font-serif);font-size:18px;color:var(--gold);">Stabilisation</div>
+      </div>
+      <div style="background:rgba(250,247,242,0.04);border:1px solid rgba(250,247,242,0.1);border-radius:8px;padding:20px;text-align:center;">
+        <div style="font-size:11px;letter-spacing:2px;color:var(--stone);text-transform:uppercase;margin-bottom:6px;">Phase 3 — S9-S12</div>
+        <div style="font-family:var(--font-serif);font-size:18px;color:var(--ivory);">Autonomie</div>
+      </div>
+    </div>
+    <p style="margin-top:16px;color:var(--stone);font-size:13px;">Tracking quotidien cetose. 12 calls 1:1 sur 90 jours.</p>
+
+    <a href="09_DELIVERY_BIBLE.html" class="detail-link">Detail complet : 09_DELIVERY_BIBLE.html</a>
+  </div>
+</section>
+
+<!-- ═══════════ SECTION 10: CONTENU ═══════════ -->
+<section class="process-section" id="contenu" data-role="both">
+  <div class="section-num">Section 10</div>
+  <h2 class="section-title">Process Creation Contenu</h2>
+  <span class="section-role-tag tag-both">Jad + Geoffrey</span>
+
+  <div class="card">
+    <h3>Geoffrey</h3>
+    <ul>
+      <li>Filmer 5 reels/jour (batch 1-2h)</li>
+      <li>Filmer 2 YouTube/semaine (batch 1 apres-midi)</li>
+      <li>Stories quotidiennes (routine, education, preuve)</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>Jad</h3>
+    <ul>
+      <li>Editer et poster les reels aux heures optimales (7h, 11h, 14h, 18h, 21h)</li>
+      <li>Gerer les commentaires "SAPIENS" &rarr; ManyChat</li>
+      <li>Analyser performance (quels hooks marchent)</li>
+      <li>Planifier le calendrier contenu</li>
+    </ul>
+
+    <a href="11_CONTENT_ENGINE.html" class="detail-link">Detail complet : 11_CONTENT_ENGINE.html</a>
+  </div>
+</section>
+
+<!-- ═══════════ SECTION 11: REVIEW HEBDO ═══════════ -->
+<section class="process-section" id="review-hebdo" data-role="both">
+  <div class="section-num">Section 11</div>
+  <h2 class="section-title">Process Review Hebdomadaire</h2>
+  <span class="section-role-tag tag-both">Jad + Geoffrey</span>
+
+  <div class="card">
+    <h3>Checklist dimanche soir</h3>
+    <ul class="checklist" data-list="review-hebdo">
+      <li><span class="check-box"></span><span class="check-text">Remplir le dashboard KPI (14_KPI_DASHBOARD.html)</span></li>
+      <li><span class="check-box"></span><span class="check-text">Identifier la metrique la plus faible &rarr; action</span></li>
+      <li><span class="check-box"></span><span class="check-text">Reecouter 1 call (le pire de la semaine) &rarr; 1 amelioration</span></li>
+      <li><span class="check-box"></span><span class="check-text">Planifier le contenu de la semaine prochaine</span></li>
+      <li><span class="check-box"></span><span class="check-text">Debrief Jad + Geoffrey (15 min) : qu'est-ce qui a marche/pas marche ?</span></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ═══════════ SECTION 12: REFERRAL ═══════════ -->
+<section class="process-section" id="referral" data-role="both">
+  <div class="section-num">Section 12</div>
+  <h2 class="section-title">Process Referral</h2>
+  <span class="section-role-tag tag-both">Jad + Geoffrey</span>
+
+  <div class="card">
+    <h3>4 moments de demande</h3>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="t-time">1. Post-close (jour meme)</div>
+        <div class="t-label">Jad demande referral</div>
+      </div>
+      <div class="timeline-item">
+        <div class="t-time">2. Post-call sans vente</div>
+        <div class="t-label">Jad demande referral (meme sans close)</div>
+      </div>
+      <div class="timeline-item">
+        <div class="t-time">3. J+7 resultats</div>
+        <div class="t-label">Geoffrey — email auto</div>
+      </div>
+      <div class="timeline-item">
+        <div class="t-time">4. J+30 milestone</div>
+        <div class="t-label">Geoffrey — email auto</div>
+      </div>
+    </div>
+
+    <a href="18_REFERRAL_SYSTEM.html" class="detail-link">Detail complet : 18_REFERRAL_SYSTEM.html</a>
+  </div>
+</section>
+
+</main>
+
+<!-- ═══════════ FOOTER ═══════════ -->
+<footer class="footer">
+  <p>SAPIENS 360 &nbsp;|&nbsp; Tous les Process &nbsp;|&nbsp; Derniere MAJ : Avril 2026</p>
+</footer>
+
+<!-- ═══════════ JAVASCRIPT ═══════════ -->
+<script>
+(function() {
+  'use strict';
+
+  // ── ROLE FILTER ──
+  const filterBtns = document.querySelectorAll('.role-btn');
+  const sections = document.querySelectorAll('.process-section');
+
+  filterBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      filterBtns.forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      var filter = btn.getAttribute('data-filter');
+
+      sections.forEach(function(sec) {
+        var role = sec.getAttribute('data-role');
+        if (filter === 'tous') {
+          sec.classList.remove('hidden');
+        } else if (filter === 'jad') {
+          sec.classList.toggle('hidden', role === 'geoffrey');
+        } else if (filter === 'geoffrey') {
+          sec.classList.toggle('hidden', role === 'jad');
+        }
+      });
+    });
+  });
+
+  // ── STICKY NAV ACTIVE STATE ──
+  var navTabs = document.querySelectorAll('.nav-tab');
+  var sectionEls = [];
+  navTabs.forEach(function(tab) {
+    var href = tab.getAttribute('href');
+    if (href && href.startsWith('#')) {
+      var el = document.getElementById(href.substring(1));
+      if (el) sectionEls.push({ tab: tab, el: el });
+    }
+  });
+
+  function updateActiveTab() {
+    var scrollY = window.scrollY + 140;
+    var current = null;
+    for (var i = 0; i < sectionEls.length; i++) {
+      if (sectionEls[i].el.offsetTop <= scrollY && !sectionEls[i].el.classList.contains('hidden')) {
+        current = sectionEls[i].tab;
+      }
+    }
+    navTabs.forEach(function(t) { t.classList.remove('active'); });
+    if (current) current.classList.add('active');
+  }
+
+  var scrollTimer;
+  window.addEventListener('scroll', function() {
+    if (scrollTimer) cancelAnimationFrame(scrollTimer);
+    scrollTimer = requestAnimationFrame(updateActiveTab);
+  });
+  updateActiveTab();
+
+  // ── INTERACTIVE CHECKLISTS WITH LOCALSTORAGE ──
+  var STORAGE_KEY = 'sapiens360_processes_';
+
+  function loadChecklist(listId) {
+    try {
+      var data = localStorage.getItem(STORAGE_KEY + listId);
+      return data ? JSON.parse(data) : {};
+    } catch (e) { return {}; }
+  }
+
+  function saveChecklist(listId, state) {
+    try {
+      localStorage.setItem(STORAGE_KEY + listId, JSON.stringify(state));
+    } catch (e) {}
+  }
+
+  document.querySelectorAll('.checklist').forEach(function(list) {
+    var listId = list.getAttribute('data-list');
+    if (!listId) return;
+    var state = loadChecklist(listId);
+    var items = list.querySelectorAll('li');
+
+    items.forEach(function(item, idx) {
+      if (state[idx]) item.classList.add('checked');
+
+      item.addEventListener('click', function() {
+        item.classList.toggle('checked');
+        var currentState = loadChecklist(listId);
+        currentState[idx] = item.classList.contains('checked');
+        saveChecklist(listId, currentState);
+      });
+    });
+  });
+
+  // ── SMOOTH SCROLL FOR NAV ──
+  navTabs.forEach(function(tab) {
+    tab.addEventListener('click', function(e) {
+      var href = tab.getAttribute('href');
+      if (href && href.startsWith('#')) {
+        var target = document.getElementById(href.substring(1));
+        if (target && !target.classList.contains('hidden')) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }
+    });
+  });
+})();
+</script>
+
+</body>
+</html>

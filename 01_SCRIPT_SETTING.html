@@ -1,0 +1,1159 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAPIENS 360 — Script Setting & Qualification</title>
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg: #111;
+  --card: #161616;
+  --border: #2C4A3555;
+  --gold: #B8956A;
+  --green: #2C4A35;
+  --ivory: #FAF7F2;
+  --stone: #888;
+  --red: #8B3A3A;
+  --red-bg: #2a1515;
+  --green-bright: #4A7A5A;
+  --green-bg: #152a1a;
+}
+
+html { scroll-behavior: smooth; scroll-padding-top: 120px; }
+
+body {
+  background: var(--bg);
+  color: var(--ivory);
+  font-family: 'Segoe UI', Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4 { font-family: Georgia, 'Times New Roman', serif; font-weight: 400; }
+
+/* ── HERO ── */
+.hero {
+  text-align: center;
+  padding: 80px 24px 48px;
+  border-bottom: 1px solid var(--border);
+}
+.hero-badge {
+  display: inline-block;
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold);
+  border: 1px solid var(--gold);
+  padding: 6px 18px;
+  border-radius: 2px;
+  margin-bottom: 28px;
+}
+.hero h1 {
+  font-size: clamp(28px, 5vw, 48px);
+  color: var(--ivory);
+  margin-bottom: 12px;
+  letter-spacing: -0.5px;
+}
+.hero h1 span { color: var(--gold); }
+.hero-sub {
+  font-size: 15px;
+  color: var(--stone);
+  max-width: 640px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+.hero-sub strong { color: var(--gold); font-weight: 600; }
+
+/* ── STICKY NAV ── */
+.sticky-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(17,17,17,0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.sticky-nav::-webkit-scrollbar { height: 0; }
+.nav-inner {
+  display: flex;
+  gap: 0;
+  max-width: 1200px;
+  margin: 0 auto;
+  min-width: max-content;
+}
+.nav-tab {
+  padding: 14px 20px;
+  font-size: 13px;
+  color: var(--stone);
+  text-decoration: none;
+  white-space: nowrap;
+  border-bottom: 2px solid transparent;
+  transition: color 0.2s, border-color 0.2s;
+  cursor: pointer;
+}
+.nav-tab:hover { color: var(--ivory); }
+.nav-tab.active {
+  color: var(--gold);
+  border-bottom-color: var(--gold);
+}
+
+/* ── LAYOUT ── */
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+section {
+  padding: 64px 0;
+  border-bottom: 1px solid var(--border);
+}
+section:last-of-type { border-bottom: none; }
+
+.section-label {
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 8px;
+}
+.section-title {
+  font-size: clamp(24px, 4vw, 36px);
+  color: var(--ivory);
+  margin-bottom: 32px;
+}
+
+/* ── CARDS ── */
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 28px;
+  margin-bottom: 20px;
+}
+.card-title {
+  font-family: Georgia, serif;
+  font-size: 18px;
+  color: var(--gold);
+  margin-bottom: 12px;
+}
+
+/* ── STAT CARDS ── */
+.stat-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin: 28px 0;
+}
+@media (max-width: 640px) { .stat-grid { grid-template-columns: 1fr; } }
+
+.stat-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 28px;
+  position: relative;
+  overflow: hidden;
+}
+.stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 4px;
+  height: 100%;
+}
+.stat-card.before::before { background: var(--red); }
+.stat-card.after::before { background: var(--green-bright); }
+.stat-label {
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.stat-card.before .stat-label { color: #C06060; }
+.stat-card.after .stat-label { color: var(--green-bright); }
+.stat-value {
+  font-family: Georgia, serif;
+  font-size: 20px;
+  color: var(--ivory);
+  line-height: 1.4;
+}
+
+/* ── NOTE ── */
+.note {
+  background: rgba(184,149,106,0.08);
+  border-left: 3px solid var(--gold);
+  padding: 16px 20px;
+  border-radius: 0 6px 6px 0;
+  margin: 24px 0;
+  font-size: 14px;
+  color: var(--stone);
+  line-height: 1.6;
+}
+.note strong { color: var(--gold); }
+
+/* ── FLOW DIAGRAM ── */
+.flow {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  overflow-x: auto;
+  padding: 24px 0;
+  margin: 16px 0;
+  -webkit-overflow-scrolling: touch;
+}
+.flow-step {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px 20px;
+  min-width: 140px;
+  text-align: center;
+  flex-shrink: 0;
+}
+.flow-step-label {
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 4px;
+}
+.flow-step-text {
+  font-size: 13px;
+  color: var(--ivory);
+  line-height: 1.4;
+}
+.flow-arrow {
+  color: var(--gold);
+  font-size: 20px;
+  padding: 0 8px;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+/* ── COPY BLOCK ── */
+.copy-block {
+  position: relative;
+  background: #0d0d0d;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 20px 20px 20px 20px;
+  margin: 16px 0;
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--ivory);
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+.copy-block .copy-label {
+  display: block;
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 10px;
+}
+.copy-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: var(--green);
+  color: var(--ivory);
+  border: none;
+  border-radius: 4px;
+  padding: 6px 14px;
+  font-size: 11px;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.copy-btn:hover { background: #3a5e47; }
+.copy-btn:active { transform: scale(0.96); }
+.copy-btn.copied { background: var(--gold); color: #111; }
+
+/* ── FLOW SECTIONS ── */
+.flow-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  margin-bottom: 24px;
+  overflow: hidden;
+}
+.flow-card-header {
+  background: rgba(44,74,53,0.2);
+  padding: 16px 24px;
+  border-bottom: 1px solid var(--border);
+}
+.flow-card-header h3 {
+  font-size: 18px;
+  color: var(--gold);
+}
+.flow-card-header .trigger {
+  font-size: 12px;
+  color: var(--stone);
+  margin-top: 4px;
+}
+.flow-card-body { padding: 24px; }
+
+.msg-step {
+  margin-bottom: 20px;
+  padding-left: 20px;
+  border-left: 2px solid var(--border);
+}
+.msg-step-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--green-bright);
+  margin-bottom: 6px;
+}
+.msg-step .action {
+  font-size: 13px;
+  color: var(--stone);
+  margin-top: 8px;
+}
+.msg-step .action-tag {
+  display: inline-block;
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 3px;
+  margin: 2px 4px 2px 0;
+}
+.tag-gold { background: rgba(184,149,106,0.15); color: var(--gold); }
+.tag-green { background: rgba(44,74,53,0.3); color: var(--green-bright); }
+.tag-red { background: rgba(139,58,58,0.2); color: #C06060; }
+
+/* ── SCENARIO TREES ── */
+.scenario {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 24px;
+  margin-bottom: 20px;
+}
+.scenario-header {
+  font-family: Georgia, serif;
+  font-size: 18px;
+  color: var(--gold);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.scenario-letter {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--green);
+  color: var(--ivory);
+  font-family: Georgia, serif;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+.tree-step {
+  padding: 10px 0 10px 20px;
+  border-left: 2px solid var(--border);
+  margin-left: 16px;
+  font-size: 14px;
+  color: var(--ivory);
+}
+.tree-step .arrow-prefix {
+  color: var(--gold);
+  margin-right: 6px;
+}
+
+/* ── OBJECTION CARDS ── */
+.objection-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  margin-bottom: 16px;
+  overflow: hidden;
+}
+.objection-q {
+  background: rgba(139,58,58,0.1);
+  padding: 14px 20px;
+  font-family: Georgia, serif;
+  font-size: 16px;
+  color: #C06060;
+  border-bottom: 1px solid var(--border);
+}
+.objection-a { padding: 20px; }
+
+/* ── CHECKLIST ── */
+.checklist { list-style: none; }
+.checklist li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 10px 0;
+  font-size: 14px;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+.checklist li:last-child { border-bottom: none; }
+.check-icon {
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: bold;
+  margin-top: 2px;
+}
+.check-red {
+  background: rgba(139,58,58,0.25);
+  color: #C06060;
+  border: 1px solid rgba(139,58,58,0.4);
+}
+.check-green {
+  background: rgba(44,74,53,0.35);
+  color: var(--green-bright);
+  border: 1px solid rgba(74,122,90,0.4);
+}
+
+/* ── TABLE ── */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 16px 0;
+}
+.data-table th {
+  text-align: left;
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--gold);
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(44,74,53,0.1);
+}
+.data-table td {
+  padding: 12px 16px;
+  font-size: 14px;
+  color: var(--ivory);
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+.data-table tr:last-child td { border-bottom: none; }
+.data-table .target {
+  color: var(--gold);
+  font-weight: 600;
+  font-family: Georgia, serif;
+}
+
+/* ── DANGER BOX ── */
+.danger-box {
+  background: rgba(139,58,58,0.08);
+  border: 1px solid rgba(139,58,58,0.3);
+  border-radius: 8px;
+  padding: 28px;
+}
+.danger-box-title {
+  font-family: Georgia, serif;
+  font-size: 18px;
+  color: #C06060;
+  margin-bottom: 20px;
+}
+.danger-rule {
+  display: flex;
+  gap: 14px;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(139,58,58,0.15);
+  font-size: 14px;
+  line-height: 1.6;
+}
+.danger-rule:last-child { border-bottom: none; }
+.danger-num {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(139,58,58,0.25);
+  color: #C06060;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 700;
+  margin-top: 1px;
+}
+
+/* ── OPTION BUTTONS (Flow 2) ── */
+.option-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin: 12px 0;
+}
+@media (max-width: 500px) { .option-grid { grid-template-columns: 1fr; } }
+.option-btn {
+  background: rgba(44,74,53,0.15);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 12px 16px;
+  text-align: left;
+}
+.option-btn .opt-letter {
+  font-weight: 700;
+  color: var(--gold);
+  margin-right: 6px;
+}
+.option-btn .opt-text {
+  font-size: 13px;
+  color: var(--ivory);
+}
+.option-btn .opt-result {
+  display: block;
+  font-size: 12px;
+  color: var(--stone);
+  margin-top: 4px;
+  padding-left: 20px;
+}
+
+/* ── FOOTER ── */
+.footer {
+  text-align: center;
+  padding: 40px 24px;
+  border-top: 1px solid var(--border);
+  font-size: 13px;
+  color: var(--stone);
+}
+.footer span { color: var(--gold); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  .hero { padding: 60px 20px 36px; }
+  section { padding: 48px 0; }
+  .container { padding: 0 16px; }
+  .nav-tab { padding: 12px 14px; font-size: 12px; }
+  .card { padding: 20px; }
+  .flow-card-body { padding: 16px; }
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-badge">Script Setting V4</div>
+  <h1>SAPIENS <span>360</span></h1>
+  <h2 style="font-size:clamp(16px,3vw,22px);color:var(--stone);margin-bottom:20px;font-weight:400;">Script Setting & Qualification</h2>
+  <p class="hero-sub"><strong>ManyChat 80% + Jad 20%</strong> — Qualifier, envoyer la VSL, booker le call</p>
+</header>
+
+<!-- STICKY NAV -->
+<nav class="sticky-nav" id="stickyNav">
+  <div class="nav-inner">
+    <a class="nav-tab active" href="#vue-ensemble">Vue d'ensemble</a>
+    <a class="nav-tab" href="#manychat">ManyChat Auto</a>
+    <a class="nav-tab" href="#vocal-jad">Vocal Jad</a>
+    <a class="nav-tab" href="#post-vocal">Post-Vocal</a>
+    <a class="nav-tab" href="#objections">Objections Setting</a>
+    <a class="nav-tab" href="#calendly">Calendly</a>
+    <a class="nav-tab" href="#red-flags">Red Flags</a>
+    <a class="nav-tab" href="#metriques">Metriques</a>
+  </div>
+</nav>
+
+<main class="container">
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- SECTION 1: VUE D'ENSEMBLE                  -->
+<!-- ═══════════════════════════════════════════ -->
+<section id="vue-ensemble">
+  <div class="section-label">Section 01</div>
+  <h2 class="section-title">Vue d'ensemble</h2>
+
+  <div class="flow">
+    <div class="flow-step">
+      <div class="flow-step-label">Trigger</div>
+      <div class="flow-step-text">Comment "SAPIENS"</div>
+    </div>
+    <div class="flow-arrow">&rarr;</div>
+    <div class="flow-step">
+      <div class="flow-step-label">Auto</div>
+      <div class="flow-step-text">ManyChat<br>(3 messages)</div>
+    </div>
+    <div class="flow-arrow">&rarr;</div>
+    <div class="flow-step">
+      <div class="flow-step-label">Envoi</div>
+      <div class="flow-step-text">VSL envoyee</div>
+    </div>
+    <div class="flow-arrow">&rarr;</div>
+    <div class="flow-step">
+      <div class="flow-step-label">H+3</div>
+      <div class="flow-step-text">Vocal Jad</div>
+    </div>
+    <div class="flow-arrow">&rarr;</div>
+    <div class="flow-step">
+      <div class="flow-step-label">Qualify</div>
+      <div class="flow-step-text">Qualification</div>
+    </div>
+    <div class="flow-arrow">&rarr;</div>
+    <div class="flow-step">
+      <div class="flow-step-label">Book</div>
+      <div class="flow-step-text">Calendly</div>
+    </div>
+  </div>
+
+  <div class="stat-grid">
+    <div class="stat-card before">
+      <div class="stat-label">Avant</div>
+      <div class="stat-value">Geoffrey repond a 50 DMs/jour manuellement (intenable)</div>
+    </div>
+    <div class="stat-card after">
+      <div class="stat-label">Apres</div>
+      <div class="stat-value">ManyChat gere 80%, Jad qualifie 10-15 leads/jour</div>
+    </div>
+  </div>
+
+  <div class="note">
+    <strong>Important :</strong> Les messages sont envoyes AU NOM DE Geoffrey (compte @geo_le_sapiens). Le prospect pense parler a Geoffrey.
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- SECTION 2: MANYCHAT                        -->
+<!-- ═══════════════════════════════════════════ -->
+<section id="manychat">
+  <div class="section-label">Section 02</div>
+  <h2 class="section-title">ManyChat — Sequence Automatique</h2>
+
+  <!-- FLOW 1 -->
+  <div class="flow-card">
+    <div class="flow-card-header">
+      <h3>Flow 1 — Commentaire "SAPIENS"</h3>
+      <div class="trigger">Trigger : Commentaire contenant SAPIENS / sapiens / PEAU / peau &nbsp;&bull;&nbsp; 90% du flux</div>
+    </div>
+    <div class="flow-card-body">
+
+      <div class="msg-step">
+        <div class="msg-step-label">Reponse publique auto</div>
+        <div class="copy-block">
+          <span class="copy-label">Commentaire public</span>
+          <button class="copy-btn" onclick="copyText(this)">Copier</button>Merci! Je t'envoie un message en prive!</div>
+      </div>
+
+      <div class="msg-step">
+        <div class="msg-step-label">DM Message 1 (immediat)</div>
+        <div class="copy-block">
+          <span class="copy-label">DM automatique</span>
+          <button class="copy-btn" onclick="copyText(this)">Copier</button>Salut! Envoie-moi ton email, je t'envoie la video qui t'explique exactement ce qui se passe avec ta peau.</div>
+        <div class="action">[User sends email &rarr; webhook GHL: create contact]</div>
+      </div>
+
+      <div class="msg-step">
+        <div class="msg-step-label">DM Message 2 (apres email capture)</div>
+        <div class="copy-block">
+          <span class="copy-label">DM automatique</span>
+          <button class="copy-btn" onclick="copyText(this)">Copier</button>Merci! Voila la video (10 min). Regarde-la jusqu'au bout — ca va tout t'expliquer.
+[LIEN VSL]</div>
+        <div class="action">
+          <span class="action-tag tag-gold">Tag: vsl-envoyee</span>
+          <span class="action-tag tag-green">Timer H+3: notification Jad "envoyer vocal"</span>
+        </div>
+      </div>
+
+      <div class="msg-step">
+        <div class="msg-step-label">Relance H+24 (si pas de reponse)</div>
+        <div class="copy-block">
+          <span class="copy-label">Relance auto</span>
+          <button class="copy-btn" onclick="copyText(this)">Copier</button>T'as pu regarder la video?</div>
+      </div>
+
+      <div class="msg-step">
+        <div class="msg-step-label">Relance H+72 (si toujours rien)</div>
+        <div class="copy-block">
+          <span class="copy-label">Dernier message</span>
+          <button class="copy-btn" onclick="copyText(this)">Copier</button>Je vais pas insister. Mais si un jour tu veux comprendre ce qui se passe avec ta peau — je suis la.</div>
+        <div class="action">
+          <span class="action-tag tag-red">Tag: lead-froid</span>
+          <span class="action-tag tag-red">STOP</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FLOW 2 -->
+  <div class="flow-card">
+    <div class="flow-card-header">
+      <h3>Flow 2 — Nouveau Follow</h3>
+      <div class="trigger">Timer 5 min apres follow</div>
+    </div>
+    <div class="flow-card-body">
+      <div class="copy-block">
+        <span class="copy-label">Message d'accueil</span>
+        <button class="copy-btn" onclick="copyText(this)">Copier</button>Salut! Bienvenue! C'est quoi qui t'a amene(e) ici?</div>
+
+      <div class="option-grid">
+        <div class="option-btn">
+          <span class="opt-letter">A)</span>
+          <span class="opt-text">Probleme de peau</span>
+          <span class="opt-result">&rarr; Rediriger vers Flow 1</span>
+        </div>
+        <div class="option-btn">
+          <span class="opt-letter">B)</span>
+          <span class="opt-text">Sante naturelle</span>
+          <span class="opt-result">&rarr; "Cool! Et toi, c'est quoi qui se passe dans ton corps?"</span>
+        </div>
+        <div class="option-btn">
+          <span class="opt-letter">C)</span>
+          <span class="opt-text">Vu une video</span>
+          <span class="opt-result">&rarr; "Laquelle?"</span>
+        </div>
+        <div class="option-btn">
+          <span class="opt-letter">D)</span>
+          <span class="opt-text">Autre</span>
+          <span class="opt-result">&rarr; "Bienvenue! N'hesite pas."</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FLOW 3 -->
+  <div class="flow-card">
+    <div class="flow-card-header">
+      <h3>Flow 3 — DM Entrant Spontane</h3>
+      <div class="trigger">Keyword detection : rosacee, acne, eczema, psoriasis, peau, boutons, plaques, rougeurs</div>
+    </div>
+    <div class="flow-card-body">
+      <div class="msg-step">
+        <div class="msg-step-label">Si keyword detecte</div>
+        <div class="action">Qualification &rarr; Rediriger vers Flow 1</div>
+      </div>
+      <div class="msg-step">
+        <div class="msg-step-label">Si pas de keyword</div>
+        <div class="action">
+          <span class="action-tag tag-gold">Tag: dm-non-qualifie</span>
+          Jad repond manuellement
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FLOW 4 -->
+  <div class="flow-card">
+    <div class="flow-card-header">
+      <h3>Flow 4 — Relance Post-VSL (48h sans booking)</h3>
+      <div class="trigger">Timer H+48 apres envoi VSL, sans booking detecte</div>
+    </div>
+    <div class="flow-card-body">
+      <div class="copy-block">
+        <span class="copy-label">Relance post-VSL</span>
+        <button class="copy-btn" onclick="copyText(this)">Copier</button>Hey [prenom]! Tu as pu regarder la video? Si tu veux qu'on regarde ta situation ensemble, l'appel est gratuit: [LIEN CALENDLY]</div>
+    </div>
+  </div>
+
+  <!-- FLOW 5 -->
+  <div class="flow-card">
+    <div class="flow-card-header">
+      <h3>Flow 5 — Quiz en Bio</h3>
+      <div class="trigger">Lien en bio &rarr; 5 questions de qualification</div>
+    </div>
+    <div class="flow-card-body">
+      <table class="data-table">
+        <thead>
+          <tr><th>Question</th><th>Type</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Quelle est ta condition?</td><td>Choix multiple</td></tr>
+          <tr><td>Depuis combien de temps?</td><td>Choix multiple</td></tr>
+          <tr><td>Qu'est-ce que tu as deja essaye?</td><td>Choix multiple</td></tr>
+          <tr><td>Quel impact sur ta vie?</td><td style="color:var(--gold);">Texte libre (gold pour closing)</td></tr>
+          <tr><td>Prete a changer?</td><td>Choix multiple</td></tr>
+        </tbody>
+      </table>
+
+      <div class="copy-block">
+        <span class="copy-label">Resultat personnalise</span>
+        <button class="copy-btn" onclick="copyText(this)">Copier</button>Inflammation terrain: ELEVEE
+
+Regarde cette video — elle t'explique ce qui se passe avec ta peau et ce qu'on peut faire:
+[LIEN VSL]
+
+Et si tu veux qu'on regarde ca ensemble:
+[LIEN CALENDLY]</div>
+
+      <div class="action">
+        <span class="action-tag tag-green">Toutes les donnees envoyees a GHL via webhook</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- SECTION 3: VOCAL JAD                       -->
+<!-- ═══════════════════════════════════════════ -->
+<section id="vocal-jad">
+  <div class="section-label">Section 03</div>
+  <h2 class="section-title">Vocal Jad (H+3 apres VSL)</h2>
+
+  <div class="note">
+    <strong>Quand :</strong> Le lead a repondu aux 2 questions + VSL envoyee + H+3 ecoule
+  </div>
+
+  <div class="copy-block">
+    <span class="copy-label">Template vocal (30-45 sec)</span>
+    <button class="copy-btn" onclick="copyText(this)">Copier</button>Salut [prenom]! C'est Geoffrey. J'ai vu que tu avais [condition] depuis [duree] — j'ai accompagne plusieurs personnes exactement dans ta situation et je sais a quel point c'est epuisant. Est-ce que t'as eu le temps de regarder la video que je t'avais envoyee? Si oui, dis-moi ce que t'en as pense. Et si t'as des questions, n'hesite pas — je suis la.</div>
+
+  <div class="note">
+    <strong>Alternative :</strong> Geoffrey enregistre les vocaux lui-meme en batch (10-15 le matin).
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- SECTION 4: POST-VOCAL                      -->
+<!-- ═══════════════════════════════════════════ -->
+<section id="post-vocal">
+  <div class="section-label">Section 04</div>
+  <h2 class="section-title">Scenarios Post-Vocal</h2>
+
+  <!-- Scenario A -->
+  <div class="scenario">
+    <div class="scenario-header">
+      <span class="scenario-letter">A</span>
+      Elle a vu la VSL et repond
+    </div>
+    <div class="tree-step"><span class="arrow-prefix">&rarr;</span> 1. "Qu'est-ce qui t'a retenue de reserver l'appel?" — laisser le blocage sortir</div>
+    <div class="tree-step"><span class="arrow-prefix">&rarr;</span> 2. Repondre a l'objection (voir section Objections)</div>
+    <div class="tree-step"><span class="arrow-prefix">&rarr;</span> 3. Envoyer Calendly</div>
+  </div>
+
+  <!-- Scenario B -->
+  <div class="scenario">
+    <div class="scenario-header">
+      <span class="scenario-letter">B</span>
+      Elle n'a pas vu la VSL
+    </div>
+    <div class="copy-block">
+      <span class="copy-label">Reponse</span>
+      <button class="copy-btn" onclick="copyText(this)">Copier</button>Pas de souci. C'est quoi ta situation avec ta peau?</div>
+    <div class="tree-step"><span class="arrow-prefix">&rarr;</span> Qualifier en 2-3 echanges</div>
+    <div class="tree-step"><span class="arrow-prefix">&rarr;</span> <strong style="color:#C06060;">JAMAIS</strong> renvoyer la VSL</div>
+    <div class="tree-step"><span class="arrow-prefix">&rarr;</span> Passer directement au Calendly si qualifiee</div>
+  </div>
+
+  <!-- Scenario C -->
+  <div class="scenario">
+    <div class="scenario-header">
+      <span class="scenario-letter">C</span>
+      Pas de reponse au vocal
+    </div>
+    <div class="msg-step" style="margin-top:12px;">
+      <div class="msg-step-label">H+24</div>
+      <div class="copy-block">
+        <span class="copy-label">Relance</span>
+        <button class="copy-btn" onclick="copyText(this)">Copier</button>Hey [prenom]! T'as pu ecouter mon vocal?</div>
+    </div>
+    <div class="msg-step">
+      <div class="msg-step-label">H+72</div>
+      <div class="copy-block">
+        <span class="copy-label">Dernier message</span>
+        <button class="copy-btn" onclick="copyText(this)">Copier</button>Je vais pas insister. Mais ce que tu vis — c'est pas une fatalite. Si un jour t'as envie qu'on en parle — je suis la.</div>
+    </div>
+    <div class="note" style="margin-top:12px;">
+      <strong>STOP.</strong> Pas de CTA. Pas de lien.
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- SECTION 5: OBJECTIONS SETTING              -->
+<!-- ═══════════════════════════════════════════ -->
+<section id="objections">
+  <div class="section-label">Section 05</div>
+  <h2 class="section-title">Mini-Scripts Objections Setting</h2>
+
+  <div class="objection-card">
+    <div class="objection-q">"C'est combien?"</div>
+    <div class="objection-a">
+      <div class="copy-block">
+        <button class="copy-btn" onclick="copyText(this)">Copier</button>On en parle sur l'appel — l'investissement depend de ton profil et de la formule adaptee a ta situation. L'appel est gratuit. On regarde si ca a du sens pour toi.</div>
+    </div>
+  </div>
+
+  <div class="objection-card">
+    <div class="objection-q">"J'ai peur que ca marche pas"</div>
+    <div class="objection-a">
+      <div class="copy-block">
+        <button class="copy-btn" onclick="copyText(this)">Copier</button>Je comprends — apres tout ce que tu as essaye, c'est normal d'avoir cette peur. La difference c'est que tout ce que tu as fait jusqu'ici traitait la surface. Nous on traite ce qui produit l'inflammation. Et on a une garantie : si apres 90 jours ca n'a pas bouge — on continue gratuitement. Le risque, c'est nous. Pas toi.</div>
+    </div>
+  </div>
+
+  <div class="objection-card">
+    <div class="objection-q">"Mon dermato dit que c'est chronique"</div>
+    <div class="objection-a">
+      <div class="copy-block">
+        <button class="copy-btn" onclick="copyText(this)">Copier</button>Chronique ≠ irreversible. Ton dermato traite la peau. Nous on traite ce qui fait flamber la peau. C'est pas le meme travail.</div>
+    </div>
+  </div>
+
+  <div class="objection-card">
+    <div class="objection-q">"J'y crois pas trop"</div>
+    <div class="objection-a">
+      <div class="copy-block">
+        <button class="copy-btn" onclick="copyText(this)">Copier</button>C'est quoi exactement qui te fait douter?</div>
+      <div class="note" style="margin-top:8px;"><strong>Technique :</strong> Attendre la reponse specifique avant de repondre.</div>
+    </div>
+  </div>
+
+  <div class="objection-card">
+    <div class="objection-q">"C'est pas le bon moment"</div>
+    <div class="objection-a">
+      <div class="copy-block">
+        <button class="copy-btn" onclick="copyText(this)">Copier</button>Ca fait combien de temps que tu attends le bon moment?</div>
+      <div class="note" style="margin-top:8px;"><strong>Technique :</strong> Silence. Laisser la question faire son travail.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- SECTION 6: CALENDLY                        -->
+<!-- ═══════════════════════════════════════════ -->
+<section id="calendly">
+  <div class="section-label">Section 06</div>
+  <h2 class="section-title">Transition vers Calendly</h2>
+
+  <div class="copy-block">
+    <span class="copy-label">Message de booking</span>
+    <button class="copy-btn" onclick="copyText(this)">Copier</button>Voila le lien pour reserver ton appel:
+[LIEN CALENDLY]
+
+L'appel se fera avec Jad, qui m'accompagne sur la partie analyse de profil. Il va regarder ta situation en detail et te dire honnetement si le protocole est adapte a ton cas.
+
+30 minutes. Gratuit. Sans engagement.</div>
+</section>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- SECTION 7: RED FLAGS                       -->
+<!-- ═══════════════════════════════════════════ -->
+<section id="red-flags">
+  <div class="section-label">Section 07</div>
+  <h2 class="section-title">Red Flags — Disqualification</h2>
+
+  <div class="card" style="margin-bottom:24px;">
+    <h4 class="card-title" style="color:#C06060;">Disqualifier si :</h4>
+    <ul class="checklist">
+      <li><span class="check-icon check-red">&times;</span> Budget reel &lt; 400&euro;/mois (ne peut pas payer meme en 3&times;)</li>
+      <li><span class="check-icon check-red">&times;</span> Cherche encore la "creme miracle"</li>
+      <li><span class="check-icon check-red">&times;</span> Forte dependance a l'opinion medicale ("mon medecin doit valider")</li>
+      <li><span class="check-icon check-red">&times;</span> Indisponible pour le suivi bihebdomadaire</li>
+      <li><span class="check-icon check-red">&times;</span> Motivation 100% externe ("ma mere m'a dit de le faire")</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h4 class="card-title" style="color:var(--green-bright);">Qualifier si :</h4>
+    <ul class="checklist">
+      <li><span class="check-icon check-green">&#10003;</span> Condition depuis 1+ an</li>
+      <li><span class="check-icon check-green">&#10003;</span> A deja essaye 2+ solutions sans resultat durable</li>
+      <li><span class="check-icon check-green">&#10003;</span> Exprime frustration / epuisement emotionnel</li>
+      <li><span class="check-icon check-green">&#10003;</span> Pose des questions sur le fonctionnement (pas juste le prix)</li>
+      <li><span class="check-icon check-green">&#10003;</span> Prete a modifier ses habitudes</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- SECTION 8: METRIQUES                       -->
+<!-- ═══════════════════════════════════════════ -->
+<section id="metriques">
+  <div class="section-label">Section 08</div>
+  <h2 class="section-title">Metriques a Tracker</h2>
+
+  <div class="card">
+    <table class="data-table">
+      <thead>
+        <tr><th>Metrique</th><th>Cible</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>DMs qualifies/jour (post-ManyChat)</td><td class="target">15-20</td></tr>
+        <tr><td>VSL envoyees/jour</td><td class="target">15-20</td></tr>
+        <tr><td>Vocaux/jour</td><td class="target">10-15</td></tr>
+        <tr><td>Bookings/jour</td><td class="target">3-5</td></tr>
+        <tr><td>Taux reponse vocal</td><td class="target">&gt;40%</td></tr>
+        <tr><td>Taux VSL vue &rarr; booking</td><td class="target">&gt;15%</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- SECTION 9: CUSTOM FIELDS                   -->
+<!-- ═══════════════════════════════════════════ -->
+<section id="custom-fields">
+  <div class="section-label">Section 09</div>
+  <h2 class="section-title">Custom Fields ManyChat &rarr; GHL</h2>
+
+  <div class="card">
+    <table class="data-table">
+      <thead>
+        <tr><th>ManyChat Field</th><th>GHL Field</th><th>Type</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>email</td><td>contact.email</td><td>Email</td></tr>
+        <tr><td>first_name</td><td>contact.firstName</td><td>Text</td></tr>
+        <tr><td>last_name</td><td>contact.lastName</td><td>Text</td></tr>
+        <tr><td>ig_username</td><td>contact.customField.ig_handle</td><td>Text</td></tr>
+        <tr><td>condition</td><td>contact.customField.skin_condition</td><td>Text</td></tr>
+        <tr><td>duree_condition</td><td>contact.customField.condition_duration</td><td>Text</td></tr>
+        <tr><td>tentatives</td><td>contact.customField.past_attempts</td><td>Text</td></tr>
+        <tr><td>impact_vie</td><td>contact.customField.life_impact</td><td>Long Text</td></tr>
+        <tr><td>pret_changement</td><td>contact.customField.ready_to_change</td><td>Boolean</td></tr>
+        <tr><td>vsl_vue</td><td>contact.tag: vsl-vue</td><td>Tag</td></tr>
+        <tr><td>quiz_score</td><td>contact.customField.quiz_inflammation</td><td>Text</td></tr>
+        <tr><td>source</td><td>contact.customField.lead_source</td><td>Text</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- SECTION 10: REGLES ABSOLUES                -->
+<!-- ═══════════════════════════════════════════ -->
+<section id="regles">
+  <div class="section-label">Section 10</div>
+  <h2 class="section-title">Regles Absolues du Setting</h2>
+
+  <div class="danger-box">
+    <div class="danger-box-title">Ne jamais enfreindre ces regles</div>
+    <div class="danger-rule">
+      <span class="danger-num">1</span>
+      <span>Repondre en moins de 10 min aux leads qualifies</span>
+    </div>
+    <div class="danger-rule">
+      <span class="danger-num">2</span>
+      <span>Ne jamais envoyer le lien Calendly sans au moins 1 question posee</span>
+    </div>
+    <div class="danger-rule">
+      <span class="danger-num">3</span>
+      <span>Max 4-5 echanges avant le lien — ne pas transformer le setting en coaching gratuit</span>
+    </div>
+    <div class="danger-rule">
+      <span class="danger-num">4</span>
+      <span>Jamais reduire le prix en setting — le prix se discute en call uniquement</span>
+    </div>
+    <div class="danger-rule">
+      <span class="danger-num">5</span>
+      <span>Toujours poser une question AVANT d'envoyer la VSL (engagement)</span>
+    </div>
+    <div class="danger-rule">
+      <span class="danger-num">6</span>
+      <span>Le vocal est obligatoire — c'est lui qui cree le lien humain</span>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="footer">
+  SAPIENS <span>360</span> &nbsp;|&nbsp; Script Setting V4 &nbsp;|&nbsp; Derniere MAJ: Avril 2026
+</footer>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- JAVASCRIPT                                 -->
+<!-- ═══════════════════════════════════════════ -->
+<script>
+// ── Copy to clipboard ──
+function copyText(btn) {
+  const block = btn.closest('.copy-block');
+  const clone = block.cloneNode(true);
+  // Remove label and button from clone
+  const label = clone.querySelector('.copy-label');
+  const button = clone.querySelector('.copy-btn');
+  if (label) label.remove();
+  if (button) button.remove();
+  const text = clone.textContent.trim();
+
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = 'Copie!';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = 'Copier';
+      btn.classList.remove('copied');
+    }, 1800);
+  }).catch(function() {
+    // Fallback
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    btn.textContent = 'Copie!';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = 'Copier';
+      btn.classList.remove('copied');
+    }, 1800);
+  });
+}
+
+// ── Active tab on scroll ──
+(function() {
+  var tabs = document.querySelectorAll('.nav-tab');
+  var sections = [];
+
+  tabs.forEach(function(tab) {
+    var href = tab.getAttribute('href');
+    if (href && href.startsWith('#')) {
+      var sec = document.getElementById(href.substring(1));
+      if (sec) sections.push({ el: sec, tab: tab, id: href.substring(1) });
+    }
+  });
+
+  function updateActive() {
+    var scrollY = window.scrollY + 140;
+    var current = null;
+
+    for (var i = sections.length - 1; i >= 0; i--) {
+      if (sections[i].el.offsetTop <= scrollY) {
+        current = sections[i];
+        break;
+      }
+    }
+
+    tabs.forEach(function(t) { t.classList.remove('active'); });
+    if (current) {
+      current.tab.classList.add('active');
+      // Scroll tab into view if needed
+      var nav = document.getElementById('stickyNav');
+      var tabRect = current.tab.getBoundingClientRect();
+      var navRect = nav.getBoundingClientRect();
+      if (tabRect.left < navRect.left || tabRect.right > navRect.right) {
+        current.tab.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+      }
+    }
+  }
+
+  var ticking = false;
+  window.addEventListener('scroll', function() {
+    if (!ticking) {
+      requestAnimationFrame(function() {
+        updateActive();
+        ticking = false;
+      });
+      ticking = true;
+    }
+  });
+
+  updateActive();
+})();
+</script>
+
+</body>
+</html>

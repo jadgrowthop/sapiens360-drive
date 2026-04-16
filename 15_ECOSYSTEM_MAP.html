@@ -1,0 +1,1441 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAPIENS 360 — Carte de l'Ecosysteme</title>
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg: #111;
+  --card: #161616;
+  --border: #2C4A3555;
+  --gold: #B8956A;
+  --green: #2C4A35;
+  --ivory: #FAF7F2;
+  --stone: #888;
+  --gold-glow: #B8956A44;
+  --green-glow: #2C4A3544;
+  --red: #C0392B;
+  --orange: #E67E22;
+}
+
+body {
+  background: var(--bg);
+  color: var(--ivory);
+  font-family: 'Segoe UI', Arial, sans-serif;
+  line-height: 1.6;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Hero ── */
+.hero {
+  text-align: center;
+  padding: 60px 24px 40px;
+  border-bottom: 1px solid var(--border);
+}
+.hero-brand {
+  font-family: Georgia, serif;
+  font-size: 14px;
+  color: var(--gold);
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.hero-title {
+  font-family: Georgia, serif;
+  font-size: clamp(28px, 5vw, 48px);
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.15;
+  margin-bottom: 8px;
+}
+.hero-title .gold { color: var(--gold); }
+.hero-subtitle {
+  color: var(--stone);
+  font-size: 15px;
+  font-style: italic;
+  max-width: 520px;
+  margin: 0 auto;
+  letter-spacing: 1px;
+}
+
+/* ── Sticky Nav ── */
+.sticky-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  padding: 0 16px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.sticky-nav::-webkit-scrollbar { height: 0; }
+.nav-tabs {
+  display: flex;
+  gap: 0;
+  max-width: 1100px;
+  margin: 0 auto;
+  min-width: max-content;
+}
+.nav-tab {
+  padding: 14px 20px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--stone);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: color .2s, border-color .2s;
+  white-space: nowrap;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  user-select: none;
+}
+.nav-tab:hover { color: var(--ivory); }
+.nav-tab.active {
+  color: var(--gold);
+  border-bottom-color: var(--gold);
+}
+
+/* ── Sections ── */
+.content { max-width: 1100px; margin: 0 auto; padding: 0 24px 80px; }
+.section { display: none; padding-top: 48px; }
+.section.active { display: block; }
+.section-title {
+  font-family: Georgia, serif;
+  font-size: 28px;
+  color: #fff;
+  margin-bottom: 8px;
+}
+.section-title .gold { color: var(--gold); }
+.section-desc {
+  color: var(--stone);
+  font-size: 14px;
+  margin-bottom: 36px;
+  max-width: 640px;
+}
+
+/* ── Visual Map ── */
+.vmap {
+  display: flex;
+  gap: 40px;
+  align-items: flex-start;
+}
+.vmap-main { flex: 1; min-width: 0; }
+.vmap-side {
+  width: 240px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-top: 20px;
+}
+
+.map-node {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px 20px;
+  margin-bottom: 0;
+  position: relative;
+  transition: border-color .25s, box-shadow .25s;
+  cursor: default;
+}
+.map-node:hover {
+  border-color: var(--gold);
+  box-shadow: 0 0 20px var(--gold-glow);
+}
+.map-node .node-icon {
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: var(--green);
+  color: var(--gold);
+  font-size: 14px;
+  font-weight: 700;
+  text-align: center;
+  line-height: 32px;
+  margin-right: 12px;
+  vertical-align: middle;
+}
+.map-node .node-name {
+  font-weight: 700;
+  font-size: 15px;
+  color: #fff;
+  vertical-align: middle;
+}
+.map-node .node-role {
+  display: block;
+  color: var(--stone);
+  font-size: 12px;
+  margin-top: 4px;
+  padding-left: 44px;
+}
+
+/* Flow connectors */
+.flow-connector {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 0;
+}
+.flow-arrow {
+  width: 2px;
+  height: 28px;
+  background: var(--gold);
+  position: relative;
+}
+.flow-arrow::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 6px solid var(--gold);
+}
+.flow-label {
+  font-size: 10px;
+  color: var(--gold);
+  margin-left: 10px;
+  letter-spacing: .5px;
+  text-transform: uppercase;
+  opacity: .8;
+}
+
+/* Branch */
+.map-branch {
+  display: flex;
+  gap: 20px;
+  margin-top: 0;
+}
+.branch-col {
+  flex: 1;
+  min-width: 0;
+}
+.branch-header {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  padding: 10px 16px;
+  border-radius: 8px;
+  text-align: center;
+  margin-bottom: 0;
+}
+.branch-header.close {
+  background: var(--green);
+  color: var(--gold);
+}
+.branch-header.noclose {
+  background: #2a1a1a;
+  color: var(--red);
+  border: 1px solid #3a2020;
+}
+
+.side-node {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px 14px;
+  transition: border-color .25s, box-shadow .25s;
+  cursor: default;
+}
+.side-node:hover {
+  border-color: var(--gold);
+  box-shadow: 0 0 16px var(--gold-glow);
+}
+.side-node .node-name {
+  font-weight: 700;
+  font-size: 13px;
+  color: #fff;
+}
+.side-node .node-role {
+  color: var(--stone);
+  font-size: 11px;
+  margin-top: 2px;
+}
+.side-label {
+  font-size: 11px;
+  color: var(--stone);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+/* ── Tool Cards ── */
+.tool-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 20px;
+}
+.tool-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: border-color .25s, box-shadow .25s;
+}
+.tool-card:hover {
+  border-color: var(--gold);
+  box-shadow: 0 0 24px var(--gold-glow);
+}
+.tool-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px 20px 14px;
+  cursor: pointer;
+  user-select: none;
+}
+.tool-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: var(--green);
+  color: var(--gold);
+  font-size: 18px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.tool-header-text { flex: 1; min-width: 0; }
+.tool-name {
+  font-weight: 700;
+  font-size: 16px;
+  color: #fff;
+}
+.tool-tagline {
+  font-size: 12px;
+  color: var(--stone);
+  margin-top: 2px;
+}
+.tool-cost {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--gold);
+  background: var(--gold-glow);
+  padding: 4px 10px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+.tool-toggle {
+  width: 24px;
+  height: 24px;
+  color: var(--stone);
+  transition: transform .3s, color .2s;
+  flex-shrink: 0;
+}
+.tool-toggle.open { transform: rotate(180deg); color: var(--gold); }
+.tool-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height .4s ease;
+}
+.tool-body.open { max-height: 600px; }
+.tool-body-inner {
+  padding: 0 20px 20px;
+  border-top: 1px solid var(--border);
+  padding-top: 16px;
+}
+.tool-meta {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 6px 16px;
+  font-size: 13px;
+}
+.tool-meta dt {
+  color: var(--stone);
+  font-weight: 600;
+}
+.tool-meta dd { color: var(--ivory); }
+
+/* ── Data Flow ── */
+.flow-steps { counter-reset: step; }
+.flow-step {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  padding: 20px 0;
+  border-bottom: 1px solid var(--border);
+  counter-increment: step;
+}
+.flow-step:last-child { border-bottom: none; }
+.step-num {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--green);
+  color: var(--gold);
+  font-family: Georgia, serif;
+  font-size: 16px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.step-num::before { content: counter(step); }
+.step-content { flex: 1; }
+.step-title {
+  font-weight: 700;
+  color: #fff;
+  font-size: 15px;
+  margin-bottom: 4px;
+}
+.step-desc {
+  color: var(--stone);
+  font-size: 13px;
+}
+.step-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+.step-tag {
+  font-size: 11px;
+  padding: 3px 10px;
+  border-radius: 20px;
+  background: var(--gold-glow);
+  color: var(--gold);
+  font-weight: 600;
+}
+
+/* ── Custom Fields Table ── */
+.fields-title {
+  font-family: Georgia, serif;
+  font-size: 20px;
+  color: #fff;
+  margin: 40px 0 16px;
+}
+
+/* ── Tables ── */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  margin-bottom: 24px;
+}
+.data-table th {
+  text-align: left;
+  padding: 12px 16px;
+  background: var(--green);
+  color: var(--gold);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-weight: 700;
+  border-bottom: 2px solid var(--gold-glow);
+}
+.data-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+  color: var(--ivory);
+}
+.data-table tr:last-child td { border-bottom: none; }
+.data-table tbody tr {
+  transition: background .2s;
+}
+.data-table tbody tr:hover { background: #1a1a1a; }
+.data-table .mono {
+  font-family: 'SF Mono', 'Consolas', monospace;
+  font-size: 12px;
+  color: var(--gold);
+}
+
+/* ── Costs ── */
+.cost-grid {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 32px;
+  align-items: start;
+}
+.cost-summary {
+  background: var(--card);
+  border: 1px solid var(--gold);
+  border-radius: 12px;
+  padding: 28px 24px;
+}
+.cost-summary-title {
+  font-family: Georgia, serif;
+  font-size: 20px;
+  color: var(--gold);
+  margin-bottom: 20px;
+}
+.cost-total-line {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 14px;
+}
+.cost-total-line:last-child { border-bottom: none; }
+.cost-total-line .label { color: var(--stone); }
+.cost-total-line .value { color: #fff; font-weight: 700; }
+.cost-total-line.highlight .label { color: var(--gold); font-weight: 700; }
+.cost-total-line.highlight .value { color: var(--gold); font-size: 20px; }
+.cost-note {
+  margin-top: 20px;
+  padding: 16px;
+  background: var(--green-glow);
+  border-radius: 8px;
+  font-size: 13px;
+  color: var(--ivory);
+  border-left: 3px solid var(--green);
+}
+
+/* ── Troubleshooting ── */
+.trouble-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 20px;
+}
+.trouble-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+  transition: border-color .25s;
+}
+.trouble-card:hover {
+  border-color: var(--red);
+  box-shadow: 0 0 20px rgba(192, 57, 43, .15);
+}
+.trouble-title {
+  font-weight: 700;
+  font-size: 15px;
+  color: #fff;
+  margin-bottom: 14px;
+  padding-left: 12px;
+  border-left: 3px solid var(--red);
+}
+.trouble-section {
+  margin-bottom: 12px;
+}
+.trouble-section:last-child { margin-bottom: 0; }
+.trouble-label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+.trouble-label.check { color: var(--orange); }
+.trouble-label.fix { color: var(--green); }
+.trouble-list {
+  list-style: none;
+  font-size: 13px;
+  color: var(--stone);
+}
+.trouble-list li {
+  padding: 3px 0;
+  padding-left: 16px;
+  position: relative;
+}
+.trouble-list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 10px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+.trouble-section.check-section li::before { background: var(--orange); }
+.trouble-section.fix-section li::before { background: var(--green); }
+
+/* ── Footer ── */
+.footer {
+  text-align: center;
+  padding: 40px 24px;
+  border-top: 1px solid var(--border);
+  color: var(--stone);
+  font-size: 12px;
+  letter-spacing: 1px;
+}
+.footer .gold { color: var(--gold); }
+
+/* ── Responsive ── */
+@media (max-width: 860px) {
+  .vmap { flex-direction: column; }
+  .vmap-side { width: 100%; flex-direction: row; flex-wrap: wrap; }
+  .vmap-side .side-node { flex: 1 1 140px; }
+  .cost-grid { grid-template-columns: 1fr; }
+  .map-branch { flex-direction: column; }
+  .tool-grid { grid-template-columns: 1fr; }
+  .trouble-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 600px) {
+  .hero { padding: 40px 16px 28px; }
+  .content { padding: 0 16px 60px; }
+  .nav-tab { padding: 12px 14px; font-size: 11px; }
+  .section { padding-top: 32px; }
+  .section-title { font-size: 22px; }
+  .data-table { font-size: 12px; }
+  .data-table th, .data-table td { padding: 8px 10px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ HERO ═══ -->
+<header class="hero">
+  <div class="hero-brand">SAPIENS 360</div>
+  <h1 class="hero-title">Carte de l'<span class="gold">Ecosysteme</span></h1>
+  <p class="hero-subtitle">"Chaque outil, chaque integration, chaque flux de donnees"</p>
+</header>
+
+<!-- ═══ STICKY NAV ═══ -->
+<nav class="sticky-nav">
+  <div class="nav-tabs">
+    <div class="nav-tab active" data-tab="map">Map Visuelle</div>
+    <div class="nav-tab" data-tab="outils">Outils</div>
+    <div class="nav-tab" data-tab="flux">Flux de Donnees</div>
+    <div class="nav-tab" data-tab="integrations">Integrations</div>
+    <div class="nav-tab" data-tab="couts">Couts</div>
+    <div class="nav-tab" data-tab="troubleshooting">Troubleshooting</div>
+  </div>
+</nav>
+
+<!-- ═══ CONTENT ═══ -->
+<main class="content">
+
+  <!-- ── Section 1: Map Visuelle ── -->
+  <section class="section active" id="sec-map">
+    <h2 class="section-title">Map <span class="gold">Visuelle</span></h2>
+    <p class="section-desc">Vue d'ensemble de l'ecosysteme SAPIENS 360 — du premier commentaire Instagram jusqu'au suivi client quotidien.</p>
+
+    <div class="vmap">
+      <div class="vmap-main">
+
+        <!-- Instagram -->
+        <div class="map-node" data-highlight="instagram">
+          <span class="node-icon">IG</span>
+          <span class="node-name">INSTAGRAM</span>
+          <span class="node-role">@geo_le_sapiens — Acquisition, contenu, proximite</span>
+        </div>
+        <div class="flow-connector">
+          <div class="flow-arrow"></div>
+          <span class="flow-label">Comments / DMs</span>
+        </div>
+
+        <!-- ManyChat -->
+        <div class="map-node" data-highlight="manychat">
+          <span class="node-icon">MC</span>
+          <span class="node-name">MANYCHAT</span>
+          <span class="node-role">Auto-qualification — 5 flows actifs</span>
+        </div>
+        <div class="flow-connector">
+          <div class="flow-arrow"></div>
+          <span class="flow-label">Webhook (email, condition, tags)</span>
+        </div>
+
+        <!-- GHL -->
+        <div class="map-node" data-highlight="ghl">
+          <span class="node-icon">GHL</span>
+          <span class="node-name">GOHIGHLEVEL</span>
+          <span class="node-role">CRM central — 708+ contacts, 41 tags, 12 workflows</span>
+        </div>
+        <div class="flow-connector">
+          <div class="flow-arrow"></div>
+          <span class="flow-label">Custom fields &rarr; Emails auto</span>
+        </div>
+
+        <!-- Calendly -->
+        <div class="map-node" data-highlight="calendly">
+          <span class="node-icon">CA</span>
+          <span class="node-name">CALENDLY</span>
+          <span class="node-role">Booking calls de closing — pre-qualification dropdown</span>
+        </div>
+        <div class="flow-connector">
+          <div class="flow-arrow"></div>
+          <span class="flow-label">Webhook</span>
+        </div>
+
+        <!-- Call Jad -->
+        <div class="map-node" data-highlight="call">
+          <span class="node-icon">JD</span>
+          <span class="node-name">CALL JAD</span>
+          <span class="node-role">Zoom / phone — closing call</span>
+        </div>
+        <div class="flow-connector">
+          <div class="flow-arrow"></div>
+          <span class="flow-label">Close / No Close</span>
+        </div>
+
+        <!-- Branch -->
+        <div class="map-branch">
+          <!-- CLOSE branch -->
+          <div class="branch-col">
+            <div class="branch-header close">CLOSE</div>
+            <div class="flow-connector"><div class="flow-arrow"></div></div>
+            <div class="map-node" data-highlight="whop">
+              <span class="node-icon">WH</span>
+              <span class="node-name">WHOP</span>
+              <span class="node-role">Paiement &rarr; Tag "client"</span>
+            </div>
+            <div class="flow-connector"><div class="flow-arrow"></div></div>
+            <div class="map-node" data-highlight="skool">
+              <span class="node-icon">SK</span>
+              <span class="node-name">SKOOL</span>
+              <span class="node-role">Formation + communaute (12 modules)</span>
+            </div>
+            <div class="flow-connector"><div class="flow-arrow"></div></div>
+            <div class="map-node" data-highlight="whatsapp">
+              <span class="node-icon">WA</span>
+              <span class="node-name">WHATSAPP</span>
+              <span class="node-role">Suivi quotidien Geoffrey</span>
+            </div>
+            <div class="flow-connector"><div class="flow-arrow"></div></div>
+            <div class="map-node" data-highlight="fatome">
+              <span class="node-icon">FT</span>
+              <span class="node-name">FATOME.VIDEO</span>
+              <span class="node-role">Calls 1:1 Geoffrey (12 calls / 90j)</span>
+            </div>
+          </div>
+
+          <!-- NO CLOSE branch -->
+          <div class="branch-col">
+            <div class="branch-header noclose">NO CLOSE</div>
+            <div class="flow-connector"><div class="flow-arrow"></div></div>
+            <div class="map-node" data-highlight="ghl">
+              <span class="node-icon">GHL</span>
+              <span class="node-name">GHL WORKFLOWS</span>
+              <span class="node-role">Rescue emails — sequences de relance automatiques</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Side tools -->
+      <div class="vmap-side">
+        <div class="side-label">Outils Lateraux</div>
+        <div class="side-node" data-highlight="readai">
+          <div class="node-name">READ.AI</div>
+          <div class="node-role">Transcription calls (42+ archives)</div>
+        </div>
+        <div class="side-node" data-highlight="netlify">
+          <div class="node-name">NETLIFY</div>
+          <div class="node-role">Hosting pages: optin, VSL, thankyou, quiz</div>
+        </div>
+        <div class="side-node" data-highlight="sheets">
+          <div class="node-name">GOOGLE SHEETS</div>
+          <div class="node-role">Tracking cetose clients</div>
+        </div>
+        <div class="side-node" data-highlight="keto">
+          <div class="node-name">KETO-MOJO</div>
+          <div class="node-role">Tracker physique cetose</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Section 2: Outils ── -->
+  <section class="section" id="sec-outils">
+    <h2 class="section-title">Detail par <span class="gold">Outil</span></h2>
+    <p class="section-desc">Chaque outil de l'ecosysteme avec son role, qui le gere, ses fonctionnalites cles et son cout mensuel.</p>
+
+    <div class="tool-grid">
+
+      <!-- Instagram -->
+      <div class="tool-card">
+        <div class="tool-header" onclick="toggleTool(this)">
+          <div class="tool-icon">IG</div>
+          <div class="tool-header-text">
+            <div class="tool-name">Instagram</div>
+            <div class="tool-tagline">@geo_le_sapiens</div>
+          </div>
+          <div class="tool-cost">Gratuit</div>
+          <svg class="tool-toggle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </div>
+        <div class="tool-body">
+          <div class="tool-body-inner">
+            <dl class="tool-meta">
+              <dt>Role</dt><dd>Acquisition, contenu, proximite</dd>
+              <dt>Gere par</dt><dd>Geoffrey (creation) + Jad (setting/DMs)</dd>
+              <dt>Metriques</dt><dd>900K vues/mois, 5 reels/jour</dd>
+              <dt>Cout</dt><dd>Gratuit</dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+
+      <!-- ManyChat -->
+      <div class="tool-card">
+        <div class="tool-header" onclick="toggleTool(this)">
+          <div class="tool-icon">MC</div>
+          <div class="tool-header-text">
+            <div class="tool-name">ManyChat</div>
+            <div class="tool-tagline">Automatisation DMs Instagram</div>
+          </div>
+          <div class="tool-cost">~15&euro;/m</div>
+          <svg class="tool-toggle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </div>
+        <div class="tool-body">
+          <div class="tool-body-inner">
+            <dl class="tool-meta">
+              <dt>Role</dt><dd>Automatisation DMs Instagram (80% du setting)</dd>
+              <dt>Gere par</dt><dd>Jad (setup + monitoring)</dd>
+              <dt>Flows actifs</dt><dd>Commentaire SAPIENS, Nouveau Follow, DM Spontane, Post-VSL, Quiz Bio</dd>
+              <dt>Cout</dt><dd>~15&euro;/mois (Pro)</dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+
+      <!-- GHL -->
+      <div class="tool-card">
+        <div class="tool-header" onclick="toggleTool(this)">
+          <div class="tool-icon">GHL</div>
+          <div class="tool-header-text">
+            <div class="tool-name">GoHighLevel (GHL)</div>
+            <div class="tool-tagline">CRM central</div>
+          </div>
+          <div class="tool-cost">~97&euro;/m</div>
+          <svg class="tool-toggle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </div>
+        <div class="tool-body">
+          <div class="tool-body-inner">
+            <dl class="tool-meta">
+              <dt>Role</dt><dd>CRM central — contacts, tags (41+), custom fields, workflows (12), emails</dd>
+              <dt>Gere par</dt><dd>Jad</dd>
+              <dt>Contacts</dt><dd>708+ contacts</dd>
+              <dt>API Token</dt><dd style="color:var(--stone);font-style:italic;">[reference seulement, pas affiche]</dd>
+              <dt>Cout</dt><dd>~97&euro;/mois</dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+
+      <!-- Calendly -->
+      <div class="tool-card">
+        <div class="tool-header" onclick="toggleTool(this)">
+          <div class="tool-icon">CA</div>
+          <div class="tool-header-text">
+            <div class="tool-name">Calendly</div>
+            <div class="tool-tagline">Booking calls de closing</div>
+          </div>
+          <div class="tool-cost">~10&euro;/m</div>
+          <svg class="tool-toggle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </div>
+        <div class="tool-body">
+          <div class="tool-body-inner">
+            <dl class="tool-meta">
+              <dt>Role</dt><dd>Booking calls de closing</dd>
+              <dt>Gere par</dt><dd>Jad</dd>
+              <dt>Features</dt><dd>Pre-qualification dropdown (condition)</dd>
+              <dt>Integration</dt><dd>Webhook &rarr; GHL (tag rdv-reserve)</dd>
+              <dt>Cout</dt><dd>~10&euro;/mois (Standard)</dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+
+      <!-- Whop -->
+      <div class="tool-card">
+        <div class="tool-header" onclick="toggleTool(this)">
+          <div class="tool-icon">WH</div>
+          <div class="tool-header-text">
+            <div class="tool-name">Whop</div>
+            <div class="tool-tagline">Paiement</div>
+          </div>
+          <div class="tool-cost">~5% tx</div>
+          <svg class="tool-toggle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </div>
+        <div class="tool-body">
+          <div class="tool-body-inner">
+            <dl class="tool-meta">
+              <dt>Role</dt><dd>Paiement</dd>
+              <dt>Gere par</dt><dd>Jad</dd>
+              <dt>Liens</dt><dd>1&times; 1,200&euro; + 3&times; 400&euro;</dd>
+              <dt>Integration</dt><dd>Webhook &rarr; GHL (tag client)</dd>
+              <dt>Cout</dt><dd>~5% transaction</dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+
+      <!-- Skool -->
+      <div class="tool-card">
+        <div class="tool-header" onclick="toggleTool(this)">
+          <div class="tool-icon">SK</div>
+          <div class="tool-header-text">
+            <div class="tool-name">Skool</div>
+            <div class="tool-tagline">Formation + communaute</div>
+          </div>
+          <div class="tool-cost">~99&euro;/m</div>
+          <svg class="tool-toggle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </div>
+        <div class="tool-body">
+          <div class="tool-body-inner">
+            <dl class="tool-meta">
+              <dt>Role</dt><dd>Formation + communaute</dd>
+              <dt>Gere par</dt><dd>Geoffrey</dd>
+              <dt>Contenu</dt><dd>12 modules, 3 phases, 40h+ contenu</dd>
+              <dt>Lives</dt><dd>Lives groupe dimanche 10h</dd>
+              <dt>Cout</dt><dd>~99&euro;/mois</dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+
+      <!-- WhatsApp -->
+      <div class="tool-card">
+        <div class="tool-header" onclick="toggleTool(this)">
+          <div class="tool-icon">WA</div>
+          <div class="tool-header-text">
+            <div class="tool-name">WhatsApp</div>
+            <div class="tool-tagline">Suivi quotidien clients</div>
+          </div>
+          <div class="tool-cost">Gratuit</div>
+          <svg class="tool-toggle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </div>
+        <div class="tool-body">
+          <div class="tool-body-inner">
+            <dl class="tool-meta">
+              <dt>Role</dt><dd>Suivi quotidien clients (Geoffrey)</dd>
+              <dt>Gere par</dt><dd>Geoffrey</dd>
+              <dt>SLA</dt><dd>Reponse &lt;4h (Phase 1), &lt;24h (Phase 2-3)</dd>
+              <dt>Usage</dt><dd>Photos cetose quotidiennes</dd>
+              <dt>Cout</dt><dd>Gratuit</dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+
+      <!-- Fatome.video -->
+      <div class="tool-card">
+        <div class="tool-header" onclick="toggleTool(this)">
+          <div class="tool-icon">FT</div>
+          <div class="tool-header-text">
+            <div class="tool-name">Fatome.video</div>
+            <div class="tool-tagline">Calls 1:1 Geoffrey</div>
+          </div>
+          <div class="tool-cost">~20&euro;/m</div>
+          <svg class="tool-toggle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </div>
+        <div class="tool-body">
+          <div class="tool-body-inner">
+            <dl class="tool-meta">
+              <dt>Role</dt><dd>Calls 1:1 Geoffrey</dd>
+              <dt>Gere par</dt><dd>Geoffrey</dd>
+              <dt>Volume</dt><dd>12 calls/client sur 90 jours</dd>
+              <dt>Cout</dt><dd>~20&euro;/mois</dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+
+      <!-- Read.AI -->
+      <div class="tool-card">
+        <div class="tool-header" onclick="toggleTool(this)">
+          <div class="tool-icon">RA</div>
+          <div class="tool-header-text">
+            <div class="tool-name">Read.AI</div>
+            <div class="tool-tagline">Transcription + analyse calls</div>
+          </div>
+          <div class="tool-cost">~20&euro;/m</div>
+          <svg class="tool-toggle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </div>
+        <div class="tool-body">
+          <div class="tool-body-inner">
+            <dl class="tool-meta">
+              <dt>Role</dt><dd>Transcription + analyse calls de closing</dd>
+              <dt>Gere par</dt><dd>Jad</dd>
+              <dt>Archives</dt><dd>42+ transcripts archives</dd>
+              <dt>Cout</dt><dd>~20&euro;/mois</dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+
+      <!-- Netlify -->
+      <div class="tool-card">
+        <div class="tool-header" onclick="toggleTool(this)">
+          <div class="tool-icon">NL</div>
+          <div class="tool-header-text">
+            <div class="tool-name">Netlify</div>
+            <div class="tool-tagline">Hosting pages</div>
+          </div>
+          <div class="tool-cost">Gratuit</div>
+          <svg class="tool-toggle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </div>
+        <div class="tool-body">
+          <div class="tool-body-inner">
+            <dl class="tool-meta">
+              <dt>Role</dt><dd>Hosting pages (optin, VSL, thankyou, quiz)</dd>
+              <dt>Gere par</dt><dd>Jad</dd>
+              <dt>Functions</dt><dd>3 serverless: vsl-track, calendly-webhook, whop-webhook</dd>
+              <dt>Cout</dt><dd>Gratuit (plan free)</dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+
+      <!-- Google Sheets -->
+      <div class="tool-card">
+        <div class="tool-header" onclick="toggleTool(this)">
+          <div class="tool-icon">GS</div>
+          <div class="tool-header-text">
+            <div class="tool-name">Google Sheets</div>
+            <div class="tool-tagline">Tracking cetose clients</div>
+          </div>
+          <div class="tool-cost">Gratuit</div>
+          <svg class="tool-toggle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </div>
+        <div class="tool-body">
+          <div class="tool-body-inner">
+            <dl class="tool-meta">
+              <dt>Role</dt><dd>Tracking cetose clients</dd>
+              <dt>Gere par</dt><dd>Geoffrey</dd>
+              <dt>Structure</dt><dd>1 tab par client, conditional formatting (vert/orange/rouge)</dd>
+              <dt>Cout</dt><dd>Gratuit</dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+
+      <!-- Keto-Mojo -->
+      <div class="tool-card">
+        <div class="tool-header" onclick="toggleTool(this)">
+          <div class="tool-icon">KM</div>
+          <div class="tool-header-text">
+            <div class="tool-name">Keto-Mojo</div>
+            <div class="tool-tagline">Tracker physique cetose</div>
+          </div>
+          <div class="tool-cost">~130&euro;/client</div>
+          <svg class="tool-toggle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </div>
+        <div class="tool-body">
+          <div class="tool-body-inner">
+            <dl class="tool-meta">
+              <dt>Role</dt><dd>Tracker physique cetose (bandelettes sanguines)</dd>
+              <dt>Gere par</dt><dd>Geoffrey (commande), Client (usage)</dd>
+              <dt>Kit</dt><dd>1 tracker + 60 bandelettes par client (paiement 1&times; uniquement)</dd>
+              <dt>Cout</dt><dd>~130&euro; par client</dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── Section 3: Flux de Donnees ── -->
+  <section class="section" id="sec-flux">
+    <h2 class="section-title">Flux de <span class="gold">Donnees</span></h2>
+    <p class="section-desc">Comment les donnees d'un lead circulent a travers l'ecosysteme, etape par etape.</p>
+
+    <div class="flow-steps">
+      <div class="flow-step">
+        <div class="step-num"></div>
+        <div class="step-content">
+          <div class="step-title">Lead commente "SAPIENS" sur Instagram</div>
+          <div class="step-desc">Un prospect voit un reel de Geoffrey et commente le mot-cle declencheur.</div>
+          <div class="step-tags"><span class="step-tag">Instagram</span></div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num"></div>
+        <div class="step-content">
+          <div class="step-title">ManyChat capture: prenom Instagram + interaction</div>
+          <div class="step-desc">Le flow ManyChat se declenche automatiquement, capture le prenom et le type d'interaction.</div>
+          <div class="step-tags"><span class="step-tag">ManyChat</span></div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num"></div>
+        <div class="step-content">
+          <div class="step-title">Lead donne son email &rarr; ManyChat webhook &rarr; GHL cree contact</div>
+          <div class="step-desc">L'email est capture, le webhook POST envoie les donnees a GHL qui cree le contact avec les tags initiaux.</div>
+          <div class="step-tags">
+            <span class="step-tag">ManyChat</span>
+            <span class="step-tag">GHL</span>
+            <span class="step-tag">manychat-qualifie</span>
+          </div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num"></div>
+        <div class="step-content">
+          <div class="step-title">ManyChat envoie VSL &rarr; tag vsl-envoyee</div>
+          <div class="step-desc">Le lead recoit le lien de la VSL. Le tag est ajoute dans GHL pour le tracking.</div>
+          <div class="step-tags">
+            <span class="step-tag">ManyChat</span>
+            <span class="step-tag">vsl-envoyee</span>
+          </div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num"></div>
+        <div class="step-content">
+          <div class="step-title">Lead booke Calendly &rarr; webhook &rarr; GHL tag rdv-reserve</div>
+          <div class="step-desc">Le lead prend rendez-vous. Le webhook Calendly tague le contact et remplit le custom field "condition".</div>
+          <div class="step-tags">
+            <span class="step-tag">Calendly</span>
+            <span class="step-tag">GHL</span>
+            <span class="step-tag">rdv-reserve</span>
+          </div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num"></div>
+        <div class="step-content">
+          <div class="step-title">GHL WF2 s'active (emails pre-call)</div>
+          <div class="step-desc">Le workflow 2 envoie la sequence d'emails de preparation avant le call de closing.</div>
+          <div class="step-tags"><span class="step-tag">GHL Workflow</span></div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num"></div>
+        <div class="step-content">
+          <div class="step-title">Call Jad &rarr; close / no-close / no-show &rarr; tags manuels</div>
+          <div class="step-desc">Jad effectue le call de closing. Le resultat est tague manuellement dans GHL.</div>
+          <div class="step-tags">
+            <span class="step-tag">Zoom</span>
+            <span class="step-tag">GHL</span>
+          </div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num"></div>
+        <div class="step-content">
+          <div class="step-title">Si close: Whop paiement &rarr; webhook &rarr; GHL tag client</div>
+          <div class="step-desc">Le client paye via Whop. Le webhook Netlify transmet a GHL qui ajoute le tag "client".</div>
+          <div class="step-tags">
+            <span class="step-tag">Whop</span>
+            <span class="step-tag">Netlify</span>
+            <span class="step-tag">GHL</span>
+            <span class="step-tag">client</span>
+          </div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num"></div>
+        <div class="step-content">
+          <div class="step-title">Geoffrey notifie &rarr; onboarding &rarr; Skool + WhatsApp + Fatome</div>
+          <div class="step-desc">Geoffrey lance l'onboarding: acces Skool, groupe WhatsApp, premier call Fatome planifie.</div>
+          <div class="step-tags">
+            <span class="step-tag">Skool</span>
+            <span class="step-tag">WhatsApp</span>
+            <span class="step-tag">Fatome</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Custom Fields -->
+    <h3 class="fields-title">Custom Fields <span class="gold">Trackes</span></h3>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Field</th>
+          <th>Source</th>
+          <th>Usage</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="mono">condition</td><td>ManyChat / Calendly</td><td>Emails personnalises, closing</td></tr>
+        <tr><td class="mono">duree_probleme</td><td>ManyChat</td><td>Reframe closing</td></tr>
+        <tr><td class="mono">historique_tentatives</td><td>ManyChat</td><td>Preuve "tout essaye"</td></tr>
+        <tr><td class="mono">impact_vie</td><td>Quiz</td><td>Gold pour le closing</td></tr>
+        <tr><td class="mono">source</td><td>ManyChat</td><td>Attribution</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ── Section 4: Integrations ── -->
+  <section class="section" id="sec-integrations">
+    <h2 class="section-title">Points d'<span class="gold">Integration</span></h2>
+    <p class="section-desc">Tous les webhooks et connexions entre les outils de l'ecosysteme.</p>
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>De</th>
+          <th>Vers</th>
+          <th>Type</th>
+          <th>Trigger</th>
+          <th>Donnees</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>ManyChat</td>
+          <td>GHL</td>
+          <td class="mono">Webhook POST</td>
+          <td>Email capture</td>
+          <td>firstName, email, tags</td>
+        </tr>
+        <tr>
+          <td>Calendly</td>
+          <td>GHL</td>
+          <td class="mono">Webhook</td>
+          <td>Booking</td>
+          <td>contact, appointment, condition</td>
+        </tr>
+        <tr>
+          <td>Whop</td>
+          <td>GHL</td>
+          <td class="mono">Webhook</td>
+          <td>Payment</td>
+          <td>email, plan, amount</td>
+        </tr>
+        <tr>
+          <td>GHL</td>
+          <td>Email</td>
+          <td class="mono">Workflow</td>
+          <td>Tags</td>
+          <td>Emails personnalises</td>
+        </tr>
+        <tr>
+          <td>Netlify</td>
+          <td>GHL</td>
+          <td class="mono">Serverless function</td>
+          <td>VSL view / Calendly / Whop</td>
+          <td>Tracking data</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ── Section 5: Couts ── -->
+  <section class="section" id="sec-couts">
+    <h2 class="section-title">Couts <span class="gold">Mensuels</span></h2>
+    <p class="section-desc">Ventilation complete des couts de l'ecosysteme SAPIENS 360.</p>
+
+    <div class="cost-grid">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Outil</th>
+            <th style="text-align:right">Cout/mois</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>GoHighLevel (GHL)</td><td style="text-align:right">97&euro;</td></tr>
+          <tr><td>Skool</td><td style="text-align:right">99&euro;</td></tr>
+          <tr><td>ManyChat Pro</td><td style="text-align:right">15&euro;</td></tr>
+          <tr><td>Calendly</td><td style="text-align:right">10&euro;</td></tr>
+          <tr><td>Fatome.video</td><td style="text-align:right">20&euro;</td></tr>
+          <tr><td>Read.AI</td><td style="text-align:right">20&euro;</td></tr>
+          <tr><td>Whop</td><td style="text-align:right;color:var(--stone);font-style:italic">~5% CA</td></tr>
+          <tr><td>Netlify</td><td style="text-align:right;color:var(--green)">0&euro;</td></tr>
+          <tr><td>WhatsApp</td><td style="text-align:right;color:var(--green)">0&euro;</td></tr>
+          <tr><td>Instagram</td><td style="text-align:right;color:var(--green)">0&euro;</td></tr>
+          <tr><td>Google Sheets</td><td style="text-align:right;color:var(--green)">0&euro;</td></tr>
+        </tbody>
+      </table>
+
+      <div class="cost-summary">
+        <div class="cost-summary-title">Resume</div>
+        <div class="cost-total-line highlight">
+          <span class="label">TOTAL fixe</span>
+          <span class="value" id="cost-fixed">261&euro;/mois</span>
+        </div>
+        <div class="cost-total-line">
+          <span class="label">+ Whop variable</span>
+          <span class="value">~5% CA</span>
+        </div>
+        <div class="cost-note">
+          <strong>A 15K&euro; CA/mois:</strong> cout fixe 261&euro; + Whop ~750&euro; = <strong>~1,011&euro;/mois</strong> = <strong>6.7% du CA</strong>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Section 6: Troubleshooting ── -->
+  <section class="section" id="sec-troubleshooting">
+    <h2 class="section-title"><span class="gold">Troubleshooting</span></h2>
+    <p class="section-desc">"Si X casse, fais Y" — guide de depannage rapide pour chaque point critique.</p>
+
+    <div class="trouble-grid">
+
+      <div class="trouble-card">
+        <div class="trouble-title">ManyChat ne repond plus</div>
+        <div class="trouble-section check-section">
+          <div class="trouble-label check">Verifier</div>
+          <ul class="trouble-list">
+            <li>Flow actif?</li>
+            <li>Trigger keywords corrects?</li>
+            <li>Compte Instagram connecte?</li>
+          </ul>
+        </div>
+        <div class="trouble-section fix-section">
+          <div class="trouble-label fix">Fix</div>
+          <ul class="trouble-list">
+            <li>Reconnecter Instagram dans ManyChat settings</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="trouble-card">
+        <div class="trouble-title">GHL n'envoie pas d'emails</div>
+        <div class="trouble-section check-section">
+          <div class="trouble-label check">Verifier</div>
+          <ul class="trouble-list">
+            <li>Workflow actif?</li>
+            <li>Tag correct?</li>
+            <li>Email du contact present?</li>
+            <li>Deliverabilite?</li>
+          </ul>
+        </div>
+        <div class="trouble-section fix-section">
+          <div class="trouble-label fix">Fix</div>
+          <ul class="trouble-list">
+            <li>GHL &gt; Workflows &gt; le workflow specifique &gt; Run History</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="trouble-card">
+        <div class="trouble-title">Calendly webhook ne tague pas dans GHL</div>
+        <div class="trouble-section check-section">
+          <div class="trouble-label check">Verifier</div>
+          <ul class="trouble-list">
+            <li>Webhook URL correcte?</li>
+            <li>Custom fields mappes?</li>
+          </ul>
+        </div>
+        <div class="trouble-section fix-section">
+          <div class="trouble-label fix">Fix</div>
+          <ul class="trouble-list">
+            <li>Tester le webhook manuellement via Calendly test event</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="trouble-card">
+        <div class="trouble-title">Whop payment pas detecte</div>
+        <div class="trouble-section check-section">
+          <div class="trouble-label check">Verifier</div>
+          <ul class="trouble-list">
+            <li>Webhook URL Netlify active?</li>
+            <li>Function deploiee?</li>
+          </ul>
+        </div>
+        <div class="trouble-section fix-section">
+          <div class="trouble-label fix">Fix</div>
+          <ul class="trouble-list">
+            <li>Netlify &gt; Functions &gt; whop-webhook logs</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="trouble-card">
+        <div class="trouble-title">Emails arrivent en spam</div>
+        <div class="trouble-section check-section">
+          <div class="trouble-label check">Verifier</div>
+          <ul class="trouble-list">
+            <li>DKIM/SPF/DMARC configures?</li>
+            <li>Domaine pas blackliste?</li>
+          </ul>
+        </div>
+        <div class="trouble-section fix-section">
+          <div class="trouble-label fix">Fix</div>
+          <ul class="trouble-list">
+            <li>Voir guide deliverabilite dans /guides/DELIVERABILITE_EMAIL.html</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="trouble-card">
+        <div class="trouble-title">Form backfill ne fonctionne pas</div>
+        <div class="trouble-section check-section">
+          <div class="trouble-label check">Verifier</div>
+          <ul class="trouble-list">
+            <li>Cron com.sapiens360.form-backfill actif?</li>
+            <li>Python script /automation/backfill_form_to_customfields.py operationnel?</li>
+          </ul>
+        </div>
+        <div class="trouble-section fix-section">
+          <div class="trouble-label fix">Fix</div>
+          <ul class="trouble-list">
+            <li>Relancer le cron, verifier les logs dans /automation/logs/</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+</main>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="footer">
+  <span class="gold">SAPIENS 360</span> &nbsp;|&nbsp; Carte Ecosysteme &nbsp;|&nbsp; Derniere MAJ: Avril 2026
+</footer>
+
+<!-- ═══ JAVASCRIPT ═══ -->
+<script>
+(function() {
+  // Tab navigation
+  var tabs = document.querySelectorAll('.nav-tab');
+  var sections = document.querySelectorAll('.section');
+  var tabMap = {
+    'map': 'sec-map',
+    'outils': 'sec-outils',
+    'flux': 'sec-flux',
+    'integrations': 'sec-integrations',
+    'couts': 'sec-couts',
+    'troubleshooting': 'sec-troubleshooting'
+  };
+
+  tabs.forEach(function(tab) {
+    tab.addEventListener('click', function() {
+      var target = this.getAttribute('data-tab');
+      tabs.forEach(function(t) { t.classList.remove('active'); });
+      sections.forEach(function(s) { s.classList.remove('active'); });
+      this.classList.add('active');
+      var sec = document.getElementById(tabMap[target]);
+      if (sec) sec.classList.add('active');
+    });
+  });
+
+  // Tool card toggle
+  window.toggleTool = function(header) {
+    var body = header.nextElementSibling;
+    var toggle = header.querySelector('.tool-toggle');
+    var isOpen = body.classList.contains('open');
+
+    body.classList.toggle('open');
+    toggle.classList.toggle('open');
+  };
+
+  // Map node hover highlight
+  var mapNodes = document.querySelectorAll('[data-highlight]');
+  mapNodes.forEach(function(node) {
+    node.addEventListener('mouseenter', function() {
+      var key = this.getAttribute('data-highlight');
+      mapNodes.forEach(function(n) {
+        if (n.getAttribute('data-highlight') === key) {
+          n.style.borderColor = 'var(--gold)';
+          n.style.boxShadow = '0 0 24px var(--gold-glow)';
+        }
+      });
+    });
+    node.addEventListener('mouseleave', function() {
+      var key = this.getAttribute('data-highlight');
+      mapNodes.forEach(function(n) {
+        if (n.getAttribute('data-highlight') === key) {
+          n.style.borderColor = '';
+          n.style.boxShadow = '';
+        }
+      });
+    });
+  });
+})();
+</script>
+</body>
+</html>

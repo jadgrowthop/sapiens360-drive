@@ -1,0 +1,1188 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAPIENS 360 | Script Closing V8</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#111;--card:#161616;--border:#2C4A3555;
+  --gold:#B8956A;--green:#2C4A35;--ivory:#FAF7F2;--stone:#888;
+  --danger:#8B2020;--danger-bg:#1a0808;
+  --font-head:Georgia,serif;--font-body:'Segoe UI',Arial,sans-serif;
+}
+html{scroll-behavior:smooth;scroll-padding-top:110px}
+body{background:var(--bg);color:var(--ivory);font-family:var(--font-body);line-height:1.7;font-size:15px}
+h1,h2,h3,h4{font-family:var(--font-head);color:var(--gold);font-weight:normal}
+h1{font-size:clamp(1.6rem,4vw,2.4rem);line-height:1.3}
+h2{font-size:clamp(1.3rem,3vw,1.8rem);margin-bottom:.8rem}
+h3{font-size:1.15rem;margin-bottom:.5rem}
+
+/* Layout */
+.container{max-width:900px;margin:0 auto;padding:0 20px}
+
+/* Hero */
+.hero{padding:50px 0 30px;text-align:center;border-bottom:1px solid var(--border)}
+.hero h1{margin-bottom:12px}
+.hero p{color:var(--stone);font-size:.95rem;max-width:700px;margin:0 auto;line-height:1.6}
+.hero .tag{display:inline-block;background:var(--green);color:var(--gold);padding:4px 14px;border-radius:20px;font-size:.8rem;margin-top:14px;letter-spacing:.5px}
+
+/* Prospect Injection */
+.inject-panel{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:24px;margin:30px auto;max-width:900px}
+.inject-panel h3{color:var(--gold);margin-bottom:16px;font-family:var(--font-head)}
+.inject-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.inject-grid label{display:flex;flex-direction:column;gap:5px;color:var(--stone);font-size:.85rem}
+.inject-grid input,.inject-grid select{background:#0d0d0d;border:1px solid var(--border);color:var(--ivory);padding:10px 14px;border-radius:8px;font-size:1rem;font-family:var(--font-body)}
+.inject-grid input:focus,.inject-grid select:focus{outline:none;border-color:var(--gold)}
+.inject-grid select option{background:#111;color:var(--ivory)}
+
+/* Mantra */
+.mantra{background:linear-gradient(135deg,#1a0808,#1a0f08);border:1px solid #6b2020;border-radius:12px;padding:20px 24px;margin:24px auto;max-width:900px;font-size:.95rem;line-height:1.7}
+.mantra strong{color:#e05555}
+.mantra .mantra-label{color:#e05555;font-family:var(--font-head);font-size:1.05rem;margin-bottom:8px;display:block}
+
+/* Sticky Nav */
+.sticky-nav{position:sticky;top:0;z-index:100;background:rgba(17,17,17,.96);border-bottom:1px solid var(--border);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.nav-scroll{display:flex;overflow-x:auto;padding:10px 0;gap:4px;scrollbar-width:none;-ms-overflow-style:none;max-width:900px;margin:0 auto;padding-left:20px;padding-right:20px}
+.nav-scroll::-webkit-scrollbar{display:none}
+.nav-btn{white-space:nowrap;padding:7px 14px;border-radius:8px;border:1px solid transparent;background:transparent;color:var(--stone);cursor:pointer;font-size:.8rem;font-family:var(--font-body);transition:all .2s}
+.nav-btn:hover{color:var(--ivory);border-color:var(--border)}
+.nav-btn.active{background:var(--green);color:var(--gold);border-color:var(--green)}
+
+/* Phase sections */
+.phase{padding:40px 0;border-bottom:1px solid var(--border)}
+.phase-header{display:flex;align-items:baseline;gap:12px;margin-bottom:20px;flex-wrap:wrap}
+.phase-num{background:var(--green);color:var(--gold);padding:4px 12px;border-radius:8px;font-size:.85rem;font-family:var(--font-head)}
+.phase-time{color:var(--stone);font-size:.85rem}
+
+/* Script blocks */
+.script-block{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px 24px;margin:16px 0;position:relative}
+.script-block .script-text{font-size:1rem;line-height:1.8;color:var(--ivory)}
+.script-block .script-text em{color:var(--stone);font-style:italic}
+
+/* Copy button */
+.copy-btn{position:absolute;top:12px;right:12px;background:var(--gold);color:#111;border:none;padding:5px 14px;border-radius:6px;cursor:pointer;font-size:.78rem;font-family:var(--font-body);font-weight:600;transition:all .25s}
+.copy-btn:hover{opacity:.85}
+.copy-btn.copied{background:#2C6A35;color:var(--ivory)}
+
+/* Coaching notes / danger / tips */
+.coaching-note{background:#0d1a12;border:1px solid var(--green);border-radius:10px;padding:18px 22px;margin:14px 0;font-size:.9rem}
+.coaching-note .note-label{color:var(--green);font-weight:600;font-size:.8rem;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;display:block}
+
+.danger-box{background:var(--danger-bg);border:1px solid var(--danger);border-radius:10px;padding:18px 22px;margin:14px 0;font-size:.9rem}
+.danger-box .danger-label{color:#e05555;font-weight:600;font-size:.8rem;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;display:block}
+
+.important-box{background:#1a1508;border:1px solid var(--gold);border-radius:10px;padding:18px 22px;margin:14px 0;font-size:.9rem}
+.important-box .important-label{color:var(--gold);font-weight:600;font-size:.8rem;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;display:block}
+
+.rule-box{background:#0a0a1a;border:1px solid #4a4a8a;border-radius:10px;padding:18px 22px;margin:14px 0;font-size:.9rem}
+.rule-box .rule-label{color:#7a7aCA;font-weight:600;font-size:.8rem;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;display:block}
+
+/* Precision probing table */
+.probe-table{width:100%;border-collapse:collapse;margin:14px 0;font-size:.9rem}
+.probe-table th{background:var(--green);color:var(--gold);padding:10px 14px;text-align:left;font-family:var(--font-head);font-weight:normal}
+.probe-table td{padding:10px 14px;border-bottom:1px solid var(--border);color:var(--ivory)}
+.probe-table tr:nth-child(even) td{background:rgba(22,22,22,.5)}
+
+/* Testimonials */
+.testimonial-grid{display:grid;gap:14px;margin:14px 0}
+.testimonial-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:18px;display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:start}
+.testimonial-cond{background:var(--green);color:var(--gold);padding:4px 10px;border-radius:6px;font-size:.78rem;white-space:nowrap;font-family:var(--font-head)}
+.testimonial-card .t-name{color:var(--gold);font-weight:600;font-size:.9rem}
+.testimonial-card .t-quote{color:var(--ivory);font-style:italic;font-size:.9rem;margin-top:4px}
+
+/* Silence Timer */
+.silence-timer{background:var(--card);border:2px solid var(--gold);border-radius:16px;padding:30px;text-align:center;margin:24px 0}
+.silence-timer h3{color:var(--gold);font-family:var(--font-head);font-size:1.3rem;margin-bottom:6px}
+.silence-timer .timer-subtitle{color:var(--stone);font-style:italic;margin-bottom:20px;font-size:.95rem}
+.timer-display{font-size:5rem;font-family:var(--font-head);color:var(--gold);margin:10px 0;line-height:1;min-height:80px}
+.timer-bar-wrap{width:100%;max-width:400px;height:8px;background:#222;border-radius:4px;margin:16px auto;overflow:hidden}
+.timer-bar{height:100%;background:var(--gold);border-radius:4px;width:100%;transition:width .1s linear}
+.timer-start-btn{background:var(--gold);color:#111;border:none;padding:14px 40px;border-radius:10px;font-size:1.1rem;font-weight:700;cursor:pointer;font-family:var(--font-body);transition:all .25s;margin-top:10px}
+.timer-start-btn:hover{opacity:.85}
+.timer-start-btn:disabled{opacity:.5;cursor:not-allowed}
+
+/* Objection blocks */
+.objection-block{background:var(--card);border:1px solid var(--border);border-radius:12px;margin:16px 0;overflow:hidden}
+.objection-header{background:var(--green);color:var(--gold);padding:14px 20px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-family:var(--font-head);font-size:1.05rem}
+.objection-header .toggle-icon{transition:transform .3s}
+.objection-header.open .toggle-icon{transform:rotate(180deg)}
+.objection-body{padding:20px;display:none}
+.objection-body.open{display:block}
+
+/* Interdites */
+.interdites{background:linear-gradient(135deg,#1a0808,#1a0505);border:2px solid #6b2020;border-radius:12px;padding:24px;margin:24px 0}
+.interdites h3{color:#e05555;font-family:var(--font-head);margin-bottom:14px}
+.interdit-row{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:start;padding:10px 0;border-bottom:1px solid #2a1010;font-size:.9rem}
+.interdit-row:last-child{border-bottom:none}
+.interdit-bad{color:#e05555}
+.interdit-arrow{color:var(--gold);font-size:1.2rem}
+.interdit-good{color:#5a9a5a}
+
+/* Post-call checklists */
+.checklist{margin:14px 0}
+.checklist h4{color:var(--gold);margin-bottom:10px;font-family:var(--font-head)}
+.check-item{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);font-size:.9rem}
+.check-item input[type="checkbox"]{accent-color:var(--gold);width:18px;height:18px;cursor:pointer}
+
+/* Scorecard */
+.scorecard{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:24px;margin:24px 0}
+.scorecard h3{color:var(--gold);font-family:var(--font-head);margin-bottom:16px}
+.score-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border);gap:12px}
+.score-row:last-of-type{border-bottom:none}
+.score-label{flex:1;font-size:.9rem;color:var(--ivory)}
+.score-num{font-size:.85rem;color:var(--stone);min-width:25px}
+.score-input{width:60px;background:#0d0d0d;border:1px solid var(--border);color:var(--gold);padding:6px 10px;border-radius:6px;font-size:1rem;text-align:center;font-family:var(--font-body)}
+.score-input:focus{outline:none;border-color:var(--gold)}
+.score-total{display:flex;justify-content:space-between;align-items:center;padding:18px 0;margin-top:10px;border-top:2px solid var(--gold)}
+.score-total-num{font-size:2rem;font-family:var(--font-head);color:var(--gold)}
+.score-actions{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
+.score-actions button{padding:10px 20px;border-radius:8px;border:none;cursor:pointer;font-family:var(--font-body);font-size:.9rem;font-weight:600;transition:all .25s}
+.btn-save{background:var(--gold);color:#111}
+.btn-history{background:var(--green);color:var(--gold)}
+.btn-save:hover,.btn-history:hover{opacity:.85}
+
+/* History modal */
+.history-overlay{position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:200;display:none;align-items:center;justify-content:center}
+.history-overlay.show{display:flex}
+.history-modal{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:30px;max-width:600px;width:90%;max-height:80vh;overflow-y:auto}
+.history-modal h3{color:var(--gold);font-family:var(--font-head);margin-bottom:16px}
+.history-entry{padding:12px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+.history-date{color:var(--stone);font-size:.85rem}
+.history-score{font-size:1.3rem;font-family:var(--font-head);color:var(--gold)}
+.history-close{background:var(--gold);color:#111;border:none;padding:8px 20px;border-radius:8px;cursor:pointer;font-weight:600;margin-top:16px}
+
+/* Call mode toggle */
+.call-mode-btn{position:fixed;bottom:24px;right:24px;z-index:150;background:var(--gold);color:#111;border:none;width:60px;height:60px;border-radius:50%;cursor:pointer;font-size:1.4rem;box-shadow:0 4px 20px rgba(184,149,106,.4);transition:all .3s;display:flex;align-items:center;justify-content:center}
+.call-mode-btn:hover{transform:scale(1.08)}
+.call-mode-btn.active{background:#e05555}
+
+/* Call mode styles */
+body.call-mode .coaching-note,
+body.call-mode .danger-box,
+body.call-mode .important-box,
+body.call-mode .rule-box,
+body.call-mode .probe-table,
+body.call-mode .interdit-row .interdit-bad,
+body.call-mode .interdit-row .interdit-arrow{display:none}
+body.call-mode .script-block .script-text{font-size:1.25rem;line-height:2}
+body.call-mode .phase-header h2{font-size:1.5rem}
+body.call-mode .mantra{display:block !important}
+body.call-mode .interdites{display:block !important}
+body.call-mode .interdit-row{grid-template-columns:1fr;gap:0}
+body.call-mode .interdit-good{color:var(--gold);font-size:1.1rem}
+
+/* Footer */
+.footer{text-align:center;padding:40px 20px;color:var(--stone);font-size:.85rem;border-top:1px solid var(--border)}
+
+/* Responsive */
+@media(max-width:600px){
+  .inject-grid{grid-template-columns:1fr}
+  .interdit-row{grid-template-columns:1fr;gap:4px}
+  .score-row{flex-direction:column;align-items:flex-start;gap:8px}
+  .timer-display{font-size:3.5rem}
+  .container{padding:0 14px}
+  .call-mode-btn{bottom:16px;right:16px;width:50px;height:50px;font-size:1.1rem}
+  .nav-scroll{padding-left:14px;padding-right:14px}
+}
+</style>
+</head>
+<body>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="container">
+    <h1>SAPIENS 360 &mdash; Script Closing V8</h1>
+    <p>11 phases, minute par minute &mdash; construit sur 8 calls reels + Cole Gordon + Jeremy Miner + Alexy Mouly + Chris Voss</p>
+    <span class="tag">USAGE INTERNE</span>
+  </div>
+</section>
+
+<!-- ============ PROSPECT DATA INJECTION ============ -->
+<div class="container">
+  <div class="inject-panel">
+    <h3>Donnees Prospect</h3>
+    <div class="inject-grid">
+      <label>
+        Prenom prospect
+        <input type="text" id="injectPrenom" placeholder="Ex: Lea" oninput="injectData()">
+      </label>
+      <label>
+        Condition
+        <select id="injectCondition" onchange="injectData()">
+          <option value="">-- Selectionner --</option>
+          <option value="Rosacea">Rosacea</option>
+          <option value="Acne">Acne</option>
+          <option value="Eczema">Eczema</option>
+          <option value="Psoriasis">Psoriasis</option>
+          <option value="Digestion">Digestion</option>
+          <option value="Autre">Autre</option>
+        </select>
+      </label>
+      <label>
+        Duree
+        <select id="injectDuree" onchange="injectData()">
+          <option value="">-- Selectionner --</option>
+          <option value="moins d'1 an">&lt;1 an</option>
+          <option value="1-3 ans">1-3 ans</option>
+          <option value="3-5 ans">3-5 ans</option>
+          <option value="5+ ans">5+ ans</option>
+          <option value="10+ ans">10+ ans</option>
+          <option value="15+ ans">15+ ans</option>
+        </select>
+      </label>
+    </div>
+  </div>
+</div>
+
+<!-- ============ MANTRA ============ -->
+<div class="container">
+  <div class="mantra" id="mantraBox">
+    <span class="mantra-label">MANTRA &mdash; Avant chaque appel</span>
+    <strong>Je ne suis pas un nutritionniste gratuit. Je suis un filtre de qualite qui donne acces a Geoffrey.</strong><br>
+    QUOI = gratuit (Instagram / YouTube). COMMENT personnalise = payant (programme).
+  </div>
+</div>
+
+<!-- ============ STICKY NAV ============ -->
+<nav class="sticky-nav" id="stickyNav">
+  <div class="nav-scroll">
+    <button class="nav-btn active" data-target="phase1">P1 Rapport</button>
+    <button class="nav-btn" data-target="phase2">P2 Situation</button>
+    <button class="nav-btn" data-target="phase3">P3 Qualif</button>
+    <button class="nav-btn" data-target="phase4">P4 Emotion</button>
+    <button class="nav-btn" data-target="phase5">P5 Cadrage</button>
+    <button class="nav-btn" data-target="phase6">P6 Recap</button>
+    <button class="nav-btn" data-target="phase7">P7 Protocole</button>
+    <button class="nav-btn" data-target="phase8">P8 Preuve</button>
+    <button class="nav-btn" data-target="phase9">P9 Prix</button>
+    <button class="nav-btn" data-target="phase10">P10 Objections</button>
+    <button class="nav-btn" data-target="phase11">P11 Close</button>
+    <button class="nav-btn" data-target="postcall">Post-Call</button>
+  </div>
+</nav>
+
+<!-- ============ PHASES ============ -->
+<div class="container">
+
+<!-- ======== PHASE 1 ======== -->
+<section class="phase" id="phase1">
+  <div class="phase-header">
+    <span class="phase-num">PHASE 1</span>
+    <h2>Rapport + Cadrage</h2>
+    <span class="phase-time">Min 0-3</span>
+  </div>
+
+  <div class="script-block">
+    <button class="copy-btn" onclick="copyBlock(this)">Copier</button>
+    <div class="script-text" data-template="true">
+      Salut <span class="placeholder" data-field="prenom">[prenom]</span>, enchante. Comment tu vas ?<br><br>
+      <em>[Small talk 30 sec MAX]</em><br><br>
+      Ecoute, avant qu'on commence, je vais te dire comment ca va se passer.<br><br>
+      Ce que je vais faire, c'est d'abord vraiment comprendre ta situation &mdash; ce que tu vis, depuis combien de temps, ce que tu as deja essaye. Ensuite, je te dis honnetement si ton profil correspond a ce qu'on accompagne. Si oui, je t'explique comment ca marche. Si non, je te le dis aussi. L'idee, c'est que tu repartes avec de la clarte dans les deux cas.<br><br>
+      Je te dis ca parce que Geoffrey prend un nombre limite de profils par mois pour garder un suivi humain reel. On selectionne les personnes avec qui on travaille. C'est la meme chose pour toi &mdash; si a la fin ca ne te parle pas, dis-le moi, c'est OK.<br><br>
+      Ca te va ?
+    </div>
+  </div>
+
+  <div class="coaching-note">
+    <span class="note-label">Red Flag Handlers</span>
+    <strong>&laquo; Je ne prends jamais de decision tout de suite &raquo;</strong><br>
+    &rarr; &laquo; Pas de souci. Mon objectif c'est pas que tu prennes une decision. C'est qu'on ait une conversation honnete et que tu repartes avec de la clarte. C'est tout. &raquo;<br><br>
+    <strong>&laquo; J'ai pas beaucoup de temps &raquo;</strong><br>
+    &rarr; &laquo; OK, on va etre efficaces. T'as combien de temps devant toi ? ... Parfait, ca suffit largement. &raquo;<br><br>
+    <strong>&laquo; Je m'attendais a parler a Geoffrey &raquo;</strong><br>
+    &rarr; &laquo; Geoffrey, c'est lui qui delivre le protocole. Moi, mon role c'est d'analyser ton profil et de voir si on peut vraiment t'aider. Si ton profil correspond, Geoffrey te contacte directement. &raquo;
+  </div>
+</section>
+
+<!-- ======== PHASE 2 ======== -->
+<section class="phase" id="phase2">
+  <div class="phase-header">
+    <span class="phase-num">PHASE 2</span>
+    <h2>Discovery : Situation + Tentatives</h2>
+    <span class="phase-time">Min 3-8</span>
+  </div>
+
+  <div class="script-block">
+    <button class="copy-btn" onclick="copyBlock(this)">Copier</button>
+    <div class="script-text" data-template="true">
+      Qu'est-ce qui t'a pousse a prendre cet appel aujourd'hui ?<br>
+      <em>&rarr; Laisser parler. Ne PAS interrompre.</em><br><br>
+      C'est quoi exactement ta condition ? C'est localise ou ?<br><br>
+      Ca dure depuis combien de temps ?<br><br>
+      Et t'as essaye quoi pour regler ca jusqu'ici ?<br><br>
+      Et sur tout ce que t'as essaye, il y a quelque chose qui a marche durablement ?
+    </div>
+  </div>
+
+  <div class="script-block">
+    <button class="copy-btn" onclick="copyBlock(this)">Copier</button>
+    <div class="script-text" data-template="true">
+      <strong>Recap :</strong><br>
+      Donc si je resume, tu as <span class="placeholder" data-field="condition">[condition]</span> depuis <span class="placeholder" data-field="duree">[duree]</span>, tu as essaye <em>[liste]</em>, et rien n'a tenu sur le long terme. C'est ca ?
+    </div>
+  </div>
+
+  <div class="danger-box">
+    <span class="danger-label">Zone Piege &mdash; Questions Techniques</span>
+    <strong>Regle :</strong> Tu donnes le POURQUOI (gratuit). JAMAIS le COMMENT personnalise (payant).<br><br>
+    <strong>&laquo; C'est quoi la cetose ? &raquo;</strong><br>
+    Mauvais : &laquo; La cetose c'est quand ton corps... &raquo;<br>
+    Bon : &laquo; C'est exactement le genre de chose que Geoffrey t'explique en detail dans le protocole. &raquo;<br><br>
+    <strong>&laquo; Mais concretement je mange quoi ? &raquo;</strong><br>
+    Mauvais : &laquo; Par exemple, tu pourrais manger... &raquo;<br>
+    Bon : &laquo; C'est 100% personnalise selon ton profil. C'est pour ca qu'on commence par une analyse complete. &raquo;<br><br>
+    <strong>&laquo; Et les complements ? &raquo;</strong><br>
+    Mauvais : &laquo; Tu pourrais prendre du zinc et... &raquo;<br>
+    Bon : &laquo; Ca fait partie du protocole &mdash; Geoffrey ajuste ca au cas par cas. &raquo;<br><br>
+    <strong>&laquo; J'ai lu que le gluten... &raquo;</strong><br>
+    Mauvais : &laquo; Oui le gluten peut causer... &raquo;<br>
+    Bon : &laquo; Il y a beaucoup d'infos contradictoires en ligne. C'est exactement pour ca qu'un accompagnement personnalise fait la difference. &raquo;
+  </div>
+</section>
+
+<!-- ======== PHASE 3 ======== -->
+<section class="phase" id="phase3">
+  <div class="phase-header">
+    <span class="phase-num">PHASE 3</span>
+    <h2>Qualification Financiere + Logistique</h2>
+    <span class="phase-time">Min 8-10</span>
+  </div>
+
+  <div class="script-block">
+    <button class="copy-btn" onclick="copyBlock(this)">Copier</button>
+    <div class="script-text" data-template="true">
+      <span class="placeholder" data-field="prenom">[prenom]</span>, avant qu'on aille plus loin, je prefere etre transparent. Ce qu'on fait, c'est un accompagnement serieux sur 90 jours avec un suivi individuel. C'est un investissement &mdash; on n'est pas sur du gratuit ni sur un ebook a 30&euro;. Est-ce que c'est quelque chose que tu pourrais envisager d'investir dans ta sante si ton profil correspond ?
+    </div>
+  </div>
+
+  <div class="coaching-note">
+    <span class="note-label">Gestion des Reponses</span>
+    <strong>&laquo; Oui, ca depend du prix &raquo;</strong><br>
+    &rarr; &laquo; Bien sur, on va en parler. Avant ca, j'ai besoin de mieux comprendre ta situation pour voir si on peut t'aider. &raquo;<br><br>
+    <strong>&laquo; C'est combien ? &raquo;</strong><br>
+    &rarr; &laquo; Je te donne tous les details juste apres. D'abord, je veux m'assurer que ton profil correspond vraiment. &raquo;<br><br>
+    <strong>&laquo; Hesitation / Silence &raquo;</strong><br>
+    &rarr; &laquo; Je comprends. On n'est pas la pour te mettre la pression. Mais si ton profil correspond, est-ce que tu serais ouvert a au moins ecouter comment ca marche ? &raquo;<br><br>
+    <strong>&laquo; Je paie par quoi ? &raquo;</strong><br>
+    &rarr; &laquo; Carte bancaire, virement, ou paiement en plusieurs fois. On s'adapte. &raquo;<br><br>
+    <strong>&laquo; Je suis a l'international &raquo;</strong><br>
+    &rarr; &laquo; Pas de probleme, tout se fait en ligne. On a des clients dans le monde entier. &raquo;
+  </div>
+</section>
+
+<!-- ======== PHASE 4 ======== -->
+<section class="phase" id="phase4">
+  <div class="phase-header">
+    <span class="phase-num">PHASE 4</span>
+    <h2>Discovery Profonde : Impact Emotionnel</h2>
+    <span class="phase-time">Min 10-22</span>
+  </div>
+
+  <div class="rule-box">
+    <span class="rule-label">Regle</span>
+    70% elle parle, 30% toi. Cette phase doit durer <strong>12 minutes MINIMUM</strong>.
+  </div>
+
+  <h3 style="color:var(--gold);margin:20px 0 10px">Bloc A &mdash; Impact Quotidien (3-4 min)</h3>
+  <div class="script-block">
+    <button class="copy-btn" onclick="copyBlock(this)">Copier</button>
+    <div class="script-text">
+      Au-dela de la peau en elle-meme, ca impacte quoi dans ta vie au quotidien ?
+    </div>
+  </div>
+
+  <div class="coaching-note">
+    <span class="note-label">Precision Probing (Jeremy Miner)</span>
+    <table class="probe-table">
+      <thead><tr><th>Elle dit</th><th>Tu dis</th></tr></thead>
+      <tbody>
+        <tr><td>&laquo; Je ne sortais plus &raquo;</td><td>&laquo; Tu ne sortais plus... ? &raquo; <em>(ton confus, attendre)</em></td></tr>
+        <tr><td>&laquo; C'est stressant &raquo;</td><td>&laquo; Stressant... comment ca ? &raquo;</td></tr>
+        <tr><td>&laquo; Ca me gene &raquo;</td><td>&laquo; Ca te gene... dans quel sens ? &raquo;</td></tr>
+        <tr><td>&laquo; J'en ai marre &raquo;</td><td>&laquo; T'en as marre... de quoi exactement ? &raquo;</td></tr>
+        <tr><td>&laquo; C'est dur &raquo;</td><td>&laquo; C'est dur... qu'est-ce qui est le plus dur ? &raquo;</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="coaching-note">
+    <span class="note-label">Questions d'approfondissement</span>
+    &laquo; Et ca, ca te fait quoi ? &raquo;<br>
+    &laquo; Donne-moi un exemple concret. &raquo;<br>
+    &laquo; C'etait quand la derniere fois ? &raquo;<br>
+    &laquo; Et a ce moment-la, qu'est-ce que tu as ressenti ? &raquo;
+  </div>
+
+  <h3 style="color:var(--gold);margin:20px 0 10px">Bloc B &mdash; Labels Chris Voss (2-3 min)</h3>
+  <div class="script-block">
+    <button class="copy-btn" onclick="copyBlock(this)">Copier</button>
+    <div class="script-text">
+      On dirait que cette maladie a pris le controle de ta vie.<br><br>
+      J'ai l'impression que t'en as marre de chercher des solutions qui ne tiennent pas.<br><br>
+      On dirait que le pire, c'est pas la douleur physique &mdash; c'est de ne pas comprendre pourquoi ca revient.<br><br>
+      J'ai l'impression que tu as perdu confiance dans le fait que ca puisse vraiment changer.
+    </div>
+  </div>
+
+  <h3 style="color:var(--gold);margin:20px 0 10px">Bloc C &mdash; Consequences / Cout de l'Inaction (3-4 min)</h3>
+  <div class="script-block">
+    <button class="copy-btn" onclick="copyBlock(this)">Copier</button>
+    <div class="script-text" data-template="true">
+      <span class="placeholder" data-field="prenom">[prenom]</span>, je vais te poser une question directe. Si rien ne change &mdash; si dans 12 mois tu es exactement au meme endroit, avec les memes poussees, les memes crises, le meme cycle &mdash; ca ressemble a quoi ta vie ?<br><br>
+      Et ca fait deja <span class="placeholder" data-field="duree">[duree]</span> que c'est comme ca. Qu'est-ce qui te fait penser que ca va changer tout seul ?
+    </div>
+  </div>
+
+  <h3 style="color:var(--gold);margin:20px 0 10px">Bloc D &mdash; Desir / Future Pacing (2-3 min)</h3>
+  <div class="script-block">
+    <button class="copy-btn" onclick="copyBlock(this)">Copier</button>
+    <div class="script-text">
+      Maintenant, imagine. Dans 90 jours, ton terrain est stabilise. Tu comprends ton corps. Tu sais exactement ce qui te convient. Ta peau est stable. Concretement, ca changerait quoi pour toi ?<br><br>
+      Et c'est quoi la premiere chose que tu ferais ?
+    </div>
+  </div>
+
+  <h3 style="color:var(--gold);margin:20px 0 10px">Bloc E &mdash; Support (1 min)</h3>
+  <div class="script-block">
+    <button class="copy-btn" onclick="copyBlock(this)">Copier</button>
+    <div class="script-text">
+      Il y a quelqu'un dans ton entourage qui est au courant de ta demarche ? Un conjoint, un proche ?
+    </div>
+  </div>
+</section>
+
+<!-- ======== PHASE 5 ======== -->
+<section class="phase" id="phase5">
+  <div class="phase-header">
+    <span class="phase-num">PHASE 5</span>
+    <h2>Cadrage Pre-Offre</h2>
+    <span class="phase-time">Min 22-23</span>
+  </div>
+
+  <div class="important-box">
+    <span class="important-label">Important</span>
+    C'est la phase la plus importante du script. Si tu fais bien cette phase, &laquo; je reflechis &raquo; disparait.
+  </div>
+
+  <div class="script-block">
+    <button class="copy-btn" onclick="copyBlock(this)">Copier</button>
+    <div class="script-text" data-template="true">
+      <span class="placeholder" data-field="prenom">[prenom]</span>, merci pour tout ce que tu m'as partage. Honnetement, je pense qu'on a exactement ce qu'il te faut.<br><br>
+      Mais avant qu'on aille plus loin, il y a un point important pour moi.<br><br>
+      Je travaille uniquement avec des personnes qui sont pretes a passer a l'action. Pas des gens qui cherchent juste des infos &mdash; ceux-la, Geoffrey les aide gratuitement via ses videos.<br><br>
+      Du coup, la question que j'ai pour toi : est-ce que c'est OK de prendre une decision avant la fin de cet appel ? Tu pourras me dire oui, j'ai envie de commencer. Ou non, je prefere continuer seul. Mais j'attends de toi une vraie reponse claire.<br><br>
+      C'est OK pour toi ?
+    </div>
+  </div>
+
+  <div class="coaching-note">
+    <span class="note-label">Counter &laquo; je reflechis &raquo; (plus tard dans le call)</span>
+    &laquo; Je comprends. Mais il y a 10 minutes, tu m'as dit que tu etais pret a prendre une decision avant la fin de cet appel. Qu'est-ce qui a change depuis ? &raquo;
+  </div>
+</section>
+
+<!-- ======== PHASE 6 ======== -->
+<section class="phase" id="phase6">
+  <div class="phase-header">
+    <span class="phase-num">PHASE 6</span>
+    <h2>Recap + Transition</h2>
+    <span class="phase-time">Min 23-25</span>
+  </div>
+
+  <div class="script-block">
+    <button class="copy-btn" onclick="copyBlock(this)">Copier</button>
+    <div class="script-text" data-template="true">
+      OK. Moi j'ai plus de questions. Est-ce qu'il y a quelque chose qu'on n'a pas couvert et que tu voudrais me dire ?<br><br>
+      <em>[Ecouter]</em><br><br>
+      Ecoute, honnetement, ton profil correspond exactement aux personnes qu'on accompagne. Je peux te montrer comment le protocole fonctionne et comment ca s'appliquerait a ta situation. Tu veux qu'on regarde ca ?
+    </div>
+  </div>
+</section>
+
+<!-- ======== PHASE 7 ======== -->
+<section class="phase" id="phase7">
+  <div class="phase-header">
+    <span class="phase-num">PHASE 7</span>
+    <h2>Presentation du Protocole</h2>
+    <span class="phase-time">Min 25-31</span>
+  </div>
+
+  <div class="rule-box">
+    <span class="rule-label">Regle</span>
+    Chaque phrase doit contenir un lien vers quelque chose qu'ELLE a dit.
+  </div>
+
+  <div class="script-block">
+    <button class="copy-btn" onclick="copyBlock(this)">Copier</button>
+    <div class="script-text" data-template="true">
+      <strong>L'histoire de Geoffrey (1 min) :</strong><br>
+      Geoffrey a eu exactement le meme parcours. Problemes de peau pendant des annees, medecins, cremes, cortisone &mdash; rien qui tenait. Il a fini par comprendre que le probleme n'etait pas la peau. C'etait le terrain. L'intestin, le foie, l'inflammation systemique. Il a tout reconstruit &mdash; pour lui d'abord, puis pour des centaines de personnes.<br><br>
+
+      <strong>Le protocole en 3 phases :</strong><br><br>
+
+      <strong>Phase 1 &mdash; Analyse + Nettoyage (Semaines 1-3)</strong><br>
+      On analyse ton terrain complet. On identifie les desequilibres &mdash; pas juste les symptomes. Ensuite on nettoie : intestin, foie, inflammation. Tu m'as dit que tu avais essaye plein de choses &mdash; le probleme c'est qu'aucune n'a commence par la.<br><br>
+
+      <strong>Phase 2 &mdash; Reconstruction (Semaines 4-8)</strong><br>
+      On reconstruit ton microbiote, on reequilibre tes systemes. C'est la que la peau commence a changer parce que la racine est traitee. Tu m'as parle de <span class="placeholder" data-field="condition">[condition]</span> &mdash; c'est exactement le type de condition qui repond a cette approche.<br><br>
+
+      <strong>Phase 3 &mdash; Stabilisation + Autonomie (Semaines 8-12)</strong><br>
+      On stabilise. Tu apprends a lire ton corps. L'objectif c'est que dans 90 jours, tu n'aies plus besoin de nous. Tu sais ce qui fonctionne pour toi.<br><br>
+
+      <strong>Le suivi :</strong><br>
+      Geoffrey te suit personnellement. Appels reguliers, ajustements en temps reel, acces WhatsApp direct. C'est pas un PDF qu'on t'envoie et bon courage. C'est un vrai accompagnement humain.<br><br>
+
+      <strong>La garantie :</strong><br>
+      Si dans 30 jours tu ne vois aucune amelioration, on te rembourse. C'est aussi simple que ca. On prend le risque a ta place parce qu'on sait que ca marche.
+    </div>
+  </div>
+</section>
+
+<!-- ======== PHASE 8 ======== -->
+<section class="phase" id="phase8">
+  <div class="phase-header">
+    <span class="phase-num">PHASE 8</span>
+    <h2>Preuve Sociale</h2>
+    <span class="phase-time">Min 31-33</span>
+  </div>
+
+  <div class="script-block">
+    <button class="copy-btn" onclick="copyBlock(this)">Copier</button>
+    <div class="script-text" data-template="true">
+      Je vais te partager quelques exemples de personnes qui avaient un profil similaire au tien.
+    </div>
+  </div>
+
+  <div class="testimonial-grid">
+    <div class="testimonial-card">
+      <span class="testimonial-cond">Psoriasis</span>
+      <div>
+        <div class="t-name">Amelie</div>
+        <div class="t-quote">&laquo; Les plaques ont commence a disparaitre a S5. Son dermato ne comprend pas. &raquo;</div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <span class="testimonial-cond">Acne</span>
+      <div>
+        <div class="t-name">Sophie</div>
+        <div class="t-quote">&laquo; Le protocole ne m'a pas promis de me guerir. Il m'a explique. &raquo;</div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <span class="testimonial-cond">Rosacee</span>
+      <div>
+        <div class="t-name">Marie</div>
+        <div class="t-quote">&laquo; Geoffrey a decrit mon parcours avant meme que je lui en parle. &raquo;</div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <span class="testimonial-cond">Eczema</span>
+      <div>
+        <div class="t-name">Coralie</div>
+        <div class="t-quote">&laquo; L'eczema a disparu. Et mon energie est revenue avant meme ma peau. &raquo;</div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <span class="testimonial-cond">Digestion</span>
+      <div>
+        <div class="t-name">Julie</div>
+        <div class="t-quote">&laquo; C'etait le meme terrain. Quand il se stabilise, tout se stabilise. &raquo;</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======== PHASE 9 ======== -->
+<section class="phase" id="phase9">
+  <div class="phase-header">
+    <span class="phase-num">PHASE 9</span>
+    <h2>Accusation Audit + Prix</h2>
+    <span class="phase-time">Min 33-37</span>
+  </div>
+
+  <div class="script-block">
+    <button class="copy-btn" onclick="copyBlock(this)">Copier</button>
+    <div class="script-text" data-template="true">
+      <strong>Accusation Audit (Chris Voss) :</strong><br>
+      <span class="placeholder" data-field="prenom">[prenom]</span>, avant que je te donne les details, tu vas probablement te dire que c'est cher. Que t'as deja depense de l'argent dans des trucs qui n'ont pas marche. Que t'as pas envie de te faire avoir encore une fois. Et c'est normal &mdash; je te comprendrais.<br><br>
+
+      <strong>Cout de l'inaction :</strong><br>
+      Mais laisse-moi te poser une question. Combien tu as deja depense en dermatologues, en cremes, en complements, en tests &mdash; en tout &mdash; depuis que t'as <span class="placeholder" data-field="condition">[condition]</span> ?<br><br>
+      <em>[Laisser repondre]</em><br><br>
+      Et est-ce que ca a regle le probleme ?<br><br>
+
+      <strong>Value Stack :</strong><br>
+      Voila ce qui est inclus dans l'accompagnement :<br>
+      &bull; Analyse terrain complete personnalisee<br>
+      &bull; Protocole nutritionnel sur mesure en 3 phases<br>
+      &bull; Suivi individuel avec Geoffrey pendant 90 jours<br>
+      &bull; Acces WhatsApp direct pour questions et ajustements<br>
+      &bull; Appels de suivi reguliers<br>
+      &bull; Communaute privee de soutien<br>
+      &bull; Garantie satisfait ou rembourse 30 jours<br><br>
+
+      L'investissement pour tout ca, c'est 1 800&euro;.<br>
+      Ou en 3 fois : 650&euro; par mois.
+    </div>
+  </div>
+
+  <!-- SILENCE TIMER -->
+  <div class="silence-timer" id="silenceTimer">
+    <h3>SILENCE</h3>
+    <div class="timer-subtitle">Celui qui parle en premier perd.</div>
+    <div class="timer-display" id="timerDisplay">10</div>
+    <div class="timer-bar-wrap">
+      <div class="timer-bar" id="timerBar"></div>
+    </div>
+    <button class="timer-start-btn" id="timerStartBtn" onclick="startSilenceTimer()">START</button>
+  </div>
+
+  <div class="coaching-note">
+    <span class="note-label">Post-Silence &mdash; Si &laquo; c'est cher &raquo;</span>
+    &laquo; Je comprends. Quand tu dis "c'est cher" &mdash; c'est cher par rapport a quoi ? &raquo;<br><br>
+    &laquo; Est-ce que c'est le prix qui te bloque, ou c'est autre chose ? &raquo;<br><br>
+    <em>Objectif : Isoler. Ne jamais justifier le prix sans avoir isole la vraie objection.</em>
+  </div>
+</section>
+
+<!-- ======== PHASE 10 ======== -->
+<section class="phase" id="phase10">
+  <div class="phase-header">
+    <span class="phase-num">PHASE 10</span>
+    <h2>Objections</h2>
+    <span class="phase-time">Min 37-43</span>
+  </div>
+
+  <div class="rule-box">
+    <span class="rule-label">Protocole Universel</span>
+    <strong>DIFFUSER</strong> &rarr; <strong>ISOLER</strong> &rarr; <strong>TRAITER</strong> &rarr; <strong>RE-TEMP CHECK</strong>
+  </div>
+
+  <!-- Objection 1 -->
+  <div class="objection-block">
+    <div class="objection-header" onclick="toggleObjection(this)">
+      1. &laquo; C'est trop cher &raquo;
+      <span class="toggle-icon">&#9660;</span>
+    </div>
+    <div class="objection-body">
+      <div class="script-block">
+        <button class="copy-btn" onclick="copyBlock(this)">Copier</button>
+        <div class="script-text">
+          <strong>Diffuser :</strong><br>
+          &laquo; Je comprends completement. Et je prefere que tu me le dises plutot que d'y penser sans rien dire. &raquo;<br><br>
+          <strong>Isoler :</strong><br>
+          &laquo; Juste pour etre sur &mdash; si le prix n'etait pas un sujet, est-ce que tu serais pret a commencer ? &raquo;<br><br>
+          <strong>Si oui (c'est le prix) :</strong><br>
+          &laquo; OK. Alors le vrai sujet c'est le budget, pas le programme. On a le paiement en 3 fois a 650&euro;/mois. Est-ce que ca rend les choses plus accessibles ? &raquo;<br><br>
+          <strong>Si non (c'est pas le prix) :</strong><br>
+          &laquo; D'accord &mdash; alors c'est quoi la vraie hesitation ? &raquo;<br><br>
+          <strong>Reframe final :</strong><br>
+          &laquo; Combien tu as deja investi dans des solutions qui n'ont pas marche ? ... Et la difference c'est qu'ici, tu as une garantie de 30 jours. Si ca marche pas, tu recup tout. Le vrai risque, c'est de ne rien faire et d'etre au meme endroit dans 12 mois. &raquo;
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Objection 2 -->
+  <div class="objection-block">
+    <div class="objection-header" onclick="toggleObjection(this)">
+      2. &laquo; Je dois reflechir &raquo;
+      <span class="toggle-icon">&#9660;</span>
+    </div>
+    <div class="objection-body">
+      <div class="script-block">
+        <button class="copy-btn" onclick="copyBlock(this)">Copier</button>
+        <div class="script-text">
+          <strong>Etape 1 &mdash; Diffuser :</strong><br>
+          &laquo; Bien sur, c'est normal. Je ne veux surtout pas que tu prennes une decision sous pression. &raquo;<br><br>
+          <strong>Etape 2 &mdash; Rappel du cadrage :</strong><br>
+          &laquo; Mais il y a 15 minutes, tu m'as dit que t'etais OK pour prendre une decision a la fin de cet appel. Qu'est-ce qui a change ? &raquo;<br><br>
+          <strong>Etape 3 &mdash; Isoler :</strong><br>
+          &laquo; Quand tu dis "reflechir" &mdash; reflechir a quoi exactement ? &raquo;<br><br>
+          <strong>Etape 4 &mdash; Version A / Version B (Alexy Mouly) :</strong><br>
+          &laquo; Je vois deux scenarios. Version A : tu raccroches, tu y penses, la vie reprend, et dans 6 mois t'es au meme point. Version B : tu prends ta decision maintenant, et dans 90 jours tu sais exactement ou tu en es &mdash; avec la garantie 30 jours si ca marche pas. Qu'est-ce qui te parle le plus ? &raquo;<br><br>
+          <strong>Etape 5 &mdash; Derniere chance :</strong><br>
+          &laquo; Honnement, qu'est-ce qui te retient vraiment ? &raquo;
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Objection 3 -->
+  <div class="objection-block">
+    <div class="objection-header" onclick="toggleObjection(this)">
+      3. &laquo; Je dois en parler a mon conjoint &raquo;
+      <span class="toggle-icon">&#9660;</span>
+    </div>
+    <div class="objection-body">
+      <div class="script-block">
+        <button class="copy-btn" onclick="copyBlock(this)">Copier</button>
+        <div class="script-text">
+          <strong>Diffuser :</strong><br>
+          &laquo; Completement, c'est une decision importante et c'est bien d'en parler. &raquo;<br><br>
+          <strong>Isoler :</strong><br>
+          &laquo; Juste pour comprendre &mdash; si ton conjoint te dit "fais ce que tu veux", tu commences ? &raquo;<br><br>
+          <strong>Si oui :</strong><br>
+          &laquo; OK. Ton conjoint, il/elle est disponible la ? On peut l'appeler ensemble pour repondre a ses questions. 5 minutes, ca suffit. &raquo;<br><br>
+          <strong>Si pas dispo :</strong><br>
+          &laquo; D'accord. On fait comme ca : tu en parles ce soir, et on se rappelle demain a quelle heure ? &raquo;<br>
+          <em>&rarr; Fixer heure precise. Ne JAMAIS laisser "je te rappelle" sans date/heure.</em>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Objection 4 -->
+  <div class="objection-block">
+    <div class="objection-header" onclick="toggleObjection(this)">
+      4. &laquo; J'ai deja tout essaye &raquo;
+      <span class="toggle-icon">&#9660;</span>
+    </div>
+    <div class="objection-body">
+      <div class="script-block">
+        <button class="copy-btn" onclick="copyBlock(this)">Copier</button>
+        <div class="script-text">
+          <strong>Reframe :</strong><br>
+          &laquo; Je comprends. Et c'est exactement pour ca que t'es la. Tout ce que t'as essaye traitait les symptomes. Pas un seul n'a traite le terrain &mdash; l'intestin, le foie, l'inflammation de fond. C'est une approche completement differente. &raquo;<br><br>
+          <strong>Garantie :</strong><br>
+          &laquo; Et c'est aussi pour ca qu'on a la garantie 30 jours. Si tu vois rien apres 30 jours, tu recup tout. Tu risques quoi concretement ? &raquo;<br><br>
+          <strong>Temoignage :</strong><br>
+          &laquo; J'ai parle a [temoignage matching] la semaine derniere. Elle m'a dit exactement la meme chose au debut. Aujourd'hui son [condition] a completement change. &raquo;
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Objection 5 -->
+  <div class="objection-block">
+    <div class="objection-header" onclick="toggleObjection(this)">
+      5. &laquo; C'est pas le bon moment &raquo;
+      <span class="toggle-icon">&#9660;</span>
+    </div>
+    <div class="objection-body">
+      <div class="script-block">
+        <button class="copy-btn" onclick="copyBlock(this)">Copier</button>
+        <div class="script-text">
+          <strong>Challenge :</strong><br>
+          &laquo; Je comprends. Mais honnement &mdash; est-ce que c'etait le bon moment il y a 6 mois ? Et dans 6 mois, ca sera le bon moment ? &raquo;<br><br>
+          &laquo; Ca fait deja <span class="placeholder" data-field="duree">[duree]</span> que ca dure. Le "bon moment" c'est quand tu decides que ca suffit. Et t'es deja sur cet appel &mdash; ca veut dire quelque chose, non ? &raquo;<br><br>
+          &laquo; Le programme commence quand TU es pret. On peut demarrer la semaine prochaine, dans 15 jours. Mais la decision, c'est aujourd'hui. &raquo;
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Objection 6 -->
+  <div class="objection-block">
+    <div class="objection-header" onclick="toggleObjection(this)">
+      6. &laquo; Vous pourriez etre des charlatans &raquo;
+      <span class="toggle-icon">&#9660;</span>
+    </div>
+    <div class="objection-body">
+      <div class="script-block">
+        <button class="copy-btn" onclick="copyBlock(this)">Copier</button>
+        <div class="script-text">
+          <strong>Diffuser :</strong><br>
+          &laquo; Je comprends a 100%. Avec tout ce qu'on voit en ligne, c'est sain de se mefier. &raquo;<br><br>
+          <strong>Preuves :</strong><br>
+          &laquo; Trois choses. Un : Geoffrey partage tout son contenu gratuitement &mdash; des centaines de videos. Tu peux verifier son approche toi-meme. Deux : on a des dizaines de temoignages de vraies personnes. Trois : on a une garantie 30 jours &mdash; c'est nous qui prenons le risque, pas toi. &raquo;<br><br>
+          &laquo; Un charlatan te demande de le croire sur parole. Nous, on te dit : teste, et si ca marche pas, on te rembourse. &raquo;
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======== PHASE 11 ======== -->
+<section class="phase" id="phase11">
+  <div class="phase-header">
+    <span class="phase-num">PHASE 11</span>
+    <h2>Close</h2>
+    <span class="phase-time">Min 43-46</span>
+  </div>
+
+  <div class="script-block">
+    <button class="copy-btn" onclick="copyBlock(this)">Copier</button>
+    <div class="script-text" data-template="true">
+      <span class="placeholder" data-field="prenom">[prenom]</span>, on est d'accord que c'est ce qu'il te faut ?<br><br>
+      <em>[Attendre reponse]</em><br><br>
+      Parfait. Alors voila comment on fait. T'as ta carte bancaire sous la main ?<br><br>
+      Je t'envoie le lien de paiement la maintenant. On reste en ligne ensemble le temps que tout soit fait. Comme ca si t'as une question, je suis la.<br><br>
+      <em>[Envoyer le lien]</em><br><br>
+      Tu l'as recu ? ... Super. Tu cliques dessus, tu entres tes infos. Dis-moi quand c'est bon.<br><br>
+      <em>[Rester en ligne jusqu'a confirmation du paiement]</em><br><br>
+      C'est fait ! Felicitations <span class="placeholder" data-field="prenom">[prenom]</span>. Bienvenue dans SAPIENS 360.<br><br>
+      Voila ce qui va se passer maintenant : Geoffrey te contacte dans les 24h pour lancer ton analyse terrain. Tu vas recevoir un email avec tout le detail de l'onboarding. Et tu peux deja rejoindre la communaute privee.
+    </div>
+  </div>
+
+  <div class="coaching-note">
+    <span class="note-label">Situations Particulieres</span>
+    <strong>&laquo; J'ai pas ma carte sur moi &raquo;</strong><br>
+    &rarr; &laquo; Pas de probleme. Tu es ou la ? Tu peux aller la chercher ? Je reste en ligne. &raquo;<br><br>
+    <strong>&laquo; Je peux pas maintenant &raquo;</strong><br>
+    &rarr; &laquo; OK. Je t'envoie le lien. On se rappelle dans exactement combien de temps ? Je bloque dans mon agenda. &raquo;<br>
+    <em>&rarr; Fixer a la minute pres.</em><br><br>
+    <strong>&laquo; Paiement international / probleme technique &raquo;</strong><br>
+    &rarr; &laquo; Pas de souci, on s'adapte. Dis-moi exactement ce que tu vois a l'ecran. &raquo;
+  </div>
+
+  <div class="danger-box">
+    <span class="danger-label">Regle Absolue</span>
+    Ne JAMAIS raccrocher sans :<br>
+    1) Le paiement fait, OU<br>
+    2) Un plan d'action concret avec nom + heure + moyen, OU<br>
+    3) Un rebook strategique avec date/heure fixee
+  </div>
+</section>
+
+<!-- ======== POST-CALL ======== -->
+<section class="phase" id="postcall">
+  <div class="phase-header">
+    <span class="phase-num">POST-CALL</span>
+    <h2>Apres l'Appel</h2>
+  </div>
+
+  <h3 style="color:var(--gold);margin-bottom:10px">Script Referral</h3>
+  <div class="script-block">
+    <button class="copy-btn" onclick="copyBlock(this)">Copier</button>
+    <div class="script-text" data-template="true">
+      <span class="placeholder" data-field="prenom">[prenom]</span>, une derniere chose. Est-ce que tu connais quelqu'un dans ton entourage qui vit la meme galere ? Problemes de peau, digestion, eczema, psoriasis... Parce que si tu connais quelqu'un, je peux lui offrir un appel gratuit comme celui qu'on a eu. Et pour toi, si cette personne rejoint le programme, tu recois un mois de suivi supplementaire offert.
+    </div>
+  </div>
+
+  <!-- Checklists -->
+  <h3 style="color:var(--gold);margin:24px 0 10px">Checklists Post-Call</h3>
+
+  <div class="checklist">
+    <h4 style="color:#5a9a5a">Si Close</h4>
+    <div class="check-item"><input type="checkbox"> Paiement confirme</div>
+    <div class="check-item"><input type="checkbox"> Email de bienvenue envoye</div>
+    <div class="check-item"><input type="checkbox"> Ajout dans le CRM (tag: client)</div>
+    <div class="check-item"><input type="checkbox"> Notifier Geoffrey pour l'onboarding</div>
+    <div class="check-item"><input type="checkbox"> Ajouter a la communaute privee</div>
+    <div class="check-item"><input type="checkbox"> Demander referral</div>
+  </div>
+
+  <div class="checklist">
+    <h4 style="color:var(--gold)">Si Paiement en Cours</h4>
+    <div class="check-item"><input type="checkbox"> Lien de paiement envoye</div>
+    <div class="check-item"><input type="checkbox"> Rappel programme (date + heure exacte)</div>
+    <div class="check-item"><input type="checkbox"> SMS de relance programme</div>
+    <div class="check-item"><input type="checkbox"> Note dans le CRM (tag: follow-up)</div>
+  </div>
+
+  <div class="checklist">
+    <h4 style="color:#e05555">Si Perdu</h4>
+    <div class="check-item"><input type="checkbox"> Raison de la perte notee dans le CRM</div>
+    <div class="check-item"><input type="checkbox"> Tag: perdu + raison specifique</div>
+    <div class="check-item"><input type="checkbox"> Sequence de nurture activee</div>
+    <div class="check-item"><input type="checkbox"> Auto-evaluation completee (ci-dessous)</div>
+  </div>
+
+  <!-- 5 PHRASES INTERDITES -->
+  <div class="interdites" id="interditesBox">
+    <h3>5 Phrases Interdites</h3>
+    <div class="interdit-row">
+      <span class="interdit-bad">&laquo; La cetose c'est quand... &raquo;</span>
+      <span class="interdit-arrow">&rarr;</span>
+      <span class="interdit-good">&laquo; C'est exactement ce que Geoffrey analyse avec toi. &raquo;</span>
+    </div>
+    <div class="interdit-row">
+      <span class="interdit-bad">&laquo; Essaie ca pendant un mois &raquo;</span>
+      <span class="interdit-arrow">&rarr;</span>
+      <span class="interdit-good">&laquo; C'est ce que le protocole met en place. &raquo;</span>
+    </div>
+    <div class="interdit-row">
+      <span class="interdit-bad">&laquo; Reviens quand tu seras pret &raquo;</span>
+      <span class="interdit-arrow">&rarr;</span>
+      <span class="interdit-good">&laquo; Qu'est-ce qui te retient vraiment ? &raquo;</span>
+    </div>
+    <div class="interdit-row">
+      <span class="interdit-bad">&laquo; Je t'envoie le lien &raquo; (puis raccrocher)</span>
+      <span class="interdit-arrow">&rarr;</span>
+      <span class="interdit-good">&laquo; T'as ta carte ? On le fait ensemble. &raquo;</span>
+    </div>
+    <div class="interdit-row">
+      <span class="interdit-bad">&laquo; C'est 1,800&euro;. &raquo; (silence puis justification)</span>
+      <span class="interdit-arrow">&rarr;</span>
+      <span class="interdit-good">Value stack &rarr; prix &rarr; SILENCE 8-10 sec</span>
+    </div>
+  </div>
+
+  <!-- AUTO-EVALUATION SCORECARD -->
+  <div class="scorecard" id="scorecard">
+    <h3>Auto-Evaluation Post-Call</h3>
+    <div class="score-row">
+      <span class="score-num">1.</span>
+      <span class="score-label">J'ai tenu le cadrage (moi qui mene)</span>
+      <input type="number" class="score-input" min="0" max="10" value="" placeholder="/10" data-score="true" oninput="calcTotal()">
+    </div>
+    <div class="score-row">
+      <span class="score-num">2.</span>
+      <span class="score-label">Discovery > 12 minutes</span>
+      <input type="number" class="score-input" min="0" max="10" value="" placeholder="/10" data-score="true" oninput="calcTotal()">
+    </div>
+    <div class="score-row">
+      <span class="score-num">3.</span>
+      <span class="score-label">J'ai creuse chaque mot emotionnel (Precision Probing)</span>
+      <input type="number" class="score-input" min="0" max="10" value="" placeholder="/10" data-score="true" oninput="calcTotal()">
+    </div>
+    <div class="score-row">
+      <span class="score-num">4.</span>
+      <span class="score-label">ZERO conseil nutritionnel donne</span>
+      <input type="number" class="score-input" min="0" max="10" value="" placeholder="/10" data-score="true" oninput="calcTotal()">
+    </div>
+    <div class="score-row">
+      <span class="score-num">5.</span>
+      <span class="score-label">J'ai qualifie le budget + paiement avant min 10</span>
+      <input type="number" class="score-input" min="0" max="10" value="" placeholder="/10" data-score="true" oninput="calcTotal()">
+    </div>
+    <div class="score-row">
+      <span class="score-num">6.</span>
+      <span class="score-label">J'ai fait le value stack avant le prix</span>
+      <input type="number" class="score-input" min="0" max="10" value="" placeholder="/10" data-score="true" oninput="calcTotal()">
+    </div>
+    <div class="score-row">
+      <span class="score-num">7.</span>
+      <span class="score-label">J'ai respecte le silence 8-10 sec apres le prix</span>
+      <input type="number" class="score-input" min="0" max="10" value="" placeholder="/10" data-score="true" oninput="calcTotal()">
+    </div>
+    <div class="score-row">
+      <span class="score-num">8.</span>
+      <span class="score-label">J'ai isole chaque objection avant de la traiter</span>
+      <input type="number" class="score-input" min="0" max="10" value="" placeholder="/10" data-score="true" oninput="calcTotal()">
+    </div>
+    <div class="score-row">
+      <span class="score-num">9.</span>
+      <span class="score-label">J'ai montre un temoignage matching</span>
+      <input type="number" class="score-input" min="0" max="10" value="" placeholder="/10" data-score="true" oninput="calcTotal()">
+    </div>
+    <div class="score-row">
+      <span class="score-num">10.</span>
+      <span class="score-label">J'ai tente le close + reste en ligne</span>
+      <input type="number" class="score-input" min="0" max="10" value="" placeholder="/10" data-score="true" oninput="calcTotal()">
+    </div>
+    <div class="score-total">
+      <span style="color:var(--ivory);font-family:var(--font-head)">TOTAL</span>
+      <span class="score-total-num" id="scoreTotal">-- /100</span>
+    </div>
+    <div class="score-actions">
+      <button class="btn-save" onclick="saveScore()">Sauvegarder</button>
+      <button class="btn-history" onclick="showHistory()">Historique</button>
+    </div>
+  </div>
+
+</section>
+</div><!-- .container -->
+
+<!-- HISTORY MODAL -->
+<div class="history-overlay" id="historyOverlay" onclick="if(event.target===this)closeHistory()">
+  <div class="history-modal">
+    <h3>Historique des Evaluations</h3>
+    <div id="historyList"></div>
+    <button class="history-close" onclick="closeHistory()">Fermer</button>
+  </div>
+</div>
+
+<!-- CALL MODE TOGGLE -->
+<button class="call-mode-btn" id="callModeBtn" onclick="toggleCallMode()" title="Mode Call Live">
+  &#9742;
+</button>
+
+<!-- FOOTER -->
+<footer class="footer">
+  SAPIENS 360 | Script Closing V8 | Derniere MAJ : Avril 2026
+</footer>
+
+<script>
+// ============ DATA INJECTION ============
+const originalTexts = new Map();
+
+function initTemplates() {
+  document.querySelectorAll('.placeholder').forEach(el => {
+    if (!el.dataset.original) el.dataset.original = el.textContent;
+  });
+}
+
+function injectData() {
+  const prenom = document.getElementById('injectPrenom').value.trim();
+  const condition = document.getElementById('injectCondition').value;
+  const duree = document.getElementById('injectDuree').value;
+
+  document.querySelectorAll('.placeholder[data-field="prenom"]').forEach(el => {
+    el.textContent = prenom || el.dataset.original;
+    el.style.color = prenom ? 'var(--gold)' : '';
+    el.style.fontWeight = prenom ? '600' : '';
+  });
+  document.querySelectorAll('.placeholder[data-field="condition"]').forEach(el => {
+    el.textContent = condition || el.dataset.original;
+    el.style.color = condition ? 'var(--gold)' : '';
+    el.style.fontWeight = condition ? '600' : '';
+  });
+  document.querySelectorAll('.placeholder[data-field="duree"]').forEach(el => {
+    el.textContent = duree || el.dataset.original;
+    el.style.color = duree ? 'var(--gold)' : '';
+    el.style.fontWeight = duree ? '600' : '';
+  });
+}
+
+// ============ COPY BUTTONS ============
+function copyBlock(btn) {
+  const block = btn.closest('.script-block');
+  const text = block.querySelector('.script-text').innerText;
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = 'Copie !';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'Copier'; btn.classList.remove('copied'); }, 2000);
+  });
+}
+
+// ============ SILENCE TIMER ============
+let timerInterval = null;
+
+function startSilenceTimer() {
+  const btn = document.getElementById('timerStartBtn');
+  const display = document.getElementById('timerDisplay');
+  const bar = document.getElementById('timerBar');
+
+  if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
+
+  btn.disabled = true;
+  let remaining = 100; // 10 seconds * 10 ticks per second
+  display.textContent = '10';
+  bar.style.width = '100%';
+
+  timerInterval = setInterval(() => {
+    remaining--;
+    const secs = Math.ceil(remaining / 10);
+    display.textContent = secs;
+    bar.style.width = remaining + '%';
+
+    if (remaining <= 0) {
+      clearInterval(timerInterval);
+      timerInterval = null;
+      display.textContent = '0';
+      display.style.color = '#5a9a5a';
+      bar.style.width = '0%';
+      btn.disabled = false;
+      btn.textContent = 'RECOMMENCER';
+      setTimeout(() => { display.style.color = 'var(--gold)'; btn.textContent = 'START'; }, 4000);
+    }
+  }, 100);
+}
+
+// ============ OBJECTION TOGGLES ============
+function toggleObjection(header) {
+  const body = header.nextElementSibling;
+  const isOpen = body.classList.contains('open');
+  body.classList.toggle('open');
+  header.classList.toggle('open');
+}
+
+// ============ CALL MODE ============
+function toggleCallMode() {
+  document.body.classList.toggle('call-mode');
+  const btn = document.getElementById('callModeBtn');
+  btn.classList.toggle('active');
+  btn.innerHTML = document.body.classList.contains('call-mode') ? '&#10005;' : '&#9742;';
+  btn.title = document.body.classList.contains('call-mode') ? 'Quitter Mode Call' : 'Mode Call Live';
+}
+
+// ============ STICKY NAV ============
+document.querySelectorAll('.nav-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const target = document.getElementById(btn.dataset.target);
+    if (target) target.scrollIntoView({ behavior: 'smooth' });
+  });
+});
+
+// Highlight active nav on scroll
+const phases = document.querySelectorAll('.phase');
+const navBtns = document.querySelectorAll('.nav-btn');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      navBtns.forEach(b => b.classList.remove('active'));
+      const btn = document.querySelector(`.nav-btn[data-target="${entry.target.id}"]`);
+      if (btn) {
+        btn.classList.add('active');
+        btn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      }
+    }
+  });
+}, { rootMargin: '-120px 0px -60% 0px', threshold: 0 });
+phases.forEach(p => observer.observe(p));
+
+// ============ SCORECARD ============
+function calcTotal() {
+  const inputs = document.querySelectorAll('.score-input[data-score]');
+  let total = 0;
+  let filled = 0;
+  inputs.forEach(i => {
+    const v = parseInt(i.value);
+    if (!isNaN(v)) { total += Math.min(10, Math.max(0, v)); filled++; }
+  });
+  document.getElementById('scoreTotal').textContent = filled > 0 ? total + ' /100' : '-- /100';
+}
+
+function saveScore() {
+  const inputs = document.querySelectorAll('.score-input[data-score]');
+  let total = 0;
+  let scores = [];
+  inputs.forEach(i => {
+    const v = parseInt(i.value);
+    const s = isNaN(v) ? 0 : Math.min(10, Math.max(0, v));
+    total += s;
+    scores.push(s);
+  });
+
+  const history = JSON.parse(localStorage.getItem('sapiens_scores') || '[]');
+  history.unshift({
+    date: new Date().toLocaleString('fr-FR'),
+    total: total,
+    scores: scores
+  });
+  // Keep last 10
+  if (history.length > 10) history.length = 10;
+  localStorage.setItem('sapiens_scores', JSON.stringify(history));
+
+  // Visual feedback
+  const btn = document.querySelector('.btn-save');
+  btn.textContent = 'Sauvegarde !';
+  btn.style.background = '#2C6A35';
+  setTimeout(() => { btn.textContent = 'Sauvegarder'; btn.style.background = ''; }, 2000);
+}
+
+function showHistory() {
+  const history = JSON.parse(localStorage.getItem('sapiens_scores') || '[]');
+  const list = document.getElementById('historyList');
+
+  if (history.length === 0) {
+    list.innerHTML = '<p style="color:var(--stone);padding:20px 0">Aucune evaluation sauvegardee.</p>';
+  } else {
+    list.innerHTML = history.map(h =>
+      `<div class="history-entry">
+        <span class="history-date">${h.date}</span>
+        <span class="history-score">${h.total}/100</span>
+      </div>`
+    ).join('');
+  }
+
+  document.getElementById('historyOverlay').classList.add('show');
+}
+
+function closeHistory() {
+  document.getElementById('historyOverlay').classList.remove('show');
+}
+
+// Init
+initTemplates();
+</script>
+</body>
+</html>

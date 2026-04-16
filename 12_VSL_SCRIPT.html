@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAPIENS 360 — Script VSL (Pret a Filmer)</title>
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg: #111;
+  --card: #161616;
+  --border: #2C4A3555;
+  --gold: #B8956A;
+  --green: #2C4A35;
+  --ivory: #FAF7F2;
+  --stone: #888;
+  --gold-glow: #B8956A44;
+  --green-glow: #2C4A3544;
+  --danger: #8B3A3A;
+  --danger-bg: #2A1515;
+  --success: #3A8B5A;
+  --success-bg: #152A1A;
+}
+
+body {
+  background: var(--bg);
+  color: var(--ivory);
+  font-family: 'Segoe UI', Arial, sans-serif;
+  line-height: 1.6;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Hero ── */
+.hero {
+  text-align: center;
+  padding: 60px 24px 40px;
+  border-bottom: 1px solid var(--border);
+}
+.hero-brand {
+  font-family: Georgia, serif;
+  font-size: 14px;
+  color: var(--gold);
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.hero-number {
+  font-family: Georgia, serif;
+  font-size: 60px;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.1;
+  margin-bottom: 4px;
+}
+.hero-number .gold-six { color: var(--gold); }
+.hero-subtitle {
+  font-family: Georgia, serif;
+  font-size: 18px;
+  color: var(--stone);
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+.hero-desc {
+  color: var(--stone);
+  font-size: 15px;
+  max-width: 620px;
+  margin: 0 auto;
+  font-style: italic;
+}
+
+/* ── Tab Nav ── */
+.tab-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.tab-nav::-webkit-scrollbar { display: none; }
+.tab-btn {
+  flex-shrink: 0;
+  padding: 14px 20px;
+  background: none;
+  border: none;
+  color: var(--stone);
+  font-size: 13px;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.tab-btn:hover { color: var(--ivory); }
+.tab-btn.active { color: var(--gold); border-bottom-color: var(--gold); }
+
+/* ── Content ── */
+.content {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 32px 24px 80px;
+}
+.section { display: none; }
+.section.active { display: block; }
+.section-title {
+  font-family: Georgia, serif;
+  font-size: 28px;
+  color: #fff;
+  margin-bottom: 8px;
+}
+.section-sub {
+  color: var(--stone);
+  font-size: 14px;
+  margin-bottom: 32px;
+}
+
+/* ── Cards ── */
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 20px;
+}
+.card h3 {
+  font-family: Georgia, serif;
+  font-size: 20px;
+  color: #fff;
+  margin-bottom: 12px;
+}
+.card p, .card li {
+  color: var(--ivory);
+  font-size: 15px;
+  line-height: 1.7;
+}
+.card ul, .card ol {
+  padding-left: 20px;
+  margin-top: 8px;
+}
+.card li { margin-bottom: 6px; }
+
+/* ── Setup Grid ── */
+.setup-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-bottom: 28px;
+}
+.setup-item {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+}
+.setup-item .setup-icon {
+  font-size: 28px;
+  margin-bottom: 10px;
+  color: var(--gold);
+}
+.setup-item h4 {
+  font-family: Georgia, serif;
+  font-size: 15px;
+  color: #fff;
+  margin-bottom: 6px;
+}
+.setup-item p {
+  color: var(--stone);
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+/* ── Segment Card ── */
+.segment {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  margin-bottom: 24px;
+  overflow: hidden;
+}
+.segment-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 24px;
+  background: #1A1A1A;
+  border-bottom: 1px solid var(--border);
+}
+.segment-num {
+  font-family: Georgia, serif;
+  font-size: 14px;
+  color: var(--gold);
+  font-weight: 700;
+}
+.segment-time {
+  font-size: 12px;
+  color: var(--stone);
+  background: #0D0D0D;
+  padding: 4px 12px;
+  border-radius: 12px;
+}
+.segment-title {
+  font-family: Georgia, serif;
+  font-size: 18px;
+  color: #fff;
+  padding: 20px 24px 0;
+}
+.segment-body {
+  padding: 16px 24px 20px;
+}
+.script-text {
+  background: #0D0D0D;
+  border-left: 3px solid var(--gold);
+  border-radius: 0 8px 8px 0;
+  padding: 20px;
+  margin: 12px 0;
+  position: relative;
+  font-style: italic;
+  color: var(--ivory);
+  font-size: 15px;
+  line-height: 1.9;
+}
+.script-text .copy-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+}
+.prod-note {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  margin-top: 12px;
+  padding: 12px;
+  background: var(--green-glow);
+  border-radius: 8px;
+}
+.prod-note-label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--green);
+  min-width: 80px;
+  font-weight: 700;
+  padding-top: 2px;
+}
+.prod-note p {
+  color: var(--stone);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+/* ── Copy Button ── */
+.copy-btn {
+  background: var(--green);
+  border: 1px solid var(--border);
+  color: var(--ivory);
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  transition: all 0.2s;
+}
+.copy-btn:hover { background: var(--gold); color: #111; }
+.copy-btn.copied { background: var(--success); }
+
+/* ── Danger Box ── */
+.danger-box {
+  background: var(--danger-bg);
+  border: 1px solid var(--danger);
+  border-radius: 12px;
+  padding: 24px;
+  margin: 20px 0;
+}
+.danger-box h3 {
+  color: #CF6A6A;
+  font-family: Georgia, serif;
+  margin-bottom: 16px;
+}
+.danger-item {
+  display: flex;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid #3A1A1A;
+  align-items: center;
+}
+.danger-item:last-child { border-bottom: none; }
+.danger-x {
+  width: 24px;
+  height: 24px;
+  min-width: 24px;
+  background: #3A1515;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: #CF6A6A;
+}
+.danger-text {
+  color: var(--ivory);
+  font-size: 14px;
+}
+
+/* ── B-Roll ── */
+.broll-item {
+  display: flex;
+  gap: 16px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--border);
+  align-items: flex-start;
+}
+.broll-item:last-child { border-bottom: none; }
+.broll-seg {
+  min-width: 80px;
+  font-family: Georgia, serif;
+  font-size: 13px;
+  color: var(--gold);
+  font-weight: 700;
+  padding-top: 2px;
+}
+.broll-desc {
+  color: var(--ivory);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* ── Teleprompter ── */
+.teleprompter-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #000;
+  z-index: 9999;
+  flex-direction: column;
+}
+.teleprompter-overlay.active { display: flex; }
+.tp-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+  background: #0A0A0A;
+  border-bottom: 1px solid #222;
+  flex-shrink: 0;
+}
+.tp-btn {
+  padding: 8px 16px;
+  background: #222;
+  border: 1px solid #333;
+  color: #fff;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  transition: all 0.2s;
+}
+.tp-btn:hover { background: #333; }
+.tp-btn.tp-play { background: var(--gold); color: #111; font-weight: 700; }
+.tp-btn.tp-play:hover { filter: brightness(1.1); }
+.tp-btn.tp-close { background: var(--danger); color: #fff; }
+.tp-speed {
+  color: var(--stone);
+  font-size: 13px;
+  min-width: 100px;
+  text-align: center;
+}
+.tp-scroll-area {
+  flex: 1;
+  overflow-y: auto;
+  padding: 60px 10%;
+  scroll-behavior: smooth;
+}
+.tp-text {
+  font-family: Georgia, serif;
+  font-size: 28px;
+  line-height: 1.8;
+  color: #fff;
+  max-width: 800px;
+  margin: 0 auto;
+}
+.tp-text .tp-segment-label {
+  color: var(--gold);
+  font-size: 16px;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  margin-top: 48px;
+  margin-bottom: 16px;
+  display: block;
+}
+.tp-text .tp-segment-label:first-child { margin-top: 0; }
+.tp-text .tp-paragraph {
+  margin-bottom: 32px;
+}
+.tp-guide {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 45%;
+  height: 4px;
+  background: var(--gold);
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+/* ── Teleprompter Launch Button ── */
+.tp-launch {
+  display: block;
+  width: 100%;
+  padding: 20px;
+  background: linear-gradient(135deg, var(--gold), #8B6A40);
+  border: none;
+  border-radius: 12px;
+  color: #111;
+  font-family: Georgia, serif;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  margin: 24px 0;
+  transition: all 0.2s;
+}
+.tp-launch:hover { filter: brightness(1.1); transform: translateY(-1px); }
+
+/* ── Responsive ── */
+@media (max-width: 600px) {
+  .hero { padding: 40px 16px 28px; }
+  .hero-number { font-size: 42px; }
+  .hero-subtitle { font-size: 14px; letter-spacing: 2px; }
+  .content { padding: 24px 16px 60px; }
+  .section-title { font-size: 22px; }
+  .setup-grid { grid-template-columns: 1fr 1fr; }
+  .segment-header { flex-direction: column; gap: 6px; align-items: flex-start; }
+  .tp-text { font-size: 22px; padding: 40px 5%; }
+  .tp-controls { flex-wrap: wrap; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── Hero ── -->
+<div class="hero">
+  <div class="hero-brand">SAPIENS</div>
+  <div class="hero-number">3<span class="gold-six">6</span>0</div>
+  <div class="hero-subtitle">Script VSL</div>
+  <div class="hero-desc">"8-9 minutes, facecam Geoffrey — zero pitch, zero prix, zero cetose"</div>
+</div>
+
+<!-- ── Tab Nav ── -->
+<nav class="tab-nav">
+  <button class="tab-btn active" data-tab="setup">Setup</button>
+  <button class="tab-btn" data-tab="script">Script Complet</button>
+  <button class="tab-btn" data-tab="interdit">Interdits</button>
+  <button class="tab-btn" data-tab="teleprompter">Teleprompter</button>
+  <button class="tab-btn" data-tab="broll">B-Roll</button>
+</nav>
+
+<!-- ── Content ── -->
+<div class="content">
+
+  <!-- SETUP -->
+  <div class="section active" id="setup">
+    <h2 class="section-title">Setup Production</h2>
+    <p class="section-sub">Tout ce qu'il faut avant d'appuyer sur Record</p>
+
+    <div class="setup-grid">
+      <div class="setup-item">
+        <div class="setup-icon">&#x1F4F7;</div>
+        <h4>Camera</h4>
+        <p>Smartphone (mode portrait) ou mirrorless. Trepied stable. Cadrage poitrine + visage.</p>
+      </div>
+      <div class="setup-item">
+        <div class="setup-icon">&#x1F4A1;</div>
+        <h4>Eclairage</h4>
+        <p>Eclairage frontal doux. Ring light ou softbox. Pas d'ombre dure sur le visage.</p>
+      </div>
+      <div class="setup-item">
+        <div class="setup-icon">&#x1F3AC;</div>
+        <h4>Fond</h4>
+        <p>Neutre. Mur uni, librairie floue, ou fond sombre. Pas de distractions visuelles.</p>
+      </div>
+      <div class="setup-item">
+        <div class="setup-icon">&#x1F9D1;</div>
+        <h4>Geoffrey</h4>
+        <p>Mode clinicien : pose calme, parole lente et posee, regard direct camera. Autorite naturelle.</p>
+      </div>
+      <div class="setup-item">
+        <div class="setup-icon">&#x1F3B5;</div>
+        <h4>Audio</h4>
+        <p>PAS de musique. Micro-cravate ou micro directionnel. La voix doit etre claire et intime.</p>
+      </div>
+      <div class="setup-item">
+        <div class="setup-icon">&#x23F1;</div>
+        <h4>Duree</h4>
+        <p>8-9 minutes totales. Chaque segment chronometre. Pas de filler, pas de divagation.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Etat d'Esprit Geoffrey</h3>
+      <ul>
+        <li><strong>Pas un vendeur</strong> : un praticien qui explique calmement ce que personne d'autre ne dit</li>
+        <li><strong>Parole lente</strong> : chaque phrase doit avoir le temps de resonner</li>
+        <li><strong>Contact visuel</strong> : regarder la camera comme si c'etait une patiente assise en face</li>
+        <li><strong>Conviction sans arrogance</strong> : "je sais que ca marche parce que je l'ai vu 100 fois"</li>
+        <li><strong>Zero urgence artificielle</strong> : la rarete est reelle (10 profils/mois), pas marketing</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- SCRIPT COMPLET -->
+  <div class="section" id="script">
+    <h2 class="section-title">Script Complet</h2>
+    <p class="section-sub">9 segments — chacun avec timing, texte et notes de production</p>
+
+    <!-- Segment 1 -->
+    <div class="segment">
+      <div class="segment-header">
+        <span class="segment-num">Segment 1</span>
+        <span class="segment-time">Min 0:00 — 1:00</span>
+      </div>
+      <div class="segment-title">Validation Hook</div>
+      <div class="segment-body">
+        <div class="script-text">
+          Si ta peau flambe sans logique, si les cremes soulagent mais ne resolvent rien, si tes bilans sont "normaux" mais que ton corps te dit le contraire — cette video va te montrer quelque chose que personne ne t'a jamais explique.
+          <button class="copy-btn" onclick="copyScript(this)" title="Copier">&#x2398;</button>
+        </div>
+        <div class="prod-note">
+          <span class="prod-note-label">Production</span>
+          <p>Cadrage serre (epaules + visage). Geoffrey regarde droit dans la camera. Ton pose, presque intime. Pas de sourire — serieux et empathique.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Segment 2 -->
+    <div class="segment">
+      <div class="segment-header">
+        <span class="segment-num">Segment 2</span>
+        <span class="segment-time">Min 1:00 — 2:00</span>
+      </div>
+      <div class="segment-title">Empathie + Cout</div>
+      <div class="segment-body">
+        <div class="script-text">
+          Tu as probablement tout essaye. Cremes, dermatos, regimes, complements, naturopathes. Ca ameliore. Puis ca revient. Toujours. En 3-5 ans, tu as depense entre 1,000 et 5,000&euro; pour traiter... les symptomes.
+          <button class="copy-btn" onclick="copyScript(this)" title="Copier">&#x2398;</button>
+        </div>
+        <div class="prod-note">
+          <span class="prod-note-label">Production</span>
+          <p>Leger recul camera. Geoffrey fait une pause apres "les symptomes" — laisser le silence souligner le constat. B-roll potentiel : gros plan cremes/medicaments.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Segment 3 -->
+    <div class="segment">
+      <div class="segment-header">
+        <span class="segment-num">Segment 3</span>
+        <span class="segment-time">Min 2:00 — 3:00</span>
+      </div>
+      <div class="segment-title">Credibilite Geoffrey</div>
+      <div class="segment-body">
+        <div class="script-text">
+          Je m'appelle Geoffrey. Je suis praticien en protocoles terrain. Avant ca, j'etais sportif de combat de haut niveau. Mon corps etait mon outil. Et pourtant ma peau flambait. J'ai cherche pendant des annees, jusqu'a ce que je me forme cliniquement aupres des Dr Dufournet et Dr Florent sur les protocoles anti-inflammatoires profonds.
+          <button class="copy-btn" onclick="copyScript(this)" title="Copier">&#x2398;</button>
+        </div>
+        <div class="prod-note">
+          <span class="prod-note-label">Production</span>
+          <p>B-roll possible : photo Geoffrey en sport de combat, diplomes/formations. Retour facecam sur "protocoles anti-inflammatoires profonds".</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Segment 4 -->
+    <div class="segment">
+      <div class="segment-header">
+        <span class="segment-num">Segment 4</span>
+        <span class="segment-time">Min 3:00 — 5:00</span>
+      </div>
+      <div class="segment-title">LE MECANISME (La Revelation)</div>
+      <div class="segment-body">
+        <div class="script-text">
+          70% de ton systeme immunitaire est dans ton intestin. Ton microbiote — les bacteries qui vivent dans tes intestins — controle ta reponse inflammatoire. Quand ce systeme est deregle, ton corps s'enflamme. Et cette inflammation s'exprime ou tu es genetiquement vulnerable. Pour certains c'est la peau. Pour d'autres c'est la digestion, le sommeil, l'energie.
+          <br><br>
+          Tout ce que tu as essaye jusqu'ici traitait ce que tu VOIS — ta peau. Pas ce qui le PRODUIT — ton terrain.
+          <button class="copy-btn" onclick="copyScript(this)" title="Copier">&#x2398;</button>
+        </div>
+        <div class="prod-note">
+          <span class="prod-note-label">Production</span>
+          <p>Segment le plus long et le plus important. Ralentir le debit. Pause de 2 sec avant "Pas ce qui le PRODUIT". B-roll : illustrations systeme digestif, microbiote (images simples, pas medicales).</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Segment 5 -->
+    <div class="segment">
+      <div class="segment-header">
+        <span class="segment-num">Segment 5</span>
+        <span class="segment-time">Min 5:00 — 6:00</span>
+      </div>
+      <div class="segment-title">Solution Teaser</div>
+      <div class="segment-body">
+        <div class="script-text">
+          J'ai construit une methode qui traite la cause, pas le symptome. Un protocole personnalise en 3 phases sur 90 jours. Phase 1 : on reinitialise ton terrain. Phase 2 : on stabilise. Phase 3 : tu deviens autonome pour les 20 prochaines annees.
+          <button class="copy-btn" onclick="copyScript(this)" title="Copier">&#x2398;</button>
+        </div>
+        <div class="prod-note">
+          <span class="prod-note-label">Production</span>
+          <p>Ton confiant, pas arrogant. Lever legerement le menton sur "20 prochaines annees". Pas de details techniques — juste la promesse de la methode.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Segment 6 -->
+    <div class="segment">
+      <div class="segment-header">
+        <span class="segment-num">Segment 6</span>
+        <span class="segment-time">Min 6:00 — 7:00</span>
+      </div>
+      <div class="segment-title">Preuve Sociale (Sans Noms)</div>
+      <div class="segment-body">
+        <div class="script-text">
+          Une femme avec du psoriasis depuis 8 ans — plaques disparues en 5 semaines. Une autre, 27 ans, acne adulte — "pour la premiere fois, quelqu'un m'a explique pourquoi". Rosacee apres 3 dermatologues — son medecin ne comprend pas pourquoi ca a change.
+          <button class="copy-btn" onclick="copyScript(this)" title="Copier">&#x2398;</button>
+        </div>
+        <div class="prod-note">
+          <span class="prod-note-label">Production</span>
+          <p>Ton humain, presque emu. B-roll : avant/apres peau (sans visages identifiables), messages de remerciement floutes. Pas de noms.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Segment 7 -->
+    <div class="segment">
+      <div class="segment-header">
+        <span class="segment-num">Segment 7</span>
+        <span class="segment-time">Min 7:00 — 8:00</span>
+      </div>
+      <div class="segment-title">CTA Framing</div>
+      <div class="segment-body">
+        <div class="script-text">
+          Si tu veux comprendre ce qui se passe dans TON corps, mon equipe propose un appel diagnostic gratuit. C'est Jad qui t'accueille — il analyse ton profil et te dit honnetement si le protocole est adapte a ta situation. Pas de pression. Pas de vente. Juste de la clarte.
+          <button class="copy-btn" onclick="copyScript(this)" title="Copier">&#x2398;</button>
+        </div>
+        <div class="prod-note">
+          <span class="prod-note-label">Production</span>
+          <p>Ton bienveillant. Geoffrey se penche tres legerement vers la camera. "Pas de pression. Pas de vente." = pause entre chaque phrase.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Segment 8 -->
+    <div class="segment">
+      <div class="segment-header">
+        <span class="segment-num">Segment 8</span>
+        <span class="segment-time">Min 8:00 — 9:00</span>
+      </div>
+      <div class="segment-title">CTA + Rarete</div>
+      <div class="segment-body">
+        <div class="script-text">
+          On prend 10 profils par mois. Pas par marketing — parce que le suivi est humain et individuel. Si tu veux reserver ton appel, clique sur le bouton en dessous.
+          <button class="copy-btn" onclick="copyScript(this)" title="Copier">&#x2398;</button>
+        </div>
+        <div class="prod-note">
+          <span class="prod-note-label">Production</span>
+          <p>Fin calme. Pas d'urgence dans la voix. Geoffrey reste immobile quelques secondes apres la derniere phrase. Fade to black lent.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- INTERDITS -->
+  <div class="section" id="interdit">
+    <h2 class="section-title">Ce qui ne doit PAS apparaitre</h2>
+    <p class="section-sub">Liste stricte — a relire avant chaque tournage</p>
+
+    <div class="danger-box">
+      <h3>Interdits Absolus</h3>
+      <div class="danger-item">
+        <div class="danger-x">&times;</div>
+        <span class="danger-text"><strong>Prix</strong> — aucune mention de montant, de tarif, ou de "investissement"</span>
+      </div>
+      <div class="danger-item">
+        <div class="danger-x">&times;</div>
+        <span class="danger-text"><strong>Mot "cetose"</strong> ou "regime cetogene" — jamais, sous aucune forme</span>
+      </div>
+      <div class="danger-item">
+        <div class="danger-x">&times;</div>
+        <span class="danger-text"><strong>Details de la garantie</strong> — reservee au call closing</span>
+      </div>
+      <div class="danger-item">
+        <div class="danger-x">&times;</div>
+        <span class="danger-text"><strong>Noms d'offre</strong> — pas de "SAPIENS Essentiel", "SAPIENS Integral", etc.</span>
+      </div>
+      <div class="danger-item">
+        <div class="danger-x">&times;</div>
+        <span class="danger-text"><strong>Details paiement</strong> — pas de facilites, pas de mensualites, pas de Stripe/Whop</span>
+      </div>
+      <div class="danger-item">
+        <div class="danger-x">&times;</div>
+        <span class="danger-text"><strong>Details techniques du tracker</strong> — reservee a l'offre en call</span>
+      </div>
+      <div class="danger-item">
+        <div class="danger-x">&times;</div>
+        <span class="danger-text"><strong>Noms de prospects</strong> — meme pour les temoignages, pas de prenom ni d'identifiant</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Pourquoi ces interdits</h3>
+      <p>La VSL a un seul objectif : <strong style="color:var(--gold)">generer un appel diagnostic</strong>. Pas vendre. Pas convaincre. Pas eduquer. Chaque element interdit est un element qui soit tue la curiosite (prix), soit cree de la resistance (cetose/regime), soit donne assez d'info pour que la personne decide seule sans appeler (details offre).</p>
+    </div>
+  </div>
+
+  <!-- TELEPROMPTER -->
+  <div class="section" id="teleprompter">
+    <h2 class="section-title">Mode Teleprompter</h2>
+    <p class="section-sub">Script en grand format avec defilement automatique — pret pour le tournage</p>
+
+    <div class="card">
+      <h3>Comment utiliser</h3>
+      <ul>
+        <li>Cliquer sur le bouton ci-dessous pour lancer le mode plein ecran</li>
+        <li>Le script s'affiche en grand format sur fond noir</li>
+        <li>Utiliser Play/Pause pour le defilement automatique</li>
+        <li>Ajuster la vitesse avec les boutons +/- (0.5x a 3x)</li>
+        <li>La ligne horizontale doree indique ou poser le regard</li>
+        <li>Appuyer sur Echap ou le bouton Fermer pour revenir</li>
+      </ul>
+    </div>
+
+    <button class="tp-launch" onclick="openTeleprompter()">
+      Lancer le Teleprompter
+    </button>
+  </div>
+
+  <!-- B-ROLL -->
+  <div class="section" id="broll">
+    <h2 class="section-title">B-Roll Insert List</h2>
+    <p class="section-sub">Suggestions de plans d'insert pour chaque segment</p>
+
+    <div class="card">
+      <div class="broll-item">
+        <span class="broll-seg">Seg 1</span>
+        <span class="broll-desc">Gros plan peau irritee (macro). Mains qui appliquent une creme. Visage preoccupe dans un miroir.</span>
+      </div>
+      <div class="broll-item">
+        <span class="broll-seg">Seg 2</span>
+        <span class="broll-desc">Etagere de produits cosmetiques/medicaux. Factures de dermatologue. Pile de boites de complements.</span>
+      </div>
+      <div class="broll-item">
+        <span class="broll-seg">Seg 3</span>
+        <span class="broll-desc">Photo Geoffrey sport de combat. Certificats/formations (floutes si necessaire). Geoffrey qui ecrit a son bureau.</span>
+      </div>
+      <div class="broll-item">
+        <span class="broll-seg">Seg 4</span>
+        <span class="broll-desc">Illustrations systeme digestif (animation simple). Images microbiote stylisees. Schema inflammation (visuel, pas medical).</span>
+      </div>
+      <div class="broll-item">
+        <span class="broll-seg">Seg 5</span>
+        <span class="broll-desc">Geoffrey qui prepare un protocole. Tableau blanc avec les 3 phases. Tracker en gros plan.</span>
+      </div>
+      <div class="broll-item">
+        <span class="broll-seg">Seg 6</span>
+        <span class="broll-desc">Avant/apres peau (sans visages). Screenshots de messages de remerciement (floutes). Montage resultats.</span>
+      </div>
+      <div class="broll-item">
+        <span class="broll-seg">Seg 7</span>
+        <span class="broll-desc">Jad en appel (de dos ou flou). Interface Calendly. Ecran de reservation.</span>
+      </div>
+      <div class="broll-item">
+        <span class="broll-seg">Seg 8</span>
+        <span class="broll-desc">Geoffrey qui ferme son carnet. Logo SAPIENS 360 en fade-in. Bouton "Reserver" anime.</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ── Teleprompter Overlay ── -->
+<div class="teleprompter-overlay" id="tp-overlay">
+  <div class="tp-controls">
+    <button class="tp-btn tp-close" onclick="closeTeleprompter()">Fermer</button>
+    <button class="tp-btn" onclick="tpSpeedDown()">&#x2212; Lent</button>
+    <div class="tp-speed" id="tp-speed-display">Vitesse : 1.0x</div>
+    <button class="tp-btn" onclick="tpSpeedUp()">+ Rapide</button>
+    <button class="tp-btn tp-play" id="tp-play-btn" onclick="tpTogglePlay()">Play</button>
+  </div>
+  <div class="tp-guide"></div>
+  <div class="tp-scroll-area" id="tp-scroll">
+    <div class="tp-text" id="tp-text-content"></div>
+  </div>
+</div>
+
+<script>
+// ── Tab Navigation ──
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(btn.dataset.tab).classList.add('active');
+  });
+});
+
+// ── Copy Script ──
+function copyScript(btn) {
+  const block = btn.closest('.script-text');
+  const clone = block.cloneNode(true);
+  clone.querySelector('.copy-btn').remove();
+  const text = clone.textContent.trim();
+  navigator.clipboard.writeText(text).then(() => {
+    btn.classList.add('copied');
+    btn.innerHTML = '&#x2713;';
+    setTimeout(() => {
+      btn.classList.remove('copied');
+      btn.innerHTML = '&#x2398;';
+    }, 2000);
+  });
+}
+
+// ── Teleprompter ──
+const scriptSegments = [
+  { label: 'Segment 1 — Validation Hook (0:00-1:00)', text: 'Si ta peau flambe sans logique, si les cremes soulagent mais ne resolvent rien, si tes bilans sont "normaux" mais que ton corps te dit le contraire — cette video va te montrer quelque chose que personne ne t\'a jamais explique.' },
+  { label: 'Segment 2 — Empathie + Cout (1:00-2:00)', text: 'Tu as probablement tout essaye. Cremes, dermatos, regimes, complements, naturopathes. Ca ameliore. Puis ca revient. Toujours. En 3-5 ans, tu as depense entre 1,000 et 5,000 euros pour traiter... les symptomes.' },
+  { label: 'Segment 3 — Credibilite Geoffrey (2:00-3:00)', text: 'Je m\'appelle Geoffrey. Je suis praticien en protocoles terrain. Avant ca, j\'etais sportif de combat de haut niveau. Mon corps etait mon outil. Et pourtant ma peau flambait. J\'ai cherche pendant des annees, jusqu\'a ce que je me forme cliniquement aupres des Dr Dufournet et Dr Florent sur les protocoles anti-inflammatoires profonds.' },
+  { label: 'Segment 4 — LE MECANISME (3:00-5:00)', text: '70% de ton systeme immunitaire est dans ton intestin. Ton microbiote — les bacteries qui vivent dans tes intestins — controle ta reponse inflammatoire. Quand ce systeme est deregle, ton corps s\'enflamme. Et cette inflammation s\'exprime ou tu es genetiquement vulnerable. Pour certains c\'est la peau. Pour d\'autres c\'est la digestion, le sommeil, l\'energie.\n\nTout ce que tu as essaye jusqu\'ici traitait ce que tu VOIS — ta peau. Pas ce qui le PRODUIT — ton terrain.' },
+  { label: 'Segment 5 — Solution Teaser (5:00-6:00)', text: 'J\'ai construit une methode qui traite la cause, pas le symptome. Un protocole personnalise en 3 phases sur 90 jours. Phase 1 : on reinitialise ton terrain. Phase 2 : on stabilise. Phase 3 : tu deviens autonome pour les 20 prochaines annees.' },
+  { label: 'Segment 6 — Preuve Sociale (6:00-7:00)', text: 'Une femme avec du psoriasis depuis 8 ans — plaques disparues en 5 semaines. Une autre, 27 ans, acne adulte — "pour la premiere fois, quelqu\'un m\'a explique pourquoi". Rosacee apres 3 dermatologues — son medecin ne comprend pas pourquoi ca a change.' },
+  { label: 'Segment 7 — CTA Framing (7:00-8:00)', text: 'Si tu veux comprendre ce qui se passe dans TON corps, mon equipe propose un appel diagnostic gratuit. C\'est Jad qui t\'accueille — il analyse ton profil et te dit honnetement si le protocole est adapte a ta situation. Pas de pression. Pas de vente. Juste de la clarte.' },
+  { label: 'Segment 8 — CTA + Rarete (8:00-9:00)', text: 'On prend 10 profils par mois. Pas par marketing — parce que le suivi est humain et individuel. Si tu veux reserver ton appel, clique sur le bouton en dessous.' }
+];
+
+let tpSpeed = 1.0;
+let tpPlaying = false;
+let tpInterval = null;
+
+function openTeleprompter() {
+  const overlay = document.getElementById('tp-overlay');
+  const textEl = document.getElementById('tp-text-content');
+  let html = '';
+  scriptSegments.forEach(seg => {
+    html += `<span class="tp-segment-label">${seg.label}</span>`;
+    const paragraphs = seg.text.split('\n\n');
+    paragraphs.forEach(p => {
+      html += `<div class="tp-paragraph">${p}</div>`;
+    });
+  });
+  textEl.innerHTML = html;
+  overlay.classList.add('active');
+  document.getElementById('tp-scroll').scrollTop = 0;
+  document.body.style.overflow = 'hidden';
+}
+
+function closeTeleprompter() {
+  document.getElementById('tp-overlay').classList.remove('active');
+  document.body.style.overflow = '';
+  tpStop();
+}
+
+function tpTogglePlay() {
+  if (tpPlaying) {
+    tpStop();
+  } else {
+    tpStart();
+  }
+}
+
+function tpStart() {
+  tpPlaying = true;
+  document.getElementById('tp-play-btn').textContent = 'Pause';
+  tpInterval = setInterval(() => {
+    const el = document.getElementById('tp-scroll');
+    el.scrollTop += tpSpeed * 1.2;
+  }, 30);
+}
+
+function tpStop() {
+  tpPlaying = false;
+  document.getElementById('tp-play-btn').textContent = 'Play';
+  if (tpInterval) { clearInterval(tpInterval); tpInterval = null; }
+}
+
+function tpSpeedUp() {
+  tpSpeed = Math.min(3.0, tpSpeed + 0.25);
+  updateSpeedDisplay();
+  if (tpPlaying) { tpStop(); tpStart(); }
+}
+
+function tpSpeedDown() {
+  tpSpeed = Math.max(0.25, tpSpeed - 0.25);
+  updateSpeedDisplay();
+  if (tpPlaying) { tpStop(); tpStart(); }
+}
+
+function updateSpeedDisplay() {
+  document.getElementById('tp-speed-display').textContent = `Vitesse : ${tpSpeed.toFixed(2)}x`;
+}
+
+// Escape key to close teleprompter
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeTeleprompter();
+});
+</script>
+</body>
+</html>

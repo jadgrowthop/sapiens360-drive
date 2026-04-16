@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAPIENS 360 — Audit & Etat des Lieux</title>
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg: #111;
+  --card: #161616;
+  --border: #2C4A3555;
+  --gold: #B8956A;
+  --green: #2C4A35;
+  --ivory: #FAF7F2;
+  --stone: #888;
+  --gold-glow: #B8956A44;
+  --green-glow: #2C4A3544;
+  --danger: #8B3A3A;
+  --danger-bg: #2A1515;
+  --success: #3A8B5A;
+  --success-bg: #152A1A;
+  --warn: #8B7A3A;
+  --warn-bg: #2A2515;
+  --red: #CF6A6A;
+  --red-bg: #2A1515;
+}
+
+body {
+  background: var(--bg);
+  color: var(--ivory);
+  font-family: 'Segoe UI', Arial, sans-serif;
+  line-height: 1.6;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Hero ── */
+.hero {
+  text-align: center;
+  padding: 60px 24px 40px;
+  border-bottom: 1px solid var(--border);
+}
+.hero-brand {
+  font-family: Georgia, serif;
+  font-size: 14px;
+  color: var(--gold);
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.hero-number {
+  font-family: Georgia, serif;
+  font-size: 60px;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.1;
+  margin-bottom: 4px;
+}
+.hero-number .gold-six { color: var(--gold); }
+.hero-subtitle {
+  font-family: Georgia, serif;
+  font-size: 18px;
+  color: var(--stone);
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+.hero-desc {
+  color: var(--stone);
+  font-size: 15px;
+  max-width: 580px;
+  margin: 0 auto;
+  font-style: italic;
+}
+
+/* ── Tab Nav ── */
+.tab-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.tab-nav::-webkit-scrollbar { display: none; }
+.tab-btn {
+  flex-shrink: 0;
+  padding: 14px 20px;
+  background: none;
+  border: none;
+  color: var(--stone);
+  font-size: 13px;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.tab-btn:hover { color: var(--ivory); }
+.tab-btn.active { color: var(--gold); border-bottom-color: var(--gold); }
+
+/* ── Content ── */
+.content {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 32px 24px 80px;
+}
+.section { display: none; }
+.section.active { display: block; }
+.section-title {
+  font-family: Georgia, serif;
+  font-size: 28px;
+  color: #fff;
+  margin-bottom: 8px;
+}
+.section-sub {
+  color: var(--stone);
+  font-size: 14px;
+  margin-bottom: 32px;
+}
+
+/* ── Status Cards ── */
+.status-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+  margin-bottom: 20px;
+}
+.s-card {
+  border-radius: 12px;
+  padding: 20px;
+  border: 1px solid;
+}
+.s-card.green { background: var(--success-bg); border-color: var(--success); }
+.s-card.yellow { background: var(--warn-bg); border-color: var(--warn); }
+.s-card.red { background: var(--red-bg); border-color: var(--danger); }
+.s-card .s-icon {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 8px;
+}
+.s-card.green .s-icon { background: #4ADE80; }
+.s-card.yellow .s-icon { background: var(--gold); }
+.s-card.red .s-icon { background: var(--red); }
+.s-card h4 {
+  display: inline;
+  font-family: Georgia, serif;
+  font-size: 16px;
+  color: #fff;
+}
+.s-card p {
+  color: var(--stone);
+  font-size: 13px;
+  margin-top: 8px;
+  line-height: 1.5;
+}
+.s-card .metric {
+  color: var(--gold);
+  font-weight: 700;
+}
+
+/* ── Priority Matrix ── */
+.priority-filters {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+.pf-btn {
+  padding: 8px 18px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--stone);
+  font-size: 13px;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.pf-btn:hover { border-color: var(--gold); color: var(--ivory); }
+.pf-btn.active { background: var(--gold); color: #111; border-color: var(--gold); font-weight: 700; }
+
+.priority-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 16px;
+  border-left: 4px solid;
+}
+.priority-card.p0 { border-left-color: var(--red); }
+.priority-card.p1 { border-left-color: var(--gold); }
+.priority-card.p2 { border-left-color: var(--stone); }
+.priority-label {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  margin-bottom: 10px;
+}
+.priority-card.p0 .priority-label { background: #3A1515; color: var(--red); }
+.priority-card.p1 .priority-label { background: #2A2515; color: var(--gold); }
+.priority-card.p2 .priority-label { background: #1A1A1A; color: var(--stone); }
+.priority-card h4 {
+  font-family: Georgia, serif;
+  font-size: 16px;
+  color: #fff;
+  margin-bottom: 6px;
+}
+.priority-card p {
+  color: var(--stone);
+  font-size: 13px;
+}
+
+/* ── Checklist ── */
+.checklist-group {
+  margin-bottom: 28px;
+}
+.checklist-group-title {
+  font-family: Georgia, serif;
+  font-size: 18px;
+  color: var(--gold);
+  margin-bottom: 14px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+}
+.check-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid #1A1A1A;
+  cursor: pointer;
+  user-select: none;
+}
+.check-item:hover { background: #1A1A1A; margin: 0 -8px; padding-left: 8px; padding-right: 8px; border-radius: 6px; }
+.check-box {
+  width: 20px;
+  height: 20px;
+  min-width: 20px;
+  border: 2px solid var(--border);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2px;
+  transition: all 0.15s;
+  color: transparent;
+  font-size: 12px;
+}
+.check-item.done .check-box {
+  background: var(--green);
+  border-color: var(--green);
+  color: #fff;
+}
+.check-item.done .check-text {
+  text-decoration: line-through;
+  color: var(--stone);
+}
+.check-text {
+  color: var(--ivory);
+  font-size: 14px;
+  line-height: 1.5;
+}
+.progress-bar-wrap {
+  background: #1A1A1A;
+  border-radius: 8px;
+  height: 8px;
+  margin-bottom: 24px;
+  overflow: hidden;
+}
+.progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--green), var(--gold));
+  border-radius: 8px;
+  transition: width 0.3s;
+}
+.progress-text {
+  color: var(--stone);
+  font-size: 13px;
+  margin-bottom: 8px;
+  text-align: right;
+}
+
+/* ── Danger Box ── */
+.danger-box {
+  background: var(--danger-bg);
+  border: 1px solid var(--danger);
+  border-radius: 12px;
+  padding: 24px;
+  margin: 20px 0;
+}
+.danger-box h3 {
+  color: var(--red);
+  font-family: Georgia, serif;
+  margin-bottom: 16px;
+  font-size: 22px;
+}
+.stop-item {
+  display: flex;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid #3A1A1A;
+  align-items: flex-start;
+}
+.stop-item:last-child { border-bottom: none; }
+.stop-num {
+  width: 28px;
+  height: 28px;
+  min-width: 28px;
+  background: #3A1515;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--red);
+}
+.stop-text {
+  color: var(--ivory);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* ── Copy Button ── */
+.copy-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: var(--green);
+  border: 1px solid var(--border);
+  color: var(--ivory);
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  transition: all 0.2s;
+}
+.copy-btn:hover { background: var(--gold); color: #111; }
+.copy-btn.copied { background: var(--success); }
+
+/* ── Responsive ── */
+@media (max-width: 600px) {
+  .hero { padding: 40px 16px 28px; }
+  .hero-number { font-size: 42px; }
+  .hero-subtitle { font-size: 14px; letter-spacing: 2px; }
+  .content { padding: 24px 16px 60px; }
+  .section-title { font-size: 22px; }
+  .status-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── Hero ── -->
+<div class="hero">
+  <div class="hero-brand">SAPIENS</div>
+  <div class="hero-number">3<span class="gold-six">6</span>0</div>
+  <div class="hero-subtitle">Audit & Etat des Lieux</div>
+  <div class="hero-desc">"Ce qui marche, ce qui casse, ce qui manque — priorites P0/P1/P2"</div>
+</div>
+
+<!-- ── Tab Nav ── -->
+<nav class="tab-nav">
+  <button class="tab-btn active" data-tab="marche">Ce qui Marche</button>
+  <button class="tab-btn" data-tab="fixe">A Fixer</button>
+  <button class="tab-btn" data-tab="construit">A Construire</button>
+  <button class="tab-btn" data-tab="priorites">Matrice Priorites</button>
+  <button class="tab-btn" data-tab="checklist">Go-Live Checklist</button>
+  <button class="tab-btn" data-tab="stop">STOP Doing</button>
+</nav>
+
+<!-- ── Content ── -->
+<div class="content">
+
+  <!-- CE QUI MARCHE -->
+  <div class="section active" id="marche">
+    <h2 class="section-title">Ce qui MARCHE</h2>
+    <p class="section-sub">Les fondations sont la. Ne pas casser ce qui fonctionne.</p>
+
+    <div class="status-grid">
+      <div class="s-card green">
+        <span class="s-icon"></span>
+        <h4>Traffic Instagram</h4>
+        <p><span class="metric">900K vues/mois</span> — Le trafic n'est pas le probleme. L'audience est la, engagee, et en croissance organique.</p>
+      </div>
+      <div class="s-card green">
+        <span class="s-icon"></span>
+        <h4>Produit Valide</h4>
+        <p>Resultats prouves sur les clients existants. Temoignages authentiques. Le protocole fonctionne quand il est applique.</p>
+      </div>
+      <div class="s-card green">
+        <span class="s-icon"></span>
+        <h4>Infrastructure</h4>
+        <p>GHL, ManyChat, Calendly, Whop — tout est en place et fonctionnel. 12 workflows actifs, 41 tags.</p>
+      </div>
+      <div class="s-card green">
+        <span class="s-icon"></span>
+        <h4>Show Rate</h4>
+        <p><span class="metric">70%</span> — Les gens viennent aux calls. Le probleme n'est pas l'interet, c'est ce qui se passe PENDANT le call.</p>
+      </div>
+      <div class="s-card green">
+        <span class="s-icon"></span>
+        <h4>Audience Niche Claire</h4>
+        <p>ICP defini : femmes 25-45, problemes de peau chroniques, ont deja essaye sans solution durable. Niche specifique et monetisable.</p>
+      </div>
+      <div class="s-card green">
+        <span class="s-icon"></span>
+        <h4>8+ Clients Satisfaits</h4>
+        <p>Base de clients existante avec resultats. Preuve sociale reelle. Potentiel referral sous-exploite.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- A FIXER -->
+  <div class="section" id="fixe">
+    <h2 class="section-title">Ce qui doit etre FIXE</h2>
+    <p class="section-sub">Les leviers a impact immediat — semaines 1 a 4</p>
+
+    <div class="status-grid">
+      <div class="s-card yellow">
+        <span class="s-icon"></span>
+        <h4>Close Rate : 7% &rarr; 50%</h4>
+        <p>LE vrai levier. 6 calls audites en mars = 0% close. Les patterns sont identifies, les solutions sont pretes.</p>
+      </div>
+      <div class="s-card yellow">
+        <span class="s-icon"></span>
+        <h4>Prix Ancre Trop Bas</h4>
+        <p>900&euro; dans la tete des prospects. L'offre doit etre presentee a <span class="metric">1,200&euro;</span> avec un cadrage valeur-prix inverse.</p>
+      </div>
+      <div class="s-card yellow">
+        <span class="s-icon"></span>
+        <h4>Discovery Trop Courte</h4>
+        <p><span class="metric">5 min vs 15 min</span> necessaires. Sans discovery approfondie, impossible de creer le gap emotionnel et de personnaliser le pitch.</p>
+      </div>
+      <div class="s-card yellow">
+        <span class="s-icon"></span>
+        <h4>Conseil Gratuit en Call</h4>
+        <p>Geoffrey donne des reponses concretes ("fais ci, arrete ca") au lieu de garder le mecanisme derriere l'offre. Ca tue la vente.</p>
+      </div>
+      <div class="s-card yellow">
+        <span class="s-icon"></span>
+        <h4>Mot "Cetose" Trop Tot</h4>
+        <p>Declencheur de resistance immediate. Associe a "regime", "restrictif", "mode". Doit etre banni du vocabulaire closing.</p>
+      </div>
+      <div class="s-card yellow">
+        <span class="s-icon"></span>
+        <h4>Pas de Silence Apres le Prix</h4>
+        <p>Geoffrey comble le silence. La regle : <span class="metric">10 secondes minimum</span> de silence apres l'annonce du prix. Celui qui parle en premier perd.</p>
+      </div>
+      <div class="s-card yellow">
+        <span class="s-icon"></span>
+        <h4>Contenu BOFU Insuffisant</h4>
+        <p><span class="metric">10% vs 40%</span> de contenu bottom-of-funnel necessaire. Temoignages, resultats, avant/apres, cas d'etude = conversion.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- A CONSTRUIRE -->
+  <div class="section" id="construit">
+    <h2 class="section-title">Ce qui doit etre CONSTRUIT</h2>
+    <p class="section-sub">Les pieces manquantes du puzzle</p>
+
+    <div class="status-grid">
+      <div class="s-card red">
+        <span class="s-icon"></span>
+        <h4>YouTube</h4>
+        <p><span class="metric">0 videos</span> vs besoin de 7h de contenu pour high-ticket. YouTube = confiance, autorite, SEO long terme. Canal #1 manquant.</p>
+      </div>
+      <div class="s-card red">
+        <span class="s-icon"></span>
+        <h4>Referral System</h4>
+        <p>Inexistant. 8 clients satisfaits = 16-24 leads potentiels a cout 0. Close rate 50-70% sur referrals vs 25-30% cold.</p>
+      </div>
+      <div class="s-card red">
+        <span class="s-icon"></span>
+        <h4>Nouvelle VSL</h4>
+        <p>9 minutes, facecam Geoffrey. Sans prix, sans "cetose", sans details offre. Mecanisme + preuve sociale + CTA diagnostic.</p>
+      </div>
+      <div class="s-card red">
+        <span class="s-icon"></span>
+        <h4>15 Plans "Quoi qu'il Arrive"</h4>
+        <p>Plans alimentaires adaptes a chaque archetype. Tangibilise l'offre et justifie le prix. "Tu repars avec ton plan des demain."</p>
+      </div>
+      <div class="s-card red">
+        <span class="s-icon"></span>
+        <h4>Masterclasses</h4>
+        <p>7 masterclasses de 60-90 min. Contenu premium sur Whop. Augmente la valeur percue et reduit les demandes de remboursement.</p>
+      </div>
+      <div class="s-card red">
+        <span class="s-icon"></span>
+        <h4>SAPIENS Tracker App</h4>
+        <p>Long terme. App de suivi quotidien pour les clients (alimentation, peau, energie). Differenciant majeur et outil de retention.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- MATRICE PRIORITES -->
+  <div class="section" id="priorites">
+    <h2 class="section-title">Matrice de Priorites</h2>
+    <p class="section-sub">Filtrer par niveau de priorite</p>
+
+    <div class="priority-filters">
+      <button class="pf-btn active" data-filter="all" onclick="filterPriority('all')">Tout</button>
+      <button class="pf-btn" data-filter="p0" onclick="filterPriority('p0')">P0 — Cette Semaine</button>
+      <button class="pf-btn" data-filter="p1" onclick="filterPriority('p1')">P1 — Semaines 2-4</button>
+      <button class="pf-btn" data-filter="p2" onclick="filterPriority('p2')">P2 — Apres 50% Close</button>
+    </div>
+
+    <div class="priority-list">
+      <div class="priority-card p0" data-priority="p0">
+        <div class="priority-label">P0 — CETTE SEMAINE</div>
+        <h4>Script V8 imprime + dans l'app</h4>
+        <p>Le nouveau script avec les 8 phases, silence 10sec, zero "cetose". Geoffrey doit l'avoir devant les yeux a chaque call.</p>
+      </div>
+      <div class="priority-card p0" data-priority="p0">
+        <div class="priority-label">P0 — CETTE SEMAINE</div>
+        <h4>Bannir "cetose" de tout le vocabulaire closing</h4>
+        <p>Remplacer par "protocole terrain anti-inflammatoire", "methode en 3 phases", "reinitialisation du terrain".</p>
+      </div>
+      <div class="priority-card p0" data-priority="p0">
+        <div class="priority-label">P0 — CETTE SEMAINE</div>
+        <h4>Offre unique a 1,200&euro;</h4>
+        <p>Plus de double tier. Un seul prix, un seul tier. Simplifie la decision et supprime l'ancrage a 900&euro;.</p>
+      </div>
+      <div class="priority-card p0" data-priority="p0">
+        <div class="priority-label">P0 — CETTE SEMAINE</div>
+        <h4>Temoignages prepares avant chaque call</h4>
+        <p>3 temoignages par archetype. Geoffrey doit les connaitre par coeur et les deployer au bon moment.</p>
+      </div>
+      <div class="priority-card p0" data-priority="p0">
+        <div class="priority-label">P0 — CETTE SEMAINE</div>
+        <h4>Silence 10 secondes apres le prix</h4>
+        <p>La regle #1 du closing. S'entrainer devant le miroir. Mettre un post-it "SILENCE" sur l'ecran.</p>
+      </div>
+
+      <div class="priority-card p1" data-priority="p1">
+        <div class="priority-label">P1 — SEMAINES 2-4</div>
+        <h4>Trackers commandes + menus</h4>
+        <p>Tangibiliser l'offre. "Tu repars avec un tracker et un plan personnalise des le premier jour."</p>
+      </div>
+      <div class="priority-card p1" data-priority="p1">
+        <div class="priority-label">P1 — SEMAINES 2-4</div>
+        <h4>Nouvelle VSL (9 min)</h4>
+        <p>Facecam Geoffrey. Mecanisme + preuve sociale. Zero prix, zero "cetose", zero details offre. Voir script dedie.</p>
+      </div>
+      <div class="priority-card p1" data-priority="p1">
+        <div class="priority-label">P1 — SEMAINES 2-4</div>
+        <h4>Emails V2</h4>
+        <p>Refonte des sequences email. Plus de storytelling, plus de BOFU, moins de "information gratuite".</p>
+      </div>
+      <div class="priority-card p1" data-priority="p1">
+        <div class="priority-label">P1 — SEMAINES 2-4</div>
+        <h4>YouTube audit + premiere video</h4>
+        <p>Auditer les concurrents YouTube sante/peau. Premiere video longue de Geoffrey (15-20 min). Lancer le canal.</p>
+      </div>
+      <div class="priority-card p1" data-priority="p1">
+        <div class="priority-label">P1 — SEMAINES 2-4</div>
+        <h4>15 plans "quoi qu'il arrive"</h4>
+        <p>Plans alimentaires adaptes. Outil tangible que le client recoit. Justifie le prix et donne confiance immediate.</p>
+      </div>
+
+      <div class="priority-card p2" data-priority="p2">
+        <div class="priority-label">P2 — APRES 50% CLOSE</div>
+        <h4>Tier premium</h4>
+        <p>Offre a 2,400&euro;+ avec VIP, calls illimites, tracker premium. Seulement quand le close rate de base est solide.</p>
+      </div>
+      <div class="priority-card p2" data-priority="p2">
+        <div class="priority-label">P2 — APRES 50% CLOSE</div>
+        <h4>Referral system complet</h4>
+        <p>Tags GHL, workflows automatises, recompenses, tracker. Voir document dedie 18_REFERRAL_SYSTEM.</p>
+      </div>
+      <div class="priority-card p2" data-priority="p2">
+        <div class="priority-label">P2 — APRES 50% CLOSE</div>
+        <h4>7 Masterclasses</h4>
+        <p>60-90 min chacune. Contenu premium Whop. Augmente la valeur percue et la retention.</p>
+      </div>
+      <div class="priority-card p2" data-priority="p2">
+        <div class="priority-label">P2 — APRES 50% CLOSE</div>
+        <h4>Ads (Meta/YouTube)</h4>
+        <p>Seulement quand le funnel convertit a 50%+. Sinon, on jette de l'argent sur un funnel casse.</p>
+      </div>
+      <div class="priority-card p2" data-priority="p2">
+        <div class="priority-label">P2 — APRES 50% CLOSE</div>
+        <h4>SAPIENS Tracker App</h4>
+        <p>Application mobile de suivi quotidien. Projet long terme, differenciant majeur.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- GO-LIVE CHECKLIST -->
+  <div class="section" id="checklist">
+    <h2 class="section-title">Go-Live Checklist</h2>
+    <p class="section-sub">Tout cocher avant de prendre le prochain call</p>
+
+    <div class="progress-text" id="progress-text">0 / 0 complete</div>
+    <div class="progress-bar-wrap">
+      <div class="progress-bar-fill" id="progress-bar" style="width:0%"></div>
+    </div>
+
+    <div class="checklist-group">
+      <div class="checklist-group-title">OFFRE</div>
+      <div class="check-item" data-key="cl-offre-1" onclick="toggleCheck(this)">
+        <div class="check-box">&#x2713;</div>
+        <span class="check-text">Single tier 1,200&euro; confirme — plus de double offre</span>
+      </div>
+      <div class="check-item" data-key="cl-offre-2" onclick="toggleCheck(this)">
+        <div class="check-box">&#x2713;</div>
+        <span class="check-text">Liens Whop mis a jour (1 seul lien, 1 seul prix)</span>
+      </div>
+      <div class="check-item" data-key="cl-offre-3" onclick="toggleCheck(this)">
+        <div class="check-box">&#x2713;</div>
+        <span class="check-text">Garantie documentee et memorisee par Geoffrey</span>
+      </div>
+      <div class="check-item" data-key="cl-offre-4" onclick="toggleCheck(this)">
+        <div class="check-box">&#x2713;</div>
+        <span class="check-text">Trackers commandes (physiques ou digitaux)</span>
+      </div>
+    </div>
+
+    <div class="checklist-group">
+      <div class="checklist-group-title">SCRIPT</div>
+      <div class="check-item" data-key="cl-script-1" onclick="toggleCheck(this)">
+        <div class="check-box">&#x2713;</div>
+        <span class="check-text">V8 imprime et/ou dans l'app — accessible a chaque call</span>
+      </div>
+      <div class="check-item" data-key="cl-script-2" onclick="toggleCheck(this)">
+        <div class="check-box">&#x2713;</div>
+        <span class="check-text">Cartes archetype preparees (rosacee, eczema, acne, psoriasis)</span>
+      </div>
+      <div class="check-item" data-key="cl-script-3" onclick="toggleCheck(this)">
+        <div class="check-box">&#x2713;</div>
+        <span class="check-text">3 temoignages par archetype memorises</span>
+      </div>
+      <div class="check-item" data-key="cl-script-4" onclick="toggleCheck(this)">
+        <div class="check-box">&#x2713;</div>
+        <span class="check-text">Pitch garantie memorise mot pour mot</span>
+      </div>
+    </div>
+
+    <div class="checklist-group">
+      <div class="checklist-group-title">INFRA</div>
+      <div class="check-item" data-key="cl-infra-1" onclick="toggleCheck(this)">
+        <div class="check-box">&#x2713;</div>
+        <span class="check-text">Workflows WF1-5 rafraichis et actifs dans GHL</span>
+      </div>
+      <div class="check-item" data-key="cl-infra-2" onclick="toggleCheck(this)">
+        <div class="check-box">&#x2713;</div>
+        <span class="check-text">"Cetose" supprime de tous les emails, SMS, DM automatiques</span>
+      </div>
+      <div class="check-item" data-key="cl-infra-3" onclick="toggleCheck(this)">
+        <div class="check-box">&#x2713;</div>
+        <span class="check-text">Workflow onboarding client mis a jour</span>
+      </div>
+      <div class="check-item" data-key="cl-infra-4" onclick="toggleCheck(this)">
+        <div class="check-box">&#x2713;</div>
+        <span class="check-text">Workflow tracking referral cree</span>
+      </div>
+      <div class="check-item" data-key="cl-infra-5" onclick="toggleCheck(this)">
+        <div class="check-box">&#x2713;</div>
+        <span class="check-text">Workflow referral cree et teste</span>
+      </div>
+    </div>
+
+    <div class="checklist-group">
+      <div class="checklist-group-title">CONTENU</div>
+      <div class="check-item" data-key="cl-contenu-1" onclick="toggleCheck(this)">
+        <div class="check-box">&#x2713;</div>
+        <span class="check-text">Nouvelle VSL filmee et deployee</span>
+      </div>
+      <div class="check-item" data-key="cl-contenu-2" onclick="toggleCheck(this)">
+        <div class="check-box">&#x2713;</div>
+        <span class="check-text">10+ reels BOFU (temoignages, avant/apres, cas d'etude)</span>
+      </div>
+      <div class="check-item" data-key="cl-contenu-3" onclick="toggleCheck(this)">
+        <div class="check-box">&#x2713;</div>
+        <span class="check-text">YouTube audite — premiere video planifiee</span>
+      </div>
+      <div class="check-item" data-key="cl-contenu-4" onclick="toggleCheck(this)">
+        <div class="check-box">&#x2713;</div>
+        <span class="check-text">Bios Instagram et autres plateformes unifiees</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- STOP DOING -->
+  <div class="section" id="stop">
+    <h2 class="section-title">STOP Doing</h2>
+    <p class="section-sub">Les 10 erreurs a eliminer immediatement</p>
+
+    <div class="danger-box">
+      <h3>Les 10 Interdits</h3>
+
+      <div class="stop-item">
+        <div class="stop-num">1</div>
+        <div class="stop-text"><strong>Dire "cetose" en closing.</strong> Remplacer par "protocole terrain", "methode en 3 phases", "reinitialisation du terrain".</div>
+      </div>
+      <div class="stop-item">
+        <div class="stop-num">2</div>
+        <div class="stop-text"><strong>Resumer ses reponses avant qu'elle finisse.</strong> Laisser un silence de 2-3 sec apres chaque reponse. "Dis-m'en plus" est toujours mieux que reformuler.</div>
+      </div>
+      <div class="stop-item">
+        <div class="stop-num">3</div>
+        <div class="stop-text"><strong>Sauter aux modalites avant d'isoler l'objection valeur.</strong> Si elle dit "c'est trop cher", la vraie question est : "Est-ce que tu crois que ca va marcher pour toi ?"</div>
+      </div>
+      <div class="stop-item">
+        <div class="stop-num">4</div>
+        <div class="stop-text"><strong>Parler apres le prix.</strong> 10 secondes de silence minimum. Mettre un post-it "SILENCE" sur l'ecran. Celui qui parle en premier perd.</div>
+      </div>
+      <div class="stop-item">
+        <div class="stop-num">5</div>
+        <div class="stop-text"><strong>Faire 5 min de discovery.</strong> 15 minutes minimum. C'est la que se construit le gap emotionnel et la confiance.</div>
+      </div>
+      <div class="stop-item">
+        <div class="stop-num">6</div>
+        <div class="stop-text"><strong>Proposer 2+ tiers en phase validation.</strong> Un seul prix. Une seule offre. Simplifier la decision.</div>
+      </div>
+      <div class="stop-item">
+        <div class="stop-num">7</div>
+        <div class="stop-text"><strong>Oublier le referral.</strong> Chaque call (signe ou pas) est une opportunite de referral. Systematiser la question.</div>
+      </div>
+      <div class="stop-item">
+        <div class="stop-num">8</div>
+        <div class="stop-text"><strong>Negocier le prix automatiquement.</strong> Le prix n'est pas le probleme. La valeur percue l'est. Revenir au gap avant toute discussion financiere.</div>
+      </div>
+      <div class="stop-item">
+        <div class="stop-num">9</div>
+        <div class="stop-text"><strong>Poster 3 reels "problem-agitate"/jour.</strong> Equilibrer avec 40% de contenu BOFU (temoignages, resultats, cas d'etude).</div>
+      </div>
+      <div class="stop-item">
+        <div class="stop-num">10</div>
+        <div class="stop-text"><strong>Entrer en call sans temoignages.</strong> 3 temoignages par archetype, prepares AVANT le call. C'est l'arme #1 contre les objections.</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ── Tab Navigation ──
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(btn.dataset.tab).classList.add('active');
+  });
+});
+
+// ── Priority Filter ──
+function filterPriority(filter) {
+  document.querySelectorAll('.pf-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector(`.pf-btn[data-filter="${filter}"]`).classList.add('active');
+  document.querySelectorAll('.priority-card').forEach(card => {
+    if (filter === 'all' || card.dataset.priority === filter) {
+      card.style.display = '';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+}
+
+// ── Checklist with localStorage ──
+const CL_KEY = 'sapiens360_golive_checklist';
+
+function loadChecklist() {
+  try { return JSON.parse(localStorage.getItem(CL_KEY)) || {}; }
+  catch { return {}; }
+}
+
+function saveChecklist(data) {
+  localStorage.setItem(CL_KEY, JSON.stringify(data));
+}
+
+function toggleCheck(el) {
+  const key = el.dataset.key;
+  const data = loadChecklist();
+  data[key] = !data[key];
+  saveChecklist(data);
+  renderChecklist();
+}
+
+function renderChecklist() {
+  const data = loadChecklist();
+  const items = document.querySelectorAll('.check-item');
+  let total = items.length;
+  let done = 0;
+  items.forEach(item => {
+    if (data[item.dataset.key]) {
+      item.classList.add('done');
+      done++;
+    } else {
+      item.classList.remove('done');
+    }
+  });
+  const pct = total > 0 ? Math.round((done / total) * 100) : 0;
+  document.getElementById('progress-text').textContent = `${done} / ${total} complete (${pct}%)`;
+  document.getElementById('progress-bar').style.width = pct + '%';
+}
+
+renderChecklist();
+</script>
+</body>
+</html>

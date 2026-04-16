@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAPIENS 360 — Systeme de Referral</title>
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg: #111;
+  --card: #161616;
+  --border: #2C4A3555;
+  --gold: #B8956A;
+  --green: #2C4A35;
+  --ivory: #FAF7F2;
+  --stone: #888;
+  --gold-glow: #B8956A44;
+  --green-glow: #2C4A3544;
+  --danger: #8B3A3A;
+  --danger-bg: #2A1515;
+  --success: #3A8B5A;
+  --success-bg: #152A1A;
+}
+
+body {
+  background: var(--bg);
+  color: var(--ivory);
+  font-family: 'Segoe UI', Arial, sans-serif;
+  line-height: 1.6;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Hero ── */
+.hero {
+  text-align: center;
+  padding: 60px 24px 40px;
+  border-bottom: 1px solid var(--border);
+}
+.hero-brand {
+  font-family: Georgia, serif;
+  font-size: 14px;
+  color: var(--gold);
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.hero-number {
+  font-family: Georgia, serif;
+  font-size: 60px;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.1;
+  margin-bottom: 4px;
+}
+.hero-number .gold-six { color: var(--gold); }
+.hero-subtitle {
+  font-family: Georgia, serif;
+  font-size: 18px;
+  color: var(--stone);
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+.hero-desc {
+  color: var(--stone);
+  font-size: 15px;
+  max-width: 580px;
+  margin: 0 auto;
+  font-style: italic;
+}
+
+/* ── Tab Nav ── */
+.tab-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.tab-nav::-webkit-scrollbar { display: none; }
+.tab-btn {
+  flex-shrink: 0;
+  padding: 14px 20px;
+  background: none;
+  border: none;
+  color: var(--stone);
+  font-size: 13px;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.tab-btn:hover { color: var(--ivory); }
+.tab-btn.active {
+  color: var(--gold);
+  border-bottom-color: var(--gold);
+}
+
+/* ── Content ── */
+.content {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 32px 24px 80px;
+}
+.section { display: none; }
+.section.active { display: block; }
+.section-title {
+  font-family: Georgia, serif;
+  font-size: 28px;
+  color: #fff;
+  margin-bottom: 8px;
+}
+.section-sub {
+  color: var(--stone);
+  font-size: 14px;
+  margin-bottom: 32px;
+}
+
+/* ── Cards ── */
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 20px;
+}
+.card-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--gold);
+  margin-bottom: 12px;
+}
+.card h3 {
+  font-family: Georgia, serif;
+  font-size: 20px;
+  color: #fff;
+  margin-bottom: 12px;
+}
+.card p, .card li {
+  color: var(--ivory);
+  font-size: 15px;
+  line-height: 1.7;
+}
+.card ul, .card ol {
+  padding-left: 20px;
+  margin-top: 8px;
+}
+.card li { margin-bottom: 6px; }
+
+/* ── Stats Row ── */
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-bottom: 28px;
+}
+.stat-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+  text-align: center;
+}
+.stat-value {
+  font-family: Georgia, serif;
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--gold);
+  line-height: 1.2;
+}
+.stat-label {
+  color: var(--stone);
+  font-size: 13px;
+  margin-top: 4px;
+}
+
+/* ── Script Block ── */
+.script-block {
+  background: #0D0D0D;
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--gold);
+  border-radius: 8px;
+  padding: 20px;
+  margin: 16px 0;
+  position: relative;
+}
+.script-block p {
+  font-style: italic;
+  color: var(--ivory);
+  font-size: 15px;
+  line-height: 1.8;
+  padding-right: 40px;
+}
+.copy-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: var(--green);
+  border: 1px solid var(--border);
+  color: var(--ivory);
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  transition: all 0.2s;
+}
+.copy-btn:hover { background: var(--gold); color: #111; }
+.copy-btn.copied { background: var(--success); }
+
+/* ── Reward Cards ── */
+.reward-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+  margin: 20px 0;
+}
+.reward-card {
+  background: var(--card);
+  border: 1px solid var(--gold-glow);
+  border-radius: 12px;
+  padding: 24px;
+  text-align: center;
+}
+.reward-card .reward-icon {
+  font-size: 32px;
+  margin-bottom: 12px;
+}
+.reward-card h4 {
+  font-family: Georgia, serif;
+  font-size: 18px;
+  color: var(--gold);
+  margin-bottom: 8px;
+}
+.reward-card p {
+  color: var(--stone);
+  font-size: 14px;
+}
+
+/* ── Process Steps ── */
+.process-step {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 24px;
+  align-items: flex-start;
+}
+.step-num {
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  background: var(--green);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: Georgia, serif;
+  font-weight: 700;
+  color: var(--ivory);
+  font-size: 16px;
+}
+.step-content h4 {
+  font-family: Georgia, serif;
+  font-size: 16px;
+  color: #fff;
+  margin-bottom: 4px;
+}
+.step-content p {
+  color: var(--stone);
+  font-size: 14px;
+}
+
+/* ── Tag Chips ── */
+.tag-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 16px 0;
+}
+.tag {
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+.tag-gold { background: var(--gold-glow); color: var(--gold); border: 1px solid var(--gold); }
+.tag-green { background: var(--green-glow); color: #5DAE7B; border: 1px solid var(--green); }
+
+/* ── Objectives Table ── */
+.obj-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+}
+.obj-table th {
+  background: var(--green);
+  color: var(--ivory);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 12px 16px;
+  text-align: left;
+}
+.obj-table th:first-child { border-radius: 8px 0 0 0; }
+.obj-table th:last-child { border-radius: 0 8px 0 0; }
+.obj-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+  color: var(--ivory);
+  font-size: 14px;
+}
+.obj-table tr:nth-child(even) td { background: var(--card); }
+
+/* ── Tracker ── */
+.tracker-controls {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+.tracker-input {
+  flex: 1;
+  min-width: 140px;
+  padding: 10px 14px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--ivory);
+  font-size: 14px;
+  font-family: 'Segoe UI', Arial, sans-serif;
+}
+.tracker-input:focus { outline: none; border-color: var(--gold); }
+.tracker-select {
+  padding: 10px 14px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--ivory);
+  font-size: 14px;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  cursor: pointer;
+}
+.tracker-select:focus { outline: none; border-color: var(--gold); }
+.add-btn {
+  padding: 10px 20px;
+  background: var(--gold);
+  border: none;
+  border-radius: 8px;
+  color: #111;
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.add-btn:hover { filter: brightness(1.1); }
+.tracker-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 16px;
+}
+.tracker-table th {
+  background: var(--card);
+  color: var(--stone);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 10px 12px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+.tracker-table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border);
+  color: var(--ivory);
+  font-size: 13px;
+}
+.tracker-table .status-badge {
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 600;
+}
+.status-recu { background: var(--gold-glow); color: var(--gold); }
+.status-contacte { background: #1A2A3A; color: #6AADCF; }
+.status-qualifie { background: #2A2A1A; color: #CFAD6A; }
+.status-booking { background: var(--green-glow); color: #5DAE7B; }
+.status-client { background: #1A3A2A; color: #4ADE80; }
+.delete-row {
+  background: none;
+  border: none;
+  color: var(--stone);
+  cursor: pointer;
+  font-size: 16px;
+  padding: 4px;
+  transition: color 0.2s;
+}
+.delete-row:hover { color: #E55; }
+
+/* ── Danger Box ── */
+.danger-box {
+  background: var(--danger-bg);
+  border: 1px solid var(--danger);
+  border-radius: 12px;
+  padding: 24px;
+  margin: 20px 0;
+}
+.danger-box h4 {
+  color: #CF6A6A;
+  font-family: Georgia, serif;
+  margin-bottom: 12px;
+}
+
+/* ── Tip Box ── */
+.tip-box {
+  background: var(--success-bg);
+  border: 1px solid var(--success);
+  border-radius: 12px;
+  padding: 24px;
+  margin: 20px 0;
+}
+.tip-box h4 {
+  color: #5DAE7B;
+  font-family: Georgia, serif;
+  margin-bottom: 12px;
+}
+
+/* ── Responsive ── */
+@media (max-width: 600px) {
+  .hero { padding: 40px 16px 28px; }
+  .hero-number { font-size: 42px; }
+  .hero-subtitle { font-size: 14px; letter-spacing: 2px; }
+  .content { padding: 24px 16px 60px; }
+  .section-title { font-size: 22px; }
+  .stats-row { grid-template-columns: 1fr 1fr; }
+  .stat-value { font-size: 28px; }
+  .process-step { flex-direction: column; gap: 10px; }
+  .tracker-controls { flex-direction: column; }
+  .tracker-input, .tracker-select { min-width: 100%; }
+  .reward-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── Hero ── -->
+<div class="hero">
+  <div class="hero-brand">SAPIENS</div>
+  <div class="hero-number">3<span class="gold-six">6</span>0</div>
+  <div class="hero-subtitle">Systeme de Referral</div>
+  <div class="hero-desc">"Le seul canal de croissance exponentiel — cout 0&euro;, close rate 50-70%"</div>
+</div>
+
+<!-- ── Tab Nav ── -->
+<nav class="tab-nav">
+  <button class="tab-btn active" data-tab="pourquoi">Pourquoi</button>
+  <button class="tab-btn" data-tab="moments">4 Moments</button>
+  <button class="tab-btn" data-tab="recompense">Recompense</button>
+  <button class="tab-btn" data-tab="faciliter">Faciliter</button>
+  <button class="tab-btn" data-tab="process">Process</button>
+  <button class="tab-btn" data-tab="ghl">GHL Tracking</button>
+  <button class="tab-btn" data-tab="objectifs">Objectifs</button>
+  <button class="tab-btn" data-tab="tracker">Tracker</button>
+</nav>
+
+<!-- ── Content ── -->
+<div class="content">
+
+  <!-- POURQUOI -->
+  <div class="section active" id="pourquoi">
+    <h2 class="section-title">Pourquoi les Referrals</h2>
+    <p class="section-sub">Le canal le plus sous-estime du coaching high-ticket</p>
+
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-value">0&euro;</div>
+        <div class="stat-label">Cout d'acquisition</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">50-70%</div>
+        <div class="stat-label">Close rate referral</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">25-30%</div>
+        <div class="stat-label">Close rate cold</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">+40%</div>
+        <div class="stat-label">LTV superieure</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Le Math Exponentiel</h3>
+      <p>8 clients actuels &times; 2-3 contacts chacun = <strong style="color:var(--gold)">16-24 leads ultra-qualifies</strong></p>
+      <ul>
+        <li>Confiance pre-etablie : la recommandation vient de quelqu'un qui a eu des resultats</li>
+        <li>Cycle de vente raccourci : moins de resistance, moins d'objections</li>
+        <li>LTV plus haute : les clients referres restent plus longtemps et referent a leur tour</li>
+        <li>Zero cout media : pas de pub, pas de production de contenu</li>
+      </ul>
+    </div>
+
+    <div class="tip-box">
+      <h4>Pourquoi ca marche en sante/peau</h4>
+      <p style="color:var(--ivory);font-size:14px;">Les problemes de peau sont visibles. Quand quelqu'un voit les resultats sur une amie, la question vient naturellement : "T'as fait quoi ?". C'est le referral le plus organique qui existe.</p>
+    </div>
+  </div>
+
+  <!-- 4 MOMENTS -->
+  <div class="section" id="moments">
+    <h2 class="section-title">4 Moments pour Demander</h2>
+    <p class="section-sub">Chaque moment a son script copy-paste</p>
+
+    <div class="card">
+      <div class="card-label">Moment 1 — Post-Close (Jour Meme)</div>
+      <h3>Juste apres le paiement</h3>
+      <p>La confiance est au maximum. Le client vient de prendre une decision forte. C'est LE moment.</p>
+      <div class="script-block">
+        <p>"Felicitations, on va faire un super travail ensemble. Dis-moi, tu connais quelqu'un dans ton entourage qui vit la meme chose que toi ? Une amie, une soeur, une collegue ? Parce que si tu penses a quelqu'un, je serais ravi de lui offrir la meme clarte que tu viens d'avoir."</p>
+        <button class="copy-btn" onclick="copyScript(this)" title="Copier">&#x2398;</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Moment 2 — Post-Call Sans Vente</div>
+      <h3>Elle n'a pas achete mais a eu de la valeur</h3>
+      <p>Meme si c'est pas le bon moment pour elle, elle a probablement quelqu'un qui en a besoin.</p>
+      <div class="script-block">
+        <p>"Meme si c'est pas le bon moment pour toi, est-ce que tu connais une amie qui galere avec sa peau ? Quelqu'un qui a essaye plein de choses sans trouver de solution durable ? Si tu penses a quelqu'un, on peut lui offrir un appel diagnostic gratuit — sans engagement."</p>
+        <button class="copy-btn" onclick="copyScript(this)" title="Copier">&#x2398;</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Moment 3 — J+30 Resultats (Geoffrey)</div>
+      <h3>Quand les premiers resultats sont visibles</h3>
+      <p>Geoffrey pose la question naturellement pendant le suivi.</p>
+      <div class="script-block">
+        <p>"Tu commences a voir des changements, et c'est genial. Si tu connais quelqu'un autour de toi qui vit la meme chose — une amie avec de la rosacee, de l'eczema, de l'acne — dis-le moi. On pourrait l'aider comme on t'aide. Et pour te remercier, on t'offre un mois d'extension gratuite sur ton suivi."</p>
+        <button class="copy-btn" onclick="copyScript(this)" title="Copier">&#x2398;</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Moment 4 — Alumni</div>
+      <h3>Clients ayant termine le protocole</h3>
+      <p>Relances periodiques aux anciens clients. Ils sont la preuve vivante que ca marche.</p>
+      <div class="script-block">
+        <p>"Salut [Prenom] ! J'espere que tout va bien depuis la fin du protocole. Je voulais prendre de tes nouvelles. Et si jamais tu as une amie qui galere avec sa peau comme toi a l'epoque, n'hesite pas a me l'envoyer. On offre toujours l'appel diagnostic gratuit. Et si elle signe, tu gagnes un mois d'extension gratuite sur un futur accompagnement."</p>
+        <button class="copy-btn" onclick="copyScript(this)" title="Copier">&#x2398;</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- RECOMPENSE -->
+  <div class="section" id="recompense">
+    <h2 class="section-title">Systeme de Recompense</h2>
+    <p class="section-sub">Simple, genereux, memorisable</p>
+
+    <div class="reward-grid">
+      <div class="reward-card">
+        <div class="reward-icon" style="color:var(--gold);">&#9733;</div>
+        <h4>1 Referral qui Signe</h4>
+        <p>1 mois d'extension gratuite sur ton suivi SAPIENS 360</p>
+      </div>
+      <div class="reward-card">
+        <div class="reward-icon" style="color:var(--gold);">&#9733;&#9733;</div>
+        <h4>2 Referrals qui Signent</h4>
+        <p>Extension illimitee — tu restes dans le programme aussi longtemps que tu veux</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Pourquoi ce systeme</h3>
+      <ul>
+        <li><strong>Simple a expliquer</strong> : "1 ami = 1 mois offert" se retient en 3 secondes</li>
+        <li><strong>Win-win</strong> : le client gagne du suivi, Geoffrey gagne un prospect ultra-qualifie</li>
+        <li><strong>Pas de cash</strong> : on ne paie pas en argent, on offre de la valeur. Ca reste coherent avec le positionnement premium</li>
+        <li><strong>Exponentiel</strong> : les clients avec extension referent encore plus</li>
+      </ul>
+    </div>
+
+    <div class="danger-box">
+      <h4>Ne Jamais Faire</h4>
+      <ul style="color:var(--ivory);font-size:14px;padding-left:20px;">
+        <li>Offrir des reductions cash ou des commissions</li>
+        <li>Proposer le referral quand le client n'est pas satisfait</li>
+        <li>Mettre de la pression : la question doit etre naturelle, pas insistante</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- FACILITER -->
+  <div class="section" id="faciliter">
+    <h2 class="section-title">Faciliter le Referral</h2>
+    <p class="section-sub">Plus c'est facile, plus ca arrive</p>
+
+    <div class="card">
+      <h3>Etre Specifique</h3>
+      <p>Ne demande pas "tu connais quelqu'un ?". Demande :</p>
+      <div class="script-block">
+        <p>"Tu connais une amie avec de la rosacee ? De l'eczema ? De l'acne adulte qui revient malgre les traitements ?"</p>
+        <button class="copy-btn" onclick="copyScript(this)" title="Copier">&#x2398;</button>
+      </div>
+      <p style="color:var(--stone);font-size:13px;margin-top:8px;">Plus tu es precis sur la douleur, plus le cerveau du client fait le lien avec une personne concrete.</p>
+    </div>
+
+    <div class="card">
+      <h3>Fournir un Lien a Partager</h3>
+      <p>Donne au client un lien direct vers la VSL ou le Calendly de Jad. Quelque chose qu'il peut envoyer en 1 clic :</p>
+      <div class="script-block">
+        <p>"Tiens, je t'envoie un lien. Tu peux juste le partager a ton amie. C'est une video de 9 min de Geoffrey qui explique tout. Si ca lui parle, elle peut reserver son appel directement."</p>
+        <button class="copy-btn" onclick="copyScript(this)" title="Copier">&#x2398;</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Proposer de DM Directement</h3>
+      <p>Si le client est OK, Jad DM la personne directement au nom de Geoffrey :</p>
+      <div class="script-block">
+        <p>"Si tu preferes, donne-moi son prenom et son Insta. Je la contacte directement au nom de Geoffrey, de maniere douce et respectueuse. Comme ca, tu n'as rien a faire."</p>
+        <button class="copy-btn" onclick="copyScript(this)" title="Copier">&#x2398;</button>
+      </div>
+    </div>
+
+    <div class="tip-box">
+      <h4>Les 3 Niveaux de Facilite</h4>
+      <ol style="color:var(--ivory);font-size:14px;padding-left:20px;">
+        <li><strong>Niveau 1</strong> : Le client envoie le lien lui-meme (minimum effort cote nous)</li>
+        <li><strong>Niveau 2</strong> : Le client donne le nom + Insta, Jad DM (medium effort)</li>
+        <li><strong>Niveau 3</strong> : Le client fait une introduction en story/DM (maximum impact)</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- PROCESS -->
+  <div class="section" id="process">
+    <h2 class="section-title">Process Quand Referral Identifie</h2>
+    <p class="section-sub">Du nom au booking en 48h max</p>
+
+    <div class="process-step">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <h4>DM Personnalise par Jad</h4>
+        <p>Au nom de Geoffrey. Mention du client source. Ton naturel, pas commercial.</p>
+      </div>
+    </div>
+
+    <div class="script-block">
+      <p>"Salut [Prenom] ! Je suis Jad, je travaille avec Geoffrey de SAPIENS 360. [Prenom du client source] m'a parle de toi. Elle m'a dit que tu galeres avec [probleme specifique]. Geoffrey a un appel diagnostic gratuit ou il analyse ton profil et te dit honnetement s'il peut t'aider. Ca t'interesse ?"</p>
+      <button class="copy-btn" onclick="copyScript(this)" title="Copier">&#x2398;</button>
+    </div>
+
+    <div class="process-step">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <h4>Qualification Rapide</h4>
+        <p>3 questions : Quel probleme de peau ? Depuis combien de temps ? Qu'est-ce que tu as deja essaye ?</p>
+      </div>
+    </div>
+
+    <div class="process-step">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <h4>VSL ou Calendly</h4>
+        <p>Si qualifiee : envoyer la VSL puis le Calendly. Si pas sure : VSL d'abord, relance apres visionnage.</p>
+      </div>
+    </div>
+
+    <div class="process-step">
+      <div class="step-num">4</div>
+      <div class="step-content">
+        <h4>H+48 Relance</h4>
+        <p>Si pas de reponse apres 48h : une seule relance. Douce, pas insistante.</p>
+      </div>
+    </div>
+
+    <div class="script-block">
+      <p>"Hey [Prenom], je voulais juste m'assurer que tu avais vu mon message. Pas de pression du tout — si c'est pas le bon moment, c'est ok. La video de Geoffrey est toujours dispo si jamais."</p>
+      <button class="copy-btn" onclick="copyScript(this)" title="Copier">&#x2398;</button>
+    </div>
+
+    <div class="danger-box">
+      <h4>Regles du Process</h4>
+      <ul style="color:var(--ivory);font-size:14px;padding-left:20px;">
+        <li>1 seule relance max. Pas de spam.</li>
+        <li>Toujours mentionner le client source (social proof)</li>
+        <li>Ne jamais mentionner le prix ou les details de l'offre en DM</li>
+        <li>Si la personne dit non, on la remercie et on arrete</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- GHL TRACKING -->
+  <div class="section" id="ghl">
+    <h2 class="section-title">GHL Tracking</h2>
+    <p class="section-sub">Tags et custom fields pour suivre chaque referral dans GoHighLevel</p>
+
+    <div class="card">
+      <h3>Tags Pipeline</h3>
+      <div class="tag-row">
+        <span class="tag tag-gold">referral</span>
+        <span class="tag tag-gold">referral-contacte</span>
+        <span class="tag tag-gold">referral-qualifie</span>
+        <span class="tag tag-green">referral-booking</span>
+        <span class="tag tag-green">referral-client</span>
+      </div>
+      <ul style="margin-top:16px;">
+        <li><strong>referral</strong> : contact recu via un client existant</li>
+        <li><strong>referral-contacte</strong> : DM envoye par Jad</li>
+        <li><strong>referral-qualifie</strong> : a repondu + qualifie (3 questions)</li>
+        <li><strong>referral-booking</strong> : appel diagnostic reserve</li>
+        <li><strong>referral-client</strong> : a signe le protocole</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>Custom Fields</h3>
+      <ul>
+        <li><strong>source_referral</strong> (text) : Nom du client qui a refere</li>
+        <li><strong>referral_date</strong> (date) : Date de reception du referral</li>
+      </ul>
+      <p style="color:var(--stone);font-size:13px;margin-top:12px;">Ces champs permettent de tracker quel client genere le plus de referrals et de calculer la valeur reelle de chaque client (LTV + valeur de ses referrals).</p>
+    </div>
+
+    <div class="tip-box">
+      <h4>Workflow GHL Suggere</h4>
+      <ol style="color:var(--ivory);font-size:14px;padding-left:20px;">
+        <li>Trigger : tag "referral" ajoute</li>
+        <li>Wait 48h</li>
+        <li>If tag "referral-contacte" absent &rarr; notification Jad "Referral non contacte"</li>
+        <li>If tag "referral-qualifie" present &rarr; ajouter au pipeline "Diagnostic"</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- OBJECTIFS -->
+  <div class="section" id="objectifs">
+    <h2 class="section-title">Objectifs par Mois</h2>
+    <p class="section-sub">Progression realiste de M1 a M6</p>
+
+    <table class="obj-table">
+      <thead>
+        <tr>
+          <th>Periode</th>
+          <th>Referrals Recus</th>
+          <th>Closes</th>
+          <th>% Revenue</th>
+          <th>Action Cle</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>M1</strong></td>
+          <td>2-3</td>
+          <td>1</td>
+          <td>~10%</td>
+          <td>Installer le reflexe post-close</td>
+        </tr>
+        <tr>
+          <td><strong>M2</strong></td>
+          <td>4-6</td>
+          <td>2-3</td>
+          <td>~15%</td>
+          <td>Activer J+30 avec Geoffrey</td>
+        </tr>
+        <tr>
+          <td><strong>M3</strong></td>
+          <td>6-10</td>
+          <td>3-5</td>
+          <td>~20%</td>
+          <td>Relancer les alumni</td>
+        </tr>
+        <tr>
+          <td><strong>M6</strong></td>
+          <td>15-25</td>
+          <td>8-15</td>
+          <td>20-30%</td>
+          <td>Systeme auto-entretenu</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="card">
+      <h3>North Star</h3>
+      <p>A M6, 20-30% du chiffre d'affaires doit venir des referrals. C'est le signe que le produit est si bon que les gens en parlent sans qu'on leur demande. Le systeme ne fait qu'accelerer ce qui se passe naturellement.</p>
+    </div>
+  </div>
+
+  <!-- TRACKER -->
+  <div class="section" id="tracker">
+    <h2 class="section-title">Referral Tracker</h2>
+    <p class="section-sub">Suivi manuel localStorage — les donnees restent sur ton navigateur</p>
+
+    <div class="tracker-controls">
+      <input class="tracker-input" id="ref-source" placeholder="Client source" />
+      <input class="tracker-input" id="ref-name" placeholder="Nom du referral" />
+      <select class="tracker-select" id="ref-status">
+        <option value="recu">Recu</option>
+        <option value="contacte">Contacte</option>
+        <option value="qualifie">Qualifie</option>
+        <option value="booking">Booking</option>
+        <option value="client">Client</option>
+      </select>
+      <button class="add-btn" onclick="addReferral()">+ Ajouter</button>
+    </div>
+
+    <table class="tracker-table">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Client Source</th>
+          <th>Referral</th>
+          <th>Status</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="tracker-body"></tbody>
+    </table>
+
+    <p style="color:var(--stone);font-size:12px;margin-top:16px;text-align:center;">Donnees sauvegardees localement. Clique sur le status pour le changer.</p>
+  </div>
+
+</div>
+
+<script>
+// ── Tab Navigation ──
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(btn.dataset.tab).classList.add('active');
+  });
+});
+
+// ── Copy Script ──
+function copyScript(btn) {
+  const text = btn.parentElement.querySelector('p').textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    btn.classList.add('copied');
+    btn.innerHTML = '&#x2713;';
+    setTimeout(() => {
+      btn.classList.remove('copied');
+      btn.innerHTML = '&#x2398;';
+    }, 2000);
+  });
+}
+
+// ── Referral Tracker ──
+const STORAGE_KEY = 'sapiens360_referrals';
+const statusOrder = ['recu','contacte','qualifie','booking','client'];
+const statusLabels = { recu:'Recu', contacte:'Contacte', qualifie:'Qualifie', booking:'Booking', client:'Client' };
+
+function loadReferrals() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; }
+  catch { return []; }
+}
+
+function saveReferrals(data) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+}
+
+function renderTracker() {
+  const data = loadReferrals();
+  const tbody = document.getElementById('tracker-body');
+  if (data.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--stone);padding:32px;">Aucun referral enregistre. Ajoute le premier ci-dessus.</td></tr>';
+    return;
+  }
+  tbody.innerHTML = data.map((r, i) => `
+    <tr>
+      <td>${r.date}</td>
+      <td>${r.source}</td>
+      <td>${r.name}</td>
+      <td><span class="status-badge status-${r.status}" style="cursor:pointer" onclick="cycleStatus(${i})">${statusLabels[r.status]}</span></td>
+      <td><button class="delete-row" onclick="deleteReferral(${i})">&times;</button></td>
+    </tr>
+  `).join('');
+}
+
+function addReferral() {
+  const source = document.getElementById('ref-source').value.trim();
+  const name = document.getElementById('ref-name').value.trim();
+  const status = document.getElementById('ref-status').value;
+  if (!source || !name) return;
+  const data = loadReferrals();
+  const today = new Date().toISOString().slice(0, 10);
+  data.unshift({ date: today, source, name, status });
+  saveReferrals(data);
+  document.getElementById('ref-source').value = '';
+  document.getElementById('ref-name').value = '';
+  renderTracker();
+}
+
+function cycleStatus(index) {
+  const data = loadReferrals();
+  const current = statusOrder.indexOf(data[index].status);
+  data[index].status = statusOrder[(current + 1) % statusOrder.length];
+  saveReferrals(data);
+  renderTracker();
+}
+
+function deleteReferral(index) {
+  const data = loadReferrals();
+  data.splice(index, 1);
+  saveReferrals(data);
+  renderTracker();
+}
+
+renderTracker();
+</script>
+</body>
+</html>

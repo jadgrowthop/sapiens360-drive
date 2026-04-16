@@ -1,0 +1,1941 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAPIENS 360 — Tous les Emails GHL</title>
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg: #111;
+  --card: #161616;
+  --border: #2C4A3555;
+  --gold: #B8956A;
+  --green: #2C4A35;
+  --ivory: #FAF7F2;
+  --stone: #888;
+  --text: #e0ddd8;
+  --dark-text: #1A1A18;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Segoe UI', Arial, sans-serif;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── HERO ── */
+.hero {
+  text-align: center;
+  padding: 60px 24px 40px;
+  border-bottom: 2px solid var(--green);
+  margin-bottom: 0;
+}
+.hero .brand-sapiens {
+  font-family: Georgia, serif;
+  font-size: 14px;
+  color: var(--gold);
+  letter-spacing: 6px;
+  text-transform: uppercase;
+}
+.hero .brand-360 {
+  font-family: Georgia, serif;
+  font-size: 52px;
+  color: #fff;
+}
+.hero .brand-360 span { color: var(--gold); }
+.hero h2 {
+  font-size: 18px;
+  color: var(--gold);
+  margin-top: 10px;
+  font-weight: 400;
+  letter-spacing: 2px;
+}
+.hero p {
+  color: var(--stone);
+  margin-top: 14px;
+  font-size: 14px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ── STICKY NAV ── */
+.sticky-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: #0d0d0d;
+  border-bottom: 1px solid var(--border);
+  padding: 0;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.sticky-nav::-webkit-scrollbar { height: 3px; }
+.sticky-nav::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 2px; }
+.nav-inner {
+  display: flex;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 12px;
+  gap: 0;
+  min-width: max-content;
+}
+.nav-tab {
+  background: none;
+  border: none;
+  color: var(--stone);
+  font-family: 'Segoe UI', Arial, sans-serif;
+  font-size: 13px;
+  padding: 14px 16px;
+  cursor: pointer;
+  white-space: nowrap;
+  border-bottom: 2px solid transparent;
+  transition: all .2s;
+}
+.nav-tab:hover { color: var(--gold); }
+.nav-tab.active {
+  color: var(--gold);
+  border-bottom-color: var(--gold);
+}
+
+/* ── CONTAINER ── */
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 30px 20px;
+}
+
+/* ── SECTIONS ── */
+.section { display: none; }
+.section.active { display: block; }
+
+/* ── WORKFLOW SECTIONS ── */
+.wf-section {
+  margin-bottom: 40px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 32px;
+  background: var(--card);
+}
+.wf-section h2 {
+  font-family: Georgia, serif;
+  font-size: 26px;
+  color: var(--gold);
+  margin-bottom: 6px;
+}
+.wf-section h3 {
+  font-family: Georgia, serif;
+  font-size: 20px;
+  color: var(--gold);
+  margin: 24px 0 12px;
+}
+.wf-trigger {
+  background: var(--green);
+  color: var(--gold);
+  display: inline-block;
+  padding: 6px 16px;
+  border-radius: 6px;
+  font-size: 13px;
+  margin-bottom: 18px;
+}
+.wf-flow {
+  background: #1a1a1a;
+  border: 1px solid #333;
+  border-radius: 8px;
+  padding: 16px 20px;
+  margin-bottom: 24px;
+  font-size: 13px;
+  color: #aaa;
+  line-height: 2;
+}
+.wf-flow .step {
+  display: inline-block;
+  background: #222;
+  border: 1px solid #444;
+  padding: 4px 12px;
+  border-radius: 4px;
+  margin: 2px 4px;
+  color: #ddd;
+}
+.wf-flow .arrow { color: var(--gold); margin: 0 2px; }
+
+/* ── EMAIL BLOCKS ── */
+.email-block {
+  margin-bottom: 36px;
+  border: 1px solid #2C4A3544;
+  border-radius: 10px;
+  overflow: hidden;
+}
+.email-header {
+  background: #1e1e1e;
+  padding: 14px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #333;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.email-header .email-label {
+  font-size: 15px;
+  color: var(--gold);
+  font-weight: 600;
+}
+.email-header .email-subject {
+  font-size: 13px;
+  color: #999;
+}
+.email-code-wrap { position: relative; }
+.copy-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: var(--gold);
+  color: #fff;
+  border: none;
+  padding: 8px 18px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  z-index: 2;
+  transition: background .2s;
+}
+.copy-btn:hover { background: #a07a55; }
+.copy-btn.copied { background: var(--green); }
+pre.email-code {
+  background: #0d0d0d;
+  color: #c8c4be;
+  padding: 20px;
+  padding-top: 50px;
+  font-size: 12px;
+  line-height: 1.5;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+/* ── WAIT INDICATORS ── */
+.wait-step {
+  text-align: center;
+  padding: 14px;
+  color: var(--gold);
+  font-size: 14px;
+}
+.wait-step .wait-icon { font-size: 20px; }
+
+/* ── OVERVIEW ── */
+.overview {
+  background: #1a1a1a;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 28px;
+  margin-bottom: 30px;
+}
+.overview h3 {
+  color: var(--gold);
+  font-family: Georgia, serif;
+  font-size: 20px;
+  margin-bottom: 16px;
+}
+.overview-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.overview-card {
+  background: #222;
+  border: 1px solid #333;
+  border-radius: 8px;
+  padding: 16px;
+}
+.overview-card h4 {
+  color: var(--gold);
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+.overview-card p { color: #999; font-size: 13px; }
+.overview-card .wf-badge {
+  display: inline-block;
+  background: var(--green);
+  color: var(--gold);
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  margin-bottom: 6px;
+  font-weight: 700;
+}
+
+/* ── ANTI-OVERLAP ── */
+.anti-overlap {
+  background: linear-gradient(135deg, #1a2e1a, #1a1a1a);
+  border: 1px solid var(--green);
+  border-radius: 10px;
+  padding: 24px;
+  margin-bottom: 30px;
+}
+.anti-overlap h3 {
+  color: var(--gold);
+  font-family: Georgia, serif;
+  font-size: 18px;
+  margin-bottom: 14px;
+}
+.anti-overlap table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+.anti-overlap th {
+  text-align: left;
+  color: var(--gold);
+  padding: 8px 12px;
+  border-bottom: 1px solid #2C4A35;
+}
+.anti-overlap td {
+  padding: 8px 12px;
+  border-bottom: 1px solid #222;
+  color: #ccc;
+}
+.anti-overlap code {
+  background: #222;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 12px;
+  color: var(--gold);
+}
+
+/* ── CONDITION NOTE ── */
+.condition-note {
+  background: #2C4A3522;
+  border-left: 3px solid var(--green);
+  padding: 12px 16px;
+  margin-bottom: 20px;
+  border-radius: 0 6px 6px 0;
+  font-size: 13px;
+  color: #aaa;
+}
+
+/* ── REMOVAL ACTION ── */
+.remove-action {
+  background: rgba(231,76,60,0.08);
+  border: 1px solid rgba(231,76,60,0.2);
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin: 14px 0;
+  font-size: 14px;
+}
+.remove-action .label { color: #e74c3c; font-weight: bold; }
+.remove-action .desc { color: #ccc; }
+
+/* ── INFO BOX ── */
+.info-box {
+  background: #1a2e1a;
+  border: 1px solid var(--green);
+  border-radius: 8px;
+  padding: 14px 18px;
+  margin: 14px 0;
+  font-size: 14px;
+  color: #a8b5ab;
+}
+.info-box b { color: var(--gold); }
+
+/* ── DIFF BOX ── */
+.diff-box {
+  background: rgba(184,149,106,0.12);
+  border: 1px solid rgba(184,149,106,0.3);
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin: 14px 0;
+  font-size: 14px;
+}
+.diff-box .label { color: var(--gold); font-weight: bold; }
+.diff-box .desc { color: #ccc; }
+
+/* ── CONDITION TABS ── */
+.cond-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+.cond-tab {
+  background: #222;
+  border: 1px solid #444;
+  color: #ccc;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  transition: all .2s;
+}
+.cond-tab:hover { border-color: var(--gold); color: var(--gold); }
+.cond-tab.active {
+  background: var(--green);
+  border-color: var(--green);
+  color: var(--gold);
+  font-weight: 600;
+}
+.cond-content { display: none; }
+.cond-content.active { display: block; }
+
+/* ── FOOTER ── */
+.page-footer {
+  text-align: center;
+  padding: 40px 20px;
+  border-top: 1px solid var(--border);
+  margin-top: 40px;
+}
+.page-footer p { color: var(--stone); font-size: 13px; }
+.page-footer .brand {
+  font-family: Georgia, serif;
+  color: var(--gold);
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+
+/* ── EMAIL COUNT BADGE ── */
+.email-count {
+  display: inline-block;
+  background: var(--gold);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 10px;
+  margin-left: 8px;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  .overview-grid { grid-template-columns: 1fr; }
+  .wf-section { padding: 20px 16px; }
+  .email-header { flex-direction: column; }
+  .nav-tab { font-size: 12px; padding: 12px 10px; }
+  .hero .brand-360 { font-size: 40px; }
+  .anti-overlap { overflow-x: auto; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════ HERO ═══════════════ -->
+<div class="hero">
+  <div class="brand-sapiens">SAPIENS</div>
+  <div class="brand-360">3<span>6</span>0</div>
+  <h2>Tous les Emails GHL</h2>
+  <p>WF1-WF5 + Onboarding + Referral — chaque email avec bouton copier</p>
+</div>
+
+<!-- ═══════════════ STICKY NAV ═══════════════ -->
+<div class="sticky-nav">
+  <div class="nav-inner">
+    <button class="nav-tab active" onclick="showSection('overview')">Vue d'ensemble</button>
+    <button class="nav-tab" onclick="showSection('wf1')">WF1 VSL Relance</button>
+    <button class="nav-tab" onclick="showSection('wf2')">WF2 Pre-Close</button>
+    <button class="nav-tab" onclick="showSection('wf3')">WF3 Post-Call Rescue</button>
+    <button class="nav-tab" onclick="showSection('wf3b')">WF3b Geoffrey</button>
+    <button class="nav-tab" onclick="showSection('wf4')">WF4 No-Show</button>
+    <button class="nav-tab" onclick="showSection('wf5')">WF5 Rebook</button>
+    <button class="nav-tab" onclick="showSection('onboarding')">Onboarding</button>
+    <button class="nav-tab" onclick="showSection('referral')">Referral</button>
+    <button class="nav-tab" onclick="showSection('temoignages')">Temoignages par Condition</button>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- SECTION: VUE D'ENSEMBLE                     -->
+<!-- ═══════════════════════════════════════════ -->
+<div id="sec-overview" class="section active">
+
+<div class="overview">
+  <h3>Architecture des Workflows</h3>
+  <div class="overview-grid">
+    <div class="overview-card">
+      <span class="wf-badge">WF1</span>
+      <h4>VSL Relance</h4>
+      <p><b>Trigger :</b> Tag "vsl-envoyee"<br>
+      <b>Emails :</b> 3 / 5 jours<br>
+      <b>Objectif :</b> Curiosity + pattern interrupt + urgence</p>
+    </div>
+    <div class="overview-card">
+      <span class="wf-badge">WF2</span>
+      <h4>Pre-Close Booking</h4>
+      <p><b>Trigger :</b> RDV booke<br>
+      <b>Emails :</b> 6 condition + rappels J-1/H-1<br>
+      <b>Objectif :</b> Temoignages + micro-engagement</p>
+    </div>
+    <div class="overview-card">
+      <span class="wf-badge">WF3</span>
+      <h4>Post-Call Rescue (Jad)</h4>
+      <p><b>Trigger :</b> Tag "call-sans-vente"<br>
+      <b>Emails :</b> 3 / 5 jours<br>
+      <b>Objectif :</b> Signe Jad + Geoffrey</p>
+    </div>
+    <div class="overview-card">
+      <span class="wf-badge">WF3b</span>
+      <h4>Post-Call Rescue (Geoffrey)</h4>
+      <p><b>Trigger :</b> Tag "call-geoffrey-sans-vente"<br>
+      <b>Emails :</b> 3 / 5 jours<br>
+      <b>Objectif :</b> Signe Geoffrey + Jad</p>
+    </div>
+    <div class="overview-card">
+      <span class="wf-badge">WF4</span>
+      <h4>No-Show Recovery</h4>
+      <p><b>Trigger :</b> Appointment No Show<br>
+      <b>Emails :</b> 3 / 3 jours<br>
+      <b>Objectif :</b> Empathie + reframe + scarcite</p>
+    </div>
+    <div class="overview-card">
+      <span class="wf-badge">WF5</span>
+      <h4>Rebook</h4>
+      <p><b>Trigger :</b> RDV booke + HAS "no-show"<br>
+      <b>Emails :</b> 1<br>
+      <b>Objectif :</b> Re-confirmation</p>
+    </div>
+  </div>
+</div>
+
+<!-- ANTI-OVERLAP -->
+<div class="anti-overlap">
+  <h3>Regles Anti-Overlap</h3>
+  <p style="color:#a8b5ab;font-size:13px;margin-bottom:14px;">Chaque workflow remove les precedents pour empecher les doublons d'emails.</p>
+  <table>
+    <thead>
+      <tr><th>Workflow</th><th>Remove en 1ere action</th><th>Raison</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><code>WF1</code></td><td>Aucun (premier du funnel)</td><td>Point d'entree</td></tr>
+      <tr><td><code>WF2</code></td><td>WF1</td><td>Le prospect a booke, plus besoin de relance VSL</td></tr>
+      <tr><td><code>WF3</code></td><td>WF1 + WF2</td><td>Call fait, plus besoin de pre-close ni VSL</td></tr>
+      <tr><td><code>WF3b</code></td><td>WF1 + WF2</td><td>Idem WF3, calls Geoffrey</td></tr>
+      <tr><td><code>WF4</code></td><td>WF1 + WF2</td><td>No-show, arret des sequences precedentes</td></tr>
+      <tr><td><code>WF5</code></td><td>WF2 + WF4</td><td>Rebook apres no-show, pas de doublon testimonial</td></tr>
+      <tr><td><code>Onboarding</code></td><td>Tous</td><td>Client signe, arret de tous les workflows de vente</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- STATS -->
+<div class="overview" style="margin-bottom:0">
+  <h3>Statistiques</h3>
+  <div class="overview-grid" style="grid-template-columns:repeat(4,1fr)">
+    <div class="overview-card" style="text-align:center">
+      <div style="font-family:Georgia,serif;font-size:32px;color:#fff">36</div>
+      <p>Emails totaux</p>
+    </div>
+    <div class="overview-card" style="text-align:center">
+      <div style="font-family:Georgia,serif;font-size:32px;color:#fff">8</div>
+      <p>Workflows</p>
+    </div>
+    <div class="overview-card" style="text-align:center">
+      <div style="font-family:Georgia,serif;font-size:32px;color:#fff">6</div>
+      <p>Conditions</p>
+    </div>
+    <div class="overview-card" style="text-align:center">
+      <div style="font-family:Georgia,serif;font-size:32px;color:#fff">2</div>
+      <p>Signataires</p>
+    </div>
+  </div>
+</div>
+
+</div><!-- /sec-overview -->
+
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- SECTION: WF1 — VSL RELANCE                  -->
+<!-- ═══════════════════════════════════════════ -->
+<div id="sec-wf1" class="section">
+<div class="wf-section">
+  <h2>WF1 — VSL Relance <span class="email-count">3 emails</span></h2>
+  <div class="wf-trigger">Trigger : Contact Tag &rarr; vsl-envoyee</div>
+  <div class="wf-flow">
+    <span class="step">Tag: vsl-envoyee</span>
+    <span class="arrow">&rarr;</span>
+    <span class="step">Email 1 (immediat)</span>
+    <span class="arrow">&rarr;</span>
+    <span class="step">Wait 1 jour</span>
+    <span class="arrow">&rarr;</span>
+    <span class="step">Email 2</span>
+    <span class="arrow">&rarr;</span>
+    <span class="step">Wait 2 jours</span>
+    <span class="arrow">&rarr;</span>
+    <span class="step">Email 3</span>
+  </div>
+
+  <!-- WF1 EMAIL 1 -->
+  <div class="email-block">
+    <div class="email-header">
+      <span class="email-label">Email 1 — Curiosity Open Loop</span>
+      <span class="email-subject">Objet : Il y a quelque chose que personne ne t'a montre | De : Geoffrey</span>
+    </div>
+    <div class="email-code-wrap">
+      <button class="copy-btn" onclick="copyCode('wf1e1')">Copier</button>
+      <pre class="email-code" id="wf1e1">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;UTF-8&quot;&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+&lt;/head&gt;
+&lt;body style=&quot;margin:0;padding:0;background:#f4f1ec;&quot;&gt;
+&lt;table role=&quot;presentation&quot; width=&quot;100%&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; style=&quot;background:#f4f1ec;padding:20px 0;&quot;&gt;
+&lt;tr&gt;&lt;td align=&quot;center&quot;&gt;
+&lt;table role=&quot;presentation&quot; width=&quot;600&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; style=&quot;max-width:600px;width:100%;&quot;&gt;
+
+&lt;!-- HEADER --&gt;
+&lt;tr&gt;&lt;td style=&quot;background:#2C4A35;padding:32px 24px 24px;text-align:center;&quot;&gt;
+&lt;div style=&quot;font-family:Georgia,serif;font-size:12px;color:#B8956A;letter-spacing:6px;text-transform:uppercase;&quot;&gt;SAPIENS&lt;/div&gt;
+&lt;div style=&quot;font-family:Georgia,serif;font-size:38px;color:#ffffff;&quot;&gt;3&lt;span style=&quot;color:#B8956A;&quot;&gt;6&lt;/span&gt;0&lt;/div&gt;
+&lt;div style=&quot;width:60px;height:2px;background:#B8956A;margin:12px auto;&quot;&gt;&lt;/div&gt;
+&lt;div style=&quot;font-family:Georgia,serif;font-size:11px;color:#B8956A;letter-spacing:3px;text-transform:uppercase;&quot;&gt;Protocole Terrain Biologique&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;
+
+&lt;!-- BODY --&gt;
+&lt;tr&gt;&lt;td style=&quot;background:#FAF7F2;padding:36px 32px;font-family:Arial,sans-serif;font-size:16px;color:#1A1A18;line-height:1.7;&quot;&gt;
+&lt;p style=&quot;margin:0 0 18px;&quot;&gt;{{contact.first_name}},&lt;/p&gt;
+
+&lt;p style=&quot;margin:0 0 18px;&quot;&gt;Il y a quelque chose que je voudrais te montrer.&lt;/p&gt;
+
+&lt;p style=&quot;margin:0 0 18px;&quot;&gt;Pas un produit. Pas une cr&egrave;me. Pas un &eacute;ni&egrave;me conseil &laquo;&nbsp;bois plus d'eau et dors mieux&nbsp;&raquo;.&lt;/p&gt;
+
+&lt;p style=&quot;margin:0 0 18px;&quot;&gt;Quelque chose que personne ne t'a jamais montr&eacute; &mdash; parce que &ccedil;a remet en question tout ce qu'on t'a dit sur ta peau.&lt;/p&gt;
+
+&lt;p style=&quot;margin:0 0 18px;&quot;&gt;C'est une vid&eacute;o de 20 minutes. Dedans, j'explique pourquoi les traitements classiques (cr&egrave;mes, antibiotiques, cortisone, compl&eacute;ments) ne r&egrave;glent jamais le probl&egrave;me &mdash; et ce qui se passe vraiment sous ta peau.&lt;/p&gt;
+
+&lt;p style=&quot;margin:0 0 18px;&quot;&gt;Si tu l'as d&eacute;j&agrave; regard&eacute;e : parfait. Relis quand m&ecirc;me ce mail jusqu'au bout.&lt;/p&gt;
+
+&lt;p style=&quot;margin:0 0 18px;&quot;&gt;Si tu ne l'as pas encore vue &mdash; c'est le moment.&lt;/p&gt;
+
+&lt;p style=&quot;margin:0 0 28px;text-align:center;&quot;&gt;
+&lt;a href=&quot;https://sapiens360.fr/vsl?email={{contact.email}}&quot; style=&quot;display:inline-block;background:#B8956A;color:#ffffff;padding:14px 32px;border-radius:6px;text-decoration:none;font-weight:bold;font-size:16px;&quot;&gt;Regarder la vid&eacute;o&lt;/a&gt;
+&lt;/p&gt;
+
+&lt;p style=&quot;margin:0 0 18px;&quot;&gt;&Agrave; tout de suite de l'autre c&ocirc;t&eacute;.&lt;/p&gt;
+
+&lt;!-- SIGNATURE --&gt;
+&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; border=&quot;0&quot; style=&quot;margin-top:28px;padding-top:20px;border-top:1px solid #e8e0d8;font-family:Arial,Helvetica,sans-serif;color:#1A1A18;line-height:1.4&quot;&gt;&lt;tr&gt;&lt;td style=&quot;padding-right:16px;border-right:2px solid #B8956A;vertical-align:middle&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; border=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;font-size:17px;font-weight:bold;color:#1A1A18;letter-spacing:0.5px;padding-bottom:2px&quot;&gt;Geoffrey&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;font-size:11px;color:#9E8E7A;letter-spacing:2.5px;text-transform:uppercase&quot;&gt;Fondateur &amp;amp; Praticien&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/td&gt;&lt;td style=&quot;padding-left:16px;vertical-align:middle&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; border=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;font-size:14px;color:#2C4A35;letter-spacing:1px&quot;&gt;&lt;span style=&quot;font-weight:bold&quot;&gt;SAPIENS&lt;/span&gt;&lt;span style=&quot;color:#B8956A&quot;&gt;360&lt;/span&gt;&lt;span style=&quot;font-size:9px;color:#B8956A;vertical-align:top&quot;&gt;&amp;#8482;&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;font-size:11px;color:#9E8E7A;letter-spacing:1.5px;padding-top:3px&quot;&gt;Recalibrage du Terrain Biologique&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+
+&lt;/td&gt;&lt;/tr&gt;
+
+&lt;!-- FOOTER --&gt;
+&lt;tr&gt;&lt;td style=&quot;background:#2C4A35;padding:24px;text-align:center;&quot;&gt;
+&lt;div style=&quot;font-family:Georgia,serif;font-size:14px;color:#ffffff;margin-bottom:12px;&quot;&gt;SAPIENS 360&amp;trade;&lt;/div&gt;
+&lt;div&gt;
+&lt;a href=&quot;https://www.instagram.com/geo_le_sapiens&quot; style=&quot;color:#B8956A;text-decoration:none;font-size:13px;margin:0 8px;&quot;&gt;Instagram&lt;/a&gt;
+&lt;a href=&quot;https://www.facebook.com/profile.php?id=61585577240619&quot; style=&quot;color:#B8956A;text-decoration:none;font-size:13px;margin:0 8px;&quot;&gt;Facebook&lt;/a&gt;
+&lt;a href=&quot;https://www.youtube.com/@geolesapiens&quot; style=&quot;color:#B8956A;text-decoration:none;font-size:13px;margin:0 8px;&quot;&gt;YouTube&lt;/a&gt;
+&lt;/div&gt;
+&lt;div style=&quot;margin-top:14px;padding-top:12px;border-top:1px solid #4a5e4f;font-family:Arial,sans-serif;font-size:11px;color:#8a9e8f;line-height:1.5;&quot;&gt;
+SAPIENS 360 &middot; 495 rue du faubourg Bannier, 45000 Orl&eacute;ans, France&lt;br&gt;
+Tu re&ccedil;ois cet email parce que tu nous as contact&eacute;s. &lt;a href=&quot;{{contact.unsubscribe_url}}&quot; style=&quot;color:#B8956A;text-decoration:underline;&quot;&gt;Se d&eacute;sabonner&lt;/a&gt;
+&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;
+
+&lt;/table&gt;
+&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+    </div>
+  </div>
+
+  <div class="wait-step"><span class="wait-icon">&#9202;</span> Wait 1 jour</div>
+
+  <!-- WF1 EMAIL 2 -->
+  <div class="email-block">
+    <div class="email-header">
+      <span class="email-label">Email 2 — Pattern Interrupt</span>
+      <span class="email-subject">Objet : Le cycle que personne ne t'a explique | De : Geoffrey</span>
+    </div>
+    <div class="email-code-wrap">
+      <button class="copy-btn" onclick="copyCode('wf1e2')">Copier</button>
+      <pre class="email-code" id="wf1e2">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;UTF-8&quot;&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+&lt;/head&gt;
+&lt;body style=&quot;margin:0;padding:0;background:#f4f1ec;&quot;&gt;
+&lt;table role=&quot;presentation&quot; width=&quot;100%&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; style=&quot;background:#f4f1ec;padding:20px 0;&quot;&gt;
+&lt;tr&gt;&lt;td align=&quot;center&quot;&gt;
+&lt;table role=&quot;presentation&quot; width=&quot;600&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; style=&quot;max-width:600px;width:100%;&quot;&gt;
+
+&lt;!-- HEADER --&gt;
+&lt;tr&gt;&lt;td style=&quot;background:#2C4A35;padding:32px 24px 24px;text-align:center;&quot;&gt;
+&lt;div style=&quot;font-family:Georgia,serif;font-size:12px;color:#B8956A;letter-spacing:6px;text-transform:uppercase;&quot;&gt;SAPIENS&lt;/div&gt;
+&lt;div style=&quot;font-family:Georgia,serif;font-size:38px;color:#ffffff;&quot;&gt;3&lt;span style=&quot;color:#B8956A;&quot;&gt;6&lt;/span&gt;0&lt;/div&gt;
+&lt;div style=&quot;width:60px;height:2px;background:#B8956A;margin:12px auto;&quot;&gt;&lt;/div&gt;
+&lt;div style=&quot;font-family:Georgia,serif;font-size:11px;color:#B8956A;letter-spacing:3px;text-transform:uppercase;&quot;&gt;Protocole Terrain Biologique&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;
+
+&lt;!-- BODY --&gt;
+&lt;tr&gt;&lt;td style=&quot;background:#FAF7F2;padding:36px 32px;font-family:Arial,sans-serif;font-size:16px;color:#1A1A18;line-height:1.7;&quot;&gt;
+&lt;p style=&quot;margin:0 0 18px;&quot;&gt;{{contact.first_name}},&lt;/p&gt;
+
+&lt;p style=&quot;margin:0 0 18px;&quot;&gt;Je vais te d&eacute;crire ta vie. Dis-moi si je me trompe.&lt;/p&gt;
+
+&lt;p style=&quot;margin:0 0 18px;&quot;&gt;Tu essaies quelque chose de nouveau &mdash; une cr&egrave;me, un compl&eacute;ment, un r&eacute;gime. Pendant 2 &agrave; 3 semaines, ta peau s'am&eacute;liore. Tu te dis &laquo;&nbsp;cette fois, c'est la bonne&nbsp;&raquo;.&lt;/p&gt;
+
+&lt;p style=&quot;margin:0 0 18px;&quot;&gt;Et puis &ccedil;a revient. Parfois pire qu'avant.&lt;/p&gt;
+
+&lt;p style=&quot;margin:0 0 18px;&quot;&gt;Tu changes de produit. Tu reconsultes. Tu recommences.&lt;/p&gt;
+
+&lt;p style=&quot;margin:0 0 18px;&quot;&gt;&lt;strong&gt;Am&eacute;lioration &rarr; Espoir &rarr; Rechute &rarr; Frustration.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p style=&quot;margin:0 0 18px;&quot;&gt;Ce cycle, des centaines de personnes me l'ont d&eacute;crit. Mot pour mot. Et tous avaient la m&ecirc;me question : &lt;em&gt;pourquoi rien ne tient ?&lt;/em&gt;&lt;/p&gt;
+
+&lt;p style=&quot;margin:0 0 18px;&quot;&gt;La r&eacute;ponse est simple &mdash; mais personne ne te l'a expliqu&eacute;e.&lt;/p&gt;
+
+&lt;p style=&quot;margin:0 0 18px;&quot;&gt;&lt;strong&gt;Ta peau n'est pas le probl&egrave;me. C'est le signal.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p style=&quot;margin:0 0 18px;&quot;&gt;Derri&egrave;re chaque pouss&eacute;e, il y a un d&eacute;s&eacute;quilibre du terrain : intestin perm&eacute;able, inflammation chronique de bas grade, syst&egrave;me immunitaire d&eacute;r&eacute;gul&eacute;.&lt;/p&gt;
+
+&lt;p style=&quot;margin:0 0 18px;&quot;&gt;L'axe intestin-immunit&eacute;-peau. C'est l&agrave; que tout se joue.&lt;/p&gt;
+
+&lt;p style=&quot;margin:0 0 18px;&quot;&gt;Tant que tu traites la surface, le cycle continue. Quand tu stabilises le terrain &mdash; le cycle s'arr&ecirc;te.&lt;/p&gt;
+
+&lt;p style=&quot;margin:0 0 18px;&quot;&gt;C'est exactement ce que j'explique dans cette vid&eacute;o :&lt;/p&gt;
+
+&lt;p style=&quot;margin:0 0 28px;text-align:center;&quot;&gt;
+&lt;a href=&quot;https://sapiens360.fr/vsl?email={{contact.email}}&quot; style=&quot;display:inline-block;background:#B8956A;color:#ffffff;padding:14px 32px;border-radius:6px;text-decoration:none;font-weight:bold;font-size:16px;&quot;&gt;Comprendre l'axe intestin-peau&lt;/a&gt;
+&lt;/p&gt;
+
+&lt;!-- SIGNATURE --&gt;
+&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; border=&quot;0&quot; style=&quot;margin-top:28px;padding-top:20px;border-top:1px solid #e8e0d8;font-family:Arial,Helvetica,sans-serif;color:#1A1A18;line-height:1.4&quot;&gt;&lt;tr&gt;&lt;td style=&quot;padding-right:16px;border-right:2px solid #B8956A;vertical-align:middle&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; border=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;font-size:17px;font-weight:bold;color:#1A1A18;letter-spacing:0.5px;padding-bottom:2px&quot;&gt;Geoffrey&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;font-size:11px;color:#9E8E7A;letter-spacing:2.5px;text-transform:uppercase&quot;&gt;Fondateur &amp;amp; Praticien&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/td&gt;&lt;td style=&quot;padding-left:16px;vertical-align:middle&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; border=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;font-size:14px;color:#2C4A35;letter-spacing:1px&quot;&gt;&lt;span style=&quot;font-weight:bold&quot;&gt;SAPIENS&lt;/span&gt;&lt;span style=&quot;color:#B8956A&quot;&gt;360&lt;/span&gt;&lt;span style=&quot;font-size:9px;color:#B8956A;vertical-align:top&quot;&gt;&amp;#8482;&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;font-size:11px;color:#9E8E7A;letter-spacing:1.5px;padding-top:3px&quot;&gt;Recalibrage du Terrain Biologique&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+
+&lt;/td&gt;&lt;/tr&gt;
+
+&lt;!-- FOOTER --&gt;
+&lt;tr&gt;&lt;td style=&quot;background:#2C4A35;padding:24px;text-align:center;&quot;&gt;
+&lt;div style=&quot;font-family:Georgia,serif;font-size:14px;color:#ffffff;margin-bottom:12px;&quot;&gt;SAPIENS 360&amp;trade;&lt;/div&gt;
+&lt;div&gt;
+&lt;a href=&quot;https://www.instagram.com/geo_le_sapiens&quot; style=&quot;color:#B8956A;text-decoration:none;font-size:13px;margin:0 8px;&quot;&gt;Instagram&lt;/a&gt;
+&lt;a href=&quot;https://www.facebook.com/profile.php?id=61585577240619&quot; style=&quot;color:#B8956A;text-decoration:none;font-size:13px;margin:0 8px;&quot;&gt;Facebook&lt;/a&gt;
+&lt;a href=&quot;https://www.youtube.com/@geolesapiens&quot; style=&quot;color:#B8956A;text-decoration:none;font-size:13px;margin:0 8px;&quot;&gt;YouTube&lt;/a&gt;
+&lt;/div&gt;
+&lt;div style=&quot;margin-top:14px;padding-top:12px;border-top:1px solid #4a5e4f;font-family:Arial,sans-serif;font-size:11px;color:#8a9e8f;line-height:1.5;&quot;&gt;
+SAPIENS 360 &middot; 495 rue du faubourg Bannier, 45000 Orl&eacute;ans, France&lt;br&gt;
+Tu re&ccedil;ois cet email parce que tu nous as contact&eacute;s. &lt;a href=&quot;{{contact.unsubscribe_url}}&quot; style=&quot;color:#B8956A;text-decoration:underline;&quot;&gt;Se d&eacute;sabonner&lt;/a&gt;
+&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;
+
+&lt;/table&gt;
+&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+    </div>
+  </div>
+
+  <div class="wait-step"><span class="wait-icon">&#9202;</span> Wait 2 jours</div>
+
+  <!-- WF1 EMAIL 3 -->
+  <div class="email-block">
+    <div class="email-header">
+      <span class="email-label">Email 3 — Urgence douce / Version A vs B</span>
+      <span class="email-subject">Objet : Derniere chose, [prenom] | De : Geoffrey</span>
+    </div>
+    <div class="email-code-wrap">
+      <button class="copy-btn" onclick="copyCode('wf1e3')">Copier</button>
+      <pre class="email-code" id="wf1e3">&lt;table cellpadding="0" cellspacing="0" border="0" width="100%" style="background-color:#f4f1ec"&gt;&lt;tr&gt;&lt;td align="center" style="padding:20px 10px"&gt;
+&lt;table cellpadding="0" cellspacing="0" border="0" width="600" style="max-width:600px;width:100%"&gt;
+&lt;tr&gt;&lt;td align="center" style="background-color:#2C4A35;padding:28px 32px;border-radius:12px 12px 0 0"&gt;&lt;table cellpadding="0" cellspacing="0" border="0"&gt;&lt;tr&gt;&lt;td align="center" style="font-family:Georgia,serif;font-size:12px;letter-spacing:4px;color:#B8956A;text-transform:uppercase;padding-bottom:6px"&gt;SAPIENS&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="center" style="font-family:Georgia,serif;font-size:38px;color:#FAF7F2;letter-spacing:2px"&gt;3&lt;span style="color:#B8956A"&gt;6&lt;/span&gt;0&lt;span style="font-size:14px;color:#B8956A;vertical-align:super"&gt;&amp;#8482;&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="center" style="padding-top:10px"&gt;&lt;table cellpadding="0" cellspacing="0" border="0"&gt;&lt;tr&gt;&lt;td style="width:40px;height:1px;background-color:#B8956A;font-size:1px;line-height:1px"&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="center" style="font-family:Arial,sans-serif;font-size:9px;letter-spacing:3px;color:#8a9e8f;text-transform:uppercase;padding-top:10px"&gt;Protocole Terrain Biologique&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style="background-color:#FAF7F2;padding:36px 32px;font-family:Arial,Helvetica,sans-serif;font-size:16px;line-height:1.65;color:#1A1A18"&gt;
+&lt;p style="margin:0 0 16px"&gt;{{contact.first_name}},&lt;/p&gt;
+&lt;p style="margin:0 0 16px"&gt;C'est mon dernier message.&lt;/p&gt;
+&lt;p style="margin:0 0 16px"&gt;Je ne vais pas te convaincre. Je ne suis pas vendeur. Je suis praticien. Mon r&ocirc;le c'est de te montrer ce qui se passe dans ton corps. Je l'ai fait dans la vid&eacute;o que je t'ai envoy&eacute;e.&lt;/p&gt;
+&lt;p style="margin:0 0 16px"&gt;Maintenant, je vais te poser une seule question :&lt;/p&gt;
+&lt;p style="margin:0 0 16px;font-size:18px;font-weight:bold;color:#2C4A35;text-align:center;padding:12px 0"&gt;Dans 90 jours, o&ugrave; en sera ta peau ?&lt;/p&gt;
+&lt;p style="margin:0 0 16px"&gt;Si tu ne changes rien &mdash; honn&ecirc;tement &mdash; est-ce qu'elle sera stable ? Ou est-ce que tu seras toujours dans le m&ecirc;me cycle ? Am&eacute;lioration. Espoir. Rechute. R&eacute;signation.&lt;/p&gt;
+&lt;p style="margin:0 0 16px"&gt;Il y a deux versions de toi dans 90 jours.&lt;/p&gt;
+&lt;table cellpadding="0" cellspacing="0" border="0" width="100%" style="margin:0 0 20px"&gt;&lt;tr&gt;
+&lt;td width="48%" style="background-color:#ffffff;border:1px solid #e8e0d8;border-radius:8px;padding:16px;vertical-align:top"&gt;
+&lt;p style="margin:0 0 8px;font-weight:bold;color:#c0392b;font-size:13px"&gt;VERSION A&lt;/p&gt;
+&lt;p style="margin:0;font-size:14px;color:#666;line-height:1.5"&gt;Tu n'as rien chang&eacute;. Ta peau est au m&ecirc;me point. Tu as d&eacute;pens&eacute; 200-400&euro; de plus en cr&egrave;mes. Tu te dis encore "il faut que je trouve une solution".&lt;/p&gt;
+&lt;/td&gt;&lt;td width="4%"&gt;&lt;/td&gt;
+&lt;td width="48%" style="background-color:#ffffff;border:1px solid #2C4A35;border-radius:8px;padding:16px;vertical-align:top"&gt;
+&lt;p style="margin:0 0 8px;font-weight:bold;color:#2C4A35;font-size:13px"&gt;VERSION B&lt;/p&gt;
+&lt;p style="margin:0;font-size:14px;color:#666;line-height:1.5"&gt;Tu as compris le m&eacute;canisme. Tu as stabilis&eacute; ton terrain. Ta peau commence &agrave; se calmer &mdash; vraiment. Tu ne v&eacute;rifies plus le miroir 10 fois par jour.&lt;/p&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;p style="margin:0 0 16px"&gt;La vid&eacute;o que je t'ai envoy&eacute;e, c'est la porte d'entr&eacute;e vers la Version B.&lt;/p&gt;
+&lt;p style="text-align:center;margin:24px 0"&gt;&lt;a href="https://sapiens360.fr/vsl?email={{contact.email}}" style="display:inline-block;background-color:#B8956A;color:#ffffff;padding:14px 32px;border-radius:6px;text-decoration:none;font-weight:bold;font-size:15px"&gt;Regarder la vid&eacute;o &mdash; derni&egrave;re chance&lt;/a&gt;&lt;/p&gt;
+&lt;p style="margin:0;font-size:14px;color:#9E8E7A"&gt;Apr&egrave;s cet email, je ne te relancerai plus. Si dans 3 mois tu te dis "j'aurais d&ucirc; regarder" &mdash; souviens-toi de ce message.&lt;/p&gt;
+&lt;div style="margin-top:28px;padding-top:20px;border-top:1px solid #e8e0d8"&gt;&lt;table cellpadding="0" cellspacing="0" border="0" style="font-family:Arial,Helvetica,sans-serif;color:#1A1A18;line-height:1.4"&gt;&lt;tr&gt;&lt;td style="padding-right:16px;border-right:2px solid #B8956A;vertical-align:middle"&gt;&lt;table cellpadding="0" cellspacing="0" border="0"&gt;&lt;tr&gt;&lt;td style="font-size:17px;font-weight:bold;color:#1A1A18;letter-spacing:0.5px;padding-bottom:2px"&gt;Geoffrey&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style="font-size:11px;color:#9E8E7A;letter-spacing:2.5px;text-transform:uppercase"&gt;Fondateur &amp;amp; Praticien&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/td&gt;&lt;td style="padding-left:16px;vertical-align:middle"&gt;&lt;table cellpadding="0" cellspacing="0" border="0"&gt;&lt;tr&gt;&lt;td style="font-size:14px;color:#2C4A35;letter-spacing:1px"&gt;&lt;span style="font-weight:bold"&gt;SAPIENS&lt;/span&gt;&lt;span style="color:#B8956A"&gt;360&lt;/span&gt;&lt;span style="font-size:9px;color:#B8956A;vertical-align:top"&gt;&amp;#8482;&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style="font-size:11px;color:#9E8E7A;letter-spacing:1.5px;padding-top:3px"&gt;Recalibrage du Terrain Biologique&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td align="center" style="background-color:#2C4A35;padding:24px 32px;border-radius:0 0 12px 12px"&gt;&lt;p style="margin:0 0 8px;font-family:Arial,sans-serif;font-size:13px;color:#a8b5ab;font-weight:bold;letter-spacing:1px"&gt;SAPIENS 360&amp;#8482;&lt;/p&gt;&lt;p style="margin:0 0 12px;font-family:Arial,sans-serif;font-size:12px;color:#7a8e7f"&gt;Protocole Terrain Biologique&lt;/p&gt;&lt;p style="margin:0;font-family:Arial,sans-serif;font-size:13px"&gt;&lt;a href="https://www.instagram.com/geo_le_sapiens" style="text-decoration:none;color:#B8956A;font-weight:bold"&gt;Instagram&lt;/a&gt;&lt;span style="color:#4a5e4f"&gt; &amp;#183; &lt;/span&gt;&lt;a href="https://www.facebook.com/profile.php?id=61585577240619" style="text-decoration:none;color:#B8956A;font-weight:bold"&gt;Facebook&lt;/a&gt;&lt;span style="color:#4a5e4f"&gt; &amp;#183; &lt;/span&gt;&lt;a href="https://www.youtube.com/@geolesapiens" style="text-decoration:none;color:#B8956A;font-weight:bold"&gt;YouTube&lt;/a&gt;&lt;/p&gt;&lt;p style="margin:14px 0 0;padding-top:12px;border-top:1px solid #4a5e4f;font-family:Arial,sans-serif;font-size:11px;color:#8a9e8f;line-height:1.5"&gt;SAPIENS 360 &middot; 495 rue du faubourg Bannier, 45000 Orl&eacute;ans, France&lt;br&gt;Tu re&ccedil;ois cet email parce que tu nous as contact&eacute;s. &lt;a href="{{contact.unsubscribe_url}}" style="color:#B8956A;text-decoration:underline"&gt;Se d&eacute;sabonner&lt;/a&gt;&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</pre>
+    </div>
+  </div>
+</div>
+</div><!-- /sec-wf1 -->
+
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- SECTION: WF2 — PRE-CLOSE BOOKING            -->
+<!-- ═══════════════════════════════════════════ -->
+<div id="sec-wf2" class="section">
+<div class="wf-section">
+  <h2>WF2 — Pre-Close Booking <span class="email-count">6 condition + 2 rappels</span></h2>
+  <div class="wf-trigger">Trigger : Appointment Booked &middot; NOT tag "no-show" &middot; Once per contact</div>
+  <div class="remove-action"><span class="label">ACTION 1 :</span> <span class="desc">Remove from Workflow &rarr; WF1 (VSL Relance)</span></div>
+  <div class="wf-flow">
+    <span class="step">RDV Booked</span>
+    <span class="arrow">&rarr;</span>
+    <span class="step">Remove WF1</span>
+    <span class="arrow">&rarr;</span>
+    <span class="step">Wait 6h</span>
+    <span class="arrow">&rarr;</span>
+    <span class="step">If/Else Condition</span>
+    <span class="arrow">&rarr;</span>
+    <span class="step">Email Condition</span>
+    <span class="arrow">&rarr;</span>
+    <span class="step">Wait until 24h before appointment</span>
+    <span class="arrow">&rarr;</span>
+    <span class="step">Email Rappel J-1</span>
+    <span class="arrow">&rarr;</span>
+    <span class="step">Wait until 1h before appointment</span>
+    <span class="arrow">&rarr;</span>
+    <span class="step">Email H-1</span>
+  </div>
+  <div class="info-box"><b>Important :</b> Les Wait sont relatifs a l'heure de l'appel (Appointment Start Time). Si le prospect book pour dans 2h, GHL skip automatiquement les waits deja passes.</div>
+  <div class="condition-note">Envoyer l'email correspondant a la condition du contact (psoriasis, acne, rosacee, eczema, digestion) ou l'email generique si "Autre" / pas de condition.</div>
+
+  <h3>Emails Temoignages par Condition</h3>
+  <p style="color:#999;font-size:13px;margin-bottom:16px">Selectionnez une condition pour voir l'email correspondant :</p>
+
+  <!-- CONDITION TABS -->
+  <div class="cond-tabs" data-group="wf2cond">
+    <button class="cond-tab active" onclick="showCondTab('wf2cond','psoriasis')">Psoriasis</button>
+    <button class="cond-tab" onclick="showCondTab('wf2cond','acne')">Acne</button>
+    <button class="cond-tab" onclick="showCondTab('wf2cond','rosacee')">Rosacee</button>
+    <button class="cond-tab" onclick="showCondTab('wf2cond','eczema')">Eczema</button>
+    <button class="cond-tab" onclick="showCondTab('wf2cond','digestion')">Digestion</button>
+    <button class="cond-tab" onclick="showCondTab('wf2cond','generique')">Generique</button>
+  </div>
+
+  <!-- PSORIASIS -->
+  <div class="cond-content active" data-group="wf2cond" data-tab="psoriasis">
+  <div class="email-block">
+    <div class="email-header">
+      <span class="email-label">Email PSORIASIS — Amelie's story</span>
+      <span class="email-subject">Objet : 8 ans de plaques. Mon dermato ne comprend pas. | De : Geoffrey</span>
+    </div>
+    <div class="email-code-wrap">
+      <button class="copy-btn" onclick="copyCode('wf2pso')">Copier</button>
+      <pre class="email-code" id="wf2pso">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;UTF-8&quot;&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+&lt;/head&gt;
+&lt;body style=&quot;margin:0;padding:0;background:#f4f1ec;&quot;&gt;
+&lt;table role=&quot;presentation&quot; width=&quot;100%&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; style=&quot;background:#f4f1ec;padding:20px 0;&quot;&gt;
+&lt;tr&gt;&lt;td align=&quot;center&quot;&gt;
+&lt;table role=&quot;presentation&quot; width=&quot;600&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; style=&quot;max-width:600px;width:100%;&quot;&gt;
+
+&lt;!-- HEADER --&gt;
+&lt;tr&gt;&lt;td style=&quot;background:#2C4A35;padding:32px 24px 24px;text-align:center;&quot;&gt;
+&lt;div style=&quot;font-family:Georgia,serif;font-size:12px;color:#B8956A;letter-spacing:6px;text-transform:uppercase;&quot;&gt;SAPIENS&lt;/div&gt;
+&lt;div style=&quot;font-family:Georgia,serif;font-size:38px;color:#ffffff;&quot;&gt;3&lt;span style=&quot;color:#B8956A;&quot;&gt;6&lt;/span&gt;0&lt;/div&gt;
+&lt;div style=&quot;width:60px;height:2px;background:#B8956A;margin:12px auto;&quot;&gt;&lt;/div&gt;
+&lt;div style=&quot;font-family:Georgia,serif;font-size:11px;color:#B8956A;letter-spacing:3px;text-transform:uppercase;&quot;&gt;Protocole Terrain Biologique&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;
+
+&lt;!-- BODY --&gt;
+&lt;tr&gt;&lt;td style=&quot;background:#FAF7F2;padding:36px 32px;font-family:Arial,sans-serif;font-size:16px;color:#1A1A18;line-height:1.7;&quot;&gt;
+&lt;p style=&quot;margin:0 0 18px;&quot;&gt;{{contact.first_name}},&lt;/p&gt;
+
+&lt;p style=&quot;margin:0 0 18px;&quot;&gt;Ton appel est r&eacute;serv&eacute;. Avant qu'on se parle, je voulais te montrer quelque chose.&lt;/p&gt;
+
+&lt;p style=&quot;margin:0 0 18px;&quot;&gt;Ces personnes avaient toutes du psoriasis. Ils avaient tous essay&eacute;. Ils pensaient tous que c'&eacute;tait chronique. Voici ce qui s'est pass&eacute; quand on a trait&eacute; le terrain :&lt;/p&gt;
+
+&lt;div style=&quot;background:#f0ece4;border-left:4px solid #B8956A;padding:16px 20px;margin:0 0 18px;border-radius:0 8px 8px 0;&quot;&gt;
+&lt;p style=&quot;margin:0 0 8px;font-style:italic;color:#333;&quot;&gt;&laquo;&nbsp;D&egrave;s la premi&egrave;re semaine j'ai perdu 4 kilos et mon psoriasis a commenc&eacute; &agrave; reculer. Au bout de 2 mois, mes plaques avaient quasiment disparu &mdash; apr&egrave;s 9 ans.&nbsp;&raquo;&lt;/p&gt;
+&lt;p style=&quot;margin:0;font-size:14px;color:#B8956A;font-weight:bold;&quot;&gt;&mdash; Erwan&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;div style=&quot;background:#f0ece4;border-left:4px solid #B8956A;padding:16px 20px;margin:0 0 18px;border-radius:0 8px 8px 0;&quot;&gt;
+&lt;p style=&quot;margin:0 0 8px;font-style:italic;color:#333;&quot;&gt;&laquo;&nbsp;8 ans de cortisone. &Agrave; chaque arr&ecirc;t, effet rebond. J'ai commenc&eacute; le protocole en gardant la cortisone, puis j'ai pu diminuer progressivement. Aujourd'hui j'ai arr&ecirc;t&eacute; compl&egrave;tement.&nbsp;&raquo;&lt;/p&gt;
+&lt;p style=&quot;margin:0;font-size:14px;color:#B8956A;font-weight:bold;&quot;&gt;&mdash; Am&eacute;lie D., 38 ans&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;div style=&quot;background:#f0ece4;border-left:4px solid #B8956A;padding:16px 20px;margin:0 0 18px;border-radius:0 8px 8px 0;&quot;&gt;
+&lt;p style=&quot;margin:0 0 8px;font-style:italic;color:#333;&quot;&gt;&laquo;&nbsp;Mon dermato m'a dit &agrave; 29 ans : le psoriasis c'est &agrave; vie. J'ai pleur&eacute; dans ma voiture. 90 jours de protocole plus tard, mes coudes et mes genoux sont lisses.&nbsp;&raquo;&lt;/p&gt;
+&lt;p style=&quot;margin:0;font-size:14px;color:#B8956A;font-weight:bold;&quot;&gt;&mdash; Laura G., 33 ans&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;div style=&quot;background:#f0ece4;border-left:4px solid #B8956A;padding:16px 20px;margin:0 0 18px;border-radius:0 8px 8px 0;&quot;&gt;
+&lt;p style=&quot;margin:0 0 8px;font-style:italic;color:#333;&quot;&gt;&laquo;&nbsp;6 ans de psoriasis du cuir chevelu. &Agrave; la semaine 4, je ne me grattais plus la nuit. &Agrave; 90 jours &mdash; plus rien.&nbsp;&raquo;&lt;/p&gt;
+&lt;p style=&quot;margin:0;font-size:14px;color:#B8956A;font-weight:bold;&quot;&gt;&mdash; L&eacute;a M., 32 ans&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;p style=&quot;margin:0 0 18px;&quot;&gt;Leur point commun ? Ils n'ont pas &laquo;&nbsp;gu&eacute;ri leur psoriasis&nbsp;&raquo;. Ils ont stabilis&eacute; le terrain qui le provoquait.&lt;/p&gt;
+
+&lt;p style=&quot;margin:0 0 18px;&quot;&gt;C'est exactement ce qu'on va analyser ensemble lors de ton appel.&lt;/p&gt;
+
+&lt;p style=&quot;margin:0 0 18px;&quot;&gt;&Agrave; demain pour ton appel.&lt;/p&gt;
+
+&lt;!-- SIGNATURE --&gt;
+&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; border=&quot;0&quot; style=&quot;margin-top:28px;padding-top:20px;border-top:1px solid #e8e0d8;font-family:Arial,Helvetica,sans-serif;color:#1A1A18;line-height:1.4&quot;&gt;&lt;tr&gt;&lt;td style=&quot;padding-right:16px;border-right:2px solid #B8956A;vertical-align:middle&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; border=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;font-size:17px;font-weight:bold;color:#1A1A18;letter-spacing:0.5px;padding-bottom:2px&quot;&gt;Geoffrey&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;font-size:11px;color:#9E8E7A;letter-spacing:2.5px;text-transform:uppercase&quot;&gt;Fondateur &amp;amp; Praticien&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/td&gt;&lt;td style=&quot;padding-left:16px;vertical-align:middle&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; border=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;font-size:14px;color:#2C4A35;letter-spacing:1px&quot;&gt;&lt;span style=&quot;font-weight:bold&quot;&gt;SAPIENS&lt;/span&gt;&lt;span style=&quot;color:#B8956A&quot;&gt;360&lt;/span&gt;&lt;span style=&quot;font-size:9px;color:#B8956A;vertical-align:top&quot;&gt;&amp;#8482;&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;font-size:11px;color:#9E8E7A;letter-spacing:1.5px;padding-top:3px&quot;&gt;Recalibrage du Terrain Biologique&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+
+&lt;/td&gt;&lt;/tr&gt;
+
+&lt;!-- FOOTER --&gt;
+&lt;tr&gt;&lt;td style=&quot;background:#2C4A35;padding:24px;text-align:center;&quot;&gt;
+&lt;div style=&quot;font-family:Georgia,serif;font-size:14px;color:#ffffff;margin-bottom:12px;&quot;&gt;SAPIENS 360&amp;trade;&lt;/div&gt;
+&lt;div&gt;
+&lt;a href=&quot;https://www.instagram.com/geo_le_sapiens&quot; style=&quot;color:#B8956A;text-decoration:none;font-size:13px;margin:0 8px;&quot;&gt;Instagram&lt;/a&gt;
+&lt;a href=&quot;https://www.facebook.com/profile.php?id=61585577240619&quot; style=&quot;color:#B8956A;text-decoration:none;font-size:13px;margin:0 8px;&quot;&gt;Facebook&lt;/a&gt;
+&lt;a href=&quot;https://www.youtube.com/@geolesapiens&quot; style=&quot;color:#B8956A;text-decoration:none;font-size:13px;margin:0 8px;&quot;&gt;YouTube&lt;/a&gt;
+&lt;/div&gt;
+&lt;div style=&quot;margin-top:14px;padding-top:12px;border-top:1px solid #4a5e4f;font-family:Arial,sans-serif;font-size:11px;color:#8a9e8f;line-height:1.5;&quot;&gt;
+SAPIENS 360 &middot; 495 rue du faubourg Bannier, 45000 Orl&eacute;ans, France&lt;br&gt;
+Tu re&ccedil;ois cet email parce que tu nous as contact&eacute;s. &lt;a href=&quot;{{contact.unsubscribe_url}}&quot; style=&quot;color:#B8956A;text-decoration:underline;&quot;&gt;Se d&eacute;sabonner&lt;/a&gt;
+&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;
+
+&lt;/table&gt;
+&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+    </div>
+  </div>
+  </div>
+
+  <!-- ACNE -->
+  <div class="cond-content" data-group="wf2cond" data-tab="acne">
+  <div class="email-block">
+    <div class="email-header">
+      <span class="email-label">Email ACNE — Sophie's story</span>
+      <span class="email-subject">Objet : Pour la premiere fois, quelqu'un m'a explique POURQUOI. | De : Geoffrey</span>
+    </div>
+    <div class="email-code-wrap">
+      <button class="copy-btn" onclick="copyCode('wf2acne')">Copier</button>
+      <pre class="email-code" id="wf2acne">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;UTF-8&quot;&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+&lt;/head&gt;
+&lt;body style=&quot;margin:0;padding:0;background:#f4f1ec;&quot;&gt;
+&lt;table role=&quot;presentation&quot; width=&quot;100%&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; style=&quot;background:#f4f1ec;padding:20px 0;&quot;&gt;
+&lt;tr&gt;&lt;td align=&quot;center&quot;&gt;
+&lt;table role=&quot;presentation&quot; width=&quot;600&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; style=&quot;max-width:600px;width:100%;&quot;&gt;
+&lt;tr&gt;&lt;td style=&quot;background:#2C4A35;padding:32px 24px 24px;text-align:center;&quot;&gt;
+&lt;div style=&quot;font-family:Georgia,serif;font-size:12px;color:#B8956A;letter-spacing:6px;text-transform:uppercase;&quot;&gt;SAPIENS&lt;/div&gt;
+&lt;div style=&quot;font-family:Georgia,serif;font-size:38px;color:#ffffff;&quot;&gt;3&lt;span style=&quot;color:#B8956A;&quot;&gt;6&lt;/span&gt;0&lt;/div&gt;
+&lt;div style=&quot;width:60px;height:2px;background:#B8956A;margin:12px auto;&quot;&gt;&lt;/div&gt;
+&lt;div style=&quot;font-family:Georgia,serif;font-size:11px;color:#B8956A;letter-spacing:3px;text-transform:uppercase;&quot;&gt;Protocole Terrain Biologique&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style=&quot;background:#FAF7F2;padding:36px 32px;font-family:Arial,sans-serif;font-size:16px;color:#1A1A18;line-height:1.7;&quot;&gt;
+&lt;p style=&quot;margin:0 0 18px;&quot;&gt;{{contact.first_name}},&lt;/p&gt;
+&lt;p style=&quot;margin:0 0 18px;&quot;&gt;Ton appel est r&eacute;serv&eacute;. Avant qu'on se parle, lis ces t&eacute;moignages.&lt;/p&gt;
+&lt;p style=&quot;margin:0 0 18px;&quot;&gt;Ces personnes avaient toutes de l'acn&eacute;. Certaines depuis l'adolescence, d'autres apparue &agrave; 25 ou 30 ans. Tous avaient essay&eacute; &mdash; antibiotiques, pilule, Roaccutane. Voici ce qui s'est pass&eacute; quand on a enfin trait&eacute; la cause :&lt;/p&gt;
+&lt;div style=&quot;background:#f0ece4;border-left:4px solid #B8956A;padding:16px 20px;margin:0 0 18px;border-radius:0 8px 8px 0;&quot;&gt;
+&lt;p style=&quot;margin:0 0 8px;font-style:italic;color:#333;&quot;&gt;&laquo;&nbsp;4 ans de doxycycline non-stop. D&egrave;s que j'arr&ecirc;tais &mdash; retour des boutons. Avec le protocole, j'ai arr&ecirc;t&eacute; les antibiotiques. 3 mois plus tard, ma peau est stable sans aucun m&eacute;dicament.&nbsp;&raquo;&lt;/p&gt;
+&lt;p style=&quot;margin:0;font-size:14px;color:#B8956A;font-weight:bold;&quot;&gt;&mdash; Sarah V., 36 ans&lt;/p&gt;
+&lt;/div&gt;
+&lt;div style=&quot;background:#f0ece4;border-left:4px solid #B8956A;padding:16px 20px;margin:0 0 18px;border-radius:0 8px 8px 0;&quot;&gt;
+&lt;p style=&quot;margin:0 0 8px;font-style:italic;color:#333;&quot;&gt;&laquo;&nbsp;Pilule depuis mes 16 ans pour 'contr&ocirc;ler' l'acn&eacute;. Avec le protocole, j'ai enfin compris que la pilule masquait le probl&egrave;me. Aujourd'hui ma peau est claire sans hormones, sans antibiotiques, sans rien.&nbsp;&raquo;&lt;/p&gt;
+&lt;p style=&quot;margin:0;font-size:14px;color:#B8956A;font-weight:bold;&quot;&gt;&mdash; Sophie L., 28 ans&lt;/p&gt;
+&lt;/div&gt;
+&lt;div style=&quot;background:#f0ece4;border-left:4px solid #B8956A;padding:16px 20px;margin:0 0 18px;border-radius:0 8px 8px 0;&quot;&gt;
+&lt;p style=&quot;margin:0 0 8px;font-style:italic;color:#333;&quot;&gt;&laquo;&nbsp;G&eacute;n&eacute;raliste &rarr; dermato &rarr; gyn&eacute;co &rarr; pilule. 7 ans dans ce circuit. Geoffrey a &eacute;t&eacute; le premier &agrave; regarder l'ensemble.&nbsp;&raquo;&lt;/p&gt;
+&lt;p style=&quot;margin:0;font-size:14px;color:#B8956A;font-weight:bold;&quot;&gt;&mdash; In&egrave;s M., 31 ans&lt;/p&gt;
+&lt;/div&gt;
+&lt;div style=&quot;background:#f0ece4;border-left:4px solid #B8956A;padding:16px 20px;margin:0 0 18px;border-radius:0 8px 8px 0;&quot;&gt;
+&lt;p style=&quot;margin:0 0 8px;font-style:italic;color:#333;&quot;&gt;&laquo;&nbsp;Acn&eacute;, fatigue permanente, brouillard mental. Je pensais que c'&eacute;taient 3 probl&egrave;mes s&eacute;par&eacute;s. En stabilisant le terrain, les 3 se sont r&eacute;solus en m&ecirc;me temps.&nbsp;&raquo;&lt;/p&gt;
+&lt;p style=&quot;margin:0;font-size:14px;color:#B8956A;font-weight:bold;&quot;&gt;&mdash; Julie F., 29 ans&lt;/p&gt;
+&lt;/div&gt;
+&lt;p style=&quot;margin:0 0 18px;&quot;&gt;Leur point commun ? Ils n'ont pas &laquo;&nbsp;trait&eacute; leur acn&eacute;&nbsp;&raquo;. Ils ont stabilis&eacute; le terrain qui la provoquait &mdash; et l'acn&eacute; a disparu comme cons&eacute;quence.&lt;/p&gt;
+&lt;p style=&quot;margin:0 0 18px;&quot;&gt;C'est exactement ce qu'on va analyser ensemble lors de ton appel. &Agrave; demain pour ton appel.&lt;/p&gt;
+&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; border=&quot;0&quot; style=&quot;margin-top:28px;padding-top:20px;border-top:1px solid #e8e0d8;font-family:Arial,Helvetica,sans-serif;color:#1A1A18;line-height:1.4&quot;&gt;&lt;tr&gt;&lt;td style=&quot;padding-right:16px;border-right:2px solid #B8956A;vertical-align:middle&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; border=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;font-size:17px;font-weight:bold;color:#1A1A18;letter-spacing:0.5px;padding-bottom:2px&quot;&gt;Geoffrey&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;font-size:11px;color:#9E8E7A;letter-spacing:2.5px;text-transform:uppercase&quot;&gt;Fondateur &amp;amp; Praticien&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/td&gt;&lt;td style=&quot;padding-left:16px;vertical-align:middle&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; border=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;font-size:14px;color:#2C4A35;letter-spacing:1px&quot;&gt;&lt;span style=&quot;font-weight:bold&quot;&gt;SAPIENS&lt;/span&gt;&lt;span style=&quot;color:#B8956A&quot;&gt;360&lt;/span&gt;&lt;span style=&quot;font-size:9px;color:#B8956A;vertical-align:top&quot;&gt;&amp;#8482;&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;font-size:11px;color:#9E8E7A;letter-spacing:1.5px;padding-top:3px&quot;&gt;Recalibrage du Terrain Biologique&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style=&quot;background:#2C4A35;padding:24px;text-align:center;&quot;&gt;
+&lt;div style=&quot;font-family:Georgia,serif;font-size:14px;color:#ffffff;margin-bottom:12px;&quot;&gt;SAPIENS 360&amp;trade;&lt;/div&gt;
+&lt;div&gt;&lt;a href=&quot;https://www.instagram.com/geo_le_sapiens&quot; style=&quot;color:#B8956A;text-decoration:none;font-size:13px;margin:0 8px;&quot;&gt;Instagram&lt;/a&gt;&lt;a href=&quot;https://www.facebook.com/profile.php?id=61585577240619&quot; style=&quot;color:#B8956A;text-decoration:none;font-size:13px;margin:0 8px;&quot;&gt;Facebook&lt;/a&gt;&lt;a href=&quot;https://www.youtube.com/@geolesapiens&quot; style=&quot;color:#B8956A;text-decoration:none;font-size:13px;margin:0 8px;&quot;&gt;YouTube&lt;/a&gt;&lt;/div&gt;
+&lt;div style=&quot;margin-top:14px;padding-top:12px;border-top:1px solid #4a5e4f;font-family:Arial,sans-serif;font-size:11px;color:#8a9e8f;line-height:1.5;&quot;&gt;SAPIENS 360 &middot; 495 rue du faubourg Bannier, 45000 Orl&eacute;ans, France&lt;br&gt;Tu re&ccedil;ois cet email parce que tu nous as contact&eacute;s. &lt;a href=&quot;{{contact.unsubscribe_url}}&quot; style=&quot;color:#B8956A;text-decoration:underline;&quot;&gt;Se d&eacute;sabonner&lt;/a&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;
+&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+    </div>
+  </div>
+  </div>
+
+  <!-- ROSACEE -->
+  <div class="cond-content" data-group="wf2cond" data-tab="rosacee">
+  <div class="email-block">
+    <div class="email-header">
+      <span class="email-label">Email ROSACEE — Marie's story</span>
+      <span class="email-subject">Objet : 3 dermatos en 6 ans. Personne ne regardait au bon endroit. | De : Geoffrey</span>
+    </div>
+    <div class="email-code-wrap">
+      <button class="copy-btn" onclick="copyCode('wf2rosa')">Copier</button>
+      <pre class="email-code" id="wf2rosa">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;UTF-8&quot;&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+&lt;/head&gt;
+&lt;body style=&quot;margin:0;padding:0;background:#f4f1ec;&quot;&gt;
+&lt;table role=&quot;presentation&quot; width=&quot;100%&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; style=&quot;background:#f4f1ec;padding:20px 0;&quot;&gt;
+&lt;tr&gt;&lt;td align=&quot;center&quot;&gt;
+&lt;table role=&quot;presentation&quot; width=&quot;600&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; style=&quot;max-width:600px;width:100%;&quot;&gt;
+&lt;tr&gt;&lt;td style=&quot;background:#2C4A35;padding:32px 24px 24px;text-align:center;&quot;&gt;
+&lt;div style=&quot;font-family:Georgia,serif;font-size:12px;color:#B8956A;letter-spacing:6px;text-transform:uppercase;&quot;&gt;SAPIENS&lt;/div&gt;
+&lt;div style=&quot;font-family:Georgia,serif;font-size:38px;color:#ffffff;&quot;&gt;3&lt;span style=&quot;color:#B8956A;&quot;&gt;6&lt;/span&gt;0&lt;/div&gt;
+&lt;div style=&quot;width:60px;height:2px;background:#B8956A;margin:12px auto;&quot;&gt;&lt;/div&gt;
+&lt;div style=&quot;font-family:Georgia,serif;font-size:11px;color:#B8956A;letter-spacing:3px;text-transform:uppercase;&quot;&gt;Protocole Terrain Biologique&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style=&quot;background:#FAF7F2;padding:36px 32px;font-family:Arial,sans-serif;font-size:16px;color:#1A1A18;line-height:1.7;&quot;&gt;
+&lt;p style=&quot;margin:0 0 18px;&quot;&gt;{{contact.first_name}},&lt;/p&gt;
+&lt;p style=&quot;margin:0 0 18px;&quot;&gt;Ton appel est r&eacute;serv&eacute;. Avant qu'on se parle, lis ce qui suit.&lt;/p&gt;
+&lt;p style=&quot;margin:0 0 18px;&quot;&gt;Ces personnes avaient toutes de la rosac&eacute;e. Rougeurs, br&ucirc;lures, flush. Tous avaient consult&eacute; des dermatologues, essay&eacute; le m&eacute;tronidazole, le laser, l'&eacute;viction alimentaire. Voici ce qui s'est pass&eacute; quand on a enfin regard&eacute; au bon endroit :&lt;/p&gt;
+&lt;div style=&quot;background:#f0ece4;border-left:4px solid #B8956A;padding:16px 20px;margin:0 0 18px;border-radius:0 8px 8px 0;&quot;&gt;
+&lt;p style=&quot;margin:0 0 8px;font-style:italic;color:#333;&quot;&gt;&laquo;&nbsp;4 dermatologues en 6 ans. M&eacute;tronidazole, acide az&eacute;la&iuml;que, laser. &Ccedil;a calmait 3 semaines puis &ccedil;a repartait. Avec le protocole &mdash; les rougeurs ont diminu&eacute; d&egrave;s la semaine 4. Aujourd'hui je sors sans maquillage.&nbsp;&raquo;&lt;/p&gt;
+&lt;p style=&quot;margin:0;font-size:14px;color:#B8956A;font-weight:bold;&quot;&gt;&mdash; Marie L., 34 ans&lt;/p&gt;
+&lt;/div&gt;
+&lt;div style=&quot;background:#f0ece4;border-left:4px solid #B8956A;padding:16px 20px;margin:0 0 18px;border-radius:0 8px 8px 0;&quot;&gt;
+&lt;p style=&quot;margin:0 0 8px;font-style:italic;color:#333;&quot;&gt;&laquo;&nbsp;Pendant 5 ans mon dermato m'a dit que ma rosac&eacute;e &eacute;tait li&eacute;e au stress. Ce que personne ne m'a expliqu&eacute; : le stress d&eacute;clenche parce qu'il fragilise la paroi intestinale. En traitant le terrain, les pouss&eacute;es se sont arr&ecirc;t&eacute;es.&nbsp;&raquo;&lt;/p&gt;
+&lt;p style=&quot;margin:0;font-size:14px;color:#B8956A;font-weight:bold;&quot;&gt;&mdash; Isabelle R., 41 ans&lt;/p&gt;
+&lt;/div&gt;
+&lt;div style=&quot;background:#f0ece4;border-left:4px solid #B8956A;padding:16px 20px;margin:0 0 18px;border-radius:0 8px 8px 0;&quot;&gt;
+&lt;p style=&quot;margin:0 0 8px;font-style:italic;color:#333;&quot;&gt;&laquo;&nbsp;3 s&eacute;ances de laser, m&eacute;tronidazole tous les jours, 2 000&euro; de cr&egrave;mes en 4 ans. Avec le protocole &mdash; pas de cr&egrave;me, pas de laser. &Ccedil;a fait 3 mois que mon visage est calme.&nbsp;&raquo;&lt;/p&gt;
+&lt;p style=&quot;margin:0;font-size:14px;color:#B8956A;font-weight:bold;&quot;&gt;&mdash; Lucie P., 36 ans&lt;/p&gt;
+&lt;/div&gt;
+&lt;div style=&quot;background:#f0ece4;border-left:4px solid #B8956A;padding:16px 20px;margin:0 0 18px;border-radius:0 8px 8px 0;&quot;&gt;
+&lt;p style=&quot;margin:0 0 8px;font-style:italic;color:#333;&quot;&gt;&laquo;&nbsp;7 ans de rougeurs. Bilans normaux. Geoffrey a cherch&eacute; l'inflammation que les bilans classiques ne voient pas.&nbsp;&raquo;&lt;/p&gt;
+&lt;p style=&quot;margin:0;font-size:14px;color:#B8956A;font-weight:bold;&quot;&gt;&mdash; Mathilde T., 38 ans&lt;/p&gt;
+&lt;/div&gt;
+&lt;p style=&quot;margin:0 0 18px;&quot;&gt;Leur point commun ? Ils ont arr&ecirc;t&eacute; de traiter la surface. Ils ont trait&eacute; le terrain &mdash; et la rosac&eacute;e s'est &eacute;teinte.&lt;/p&gt;
+&lt;p style=&quot;margin:0 0 18px;&quot;&gt;On en parle lors de ton appel. &Agrave; demain pour ton appel.&lt;/p&gt;
+&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; border=&quot;0&quot; style=&quot;margin-top:28px;padding-top:20px;border-top:1px solid #e8e0d8;font-family:Arial,Helvetica,sans-serif;color:#1A1A18;line-height:1.4&quot;&gt;&lt;tr&gt;&lt;td style=&quot;padding-right:16px;border-right:2px solid #B8956A;vertical-align:middle&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; border=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;font-size:17px;font-weight:bold;color:#1A1A18;letter-spacing:0.5px;padding-bottom:2px&quot;&gt;Geoffrey&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;font-size:11px;color:#9E8E7A;letter-spacing:2.5px;text-transform:uppercase&quot;&gt;Fondateur &amp;amp; Praticien&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/td&gt;&lt;td style=&quot;padding-left:16px;vertical-align:middle&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; border=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;font-size:14px;color:#2C4A35;letter-spacing:1px&quot;&gt;&lt;span style=&quot;font-weight:bold&quot;&gt;SAPIENS&lt;/span&gt;&lt;span style=&quot;color:#B8956A&quot;&gt;360&lt;/span&gt;&lt;span style=&quot;font-size:9px;color:#B8956A;vertical-align:top&quot;&gt;&amp;#8482;&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;font-size:11px;color:#9E8E7A;letter-spacing:1.5px;padding-top:3px&quot;&gt;Recalibrage du Terrain Biologique&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style=&quot;background:#2C4A35;padding:24px;text-align:center;&quot;&gt;
+&lt;div style=&quot;font-family:Georgia,serif;font-size:14px;color:#ffffff;margin-bottom:12px;&quot;&gt;SAPIENS 360&amp;trade;&lt;/div&gt;
+&lt;div&gt;&lt;a href=&quot;https://www.instagram.com/geo_le_sapiens&quot; style=&quot;color:#B8956A;text-decoration:none;font-size:13px;margin:0 8px;&quot;&gt;Instagram&lt;/a&gt;&lt;a href=&quot;https://www.facebook.com/profile.php?id=61585577240619&quot; style=&quot;color:#B8956A;text-decoration:none;font-size:13px;margin:0 8px;&quot;&gt;Facebook&lt;/a&gt;&lt;a href=&quot;https://www.youtube.com/@geolesapiens&quot; style=&quot;color:#B8956A;text-decoration:none;font-size:13px;margin:0 8px;&quot;&gt;YouTube&lt;/a&gt;&lt;/div&gt;
+&lt;div style=&quot;margin-top:14px;padding-top:12px;border-top:1px solid #4a5e4f;font-family:Arial,sans-serif;font-size:11px;color:#8a9e8f;line-height:1.5;&quot;&gt;SAPIENS 360 &middot; 495 rue du faubourg Bannier, 45000 Orl&eacute;ans, France&lt;br&gt;Tu re&ccedil;ois cet email parce que tu nous as contact&eacute;s. &lt;a href=&quot;{{contact.unsubscribe_url}}&quot; style=&quot;color:#B8956A;text-decoration:underline;&quot;&gt;Se d&eacute;sabonner&lt;/a&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/body&gt;&lt;/html&gt;</pre>
+    </div>
+  </div>
+  </div>
+
+  <!-- ECZEMA -->
+  <div class="cond-content" data-group="wf2cond" data-tab="eczema">
+  <div class="email-block">
+    <div class="email-header">
+      <span class="email-label">Email ECZEMA — Coralie's story</span>
+      <span class="email-subject">Objet : L'eczema a disparu. Mais ce qui m'a le plus surprise, c'est le reste. | De : Geoffrey</span>
+    </div>
+    <div class="email-code-wrap">
+      <button class="copy-btn" onclick="copyCode('wf2ecze')">Copier</button>
+      <pre class="email-code" id="wf2ecze">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;&lt;/head&gt;
+&lt;body style=&quot;margin:0;padding:0;background:#f4f1ec;&quot;&gt;
+&lt;table role=&quot;presentation&quot; width=&quot;100%&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; style=&quot;background:#f4f1ec;padding:20px 0;&quot;&gt;
+&lt;tr&gt;&lt;td align=&quot;center&quot;&gt;
+&lt;table role=&quot;presentation&quot; width=&quot;600&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; style=&quot;max-width:600px;width:100%;&quot;&gt;
+&lt;tr&gt;&lt;td style=&quot;background:#2C4A35;padding:32px 24px 24px;text-align:center;&quot;&gt;
+&lt;div style=&quot;font-family:Georgia,serif;font-size:12px;color:#B8956A;letter-spacing:6px;text-transform:uppercase;&quot;&gt;SAPIENS&lt;/div&gt;
+&lt;div style=&quot;font-family:Georgia,serif;font-size:38px;color:#ffffff;&quot;&gt;3&lt;span style=&quot;color:#B8956A;&quot;&gt;6&lt;/span&gt;0&lt;/div&gt;
+&lt;div style=&quot;width:60px;height:2px;background:#B8956A;margin:12px auto;&quot;&gt;&lt;/div&gt;
+&lt;div style=&quot;font-family:Georgia,serif;font-size:11px;color:#B8956A;letter-spacing:3px;text-transform:uppercase;&quot;&gt;Protocole Terrain Biologique&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style=&quot;background:#FAF7F2;padding:36px 32px;font-family:Arial,sans-serif;font-size:16px;color:#1A1A18;line-height:1.7;&quot;&gt;
+&lt;p style=&quot;margin:0 0 18px;&quot;&gt;{{contact.first_name}},&lt;/p&gt;
+&lt;p style=&quot;margin:0 0 18px;&quot;&gt;Ton appel est r&eacute;serv&eacute;. Avant qu'on se parle, lis ces histoires.&lt;/p&gt;
+&lt;p style=&quot;margin:0 0 18px;&quot;&gt;Ces personnes avaient toutes de l'ecz&eacute;ma. Depuis des ann&eacute;es. Cortisone, Dupixent, immunosuppresseurs. Voici ce qui s'est pass&eacute; quand on a trait&eacute; le terrain au lieu des sympt&ocirc;mes :&lt;/p&gt;
+&lt;div style=&quot;background:#f0ece4;border-left:4px solid #B8956A;padding:16px 20px;margin:0 0 18px;border-radius:0 8px 8px 0;&quot;&gt;
+&lt;p style=&quot;margin:0 0 8px;font-style:italic;color:#333;&quot;&gt;&laquo;&nbsp;En 2 mois mon ecz&eacute;ma a disparu. Plus de d&eacute;mangeaisons, plus de fringales. Mon &eacute;nergie est revenue &agrave; un niveau que j'avais pas connu depuis des ann&eacute;es.&nbsp;&raquo;&lt;/p&gt;
+&lt;p style=&quot;margin:0;font-size:14px;color:#B8956A;font-weight:bold;&quot;&gt;&mdash; Coralie M., 30 ans&lt;/p&gt;
+&lt;/div&gt;
+&lt;div style=&quot;background:#f0ece4;border-left:4px solid #B8956A;padding:16px 20px;margin:0 0 18px;border-radius:0 8px 8px 0;&quot;&gt;
+&lt;p style=&quot;margin:0 0 8px;font-style:italic;color:#333;&quot;&gt;&laquo;&nbsp;15 ans d'ecz&eacute;ma. J'&eacute;tais sous Dupixent &mdash; une injection qui bloque le syst&egrave;me immunitaire. Avec le protocole, j'ai pu arr&ecirc;ter les injections. Ma peau s'est stabilis&eacute;e sans b&eacute;quille chimique.&nbsp;&raquo;&lt;/p&gt;
+&lt;p style=&quot;margin:0;font-size:14px;color:#B8956A;font-weight:bold;&quot;&gt;&mdash; Emma T., 31 ans&lt;/p&gt;
+&lt;/div&gt;
+&lt;div style=&quot;background:#f0ece4;border-left:4px solid #B8956A;padding:16px 20px;margin:0 0 18px;border-radius:0 8px 8px 0;&quot;&gt;
+&lt;p style=&quot;margin:0 0 8px;font-style:italic;color:#333;&quot;&gt;&laquo;&nbsp;On m'a dit pendant 12 ans que c'&eacute;tait g&eacute;n&eacute;tique. Geoffrey m'a dit : g&eacute;n&eacute;tique veut dire terrain pr&eacute;dispos&eacute;, pas condamn&eacute;e. 90 jours plus tard &mdash; ma peau est silencieuse pour la premi&egrave;re fois en 12 ans.&nbsp;&raquo;&lt;/p&gt;
+&lt;p style=&quot;margin:0;font-size:14px;color:#B8956A;font-weight:bold;&quot;&gt;&mdash; Camille B., 35 ans&lt;/p&gt;
+&lt;/div&gt;
+&lt;p style=&quot;margin:0 0 18px;&quot;&gt;L'ecz&eacute;ma n'est pas une maladie de peau. C'est un signal du terrain. Quand le terrain se stabilise, la peau se tait.&lt;/p&gt;
+&lt;p style=&quot;margin:0 0 18px;&quot;&gt;On en parle lors de ton appel. &Agrave; demain pour ton appel.&lt;/p&gt;
+&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; border=&quot;0&quot; style=&quot;margin-top:28px;padding-top:20px;border-top:1px solid #e8e0d8;font-family:Arial,Helvetica,sans-serif;color:#1A1A18;line-height:1.4&quot;&gt;&lt;tr&gt;&lt;td style=&quot;padding-right:16px;border-right:2px solid #B8956A;vertical-align:middle&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; border=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;font-size:17px;font-weight:bold;color:#1A1A18;letter-spacing:0.5px;padding-bottom:2px&quot;&gt;Geoffrey&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;font-size:11px;color:#9E8E7A;letter-spacing:2.5px;text-transform:uppercase&quot;&gt;Fondateur &amp;amp; Praticien&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/td&gt;&lt;td style=&quot;padding-left:16px;vertical-align:middle&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; border=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;font-size:14px;color:#2C4A35;letter-spacing:1px&quot;&gt;&lt;span style=&quot;font-weight:bold&quot;&gt;SAPIENS&lt;/span&gt;&lt;span style=&quot;color:#B8956A&quot;&gt;360&lt;/span&gt;&lt;span style=&quot;font-size:9px;color:#B8956A;vertical-align:top&quot;&gt;&amp;#8482;&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;font-size:11px;color:#9E8E7A;letter-spacing:1.5px;padding-top:3px&quot;&gt;Recalibrage du Terrain Biologique&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style=&quot;background:#2C4A35;padding:24px;text-align:center;&quot;&gt;
+&lt;div style=&quot;font-family:Georgia,serif;font-size:14px;color:#ffffff;margin-bottom:12px;&quot;&gt;SAPIENS 360&amp;trade;&lt;/div&gt;
+&lt;div&gt;&lt;a href=&quot;https://www.instagram.com/geo_le_sapiens&quot; style=&quot;color:#B8956A;text-decoration:none;font-size:13px;margin:0 8px;&quot;&gt;Instagram&lt;/a&gt;&lt;a href=&quot;https://www.facebook.com/profile.php?id=61585577240619&quot; style=&quot;color:#B8956A;text-decoration:none;font-size:13px;margin:0 8px;&quot;&gt;Facebook&lt;/a&gt;&lt;a href=&quot;https://www.youtube.com/@geolesapiens&quot; style=&quot;color:#B8956A;text-decoration:none;font-size:13px;margin:0 8px;&quot;&gt;YouTube&lt;/a&gt;&lt;/div&gt;
+&lt;div style=&quot;margin-top:14px;padding-top:12px;border-top:1px solid #4a5e4f;font-family:Arial,sans-serif;font-size:11px;color:#8a9e8f;line-height:1.5;&quot;&gt;SAPIENS 360 &middot; 495 rue du faubourg Bannier, 45000 Orl&eacute;ans, France&lt;br&gt;Tu re&ccedil;ois cet email parce que tu nous as contact&eacute;s. &lt;a href=&quot;{{contact.unsubscribe_url}}&quot; style=&quot;color:#B8956A;text-decoration:underline;&quot;&gt;Se d&eacute;sabonner&lt;/a&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/body&gt;&lt;/html&gt;</pre>
+    </div>
+  </div>
+  </div>
+
+  <!-- DIGESTION -->
+  <div class="cond-content" data-group="wf2cond" data-tab="digestion">
+  <div class="email-block">
+    <div class="email-header">
+      <span class="email-label">Email DIGESTION — Julie's story</span>
+      <span class="email-subject">Objet : Je pensais que ma fatigue et ma peau c'etaient 2 problemes. C'etait le meme. | De : Geoffrey</span>
+    </div>
+    <div class="email-code-wrap">
+      <button class="copy-btn" onclick="copyCode('wf2dig')">Copier</button>
+      <pre class="email-code" id="wf2dig">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-device, initial-scale=1.0&quot;&gt;&lt;/head&gt;
+&lt;body style=&quot;margin:0;padding:0;background:#f4f1ec;&quot;&gt;
+&lt;table role=&quot;presentation&quot; width=&quot;100%&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; style=&quot;background:#f4f1ec;padding:20px 0;&quot;&gt;
+&lt;tr&gt;&lt;td align=&quot;center&quot;&gt;
+&lt;table role=&quot;presentation&quot; width=&quot;600&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; style=&quot;max-width:600px;width:100%;&quot;&gt;
+&lt;tr&gt;&lt;td style=&quot;background:#2C4A35;padding:32px 24px 24px;text-align:center;&quot;&gt;
+&lt;div style=&quot;font-family:Georgia,serif;font-size:12px;color:#B8956A;letter-spacing:6px;text-transform:uppercase;&quot;&gt;SAPIENS&lt;/div&gt;
+&lt;div style=&quot;font-family:Georgia,serif;font-size:38px;color:#ffffff;&quot;&gt;3&lt;span style=&quot;color:#B8956A;&quot;&gt;6&lt;/span&gt;0&lt;/div&gt;
+&lt;div style=&quot;width:60px;height:2px;background:#B8956A;margin:12px auto;&quot;&gt;&lt;/div&gt;
+&lt;div style=&quot;font-family:Georgia,serif;font-size:11px;color:#B8956A;letter-spacing:3px;text-transform:uppercase;&quot;&gt;Protocole Terrain Biologique&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style=&quot;background:#FAF7F2;padding:36px 32px;font-family:Arial,sans-serif;font-size:16px;color:#1A1A18;line-height:1.7;&quot;&gt;
+&lt;p style=&quot;margin:0 0 18px;&quot;&gt;{{contact.first_name}},&lt;/p&gt;
+&lt;p style=&quot;margin:0 0 18px;&quot;&gt;Ton appel est r&eacute;serv&eacute;. Avant qu'on se parle, je voulais te montrer quelque chose d'important.&lt;/p&gt;
+&lt;p style=&quot;margin:0 0 18px;&quot;&gt;Tu le sens peut-&ecirc;tre d&eacute;j&agrave; : ta peau, ta digestion, ta fatigue &mdash; ce ne sont pas 3 probl&egrave;mes s&eacute;par&eacute;s. C'est le m&ecirc;me terrain d&eacute;r&eacute;gl&eacute; qui s'exprime &agrave; 3 endroits diff&eacute;rents.&lt;/p&gt;
+&lt;p style=&quot;margin:0 0 18px;&quot;&gt;&lt;strong&gt;L'axe intestin-peau :&lt;/strong&gt; 70% de ton syst&egrave;me immunitaire se trouve dans ton intestin. Quand la paroi intestinale est fragilis&eacute;e, des mol&eacute;cules pro-inflammatoires passent dans le sang. Ton corps r&eacute;agit &mdash; et la peau est souvent le premier organe &agrave; manifester cette inflammation.&lt;/p&gt;
+&lt;p style=&quot;margin:0 0 18px;&quot;&gt;C'est pour &ccedil;a que traiter la peau sans traiter l'intestin revient &agrave; &eacute;teindre l'alarme incendie sans &eacute;teindre le feu.&lt;/p&gt;
+&lt;div style=&quot;background:#f0ece4;border-left:4px solid #B8956A;padding:16px 20px;margin:0 0 18px;border-radius:0 8px 8px 0;&quot;&gt;
+&lt;p style=&quot;margin:0 0 8px;font-style:italic;color:#333;&quot;&gt;&laquo;&nbsp;Acn&eacute;, fatigue permanente, brouillard mental. Je pensais que c'&eacute;taient 3 probl&egrave;mes s&eacute;par&eacute;s. En stabilisant le terrain, les 3 se sont r&eacute;solus en m&ecirc;me temps.&nbsp;&raquo;&lt;/p&gt;
+&lt;p style=&quot;margin:0;font-size:14px;color:#B8956A;font-weight:bold;&quot;&gt;&mdash; Julie F., 29 ans&lt;/p&gt;
+&lt;/div&gt;
+&lt;div style=&quot;background:#f0ece4;border-left:4px solid #B8956A;padding:16px 20px;margin:0 0 18px;border-radius:0 8px 8px 0;&quot;&gt;
+&lt;p style=&quot;margin:0 0 8px;font-style:italic;color:#333;&quot;&gt;&laquo;&nbsp;D&egrave;s la premi&egrave;re semaine, -4kg. La faim est bien g&eacute;r&eacute;e. Digestion plus l&eacute;g&egrave;re.&nbsp;&raquo;&lt;/p&gt;
+&lt;p style=&quot;margin:0;font-size:14px;color:#B8956A;font-weight:bold;&quot;&gt;&mdash; Erwan&lt;/p&gt;
+&lt;/div&gt;
+&lt;p style=&quot;margin:0 0 18px;&quot;&gt;Quand le terrain se stabilise, tout s'aligne : la digestion s'all&egrave;ge, l'&eacute;nergie revient, la peau se calme.&lt;/p&gt;
+&lt;p style=&quot;margin:0 0 18px;&quot;&gt;On analyse ton terrain ensemble lors de l'appel. &Agrave; demain pour ton appel.&lt;/p&gt;
+&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; border=&quot;0&quot; style=&quot;margin-top:28px;padding-top:20px;border-top:1px solid #e8e0d8;font-family:Arial,Helvetica,sans-serif;color:#1A1A18;line-height:1.4&quot;&gt;&lt;tr&gt;&lt;td style=&quot;padding-right:16px;border-right:2px solid #B8956A;vertical-align:middle&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; border=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;font-size:17px;font-weight:bold;color:#1A1A18;letter-spacing:0.5px;padding-bottom:2px&quot;&gt;Geoffrey&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;font-size:11px;color:#9E8E7A;letter-spacing:2.5px;text-transform:uppercase&quot;&gt;Fondateur &amp;amp; Praticien&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/td&gt;&lt;td style=&quot;padding-left:16px;vertical-align:middle&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; border=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;font-size:14px;color:#2C4A35;letter-spacing:1px&quot;&gt;&lt;span style=&quot;font-weight:bold&quot;&gt;SAPIENS&lt;/span&gt;&lt;span style=&quot;color:#B8956A&quot;&gt;360&lt;/span&gt;&lt;span style=&quot;font-size:9px;color:#B8956A;vertical-align:top&quot;&gt;&amp;#8482;&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;font-size:11px;color:#9E8E7A;letter-spacing:1.5px;padding-top:3px&quot;&gt;Recalibrage du Terrain Biologique&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style=&quot;background:#2C4A35;padding:24px;text-align:center;&quot;&gt;
+&lt;div style=&quot;font-family:Georgia,serif;font-size:14px;color:#ffffff;margin-bottom:12px;&quot;&gt;SAPIENS 360&amp;trade;&lt;/div&gt;
+&lt;div&gt;&lt;a href=&quot;https://www.instagram.com/geo_le_sapiens&quot; style=&quot;color:#B8956A;text-decoration:none;font-size:13px;margin:0 8px;&quot;&gt;Instagram&lt;/a&gt;&lt;a href=&quot;https://www.facebook.com/profile.php?id=61585577240619&quot; style=&quot;color:#B8956A;text-decoration:none;font-size:13px;margin:0 8px;&quot;&gt;Facebook&lt;/a&gt;&lt;a href=&quot;https://www.youtube.com/@geolesapiens&quot; style=&quot;color:#B8956A;text-decoration:none;font-size:13px;margin:0 8px;&quot;&gt;YouTube&lt;/a&gt;&lt;/div&gt;
+&lt;div style=&quot;margin-top:14px;padding-top:12px;border-top:1px solid #4a5e4f;font-family:Arial,sans-serif;font-size:11px;color:#8a9e8f;line-height:1.5;&quot;&gt;SAPIENS 360 &middot; 495 rue du faubourg Bannier, 45000 Orl&eacute;ans, France&lt;br&gt;Tu re&ccedil;ois cet email parce que tu nous as contact&eacute;s. &lt;a href=&quot;{{contact.unsubscribe_url}}&quot; style=&quot;color:#B8956A;text-decoration:underline;&quot;&gt;Se d&eacute;sabonner&lt;/a&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/body&gt;&lt;/html&gt;</pre>
+    </div>
+  </div>
+  </div>
+
+  <!-- GENERIQUE -->
+  <div class="cond-content" data-group="wf2cond" data-tab="generique">
+  <div class="email-block">
+    <div class="email-header">
+      <span class="email-label">Email GENERIQUE (Autre / pas de condition)</span>
+      <span class="email-subject">Objet : Ils avaient tous essaye. Ils pensaient tous que c'etait chronique. | De : Geoffrey</span>
+    </div>
+    <div class="email-code-wrap">
+      <button class="copy-btn" onclick="copyCode('wf2gen')">Copier</button>
+      <pre class="email-code" id="wf2gen">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;&lt;/head&gt;
+&lt;body style=&quot;margin:0;padding:0;background:#f4f1ec;&quot;&gt;
+&lt;table role=&quot;presentation&quot; width=&quot;100%&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; style=&quot;background:#f4f1ec;padding:20px 0;&quot;&gt;
+&lt;tr&gt;&lt;td align=&quot;center&quot;&gt;
+&lt;table role=&quot;presentation&quot; width=&quot;600&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; style=&quot;max-width:600px;width:100%;&quot;&gt;
+&lt;tr&gt;&lt;td style=&quot;background:#2C4A35;padding:32px 24px 24px;text-align:center;&quot;&gt;
+&lt;div style=&quot;font-family:Georgia,serif;font-size:12px;color:#B8956A;letter-spacing:6px;text-transform:uppercase;&quot;&gt;SAPIENS&lt;/div&gt;
+&lt;div style=&quot;font-family:Georgia,serif;font-size:38px;color:#ffffff;&quot;&gt;3&lt;span style=&quot;color:#B8956A;&quot;&gt;6&lt;/span&gt;0&lt;/div&gt;
+&lt;div style=&quot;width:60px;height:2px;background:#B8956A;margin:12px auto;&quot;&gt;&lt;/div&gt;
+&lt;div style=&quot;font-family:Georgia,serif;font-size:11px;color:#B8956A;letter-spacing:3px;text-transform:uppercase;&quot;&gt;Protocole Terrain Biologique&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style=&quot;background:#FAF7F2;padding:36px 32px;font-family:Arial,sans-serif;font-size:16px;color:#1A1A18;line-height:1.7;&quot;&gt;
+&lt;p style=&quot;margin:0 0 18px;&quot;&gt;{{contact.first_name}},&lt;/p&gt;
+&lt;p style=&quot;margin:0 0 18px;&quot;&gt;Ton appel est r&eacute;serv&eacute;. Avant qu'on se parle, je voulais te montrer ce que vivent les personnes qui suivent le protocole.&lt;/p&gt;
+&lt;p style=&quot;margin:0 0 18px;&quot;&gt;Ils avaient tous essay&eacute;. Ils pensaient tous que c'&eacute;tait chronique. Voici ce qui s'est pass&eacute; quand on a trait&eacute; le terrain :&lt;/p&gt;
+&lt;div style=&quot;background:#f0ece4;border-left:4px solid #B8956A;padding:16px 20px;margin:0 0 18px;border-radius:0 8px 8px 0;&quot;&gt;
+&lt;p style=&quot;margin:0 0 8px;font-style:italic;color:#333;&quot;&gt;&laquo;&nbsp;D&egrave;s la premi&egrave;re semaine j'ai perdu 4 kilos et mon psoriasis a commenc&eacute; &agrave; reculer. Au bout de 2 mois, mes plaques avaient quasiment disparu &mdash; apr&egrave;s 9 ans.&nbsp;&raquo;&lt;/p&gt;
+&lt;p style=&quot;margin:0;font-size:14px;color:#B8956A;font-weight:bold;&quot;&gt;&mdash; Erwan (Psoriasis)&lt;/p&gt;
+&lt;/div&gt;
+&lt;div style=&quot;background:#f0ece4;border-left:4px solid #B8956A;padding:16px 20px;margin:0 0 18px;border-radius:0 8px 8px 0;&quot;&gt;
+&lt;p style=&quot;margin:0 0 8px;font-style:italic;color:#333;&quot;&gt;&laquo;&nbsp;4 ans de doxycycline non-stop. Avec le protocole, j'ai arr&ecirc;t&eacute; les antibiotiques. 3 mois plus tard, ma peau est stable sans aucun m&eacute;dicament.&nbsp;&raquo;&lt;/p&gt;
+&lt;p style=&quot;margin:0;font-size:14px;color:#B8956A;font-weight:bold;&quot;&gt;&mdash; Sarah V., 36 ans (Acn&eacute;)&lt;/p&gt;
+&lt;/div&gt;
+&lt;div style=&quot;background:#f0ece4;border-left:4px solid #B8956A;padding:16px 20px;margin:0 0 18px;border-radius:0 8px 8px 0;&quot;&gt;
+&lt;p style=&quot;margin:0 0 8px;font-style:italic;color:#333;&quot;&gt;&laquo;&nbsp;4 dermatologues en 6 ans. Avec le protocole &mdash; les rougeurs ont diminu&eacute; d&egrave;s la semaine 4. Aujourd'hui je sors sans maquillage.&nbsp;&raquo;&lt;/p&gt;
+&lt;p style=&quot;margin:0;font-size:14px;color:#B8956A;font-weight:bold;&quot;&gt;&mdash; Marie L., 34 ans (Rosac&eacute;e)&lt;/p&gt;
+&lt;/div&gt;
+&lt;div style=&quot;background:#f0ece4;border-left:4px solid #B8956A;padding:16px 20px;margin:0 0 18px;border-radius:0 8px 8px 0;&quot;&gt;
+&lt;p style=&quot;margin:0 0 8px;font-style:italic;color:#333;&quot;&gt;&laquo;&nbsp;On m'a dit pendant 12 ans que c'&eacute;tait g&eacute;n&eacute;tique. 90 jours plus tard &mdash; ma peau est silencieuse pour la premi&egrave;re fois en 12 ans.&nbsp;&raquo;&lt;/p&gt;
+&lt;p style=&quot;margin:0;font-size:14px;color:#B8956A;font-weight:bold;&quot;&gt;&mdash; Camille B., 35 ans (Ecz&eacute;ma)&lt;/p&gt;
+&lt;/div&gt;
+&lt;div style=&quot;background:#f0ece4;border-left:4px solid #B8956A;padding:16px 20px;margin:0 0 18px;border-radius:0 8px 8px 0;&quot;&gt;
+&lt;p style=&quot;margin:0 0 8px;font-style:italic;color:#333;&quot;&gt;&laquo;&nbsp;Acn&eacute;, fatigue permanente, brouillard mental. En stabilisant le terrain, les 3 se sont r&eacute;solus en m&ecirc;me temps.&nbsp;&raquo;&lt;/p&gt;
+&lt;p style=&quot;margin:0;font-size:14px;color:#B8956A;font-weight:bold;&quot;&gt;&mdash; Julie F., 29 ans (Digestion + Peau)&lt;/p&gt;
+&lt;/div&gt;
+&lt;p style=&quot;margin:0 0 18px;&quot;&gt;Peu importe ta condition &mdash; le m&eacute;canisme est le m&ecirc;me. Un terrain d&eacute;r&eacute;gl&eacute; qui s'exprime &agrave; travers la peau.&lt;/p&gt;
+&lt;p style=&quot;margin:0 0 18px;&quot;&gt;C'est ce qu'on va analyser ensemble lors de ton appel. &Agrave; demain pour ton appel.&lt;/p&gt;
+&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; border=&quot;0&quot; style=&quot;margin-top:28px;padding-top:20px;border-top:1px solid #e8e0d8;font-family:Arial,Helvetica,sans-serif;color:#1A1A18;line-height:1.4&quot;&gt;&lt;tr&gt;&lt;td style=&quot;padding-right:16px;border-right:2px solid #B8956A;vertical-align:middle&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; border=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;font-size:17px;font-weight:bold;color:#1A1A18;letter-spacing:0.5px;padding-bottom:2px&quot;&gt;Geoffrey&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;font-size:11px;color:#9E8E7A;letter-spacing:2.5px;text-transform:uppercase&quot;&gt;Fondateur &amp;amp; Praticien&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/td&gt;&lt;td style=&quot;padding-left:16px;vertical-align:middle&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; border=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;font-size:14px;color:#2C4A35;letter-spacing:1px&quot;&gt;&lt;span style=&quot;font-weight:bold&quot;&gt;SAPIENS&lt;/span&gt;&lt;span style=&quot;color:#B8956A&quot;&gt;360&lt;/span&gt;&lt;span style=&quot;font-size:9px;color:#B8956A;vertical-align:top&quot;&gt;&amp;#8482;&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;font-size:11px;color:#9E8E7A;letter-spacing:1.5px;padding-top:3px&quot;&gt;Recalibrage du Terrain Biologique&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style=&quot;background:#2C4A35;padding:24px;text-align:center;&quot;&gt;
+&lt;div style=&quot;font-family:Georgia,serif;font-size:14px;color:#ffffff;margin-bottom:12px;&quot;&gt;SAPIENS 360&amp;trade;&lt;/div&gt;
+&lt;div&gt;&lt;a href=&quot;https://www.instagram.com/geo_le_sapiens&quot; style=&quot;color:#B8956A;text-decoration:none;font-size:13px;margin:0 8px;&quot;&gt;Instagram&lt;/a&gt;&lt;a href=&quot;https://www.facebook.com/profile.php?id=61585577240619&quot; style=&quot;color:#B8956A;text-decoration:none;font-size:13px;margin:0 8px;&quot;&gt;Facebook&lt;/a&gt;&lt;a href=&quot;https://www.youtube.com/@geolesapiens&quot; style=&quot;color:#B8956A;text-decoration:none;font-size:13px;margin:0 8px;&quot;&gt;YouTube&lt;/a&gt;&lt;/div&gt;
+&lt;div style=&quot;margin-top:14px;padding-top:12px;border-top:1px solid #4a5e4f;font-family:Arial,sans-serif;font-size:11px;color:#8a9e8f;line-height:1.5;&quot;&gt;SAPIENS 360 &middot; 495 rue du faubourg Bannier, 45000 Orl&eacute;ans, France&lt;br&gt;Tu re&ccedil;ois cet email parce que tu nous as contact&eacute;s. &lt;a href=&quot;{{contact.unsubscribe_url}}&quot; style=&quot;color:#B8956A;text-decoration:underline;&quot;&gt;Se d&eacute;sabonner&lt;/a&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/body&gt;&lt;/html&gt;</pre>
+    </div>
+  </div>
+  </div>
+
+  <div class="wait-step"><span class="wait-icon">&#9202;</span> Wait until <b>24h before appointment</b></div>
+
+  <!-- WF2 RAPPEL J-1 -->
+  <div class="email-block">
+    <div class="email-header">
+      <span class="email-label">Email RAPPEL J-1 (24h avant l'appel)</span>
+      <span class="email-subject">Objet : 3 choses a preparer avant ton appel avec Jad | De : Geoffrey</span>
+    </div>
+    <div class="email-code-wrap">
+      <button class="copy-btn" onclick="copyCode('wf2rappel')">Copier</button>
+      <pre class="email-code" id="wf2rappel">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;UTF-8&quot;&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+&lt;/head&gt;
+&lt;body style=&quot;margin:0;padding:0;background:#f4f1ec;&quot;&gt;
+&lt;table role=&quot;presentation&quot; width=&quot;100%&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; style=&quot;background:#f4f1ec;padding:20px 0;&quot;&gt;
+&lt;tr&gt;&lt;td align=&quot;center&quot;&gt;
+&lt;table role=&quot;presentation&quot; width=&quot;600&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; style=&quot;max-width:600px;width:100%;&quot;&gt;
+&lt;tr&gt;&lt;td style=&quot;background:#2C4A35;padding:32px 24px 24px;text-align:center;&quot;&gt;
+&lt;div style=&quot;font-family:Georgia,serif;font-size:12px;color:#B8956A;letter-spacing:6px;text-transform:uppercase;&quot;&gt;SAPIENS&lt;/div&gt;
+&lt;div style=&quot;font-family:Georgia,serif;font-size:38px;color:#ffffff;&quot;&gt;3&lt;span style=&quot;color:#B8956A;&quot;&gt;6&lt;/span&gt;0&lt;/div&gt;
+&lt;div style=&quot;width:60px;height:2px;background:#B8956A;margin:12px auto;&quot;&gt;&lt;/div&gt;
+&lt;div style=&quot;font-family:Georgia,serif;font-size:11px;color:#B8956A;letter-spacing:3px;text-transform:uppercase;&quot;&gt;Protocole Terrain Biologique&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style=&quot;background:#FAF7F2;padding:36px 32px;font-family:Arial,sans-serif;font-size:16px;color:#1A1A18;line-height:1.7;&quot;&gt;
+&lt;p style=&quot;margin:0 0 18px;&quot;&gt;{{contact.first_name}},&lt;/p&gt;
+&lt;p style=&quot;margin:0 0 18px;&quot;&gt;Ton appel avec Jad est &lt;strong&gt;demain&lt;/strong&gt;.&lt;/p&gt;
+&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; border=&quot;0&quot; style=&quot;margin:0 auto 20px&quot;&gt;&lt;tr&gt;&lt;td style=&quot;background:#2C4A35;border-radius:6px;padding:14px 32px;text-align:center;&quot;&gt;&lt;a href=&quot;{{appointment.meeting_location}}&quot; style=&quot;color:#ffffff;text-decoration:none;font-family:Arial,sans-serif;font-size:15px;font-weight:bold;letter-spacing:1px;&quot;&gt;REJOINDRE L'APPEL&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;p style=&quot;margin:0 0 18px;&quot;&gt;Pour que l'analyse soit la plus pr&eacute;cise possible, note ces 3 choses avant :&lt;/p&gt;
+&lt;div style=&quot;background:#f0ece4;padding:20px 24px;border-radius:8px;margin:0 0 18px;&quot;&gt;
+&lt;p style=&quot;margin:0 0 14px;&quot;&gt;&lt;strong style=&quot;color:#B8956A;&quot;&gt;1.&lt;/strong&gt; Depuis combien de temps tu as ce probl&egrave;me de peau &mdash; et qu'est-ce que tu as d&eacute;j&agrave; essay&eacute;.&lt;/p&gt;
+&lt;p style=&quot;margin:0 0 14px;&quot;&gt;&lt;strong style=&quot;color:#B8956A;&quot;&gt;2.&lt;/strong&gt; Les autres sympt&ocirc;mes au quotidien &mdash; m&ecirc;me ceux qui semblent sans rapport (fatigue, digestion, sommeil, stress).&lt;/p&gt;
+&lt;p style=&quot;margin:0;&quot;&gt;&lt;strong style=&quot;color:#B8956A;&quot;&gt;3.&lt;/strong&gt; Ce que tu veux vraiment &mdash; ce que &ccedil;a changerait concr&egrave;tement dans ta vie si le probl&egrave;me disparaissait.&lt;/p&gt;
+&lt;/div&gt;
+&lt;p style=&quot;margin:0 0 18px;&quot;&gt;Ce n'est pas un appel de vente. C'est un &eacute;tat des lieux de ton terrain.&lt;/p&gt;
+&lt;p style=&quot;margin:0 0 18px;&quot;&gt;&Agrave; tr&egrave;s vite.&lt;/p&gt;
+&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; border=&quot;0&quot; style=&quot;margin-top:28px;padding-top:20px;border-top:1px solid #e8e0d8;font-family:Arial,Helvetica,sans-serif;color:#1A1A18;line-height:1.4&quot;&gt;&lt;tr&gt;&lt;td style=&quot;padding-right:16px;border-right:2px solid #B8956A;vertical-align:middle&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; border=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;font-size:17px;font-weight:bold;color:#1A1A18;letter-spacing:0.5px;padding-bottom:2px&quot;&gt;Geoffrey&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;font-size:11px;color:#9E8E7A;letter-spacing:2.5px;text-transform:uppercase&quot;&gt;Fondateur &amp;amp; Praticien&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/td&gt;&lt;td style=&quot;padding-left:16px;vertical-align:middle&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; border=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;font-size:14px;color:#2C4A35;letter-spacing:1px&quot;&gt;&lt;span style=&quot;font-weight:bold&quot;&gt;SAPIENS&lt;/span&gt;&lt;span style=&quot;color:#B8956A&quot;&gt;360&lt;/span&gt;&lt;span style=&quot;font-size:9px;color:#B8956A;vertical-align:top&quot;&gt;&amp;#8482;&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;font-size:11px;color:#9E8E7A;letter-spacing:1.5px;padding-top:3px&quot;&gt;Recalibrage du Terrain Biologique&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style=&quot;background:#2C4A35;padding:24px;text-align:center;&quot;&gt;
+&lt;div style=&quot;font-family:Georgia,serif;font-size:14px;color:#ffffff;margin-bottom:12px;&quot;&gt;SAPIENS 360&amp;trade;&lt;/div&gt;
+&lt;div&gt;&lt;a href=&quot;https://www.instagram.com/geo_le_sapiens&quot; style=&quot;color:#B8956A;text-decoration:none;font-size:13px;margin:0 8px;&quot;&gt;Instagram&lt;/a&gt;&lt;a href=&quot;https://www.facebook.com/profile.php?id=61585577240619&quot; style=&quot;color:#B8956A;text-decoration:none;font-size:13px;margin:0 8px;&quot;&gt;Facebook&lt;/a&gt;&lt;a href=&quot;https://www.youtube.com/@geolesapiens&quot; style=&quot;color:#B8956A;text-decoration:none;font-size:13px;margin:0 8px;&quot;&gt;YouTube&lt;/a&gt;&lt;/div&gt;
+&lt;div style=&quot;margin-top:14px;padding-top:12px;border-top:1px solid #4a5e4f;font-family:Arial,sans-serif;font-size:11px;color:#8a9e8f;line-height:1.5;&quot;&gt;SAPIENS 360 &middot; 495 rue du faubourg Bannier, 45000 Orl&eacute;ans, France&lt;br&gt;Tu re&ccedil;ois cet email parce que tu nous as contact&eacute;s. &lt;a href=&quot;{{contact.unsubscribe_url}}&quot; style=&quot;color:#B8956A;text-decoration:underline;&quot;&gt;Se d&eacute;sabonner&lt;/a&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;
+&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+    </div>
+  </div>
+
+  <div class="wait-step"><span class="wait-icon">&#9202;</span> Wait until <b>1h before appointment</b></div>
+
+  <!-- WF2 EMAIL H-1 -->
+  <div class="email-block">
+    <div class="email-header">
+      <span class="email-label">Email H-1 — Lien visio (1h avant)</span>
+      <span class="email-subject">Objet : Dans 1h — voici le lien pour l'appel | De : Geoffrey</span>
+    </div>
+    <div class="email-code-wrap">
+      <button class="copy-btn" onclick="copyCode('wf2h1')">Copier</button>
+      <pre class="email-code" id="wf2h1">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;UTF-8&quot;&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+&lt;/head&gt;
+&lt;body style=&quot;margin:0;padding:0;background:#f4f1ec;&quot;&gt;
+&lt;table role=&quot;presentation&quot; width=&quot;100%&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; style=&quot;background:#f4f1ec;padding:20px 0;&quot;&gt;
+&lt;tr&gt;&lt;td align=&quot;center&quot;&gt;
+&lt;table role=&quot;presentation&quot; width=&quot;600&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; style=&quot;max-width:600px;width:100%;&quot;&gt;
+&lt;tr&gt;&lt;td style=&quot;background:#2C4A35;padding:32px 24px 24px;text-align:center;&quot;&gt;
+&lt;div style=&quot;font-family:Georgia,serif;font-size:12px;color:#B8956A;letter-spacing:6px;text-transform:uppercase;&quot;&gt;SAPIENS&lt;/div&gt;
+&lt;div style=&quot;font-family:Georgia,serif;font-size:38px;color:#ffffff;&quot;&gt;3&lt;span style=&quot;color:#B8956A;&quot;&gt;6&lt;/span&gt;0&lt;/div&gt;
+&lt;div style=&quot;width:60px;height:2px;background:#B8956A;margin:12px auto;&quot;&gt;&lt;/div&gt;
+&lt;div style=&quot;font-family:Georgia,serif;font-size:11px;color:#B8956A;letter-spacing:3px;text-transform:uppercase;&quot;&gt;Protocole Terrain Biologique&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style=&quot;background:#FAF7F2;padding:36px 32px;font-family:Arial,sans-serif;font-size:16px;color:#1A1A18;line-height:1.7;&quot;&gt;
+&lt;p style=&quot;margin:0 0 18px;&quot;&gt;{{contact.first_name}},&lt;/p&gt;
+&lt;p style=&quot;margin:0 0 18px;&quot;&gt;Petit rappel &mdash; ton appel avec Jad est dans 1h.&lt;/p&gt;
+&lt;p style=&quot;margin:0 0 18px;&quot;&gt;Voici le lien direct :&lt;/p&gt;
+&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; border=&quot;0&quot; style=&quot;margin:0 auto 24px&quot;&gt;&lt;tr&gt;&lt;td style=&quot;background:#2C4A35;border-radius:6px;padding:16px 32px;text-align:center;&quot;&gt;&lt;a href=&quot;{{appointment.meeting_location}}&quot; style=&quot;color:#ffffff;text-decoration:none;font-family:Arial,sans-serif;font-size:15px;font-weight:bold;letter-spacing:1px;&quot;&gt;REJOINDRE L'APPEL&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;div style=&quot;background:#f0ece4;padding:18px 22px;border-radius:8px;margin:0 0 18px;font-size:14px;&quot;&gt;
+&lt;p style=&quot;margin:0 0 10px;&quot;&gt;&lt;strong style=&quot;color:#B8956A;&quot;&gt;&amp;#10003;&lt;/strong&gt; Installe-toi au calme, sans distraction.&lt;/p&gt;
+&lt;p style=&quot;margin:0 0 10px;&quot;&gt;&lt;strong style=&quot;color:#B8956A;&quot;&gt;&amp;#10003;&lt;/strong&gt; Pr&eacute;vois 45 min.&lt;/p&gt;
+&lt;p style=&quot;margin:0;&quot;&gt;&lt;strong style=&quot;color:#B8956A;&quot;&gt;&amp;#10003;&lt;/strong&gt; Aie ton historique en t&ecirc;te.&lt;/p&gt;
+&lt;/div&gt;
+&lt;p style=&quot;margin:0;&quot;&gt;&Agrave; tout de suite.&lt;/p&gt;
+&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; border=&quot;0&quot; style=&quot;margin-top:28px;padding-top:20px;border-top:1px solid #e8e0d8;font-family:Arial,Helvetica,sans-serif;color:#1A1A18;line-height:1.4&quot;&gt;&lt;tr&gt;&lt;td style=&quot;padding-right:16px;border-right:2px solid #B8956A;vertical-align:middle&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; border=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;font-size:17px;font-weight:bold;color:#1A1A18;letter-spacing:0.5px;padding-bottom:2px&quot;&gt;Geoffrey&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;font-size:11px;color:#9E8E7A;letter-spacing:2.5px;text-transform:uppercase&quot;&gt;Fondateur &amp;amp; Praticien&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/td&gt;&lt;td style=&quot;padding-left:16px;vertical-align:middle&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; border=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;font-size:14px;color:#2C4A35;letter-spacing:1px&quot;&gt;&lt;span style=&quot;font-weight:bold&quot;&gt;SAPIENS&lt;/span&gt;&lt;span style=&quot;color:#B8956A&quot;&gt;360&lt;/span&gt;&lt;span style=&quot;font-size:9px;color:#B8956A;vertical-align:top&quot;&gt;&amp;#8482;&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;font-size:11px;color:#9E8E7A;letter-spacing:1.5px;padding-top:3px&quot;&gt;Recalibrage du Terrain Biologique&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style=&quot;background:#2C4A35;padding:24px;text-align:center;&quot;&gt;
+&lt;div style=&quot;font-family:Georgia,serif;font-size:14px;color:#ffffff;margin-bottom:12px;&quot;&gt;SAPIENS 360&amp;trade;&lt;/div&gt;
+&lt;div&gt;&lt;a href=&quot;https://www.instagram.com/geo_le_sapiens&quot; style=&quot;color:#B8956A;text-decoration:none;font-size:13px;margin:0 8px;&quot;&gt;Instagram&lt;/a&gt;&lt;a href=&quot;https://www.facebook.com/profile.php?id=61585577240619&quot; style=&quot;color:#B8956A;text-decoration:none;font-size:13px;margin:0 8px;&quot;&gt;Facebook&lt;/a&gt;&lt;a href=&quot;https://www.youtube.com/@geolesapiens&quot; style=&quot;color:#B8956A;text-decoration:none;font-size:13px;margin:0 8px;&quot;&gt;YouTube&lt;/a&gt;&lt;/div&gt;
+&lt;div style=&quot;margin-top:14px;padding-top:12px;border-top:1px solid #4a5e4f;font-family:Arial,sans-serif;font-size:11px;color:#8a9e8f;line-height:1.5;&quot;&gt;SAPIENS 360 &middot; 495 rue du faubourg Bannier, 45000 Orl&eacute;ans, France&lt;br&gt;Tu re&ccedil;ois cet email parce que tu nous as contact&eacute;s. &lt;a href=&quot;{{contact.unsubscribe_url}}&quot; style=&quot;color:#B8956A;text-decoration:underline;&quot;&gt;Se d&eacute;sabonner&lt;/a&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;
+&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+    </div>
+  </div>
+  <div style="font-size:13px;color:#888;padding:10px 14px;border-left:2px solid #B8956A;margin:14px 0">Variable <code>{{appointment.meeting_location}}</code> = lien Zoom/Meet auto-renseigne par GHL Calendar.</div>
+</div>
+</div><!-- /sec-wf2 -->
+
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- SECTION: WF3 — POST-CALL RESCUE (JAD)       -->
+<!-- ═══════════════════════════════════════════ -->
+<div id="sec-wf3" class="section">
+<div class="wf-section">
+  <h2>WF3 — Post-Call Rescue (Jad) <span class="email-count">3 emails</span></h2>
+  <div class="wf-trigger">Trigger : Contact Tag &rarr; call-sans-vente</div>
+  <div class="remove-action"><span class="label">ACTION 1 :</span> <span class="desc">Remove from Workflow &rarr; WF1 + WF2</span></div>
+  <div class="wf-flow">
+    <span class="step">Tag: call-sans-vente</span>
+    <span class="arrow">&rarr;</span>
+    <span class="step">Remove WF1+WF2</span>
+    <span class="arrow">&rarr;</span>
+    <span class="step">Wait 2h</span>
+    <span class="arrow">&rarr;</span>
+    <span class="step">Email 1 (Jad)</span>
+    <span class="arrow">&rarr;</span>
+    <span class="step">Wait 1 jour</span>
+    <span class="arrow">&rarr;</span>
+    <span class="step">Email 2 (Jad)</span>
+    <span class="arrow">&rarr;</span>
+    <span class="step">Wait 2 jours</span>
+    <span class="arrow">&rarr;</span>
+    <span class="step">Email 3 (Geoffrey)</span>
+  </div>
+  <div class="condition-note">Emails 1-2 signes JAD (il a fait l'appel). Email 3 signe GEOFFREY (le praticien qui porte le poids de la decision).</div>
+
+  <div class="email-block">
+    <div class="email-header">
+      <span class="email-label">Email 1 — Empathy + Seed of Doubt (Signe JAD, H+2)</span>
+      <span class="email-subject">Objet : Tu vas oublier cette conversation. Ta peau, non. | De : Jad</span>
+    </div>
+    <div class="email-code-wrap">
+      <button class="copy-btn" onclick="copyCode('wf3e1')">Copier</button>
+      <pre class="email-code" id="wf3e1">[Email complet dans EMAILS_FINAL.html — Signe Jad, Analyste Terrain. Contenu : empathie post-call, seed of doubt sur l'inaction, "reponds a cet email".]</pre>
+    </div>
+  </div>
+
+  <div class="wait-step"><span class="wait-icon">&#9202;</span> Wait 1 jour</div>
+
+  <div class="email-block">
+    <div class="email-header">
+      <span class="email-label">Email 2 — Cost of Inaction (Signe JAD, J+2)</span>
+      <span class="email-subject">Objet : 2 347EUR | De : Jad</span>
+    </div>
+    <div class="email-code-wrap">
+      <button class="copy-btn" onclick="copyCode('wf3e2')">Copier</button>
+      <pre class="email-code" id="wf3e2">[Email complet dans EMAILS_FINAL.html — Signe Jad. Contenu : cout moyen 2347EUR en cremes/dermatos, calcul detaille, cout emotionnel, "le protocole coute une fraction".]</pre>
+    </div>
+  </div>
+
+  <div class="wait-step"><span class="wait-icon">&#9202;</span> Wait 2 jours</div>
+
+  <div class="email-block">
+    <div class="email-header">
+      <span class="email-label">Email 3 — Identity Question (Signe GEOFFREY, J+5)</span>
+      <span class="email-subject">Objet : La personne que tu veux devenir a deja pris sa decision | De : Geoffrey</span>
+    </div>
+    <div class="email-code-wrap">
+      <button class="copy-btn" onclick="copyCode('wf3e3')">Copier</button>
+      <pre class="email-code" id="wf3e3">[Email complet dans EMAILS_FINAL.html — Signe Geoffrey. Contenu : identity question, guarantee box (90 jours), dernier email, "ne laisse pas la peur decider".]</pre>
+    </div>
+  </div>
+</div>
+</div><!-- /sec-wf3 -->
+
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- SECTION: WF3b — POST-CALL RESCUE (GEOFFREY) -->
+<!-- ═══════════════════════════════════════════ -->
+<div id="sec-wf3b" class="section">
+<div class="wf-section">
+  <h2>WF3b — Post-Call Rescue (Geoffrey) <span class="email-count">3 emails</span></h2>
+  <div class="wf-trigger">Trigger : Contact Tag &rarr; call-geoffrey-sans-vente</div>
+  <div class="diff-box"><span class="label">DIFFERENCE vs WF3 :</span> <span class="desc">WF3 = calls Jad (Jad, Jad, Geoffrey). WF3b = calls Geoffrey (Geoffrey, Geoffrey, Geoffrey). La personne a parle a Geoffrey &rarr; c'est Geoffrey qui relance.</span></div>
+  <div class="remove-action"><span class="label">ACTION 1 :</span> <span class="desc">Remove from Workflow &rarr; WF1 + WF2</span></div>
+  <div class="wf-flow">
+    <span class="step">Tag: call-geoffrey-sans-vente</span>
+    <span class="arrow">&rarr;</span>
+    <span class="step">Remove WF1+WF2</span>
+    <span class="arrow">&rarr;</span>
+    <span class="step">Wait 2h</span>
+    <span class="arrow">&rarr;</span>
+    <span class="step">Email 1 (Geoffrey)</span>
+    <span class="arrow">&rarr;</span>
+    <span class="step">Wait 1 jour</span>
+    <span class="arrow">&rarr;</span>
+    <span class="step">Email 2 (Geoffrey)</span>
+    <span class="arrow">&rarr;</span>
+    <span class="step">Wait 2 jours</span>
+    <span class="arrow">&rarr;</span>
+    <span class="step">Email 3 (Geoffrey)</span>
+  </div>
+
+  <div class="email-block">
+    <div class="email-header">
+      <span class="email-label">Email 1 — Le cycle ne s'arrete pas tout seul (Geoffrey, H+2)</span>
+      <span class="email-subject">Objet : {{contact.first_name}}, je repense a ce que tu m'as dit | De : Geoffrey</span>
+    </div>
+    <div class="email-code-wrap">
+      <button class="copy-btn" onclick="copyCode('wf3be1')">Copier</button>
+      <pre class="email-code" id="wf3be1">[Email complet dans EMAILS_FINAL.html — Signe Geoffrey. Contenu : "je repense a notre echange", cycle cremes/espoir/rechute, "ce cycle ne s'arrete pas tout seul", "reponds-moi".]</pre>
+    </div>
+  </div>
+
+  <div class="wait-step"><span class="wait-icon">&#9202;</span> Wait 1 jour</div>
+
+  <div class="email-block">
+    <div class="email-header">
+      <span class="email-label">Email 2 — Le prix de ne rien faire (Geoffrey, J+1)</span>
+      <span class="email-subject">Objet : Ce que ta peau te coute vraiment | De : Geoffrey</span>
+    </div>
+    <div class="email-code-wrap">
+      <button class="copy-btn" onclick="copyCode('wf3be2')">Copier</button>
+      <pre class="email-code" id="wf3be2">[Email complet dans EMAILS_FINAL.html — Signe Geoffrey. Contenu : calcul couts cremes/consultations, "chaque semaine que tu attends", "reponds a cet email".]</pre>
+    </div>
+  </div>
+
+  <div class="wait-step"><span class="wait-icon">&#9202;</span> Wait 2 jours</div>
+
+  <div class="email-block">
+    <div class="email-header">
+      <span class="email-label">Email 3 — Dernier message (Geoffrey, J+3)</span>
+      <span class="email-subject">Objet : Dernier message — ensuite je te laisse tranquille | De : Geoffrey</span>
+    </div>
+    <div class="email-code-wrap">
+      <button class="copy-btn" onclick="copyCode('wf3be3')">Copier</button>
+      <pre class="email-code" id="wf3be3">[Email complet dans EMAILS_FINAL.html — Signe Geoffrey. Contenu : "ta peau ne va pas attendre ta decision", "la peur de commencer disparait en une semaine", dernier email.]</pre>
+    </div>
+  </div>
+</div>
+</div><!-- /sec-wf3b -->
+
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- SECTION: WF4 — NO-SHOW RECOVERY             -->
+<!-- ═══════════════════════════════════════════ -->
+<div id="sec-wf4" class="section">
+<div class="wf-section">
+  <h2>WF4 — No-Show Recovery <span class="email-count">3 emails</span></h2>
+  <div class="wf-trigger">Trigger : Appointment Status &rarr; No Show</div>
+  <div class="remove-action"><span class="label">ACTION 1 :</span> <span class="desc">Remove from Workflow &rarr; WF1 + WF2</span></div>
+  <div class="wf-flow">
+    <span class="step">No Show</span>
+    <span class="arrow">&rarr;</span>
+    <span class="step">Remove WF1+WF2</span>
+    <span class="arrow">&rarr;</span>
+    <span class="step">Email 1 (immediat)</span>
+    <span class="arrow">&rarr;</span>
+    <span class="step">Wait 1 jour</span>
+    <span class="arrow">&rarr;</span>
+    <span class="step">Email 2</span>
+    <span class="arrow">&rarr;</span>
+    <span class="step">Wait 2 jours</span>
+    <span class="arrow">&rarr;</span>
+    <span class="step">Email 3</span>
+  </div>
+
+  <div class="email-block">
+    <div class="email-header">
+      <span class="email-label">Email 1 — Empathy, No Guilt (immediat)</span>
+      <span class="email-subject">Objet : Ton profil m'interesse — on replanifie ? | De : Jad</span>
+    </div>
+    <div class="email-code-wrap">
+      <button class="copy-btn" onclick="copyCode('wf4e1')">Copier</button>
+      <pre class="email-code" id="wf4e1">[Email complet dans EMAILS_FINAL.html — Signe Jad. Contenu : "aucun souci, ca arrive", "ton cas m'interesse sincerement", CTA "Replanifier mon appel", lien booking.]</pre>
+    </div>
+  </div>
+
+  <div class="wait-step"><span class="wait-icon">&#9202;</span> Wait 1 jour</div>
+
+  <div class="email-block">
+    <div class="email-header">
+      <span class="email-label">Email 2 — Reframing (J+1)</span>
+      <span class="email-subject">Objet : Cet appel n'est pas ce que tu crois | De : Jad</span>
+    </div>
+    <div class="email-code-wrap">
+      <button class="copy-btn" onclick="copyCode('wf4e2')">Copier</button>
+      <pre class="email-code" id="wf4e2">[Email complet dans EMAILS_FINAL.html — Signe Jad. Contenu : reframe "pas un appel de vente", 4 etapes de l'appel, "etat des lieux gratuit", CTA "Reserver 20 minutes".]</pre>
+    </div>
+  </div>
+
+  <div class="wait-step"><span class="wait-icon">&#9202;</span> Wait 2 jours</div>
+
+  <div class="email-block">
+    <div class="email-header">
+      <span class="email-label">Email 3 — Real Scarcity + Respect (J+3)</span>
+      <span class="email-subject">Objet : Je garde ta place encore 48h | De : Jad</span>
+    </div>
+    <div class="email-code-wrap">
+      <button class="copy-btn" onclick="copyCode('wf4e3')">Copier</button>
+      <pre class="email-code" id="wf4e3">[Email complet dans EMAILS_FINAL.html — Signe Jad. Contenu : "dernier message", scarcite reelle (10 places/mois), "je garde ta place 48h", CTA "Reprendre ma place".]</pre>
+    </div>
+  </div>
+</div>
+</div><!-- /sec-wf4 -->
+
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- SECTION: WF5 — REBOOK                       -->
+<!-- ═══════════════════════════════════════════ -->
+<div id="sec-wf5" class="section">
+<div class="wf-section">
+  <h2>WF5 — Rebook <span class="email-count">1 email</span></h2>
+  <div class="wf-trigger">Trigger : Appointment Booked + HAS tag "no-show"</div>
+  <div class="remove-action"><span class="label">ACTION 1 :</span> <span class="desc">Remove from Workflow &rarr; WF2 + WF4</span></div>
+  <div class="info-box"><b>Pourquoi ce workflow ?</b> Quand une personne fait un no-show puis rebook, WF2 ne se redeclenche pas (Once per contact + filtre NOT no-show). WF5 prend le relais avec un email court — pas de temoignage, le contact l'a deja recu.</div>
+
+  <div class="email-block">
+    <div class="email-header">
+      <span class="email-label">Email 1 — Re-confirmation (Signe Jad)</span>
+      <span class="email-subject">Objet : On se retrouve bientot — cette fois c'est la bonne | De : Jad</span>
+    </div>
+    <div class="email-code-wrap">
+      <button class="copy-btn" onclick="copyCode('wf5e1')">Copier</button>
+      <pre class="email-code" id="wf5e1">[Email complet dans EMAILS_FINAL.html — Signe Jad. Contenu : "Merci d'avoir repris un creneau", "j'ai toujours tes reponses", checklist 3 points, court et direct.]</pre>
+    </div>
+  </div>
+  <div style="font-size:13px;color:#888;padding:10px 14px;border-left:2px solid #B8956A;margin:14px 0">Les rappels J-1 et H-1 sont geres par GHL Calendar (pas dans le workflow).</div>
+</div>
+</div><!-- /sec-wf5 -->
+
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- SECTION: ONBOARDING                          -->
+<!-- ═══════════════════════════════════════════ -->
+<div id="sec-onboarding" class="section">
+<div class="wf-section">
+  <h2>Onboarding Emails <span class="email-count">4 emails</span></h2>
+  <div class="wf-trigger">Trigger : Contact Tag &rarr; client</div>
+  <div class="remove-action"><span class="label">ACTION 1 :</span> <span class="desc">Remove from ALL previous workflows (WF1-WF5)</span></div>
+  <div class="wf-flow">
+    <span class="step">Tag: client</span>
+    <span class="arrow">&rarr;</span>
+    <span class="step">Remove ALL WFs</span>
+    <span class="arrow">&rarr;</span>
+    <span class="step">Email Welcome (immediat)</span>
+    <span class="arrow">&rarr;</span>
+    <span class="step">Wait 1h</span>
+    <span class="arrow">&rarr;</span>
+    <span class="step">Email Skool Access</span>
+    <span class="arrow">&rarr;</span>
+    <span class="step">Wait 24h</span>
+    <span class="arrow">&rarr;</span>
+    <span class="step">Email Diagnostic Form</span>
+    <span class="arrow">&rarr;</span>
+    <span class="step">Wait (quand tracker expedie)</span>
+    <span class="arrow">&rarr;</span>
+    <span class="step">Email Tracker Shipping</span>
+  </div>
+
+  <div class="email-block">
+    <div class="email-header">
+      <span class="email-label">Email 1 — Welcome (immediat)</span>
+      <span class="email-subject">Objet : Bienvenue dans SAPIENS 360 — ta transformation commence maintenant | De : Geoffrey</span>
+    </div>
+    <div class="email-code-wrap">
+      <button class="copy-btn" onclick="copyCode('onb1')">Copier</button>
+      <pre class="email-code" id="onb1">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;&lt;/head&gt;
+&lt;body style=&quot;margin:0;padding:0;background:#f4f1ec;&quot;&gt;
+&lt;table role=&quot;presentation&quot; width=&quot;100%&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; style=&quot;background:#f4f1ec;padding:20px 0;&quot;&gt;
+&lt;tr&gt;&lt;td align=&quot;center&quot;&gt;
+&lt;table role=&quot;presentation&quot; width=&quot;600&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; style=&quot;max-width:600px;width:100%;&quot;&gt;
+&lt;tr&gt;&lt;td style=&quot;background:#2C4A35;padding:32px 24px 24px;text-align:center;&quot;&gt;
+&lt;div style=&quot;font-family:Georgia,serif;font-size:12px;color:#B8956A;letter-spacing:6px;text-transform:uppercase;&quot;&gt;SAPIENS&lt;/div&gt;
+&lt;div style=&quot;font-family:Georgia,serif;font-size:38px;color:#ffffff;&quot;&gt;3&lt;span style=&quot;color:#B8956A;&quot;&gt;6&lt;/span&gt;0&lt;/div&gt;
+&lt;div style=&quot;width:60px;height:2px;background:#B8956A;margin:12px auto;&quot;&gt;&lt;/div&gt;
+&lt;div style=&quot;font-family:Georgia,serif;font-size:11px;color:#B8956A;letter-spacing:3px;text-transform:uppercase;&quot;&gt;Protocole Terrain Biologique&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style=&quot;background:#FAF7F2;padding:36px 32px;font-family:Arial,sans-serif;font-size:16px;color:#1A1A18;line-height:1.7;&quot;&gt;
+&lt;p style=&quot;margin:0 0 18px;&quot;&gt;{{contact.first_name}},&lt;/p&gt;
+&lt;p style=&quot;margin:0 0 18px;&quot;&gt;Bienvenue. Tu viens de prendre la meilleure d&eacute;cision pour ta peau.&lt;/p&gt;
+&lt;p style=&quot;margin:0 0 18px;&quot;&gt;Voici ce qui se passe maintenant :&lt;/p&gt;
+&lt;div style=&quot;background:#f0ece4;padding:20px 24px;border-radius:8px;margin:0 0 18px;&quot;&gt;
+&lt;p style=&quot;margin:0 0 14px;&quot;&gt;&lt;strong style=&quot;color:#B8956A;&quot;&gt;1.&lt;/strong&gt; Tu recevras un email avec ton acc&egrave;s Skool (communaut&eacute; + modules) dans l'heure.&lt;/p&gt;
+&lt;p style=&quot;margin:0 0 14px;&quot;&gt;&lt;strong style=&quot;color:#B8956A;&quot;&gt;2.&lt;/strong&gt; Demain, tu recevras le lien vers ton formulaire diagnostic d&eacute;taill&eacute;.&lt;/p&gt;
+&lt;p style=&quot;margin:0 0 14px;&quot;&gt;&lt;strong style=&quot;color:#B8956A;&quot;&gt;3.&lt;/strong&gt; Ton tracker sera exp&eacute;di&eacute; sous 48-72h &mdash; tu recevras un email de suivi.&lt;/p&gt;
+&lt;p style=&quot;margin:0;&quot;&gt;&lt;strong style=&quot;color:#B8956A;&quot;&gt;4.&lt;/strong&gt; Ton premier RDV avec Geoffrey sera planifi&eacute; d&egrave;s r&eacute;ception du diagnostic.&lt;/p&gt;
+&lt;/div&gt;
+&lt;p style=&quot;margin:0 0 18px;&quot;&gt;On est l&agrave; &agrave; chaque &eacute;tape. R&eacute;ponds &agrave; cet email si tu as la moindre question.&lt;/p&gt;
+&lt;p style=&quot;margin:0 0 18px;&quot;&gt;Les 90 prochains jours vont tout changer.&lt;/p&gt;
+&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; border=&quot;0&quot; style=&quot;margin-top:28px;padding-top:20px;border-top:1px solid #e8e0d8;font-family:Arial,Helvetica,sans-serif;color:#1A1A18;line-height:1.4&quot;&gt;&lt;tr&gt;&lt;td style=&quot;padding-right:16px;border-right:2px solid #B8956A;vertical-align:middle&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; border=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;font-size:17px;font-weight:bold;color:#1A1A18;letter-spacing:0.5px;padding-bottom:2px&quot;&gt;Geoffrey&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;font-size:11px;color:#9E8E7A;letter-spacing:2.5px;text-transform:uppercase&quot;&gt;Fondateur &amp;amp; Praticien&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/td&gt;&lt;td style=&quot;padding-left:16px;vertical-align:middle&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; border=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;font-size:14px;color:#2C4A35;letter-spacing:1px&quot;&gt;&lt;span style=&quot;font-weight:bold&quot;&gt;SAPIENS&lt;/span&gt;&lt;span style=&quot;color:#B8956A&quot;&gt;360&lt;/span&gt;&lt;span style=&quot;font-size:9px;color:#B8956A;vertical-align:top&quot;&gt;&amp;#8482;&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;font-size:11px;color:#9E8E7A;letter-spacing:1.5px;padding-top:3px&quot;&gt;Recalibrage du Terrain Biologique&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style=&quot;background:#2C4A35;padding:24px;text-align:center;&quot;&gt;
+&lt;div style=&quot;font-family:Georgia,serif;font-size:14px;color:#ffffff;margin-bottom:12px;&quot;&gt;SAPIENS 360&amp;trade;&lt;/div&gt;
+&lt;div&gt;&lt;a href=&quot;https://www.instagram.com/geo_le_sapiens&quot; style=&quot;color:#B8956A;text-decoration:none;font-size:13px;margin:0 8px;&quot;&gt;Instagram&lt;/a&gt;&lt;a href=&quot;https://www.facebook.com/profile.php?id=61585577240619&quot; style=&quot;color:#B8956A;text-decoration:none;font-size:13px;margin:0 8px;&quot;&gt;Facebook&lt;/a&gt;&lt;a href=&quot;https://www.youtube.com/@geolesapiens&quot; style=&quot;color:#B8956A;text-decoration:none;font-size:13px;margin:0 8px;&quot;&gt;YouTube&lt;/a&gt;&lt;/div&gt;
+&lt;div style=&quot;margin-top:14px;padding-top:12px;border-top:1px solid #4a5e4f;font-family:Arial,sans-serif;font-size:11px;color:#8a9e8f;line-height:1.5;&quot;&gt;SAPIENS 360 &middot; 495 rue du faubourg Bannier, 45000 Orl&eacute;ans, France&lt;br&gt;Tu re&ccedil;ois cet email parce que tu es client SAPIENS 360. &lt;a href=&quot;{{contact.unsubscribe_url}}&quot; style=&quot;color:#B8956A;text-decoration:underline;&quot;&gt;Se d&eacute;sabonner&lt;/a&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/body&gt;&lt;/html&gt;</pre>
+    </div>
+  </div>
+
+  <div class="wait-step"><span class="wait-icon">&#9202;</span> Wait 1 heure</div>
+
+  <div class="email-block">
+    <div class="email-header">
+      <span class="email-label">Email 2 — Acces Skool</span>
+      <span class="email-subject">Objet : Ton acces a la communaute SAPIENS 360 | De : Geoffrey</span>
+    </div>
+    <div class="email-code-wrap">
+      <button class="copy-btn" onclick="copyCode('onb2')">Copier</button>
+      <pre class="email-code" id="onb2">[Meme template SAPIENS 360. Contenu : lien Skool d'invitation, instructions pour rejoindre, "presente-toi dans le canal Bienvenue", modules disponibles.]</pre>
+    </div>
+  </div>
+
+  <div class="wait-step"><span class="wait-icon">&#9202;</span> Wait 24 heures</div>
+
+  <div class="email-block">
+    <div class="email-header">
+      <span class="email-label">Email 3 — Formulaire Diagnostic</span>
+      <span class="email-subject">Objet : Etape cruciale — remplis ton formulaire diagnostic | De : Geoffrey</span>
+    </div>
+    <div class="email-code-wrap">
+      <button class="copy-btn" onclick="copyCode('onb3')">Copier</button>
+      <pre class="email-code" id="onb3">[Meme template SAPIENS 360. Contenu : lien formulaire diagnostic detaille, "prends 15 min au calme", "plus tes reponses sont precises, plus le protocole sera cible".]</pre>
+    </div>
+  </div>
+
+  <div class="wait-step"><span class="wait-icon">&#9202;</span> Wait (quand tracker expedie — tag "tracker-expedie")</div>
+
+  <div class="email-block">
+    <div class="email-header">
+      <span class="email-label">Email 4 — Tracker Shipping Notification</span>
+      <span class="email-subject">Objet : Ton tracker a ete expedie | De : Geoffrey</span>
+    </div>
+    <div class="email-code-wrap">
+      <button class="copy-btn" onclick="copyCode('onb4')">Copier</button>
+      <pre class="email-code" id="onb4">[Meme template SAPIENS 360. Contenu : "ton tracker est en route", numero de suivi, instructions d'utilisation a l'arrivee, "des reception, active-le et commence le module 1".]</pre>
+    </div>
+  </div>
+</div>
+</div><!-- /sec-onboarding -->
+
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- SECTION: REFERRAL                            -->
+<!-- ═══════════════════════════════════════════ -->
+<div id="sec-referral" class="section">
+<div class="wf-section">
+  <h2>Referral Emails <span class="email-count">3 emails</span></h2>
+  <div class="wf-trigger">Trigger : Contact Tag &rarr; client (delai depuis onboarding)</div>
+  <div class="info-box"><b>Strategie :</b> 3 emails automatises a J+7, J+14 et J+30 apres le tag "client". Objectif : activer le referral naturel au moment ou le client voit ses premiers resultats.</div>
+  <div class="wf-flow">
+    <span class="step">Tag: client</span>
+    <span class="arrow">&rarr;</span>
+    <span class="step">Wait 7 jours</span>
+    <span class="arrow">&rarr;</span>
+    <span class="step">Email 1 (J+7)</span>
+    <span class="arrow">&rarr;</span>
+    <span class="step">Wait 7 jours</span>
+    <span class="arrow">&rarr;</span>
+    <span class="step">Email 2 (J+14)</span>
+    <span class="arrow">&rarr;</span>
+    <span class="step">Wait 16 jours</span>
+    <span class="arrow">&rarr;</span>
+    <span class="step">Email 3 (J+30)</span>
+  </div>
+
+  <div class="email-block">
+    <div class="email-header">
+      <span class="email-label">Email 1 — J+7 : Premiere semaine</span>
+      <span class="email-subject">Objet : Tu connais quelqu'un qui vit la meme chose ? | De : Geoffrey</span>
+    </div>
+    <div class="email-code-wrap">
+      <button class="copy-btn" onclick="copyCode('ref1')">Copier</button>
+      <pre class="email-code" id="ref1">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;&lt;meta charset=&quot;UTF-8&quot;&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;&lt;/head&gt;
+&lt;body style=&quot;margin:0;padding:0;background:#f4f1ec;&quot;&gt;
+&lt;table role=&quot;presentation&quot; width=&quot;100%&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; style=&quot;background:#f4f1ec;padding:20px 0;&quot;&gt;
+&lt;tr&gt;&lt;td align=&quot;center&quot;&gt;
+&lt;table role=&quot;presentation&quot; width=&quot;600&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; style=&quot;max-width:600px;width:100%;&quot;&gt;
+&lt;tr&gt;&lt;td style=&quot;background:#2C4A35;padding:32px 24px 24px;text-align:center;&quot;&gt;
+&lt;div style=&quot;font-family:Georgia,serif;font-size:12px;color:#B8956A;letter-spacing:6px;text-transform:uppercase;&quot;&gt;SAPIENS&lt;/div&gt;
+&lt;div style=&quot;font-family:Georgia,serif;font-size:38px;color:#ffffff;&quot;&gt;3&lt;span style=&quot;color:#B8956A;&quot;&gt;6&lt;/span&gt;0&lt;/div&gt;
+&lt;div style=&quot;width:60px;height:2px;background:#B8956A;margin:12px auto;&quot;&gt;&lt;/div&gt;
+&lt;div style=&quot;font-family:Georgia,serif;font-size:11px;color:#B8956A;letter-spacing:3px;text-transform:uppercase;&quot;&gt;Protocole Terrain Biologique&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style=&quot;background:#FAF7F2;padding:36px 32px;font-family:Arial,sans-serif;font-size:16px;color:#1A1A18;line-height:1.7;&quot;&gt;
+&lt;p style=&quot;margin:0 0 18px;&quot;&gt;{{contact.first_name}},&lt;/p&gt;
+&lt;p style=&quot;margin:0 0 18px;&quot;&gt;&Ccedil;a fait une semaine que tu as commenc&eacute; le protocole. J'esp&egrave;re que tu ressens d&eacute;j&agrave; les premiers changements.&lt;/p&gt;
+&lt;p style=&quot;margin:0 0 18px;&quot;&gt;J'ai une question simple : &lt;strong&gt;est-ce que tu connais quelqu'un qui vit la m&ecirc;me chose que toi ?&lt;/strong&gt;&lt;/p&gt;
+&lt;p style=&quot;margin:0 0 18px;&quot;&gt;Une amie avec de l'ecz&eacute;ma. Une coll&egrave;gue qui lutte contre l'acn&eacute;. Quelqu'un dans ta famille avec du psoriasis.&lt;/p&gt;
+&lt;p style=&quot;margin:0 0 18px;&quot;&gt;Si oui, transfere-lui simplement cet email ou envoie-lui ce lien :&lt;/p&gt;
+&lt;p style=&quot;margin:0 0 28px;text-align:center;&quot;&gt;
+&lt;a href=&quot;https://sapiens360.fr/vsl&quot; style=&quot;display:inline-block;background:#B8956A;color:#ffffff;padding:14px 32px;border-radius:6px;text-decoration:none;font-weight:bold;font-size:16px;&quot;&gt;Partager la vid&eacute;o&lt;/a&gt;
+&lt;/p&gt;
+&lt;p style=&quot;margin:0 0 18px;&quot;&gt;Pas de commission, pas de code promo. Juste l'envie d'aider quelqu'un que tu connais &agrave; sortir du m&ecirc;me cycle.&lt;/p&gt;
+&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; border=&quot;0&quot; style=&quot;margin-top:28px;padding-top:20px;border-top:1px solid #e8e0d8;font-family:Arial,Helvetica,sans-serif;color:#1A1A18;line-height:1.4&quot;&gt;&lt;tr&gt;&lt;td style=&quot;padding-right:16px;border-right:2px solid #B8956A;vertical-align:middle&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; border=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;font-size:17px;font-weight:bold;color:#1A1A18;letter-spacing:0.5px;padding-bottom:2px&quot;&gt;Geoffrey&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;font-size:11px;color:#9E8E7A;letter-spacing:2.5px;text-transform:uppercase&quot;&gt;Fondateur &amp;amp; Praticien&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/td&gt;&lt;td style=&quot;padding-left:16px;vertical-align:middle&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; border=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot;font-size:14px;color:#2C4A35;letter-spacing:1px&quot;&gt;&lt;span style=&quot;font-weight:bold&quot;&gt;SAPIENS&lt;/span&gt;&lt;span style=&quot;color:#B8956A&quot;&gt;360&lt;/span&gt;&lt;span style=&quot;font-size:9px;color:#B8956A;vertical-align:top&quot;&gt;&amp;#8482;&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;font-size:11px;color:#9E8E7A;letter-spacing:1.5px;padding-top:3px&quot;&gt;Recalibrage du Terrain Biologique&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style=&quot;background:#2C4A35;padding:24px;text-align:center;&quot;&gt;
+&lt;div style=&quot;font-family:Georgia,serif;font-size:14px;color:#ffffff;margin-bottom:12px;&quot;&gt;SAPIENS 360&amp;trade;&lt;/div&gt;
+&lt;div&gt;&lt;a href=&quot;https://www.instagram.com/geo_le_sapiens&quot; style=&quot;color:#B8956A;text-decoration:none;font-size:13px;margin:0 8px;&quot;&gt;Instagram&lt;/a&gt;&lt;a href=&quot;https://www.facebook.com/profile.php?id=61585577240619&quot; style=&quot;color:#B8956A;text-decoration:none;font-size:13px;margin:0 8px;&quot;&gt;Facebook&lt;/a&gt;&lt;a href=&quot;https://www.youtube.com/@geolesapiens&quot; style=&quot;color:#B8956A;text-decoration:none;font-size:13px;margin:0 8px;&quot;&gt;YouTube&lt;/a&gt;&lt;/div&gt;
+&lt;div style=&quot;margin-top:14px;padding-top:12px;border-top:1px solid #4a5e4f;font-family:Arial,sans-serif;font-size:11px;color:#8a9e8f;line-height:1.5;&quot;&gt;SAPIENS 360 &middot; 495 rue du faubourg Bannier, 45000 Orl&eacute;ans, France&lt;br&gt;&lt;a href=&quot;{{contact.unsubscribe_url}}&quot; style=&quot;color:#B8956A;text-decoration:underline;&quot;&gt;Se d&eacute;sabonner&lt;/a&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/body&gt;&lt;/html&gt;</pre>
+    </div>
+  </div>
+
+  <div class="wait-step"><span class="wait-icon">&#9202;</span> Wait 7 jours (J+14 total)</div>
+
+  <div class="email-block">
+    <div class="email-header">
+      <span class="email-label">Email 2 — J+14 : Premiers resultats</span>
+      <span class="email-subject">Objet : Tes premiers resultats — et une demande | De : Geoffrey</span>
+    </div>
+    <div class="email-code-wrap">
+      <button class="copy-btn" onclick="copyCode('ref2')">Copier</button>
+      <pre class="email-code" id="ref2">[Meme template SAPIENS 360. Contenu : "tu es a 2 semaines", demande de temoignage court (3 phrases), "envoie le lien VSL a quelqu'un qui en a besoin", CTA partage.]</pre>
+    </div>
+  </div>
+
+  <div class="wait-step"><span class="wait-icon">&#9202;</span> Wait 16 jours (J+30 total)</div>
+
+  <div class="email-block">
+    <div class="email-header">
+      <span class="email-label">Email 3 — J+30 : Un mois de protocole</span>
+      <span class="email-subject">Objet : 30 jours. Tu vois la difference. | De : Geoffrey</span>
+    </div>
+    <div class="email-code-wrap">
+      <button class="copy-btn" onclick="copyCode('ref3')">Copier</button>
+      <pre class="email-code" id="ref3">[Meme template SAPIENS 360. Contenu : celebration des 30 jours, "tu es la preuve que ca marche", demande de referral + avis Google, "chaque personne que tu aides renforce la mission".]</pre>
+    </div>
+  </div>
+</div>
+</div><!-- /sec-referral -->
+
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- SECTION: TEMOIGNAGES PAR CONDITION           -->
+<!-- ═══════════════════════════════════════════ -->
+<div id="sec-temoignages" class="section">
+<div class="wf-section">
+  <h2>Temoignages par Condition</h2>
+  <p style="color:#999;font-size:14px;margin-bottom:20px">Les temoignages complets utilises dans les emails WF2 (Pre-Close Booking), organises par condition.</p>
+
+  <div class="cond-tabs" data-group="temocond">
+    <button class="cond-tab active" onclick="showCondTab('temocond','t-psoriasis')">Psoriasis</button>
+    <button class="cond-tab" onclick="showCondTab('temocond','t-acne')">Acne</button>
+    <button class="cond-tab" onclick="showCondTab('temocond','t-rosacee')">Rosacee</button>
+    <button class="cond-tab" onclick="showCondTab('temocond','t-eczema')">Eczema</button>
+    <button class="cond-tab" onclick="showCondTab('temocond','t-digestion')">Digestion</button>
+    <button class="cond-tab" onclick="showCondTab('temocond','t-generique')">Generique</button>
+  </div>
+
+  <!-- PSORIASIS TEMOIGNAGES -->
+  <div class="cond-content active" data-group="temocond" data-tab="t-psoriasis">
+    <div style="background:#1a1a1a;border:1px solid #333;border-radius:8px;padding:20px;margin-bottom:16px">
+      <div style="background:#f0ece4;border-left:4px solid #B8956A;padding:16px 20px;margin:0 0 16px;border-radius:0 8px 8px 0;">
+        <p style="margin:0 0 8px;font-style:italic;color:#ccc;">"Des la premiere semaine j'ai perdu 4 kilos et mon psoriasis a commence a reculer. Au bout de 2 mois, mes plaques avaient quasiment disparu -- apres 9 ans."</p>
+        <p style="margin:0;font-size:14px;color:#B8956A;font-weight:bold;">-- Erwan</p>
+      </div>
+      <div style="background:#f0ece4;border-left:4px solid #B8956A;padding:16px 20px;margin:0 0 16px;border-radius:0 8px 8px 0;">
+        <p style="margin:0 0 8px;font-style:italic;color:#ccc;">"8 ans de cortisone. A chaque arret, effet rebond. J'ai commence le protocole en gardant la cortisone, puis j'ai pu diminuer progressivement. Aujourd'hui j'ai arrete completement."</p>
+        <p style="margin:0;font-size:14px;color:#B8956A;font-weight:bold;">-- Amelie D., 38 ans</p>
+      </div>
+      <div style="background:#f0ece4;border-left:4px solid #B8956A;padding:16px 20px;margin:0 0 16px;border-radius:0 8px 8px 0;">
+        <p style="margin:0 0 8px;font-style:italic;color:#ccc;">"Mon dermato m'a dit a 29 ans : le psoriasis c'est a vie. J'ai pleure dans ma voiture. 90 jours de protocole plus tard, mes coudes et mes genoux sont lisses."</p>
+        <p style="margin:0;font-size:14px;color:#B8956A;font-weight:bold;">-- Laura G., 33 ans</p>
+      </div>
+      <div style="background:#f0ece4;border-left:4px solid #B8956A;padding:16px 20px;margin:0;border-radius:0 8px 8px 0;">
+        <p style="margin:0 0 8px;font-style:italic;color:#ccc;">"6 ans de psoriasis du cuir chevelu. A la semaine 4, je ne me grattais plus la nuit. A 90 jours -- plus rien."</p>
+        <p style="margin:0;font-size:14px;color:#B8956A;font-weight:bold;">-- Lea M., 32 ans</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ACNE TEMOIGNAGES -->
+  <div class="cond-content" data-group="temocond" data-tab="t-acne">
+    <div style="background:#1a1a1a;border:1px solid #333;border-radius:8px;padding:20px;margin-bottom:16px">
+      <div style="background:#f0ece4;border-left:4px solid #B8956A;padding:16px 20px;margin:0 0 16px;border-radius:0 8px 8px 0;">
+        <p style="margin:0 0 8px;font-style:italic;color:#ccc;">"4 ans de doxycycline non-stop. Des que j'arretais -- retour des boutons. Avec le protocole, j'ai arrete les antibiotiques. 3 mois plus tard, ma peau est stable sans aucun medicament."</p>
+        <p style="margin:0;font-size:14px;color:#B8956A;font-weight:bold;">-- Sarah V., 36 ans</p>
+      </div>
+      <div style="background:#f0ece4;border-left:4px solid #B8956A;padding:16px 20px;margin:0 0 16px;border-radius:0 8px 8px 0;">
+        <p style="margin:0 0 8px;font-style:italic;color:#ccc;">"Pilule depuis mes 16 ans pour 'controler' l'acne. Avec le protocole, j'ai enfin compris que la pilule masquait le probleme. Aujourd'hui ma peau est claire sans hormones."</p>
+        <p style="margin:0;font-size:14px;color:#B8956A;font-weight:bold;">-- Sophie L., 28 ans</p>
+      </div>
+      <div style="background:#f0ece4;border-left:4px solid #B8956A;padding:16px 20px;margin:0 0 16px;border-radius:0 8px 8px 0;">
+        <p style="margin:0 0 8px;font-style:italic;color:#ccc;">"Generaliste, dermato, gyneco, pilule. 7 ans dans ce circuit. Geoffrey a ete le premier a regarder l'ensemble."</p>
+        <p style="margin:0;font-size:14px;color:#B8956A;font-weight:bold;">-- Ines M., 31 ans</p>
+      </div>
+      <div style="background:#f0ece4;border-left:4px solid #B8956A;padding:16px 20px;margin:0;border-radius:0 8px 8px 0;">
+        <p style="margin:0 0 8px;font-style:italic;color:#ccc;">"Acne, fatigue permanente, brouillard mental. Je pensais que c'etaient 3 problemes separes. En stabilisant le terrain, les 3 se sont resolus en meme temps."</p>
+        <p style="margin:0;font-size:14px;color:#B8956A;font-weight:bold;">-- Julie F., 29 ans</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ROSACEE TEMOIGNAGES -->
+  <div class="cond-content" data-group="temocond" data-tab="t-rosacee">
+    <div style="background:#1a1a1a;border:1px solid #333;border-radius:8px;padding:20px;margin-bottom:16px">
+      <div style="background:#f0ece4;border-left:4px solid #B8956A;padding:16px 20px;margin:0 0 16px;border-radius:0 8px 8px 0;">
+        <p style="margin:0 0 8px;font-style:italic;color:#ccc;">"4 dermatologues en 6 ans. Metronidazole, acide azelaique, laser. Ca calmait 3 semaines puis ca repartait. Avec le protocole -- les rougeurs ont diminue des la semaine 4. Aujourd'hui je sors sans maquillage."</p>
+        <p style="margin:0;font-size:14px;color:#B8956A;font-weight:bold;">-- Marie L., 34 ans</p>
+      </div>
+      <div style="background:#f0ece4;border-left:4px solid #B8956A;padding:16px 20px;margin:0 0 16px;border-radius:0 8px 8px 0;">
+        <p style="margin:0 0 8px;font-style:italic;color:#ccc;">"Pendant 5 ans mon dermato m'a dit que ma rosacee etait liee au stress. Ce que personne ne m'a explique : le stress declenche parce qu'il fragilise la paroi intestinale."</p>
+        <p style="margin:0;font-size:14px;color:#B8956A;font-weight:bold;">-- Isabelle R., 41 ans</p>
+      </div>
+      <div style="background:#f0ece4;border-left:4px solid #B8956A;padding:16px 20px;margin:0 0 16px;border-radius:0 8px 8px 0;">
+        <p style="margin:0 0 8px;font-style:italic;color:#ccc;">"3 seances de laser, metronidazole tous les jours, 2 000EUR de cremes en 4 ans. Avec le protocole -- pas de creme, pas de laser. Ca fait 3 mois que mon visage est calme."</p>
+        <p style="margin:0;font-size:14px;color:#B8956A;font-weight:bold;">-- Lucie P., 36 ans</p>
+      </div>
+      <div style="background:#f0ece4;border-left:4px solid #B8956A;padding:16px 20px;margin:0;border-radius:0 8px 8px 0;">
+        <p style="margin:0 0 8px;font-style:italic;color:#ccc;">"7 ans de rougeurs. Bilans normaux. Geoffrey a cherche l'inflammation que les bilans classiques ne voient pas."</p>
+        <p style="margin:0;font-size:14px;color:#B8956A;font-weight:bold;">-- Mathilde T., 38 ans</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ECZEMA TEMOIGNAGES -->
+  <div class="cond-content" data-group="temocond" data-tab="t-eczema">
+    <div style="background:#1a1a1a;border:1px solid #333;border-radius:8px;padding:20px;margin-bottom:16px">
+      <div style="background:#f0ece4;border-left:4px solid #B8956A;padding:16px 20px;margin:0 0 16px;border-radius:0 8px 8px 0;">
+        <p style="margin:0 0 8px;font-style:italic;color:#ccc;">"En 2 mois mon eczema a disparu. Plus de demangeaisons, plus de fringales. Mon energie est revenue a un niveau que j'avais pas connu depuis des annees."</p>
+        <p style="margin:0;font-size:14px;color:#B8956A;font-weight:bold;">-- Coralie M., 30 ans</p>
+      </div>
+      <div style="background:#f0ece4;border-left:4px solid #B8956A;padding:16px 20px;margin:0 0 16px;border-radius:0 8px 8px 0;">
+        <p style="margin:0 0 8px;font-style:italic;color:#ccc;">"15 ans d'eczema. J'etais sous Dupixent -- une injection qui bloque le systeme immunitaire. Avec le protocole, j'ai pu arreter les injections."</p>
+        <p style="margin:0;font-size:14px;color:#B8956A;font-weight:bold;">-- Emma T., 31 ans</p>
+      </div>
+      <div style="background:#f0ece4;border-left:4px solid #B8956A;padding:16px 20px;margin:0;border-radius:0 8px 8px 0;">
+        <p style="margin:0 0 8px;font-style:italic;color:#ccc;">"On m'a dit pendant 12 ans que c'etait genetique. Geoffrey m'a dit : genetique veut dire terrain predispose, pas condamnee. 90 jours plus tard -- ma peau est silencieuse."</p>
+        <p style="margin:0;font-size:14px;color:#B8956A;font-weight:bold;">-- Camille B., 35 ans</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- DIGESTION TEMOIGNAGES -->
+  <div class="cond-content" data-group="temocond" data-tab="t-digestion">
+    <div style="background:#1a1a1a;border:1px solid #333;border-radius:8px;padding:20px;margin-bottom:16px">
+      <div style="background:#f0ece4;border-left:4px solid #B8956A;padding:16px 20px;margin:0 0 16px;border-radius:0 8px 8px 0;">
+        <p style="margin:0 0 8px;font-style:italic;color:#ccc;">"Acne, fatigue permanente, brouillard mental. Je pensais que c'etaient 3 problemes separes. En stabilisant le terrain, les 3 se sont resolus en meme temps."</p>
+        <p style="margin:0;font-size:14px;color:#B8956A;font-weight:bold;">-- Julie F., 29 ans</p>
+      </div>
+      <div style="background:#f0ece4;border-left:4px solid #B8956A;padding:16px 20px;margin:0;border-radius:0 8px 8px 0;">
+        <p style="margin:0 0 8px;font-style:italic;color:#ccc;">"Des la premiere semaine, -4kg. La faim est bien geree. Digestion plus legere."</p>
+        <p style="margin:0;font-size:14px;color:#B8956A;font-weight:bold;">-- Erwan</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- GENERIQUE TEMOIGNAGES -->
+  <div class="cond-content" data-group="temocond" data-tab="t-generique">
+    <div style="background:#1a1a1a;border:1px solid #333;border-radius:8px;padding:20px;margin-bottom:16px">
+      <div style="background:#f0ece4;border-left:4px solid #B8956A;padding:16px 20px;margin:0 0 16px;border-radius:0 8px 8px 0;">
+        <p style="margin:0 0 8px;font-style:italic;color:#ccc;">"Des la premiere semaine j'ai perdu 4 kilos et mon psoriasis a commence a reculer. Au bout de 2 mois, mes plaques avaient quasiment disparu -- apres 9 ans."</p>
+        <p style="margin:0;font-size:14px;color:#B8956A;font-weight:bold;">-- Erwan (Psoriasis)</p>
+      </div>
+      <div style="background:#f0ece4;border-left:4px solid #B8956A;padding:16px 20px;margin:0 0 16px;border-radius:0 8px 8px 0;">
+        <p style="margin:0 0 8px;font-style:italic;color:#ccc;">"4 ans de doxycycline non-stop. Avec le protocole, j'ai arrete les antibiotiques. 3 mois plus tard, ma peau est stable sans aucun medicament."</p>
+        <p style="margin:0;font-size:14px;color:#B8956A;font-weight:bold;">-- Sarah V., 36 ans (Acne)</p>
+      </div>
+      <div style="background:#f0ece4;border-left:4px solid #B8956A;padding:16px 20px;margin:0 0 16px;border-radius:0 8px 8px 0;">
+        <p style="margin:0 0 8px;font-style:italic;color:#ccc;">"4 dermatologues en 6 ans. Avec le protocole -- les rougeurs ont diminue des la semaine 4. Aujourd'hui je sors sans maquillage."</p>
+        <p style="margin:0;font-size:14px;color:#B8956A;font-weight:bold;">-- Marie L., 34 ans (Rosacee)</p>
+      </div>
+      <div style="background:#f0ece4;border-left:4px solid #B8956A;padding:16px 20px;margin:0 0 16px;border-radius:0 8px 8px 0;">
+        <p style="margin:0 0 8px;font-style:italic;color:#ccc;">"On m'a dit pendant 12 ans que c'etait genetique. 90 jours plus tard -- ma peau est silencieuse pour la premiere fois en 12 ans."</p>
+        <p style="margin:0;font-size:14px;color:#B8956A;font-weight:bold;">-- Camille B., 35 ans (Eczema)</p>
+      </div>
+      <div style="background:#f0ece4;border-left:4px solid #B8956A;padding:16px 20px;margin:0;border-radius:0 8px 8px 0;">
+        <p style="margin:0 0 8px;font-style:italic;color:#ccc;">"Acne, fatigue permanente, brouillard mental. Je pensais que c'etaient 3 problemes separes. En stabilisant le terrain, les 3 se sont resolus en meme temps."</p>
+        <p style="margin:0;font-size:14px;color:#B8956A;font-weight:bold;">-- Julie F., 29 ans (Digestion + Peau)</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+</div><!-- /sec-temoignages -->
+
+
+</div><!-- /container -->
+
+<!-- ═══════════════ FOOTER ═══════════════ -->
+<div class="page-footer">
+  <div class="brand">SAPIENS 360</div>
+  <p>Emails GHL | Derniere MAJ : Avril 2026</p>
+</div>
+
+<!-- ═══════════════ SCRIPTS ═══════════════ -->
+<script>
+// Tab navigation
+function showSection(id) {
+  document.querySelectorAll('.section').forEach(function(s) { s.classList.remove('active'); });
+  document.querySelectorAll('.nav-tab').forEach(function(t) { t.classList.remove('active'); });
+  var sec = document.getElementById('sec-' + id);
+  if (sec) sec.classList.add('active');
+  // Find matching tab
+  var tabs = document.querySelectorAll('.nav-tab');
+  var sectionNames = ['overview','wf1','wf2','wf3','wf3b','wf4','wf5','onboarding','referral','temoignages'];
+  var idx = sectionNames.indexOf(id);
+  if (idx >= 0 && tabs[idx]) tabs[idx].classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+// Condition tabs
+function showCondTab(group, tabId) {
+  document.querySelectorAll('.cond-content[data-group="' + group + '"]').forEach(function(c) { c.classList.remove('active'); });
+  document.querySelectorAll('.cond-tabs[data-group="' + group + '"] .cond-tab').forEach(function(t) { t.classList.remove('active'); });
+  var target = document.querySelector('.cond-content[data-group="' + group + '"][data-tab="' + tabId + '"]');
+  if (target) target.classList.add('active');
+  // Activate button
+  event.target.classList.add('active');
+}
+
+// Copy to clipboard
+function copyCode(id) {
+  var pre = document.getElementById(id);
+  if (!pre) return;
+  var text = pre.textContent || pre.innerText;
+  navigator.clipboard.writeText(text).then(function() {
+    var btns = pre.parentElement.querySelectorAll('.copy-btn');
+    btns.forEach(function(btn) {
+      btn.textContent = 'Copie !';
+      btn.classList.add('copied');
+      setTimeout(function() {
+        btn.textContent = 'Copier';
+        btn.classList.remove('copied');
+      }, 2000);
+    });
+  });
+}
+</script>
+
+</body>
+</html>

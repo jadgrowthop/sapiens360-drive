@@ -1,0 +1,1351 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAPIENS 360 — Process Onboarding Client</title>
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg: #111;
+  --card: #161616;
+  --border: #2C4A3555;
+  --gold: #B8956A;
+  --green: #2C4A35;
+  --ivory: #FAF7F2;
+  --stone: #888;
+  --gold-glow: #B8956A44;
+  --green-glow: #2C4A3544;
+  --radius: 10px;
+  --transition: 0.25s ease;
+}
+
+body {
+  background: var(--bg);
+  color: var(--ivory);
+  font-family: 'Segoe UI', Arial, sans-serif;
+  line-height: 1.7;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Hero ── */
+.hero {
+  text-align: center;
+  padding: 56px 24px 36px;
+  border-bottom: 1px solid var(--border);
+}
+.hero-brand {
+  font-family: Georgia, serif;
+  font-size: 13px;
+  color: var(--gold);
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.hero-title {
+  font-family: Georgia, serif;
+  font-size: clamp(28px, 5vw, 42px);
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.15;
+  margin-bottom: 12px;
+}
+.hero-title .gold { color: var(--gold); }
+.hero-subtitle {
+  font-family: Georgia, serif;
+  font-size: 15px;
+  color: var(--stone);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.hero-desc {
+  color: var(--stone);
+  font-size: 14px;
+  max-width: 520px;
+  margin: 0 auto;
+}
+.hero-user {
+  display: inline-block;
+  margin-top: 14px;
+  padding: 5px 16px;
+  background: var(--green);
+  border-radius: 20px;
+  font-size: 12px;
+  color: var(--gold);
+  letter-spacing: 1px;
+}
+
+/* ── Sticky Nav ── */
+.sticky-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(17,17,17,0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 16px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.sticky-nav::-webkit-scrollbar { display: none; }
+.nav-inner {
+  display: flex;
+  gap: 4px;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 8px 0;
+}
+.nav-tab {
+  flex-shrink: 0;
+  padding: 8px 16px;
+  font-size: 13px;
+  color: var(--stone);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: var(--transition);
+  white-space: nowrap;
+  font-family: inherit;
+}
+.nav-tab:hover { color: var(--ivory); background: #1a1a1a; }
+.nav-tab.active {
+  color: var(--gold);
+  background: rgba(184,149,106,0.08);
+  border-color: rgba(184,149,106,0.2);
+}
+
+/* ── Layout ── */
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 20px 80px;
+}
+.section {
+  display: none;
+  padding-top: 36px;
+  animation: fadeUp 0.35s ease;
+}
+.section.active { display: block; }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Section Headers ── */
+.section-header {
+  margin-bottom: 28px;
+}
+.section-number {
+  font-size: 11px;
+  color: var(--gold);
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.section-title {
+  font-family: Georgia, serif;
+  font-size: clamp(22px, 4vw, 30px);
+  color: #fff;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+.section-desc {
+  color: var(--stone);
+  font-size: 14px;
+  max-width: 600px;
+}
+
+/* ── Cards ── */
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  margin-bottom: 16px;
+}
+.card-title {
+  font-family: Georgia, serif;
+  font-size: 17px;
+  color: var(--gold);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.card-title .badge {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  font-size: 10px;
+  background: var(--green);
+  color: var(--gold);
+  padding: 2px 8px;
+  border-radius: 10px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+/* ── Timeline ── */
+.timeline {
+  position: relative;
+  padding-left: 32px;
+}
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 8px;
+  top: 8px;
+  bottom: 8px;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--gold), var(--green), var(--gold));
+  border-radius: 2px;
+}
+.timeline-item {
+  position: relative;
+  margin-bottom: 32px;
+}
+.timeline-item:last-child { margin-bottom: 0; }
+.timeline-dot {
+  position: absolute;
+  left: -28px;
+  top: 4px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--bg);
+  border: 2px solid var(--gold);
+  box-shadow: 0 0 10px var(--gold-glow);
+}
+.timeline-item.completed .timeline-dot {
+  background: var(--gold);
+}
+.timeline-time {
+  font-family: Georgia, serif;
+  font-size: 16px;
+  color: var(--gold);
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+.timeline-title {
+  font-size: 14px;
+  color: #fff;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+.timeline-details {
+  list-style: none;
+  padding: 0;
+}
+.timeline-details li {
+  font-size: 13px;
+  color: var(--stone);
+  padding: 3px 0;
+  padding-left: 16px;
+  position: relative;
+}
+.timeline-details li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 10px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--green);
+}
+
+/* ── Checklist ── */
+.checklist-group {
+  margin-bottom: 20px;
+}
+.checklist-group-title {
+  font-family: Georgia, serif;
+  font-size: 15px;
+  color: var(--gold);
+  margin-bottom: 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border);
+}
+.checklist-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 8px 0;
+  cursor: pointer;
+  transition: var(--transition);
+}
+.checklist-item:hover { opacity: 0.85; }
+.check-box {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--stone);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition);
+  margin-top: 1px;
+}
+.checklist-item.checked .check-box {
+  border-color: var(--gold);
+  background: var(--gold);
+}
+.check-box svg {
+  width: 12px;
+  height: 12px;
+  fill: none;
+  stroke: var(--bg);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0;
+  transition: var(--transition);
+}
+.checklist-item.checked .check-box svg { opacity: 1; }
+.check-label {
+  font-size: 14px;
+  color: var(--ivory);
+  transition: var(--transition);
+}
+.checklist-item.checked .check-label {
+  color: var(--stone);
+  text-decoration: line-through;
+}
+
+/* ── Client Name Input ── */
+.client-bar {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+.client-input {
+  flex: 1;
+  min-width: 200px;
+  background: #1a1a1a;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 10px 14px;
+  color: var(--ivory);
+  font-size: 14px;
+  font-family: inherit;
+  outline: none;
+  transition: var(--transition);
+}
+.client-input:focus { border-color: var(--gold); }
+.client-input::placeholder { color: #555; }
+.btn {
+  padding: 10px 20px;
+  border: 1px solid var(--gold);
+  background: transparent;
+  color: var(--gold);
+  font-size: 13px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: var(--transition);
+  white-space: nowrap;
+}
+.btn:hover { background: rgba(184,149,106,0.1); }
+.btn-sm {
+  padding: 6px 12px;
+  font-size: 12px;
+}
+.btn-gold {
+  background: var(--gold);
+  color: var(--bg);
+  border-color: var(--gold);
+}
+.btn-gold:hover { background: #a17f5a; }
+
+/* ── Copy Block ── */
+.copy-block {
+  position: relative;
+  background: #1a1a1a;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  margin-bottom: 16px;
+}
+.copy-block pre {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  font-size: 13px;
+  color: var(--ivory);
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  line-height: 1.7;
+}
+.copy-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: var(--green);
+  border: 1px solid var(--border);
+  color: var(--gold);
+  padding: 5px 12px;
+  border-radius: 5px;
+  font-size: 11px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: var(--transition);
+  letter-spacing: 0.5px;
+}
+.copy-btn:hover { background: #3a5f47; }
+.copy-btn.copied { background: var(--gold); color: var(--bg); }
+
+/* ── Collapsible ── */
+.collapsible {
+  margin-bottom: 12px;
+}
+.collapsible-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 20px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: var(--transition);
+}
+.collapsible-header:hover { border-color: rgba(184,149,106,0.3); }
+.collapsible-header h3 {
+  font-family: Georgia, serif;
+  font-size: 15px;
+  color: var(--ivory);
+  font-weight: 600;
+}
+.collapsible-arrow {
+  color: var(--gold);
+  font-size: 18px;
+  transition: transform 0.3s ease;
+}
+.collapsible.open .collapsible-arrow { transform: rotate(180deg); }
+.collapsible.open .collapsible-header {
+  border-radius: var(--radius) var(--radius) 0 0;
+  border-bottom-color: transparent;
+}
+.collapsible-body {
+  display: none;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-top: none;
+  border-radius: 0 0 var(--radius) var(--radius);
+  padding: 20px;
+}
+.collapsible.open .collapsible-body { display: block; }
+
+/* ── Diagnostic Blocks ── */
+.diag-bloc {
+  margin-bottom: 16px;
+}
+.diag-bloc-title {
+  font-family: Georgia, serif;
+  font-size: 14px;
+  color: var(--gold);
+  margin-bottom: 8px;
+}
+.diag-list {
+  list-style: none;
+  padding: 0;
+}
+.diag-list li {
+  font-size: 13px;
+  color: var(--stone);
+  padding: 4px 0 4px 16px;
+  position: relative;
+}
+.diag-list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 11px;
+  width: 5px;
+  height: 5px;
+  background: var(--green);
+  border-radius: 50%;
+}
+
+/* ── Call Structure ── */
+.call-step {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(44,74,53,0.2);
+}
+.call-step:last-child { border-bottom: none; }
+.call-step-num {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--green);
+  color: var(--gold);
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.call-step-content {
+  flex: 1;
+}
+.call-step-title {
+  font-size: 14px;
+  color: #fff;
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+.call-step-time {
+  font-size: 12px;
+  color: var(--gold);
+}
+.call-step-desc {
+  font-size: 13px;
+  color: var(--stone);
+  margin-top: 2px;
+}
+
+/* ── Progress Bar ── */
+.progress-bar {
+  background: #1a1a1a;
+  border-radius: 6px;
+  height: 6px;
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--green), var(--gold));
+  border-radius: 6px;
+  transition: width 0.5s ease;
+  width: 0%;
+}
+.progress-label {
+  font-size: 12px;
+  color: var(--stone);
+  margin-bottom: 6px;
+  display: flex;
+  justify-content: space-between;
+}
+
+/* ── Info Alert ── */
+.info-alert {
+  background: rgba(44,74,53,0.15);
+  border-left: 3px solid var(--green);
+  border-radius: 0 6px 6px 0;
+  padding: 12px 16px;
+  margin-bottom: 16px;
+  font-size: 13px;
+  color: var(--stone);
+}
+.info-alert strong { color: var(--gold); }
+
+.warn-alert {
+  background: rgba(184,149,106,0.08);
+  border-left: 3px solid var(--gold);
+  border-radius: 0 6px 6px 0;
+  padding: 12px 16px;
+  margin-bottom: 16px;
+  font-size: 13px;
+  color: var(--stone);
+}
+.warn-alert strong { color: var(--gold); }
+
+/* ── Tracker Payment Toggle ── */
+.payment-toggle {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.toggle-btn {
+  padding: 8px 18px;
+  font-size: 13px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--stone);
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: var(--transition);
+}
+.toggle-btn.active {
+  border-color: var(--gold);
+  color: var(--gold);
+  background: rgba(184,149,106,0.08);
+}
+
+/* ── Footer ── */
+.footer {
+  text-align: center;
+  padding: 32px 24px;
+  border-top: 1px solid var(--border);
+  color: var(--stone);
+  font-size: 12px;
+  letter-spacing: 1px;
+}
+.footer span { color: var(--gold); }
+
+/* ── Responsive ── */
+@media (max-width: 640px) {
+  .hero { padding: 40px 16px 28px; }
+  .nav-tab { padding: 7px 12px; font-size: 12px; }
+  .container { padding: 0 14px 60px; }
+  .card { padding: 18px; }
+  .copy-block { padding: 16px; }
+  .client-bar { flex-direction: column; }
+  .client-input { min-width: 100%; }
+  .timeline { padding-left: 28px; }
+  .call-step { flex-direction: column; gap: 6px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── HERO ── -->
+<div class="hero">
+  <div class="hero-brand">SAPIENS 360</div>
+  <div class="hero-title">Process <span class="gold">Onboarding</span> Client</div>
+  <div class="hero-subtitle">De H+0 a J+3</div>
+  <div class="hero-desc">Chaque etape pour accueillir un nouveau client — du paiement confirme au premier jour de protocole.</div>
+  <div class="hero-user">Utilisateur principal : Geoffrey (declenche par Jad apres close)</div>
+</div>
+
+<!-- ── STICKY NAV ── -->
+<div class="sticky-nav">
+  <div class="nav-inner">
+    <button class="nav-tab active" data-tab="timeline">Timeline</button>
+    <button class="nav-tab" data-tab="h0-actions">H+0 Actions</button>
+    <button class="nav-tab" data-tab="vocal">Vocal Bienvenue</button>
+    <button class="nav-tab" data-tab="diagnostic">Diagnostic</button>
+    <button class="nav-tab" data-tab="skool">Skool Setup</button>
+    <button class="nav-tab" data-tab="tracker">Tracker</button>
+    <button class="nav-tab" data-tab="premier-call">Premier Call</button>
+    <button class="nav-tab" data-tab="handoff">Handoff Jad&#8594;Geoffrey</button>
+    <button class="nav-tab" data-tab="templates">Templates</button>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- ════════════════════════════════════════════ -->
+  <!-- SECTION 1: TIMELINE                         -->
+  <!-- ════════════════════════════════════════════ -->
+  <div class="section active" id="timeline">
+    <div class="section-header">
+      <div class="section-number">Section 01</div>
+      <div class="section-title">Timeline Visuelle H+0 a J+3</div>
+      <div class="section-desc">Vue d'ensemble du parcours d'onboarding complet.</div>
+    </div>
+
+    <div class="card">
+      <div class="timeline">
+
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-time">H+0 — Paiement confirme</div>
+          <ul class="timeline-details">
+            <li>Whop webhook &rarr; tag "client" dans GHL</li>
+            <li>Geoffrey recoit notification automatique</li>
+            <li>Jad envoie WhatsApp a Geoffrey : prenom, condition, duree, points cles du call</li>
+          </ul>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-time">H+15min</div>
+          <ul class="timeline-details">
+            <li>Geoffrey envoie vocal WhatsApp personnalise de bienvenue</li>
+          </ul>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-time">H+30min</div>
+          <ul class="timeline-details">
+            <li>Acces Skool envoye</li>
+            <li>Formulaire diagnostic 40 questions envoye</li>
+          </ul>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-time">J+1</div>
+          <ul class="timeline-details">
+            <li>Tracker Keto-Mojo commande et expedie (si paiement 1x)</li>
+            <li>60 bandelettes + lancettes incluses</li>
+            <li>Suivi expedition envoye a la cliente</li>
+          </ul>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-time">J+2</div>
+          <ul class="timeline-details">
+            <li>Premier call 1h avec Geoffrey (construire le protocole personnalise)</li>
+            <li>Analyse du diagnostic rempli</li>
+            <li>Plan semaine 1 personnalise</li>
+          </ul>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-time">J+3</div>
+          <ul class="timeline-details">
+            <li>Cliente commence le protocole</li>
+            <li>Premiere mesure cetose a 18h</li>
+            <li>Photo envoyee a Geoffrey sur WhatsApp</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════ -->
+  <!-- SECTION 2: H+0 ACTIONS                     -->
+  <!-- ════════════════════════════════════════════ -->
+  <div class="section" id="h0-actions">
+    <div class="section-header">
+      <div class="section-number">Section 02</div>
+      <div class="section-title">Actions H+0 — Checklist Interactive</div>
+      <div class="section-desc">Tout ce qui doit se passer des que le paiement est confirme.</div>
+    </div>
+
+    <div class="client-bar">
+      <input type="text" class="client-input" id="clientNameInput" placeholder="Nom de la cliente (ex: Lea)" />
+      <button class="btn btn-gold" onclick="setClientName()">Charger checklist</button>
+      <button class="btn btn-sm" onclick="resetChecklist()">Reset</button>
+    </div>
+
+    <div class="progress-label">
+      <span>Progression onboarding</span>
+      <span id="progressPercent">0%</span>
+    </div>
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Jad fait : <span class="badge">CLOSER</span></div>
+      <div class="checklist-group" data-group="jad">
+        <div class="checklist-item" data-key="jad-1">
+          <div class="check-box"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+          <div class="check-label">Confirmer le paiement sur Whop</div>
+        </div>
+        <div class="checklist-item" data-key="jad-2">
+          <div class="check-box"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+          <div class="check-label">Tagger dans GHL : "client" + "condition-[X]" + "paiement-1x" ou "paiement-3x"</div>
+        </div>
+        <div class="checklist-item" data-key="jad-3">
+          <div class="check-box"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+          <div class="check-label">Envoyer WhatsApp a Geoffrey : Prenom, Condition, Duree, Points cles, Archetype, Objection surmontee</div>
+        </div>
+        <div class="checklist-item" data-key="jad-4">
+          <div class="check-box"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+          <div class="check-label">Demander le referral (si pas fait sur le call)</div>
+        </div>
+        <div class="checklist-item" data-key="jad-5">
+          <div class="check-box"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+          <div class="check-label">Message de bienvenue a la cliente : "Bienvenue! Geoffrey te contacte dans les prochaines heures."</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Geoffrey fait : <span class="badge">COACH</span></div>
+      <div class="checklist-group" data-group="geoffrey">
+        <div class="checklist-item" data-key="geo-1">
+          <div class="check-box"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+          <div class="check-label">Recevoir le brief de Jad</div>
+        </div>
+        <div class="checklist-item" data-key="geo-2">
+          <div class="check-box"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+          <div class="check-label">Envoyer vocal bienvenue (H+15min)</div>
+        </div>
+        <div class="checklist-item" data-key="geo-3">
+          <div class="check-box"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+          <div class="check-label">Envoyer acces Skool (H+30min)</div>
+        </div>
+        <div class="checklist-item" data-key="geo-4">
+          <div class="check-box"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+          <div class="check-label">Envoyer formulaire diagnostic 40Q</div>
+        </div>
+        <div class="checklist-item" data-key="geo-5">
+          <div class="check-box"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+          <div class="check-label">Commander tracker Keto-Mojo (si paiement 1x)</div>
+        </div>
+        <div class="checklist-item" data-key="geo-6">
+          <div class="check-box"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+          <div class="check-label">Planifier premier call 1h (J+2)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════ -->
+  <!-- SECTION 3: VOCAL BIENVENUE                  -->
+  <!-- ════════════════════════════════════════════ -->
+  <div class="section" id="vocal">
+    <div class="section-header">
+      <div class="section-number">Section 03</div>
+      <div class="section-title">Vocal de Bienvenue Geoffrey</div>
+      <div class="section-desc">Template du vocal WhatsApp personnalise — duree ideale : 45-60 secondes.</div>
+    </div>
+
+    <div class="info-alert">
+      <strong>Timing :</strong> A envoyer dans les 15 minutes apres reception du brief de Jad.
+    </div>
+
+    <div class="copy-block">
+      <button class="copy-btn" onclick="copyBlock(this)">COPIER</button>
+      <pre>Salut [prenom]! C'est Geoffrey! Bienvenue dans SAPIENS 360!
+
+Je suis vraiment content de t'avoir. Jad m'a raconte ta situation — [condition] depuis [duree], et je sais exactement par ou on va commencer.
+
+D'ici quelques minutes, tu vas recevoir ton acces a la plateforme Skool et un questionnaire diagnostic. Prends le temps de le remplir serieusement — c'est ce qui me permet de construire TON protocole sur mesure.
+
+On a notre premier call dans 48 heures. D'ici la, si tu as la moindre question, tu m'ecris ici sur WhatsApp. Je suis la.
+
+On va faire du bon travail ensemble. A tres vite!</pre>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Points cles du vocal</div>
+      <ul class="diag-list">
+        <li>Personnaliser avec le prenom, la condition et la duree</li>
+        <li>Ton chaleureux et enthousiaste — mais pas sur-excite</li>
+        <li>Mentionner les prochaines etapes concretes (Skool + diagnostic)</li>
+        <li>Donner un horizon temporel clair (premier call dans 48h)</li>
+        <li>Ouvrir la porte WhatsApp pour les questions</li>
+        <li>Duree : 45-60 secondes maximum</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════ -->
+  <!-- SECTION 4: DIAGNOSTIC                       -->
+  <!-- ════════════════════════════════════════════ -->
+  <div class="section" id="diagnostic">
+    <div class="section-header">
+      <div class="section-number">Section 04</div>
+      <div class="section-title">Questionnaire Diagnostic</div>
+      <div class="section-desc">30-40 questions reparties en 5 blocs — base du protocole personnalise.</div>
+    </div>
+
+    <div class="info-alert">
+      <strong>Reference :</strong> Ce questionnaire est envoye automatiquement a H+30min. Les categories ci-dessous servent de reference pour Geoffrey lors de l'analyse.
+    </div>
+
+    <div class="collapsible open">
+      <div class="collapsible-header" onclick="toggleCollapsible(this)">
+        <h3>Bloc 1 — Informations generales (5Q)</h3>
+        <span class="collapsible-arrow">&#9662;</span>
+      </div>
+      <div class="collapsible-body">
+        <ul class="diag-list">
+          <li>Age, taille, poids</li>
+          <li>Activite physique</li>
+          <li>Qualite du sommeil</li>
+          <li>Niveau de stress quotidien</li>
+          <li>Situation professionnelle</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="collapsible">
+      <div class="collapsible-header" onclick="toggleCollapsible(this)">
+        <h3>Bloc 2 — Historique peau (8Q)</h3>
+        <span class="collapsible-arrow">&#9662;</span>
+      </div>
+      <div class="collapsible-body">
+        <ul class="diag-list">
+          <li>Condition principale</li>
+          <li>Localisation</li>
+          <li>Depuis combien de temps</li>
+          <li>Premiere apparition (age, contexte)</li>
+          <li>Frequence des poussees</li>
+          <li>Declencheurs identifies</li>
+          <li>Traitements essayes (liste complete)</li>
+          <li>Dernier traitement en cours</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="collapsible">
+      <div class="collapsible-header" onclick="toggleCollapsible(this)">
+        <h3>Bloc 3 — Alimentation actuelle (8Q)</h3>
+        <span class="collapsible-arrow">&#9662;</span>
+      </div>
+      <div class="collapsible-body">
+        <ul class="diag-list">
+          <li>Regime actuel (type)</li>
+          <li>Repas type journee</li>
+          <li>Intolerance/allergies connues</li>
+          <li>Consommation gluten/lactose/sucre</li>
+          <li>Consommation alcool</li>
+          <li>Supplements actuels</li>
+          <li>Historique regimes testes</li>
+          <li>Relation emotionnelle avec la nourriture</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="collapsible">
+      <div class="collapsible-header" onclick="toggleCollapsible(this)">
+        <h3>Bloc 4 — Sante globale (8Q)</h3>
+        <span class="collapsible-arrow">&#9662;</span>
+      </div>
+      <div class="collapsible-body">
+        <ul class="diag-list">
+          <li>Digestion (ballonnements, transit, reflux)</li>
+          <li>Energie (matin, apres-midi, soir)</li>
+          <li>Sommeil (endormissement, reveils, qualite)</li>
+          <li>Humeur (anxiete, irritabilite, depression)</li>
+          <li>Hormones (cycles, SPM, menopause)</li>
+          <li>Bilans recents (resultats cles)</li>
+          <li>Medicaments en cours</li>
+          <li>Antecedents familiaux (peau, auto-immun, metabolique)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="collapsible">
+      <div class="collapsible-header" onclick="toggleCollapsible(this)">
+        <h3>Bloc 5 — Objectifs & Engagement (5Q)</h3>
+        <span class="collapsible-arrow">&#9662;</span>
+      </div>
+      <div class="collapsible-body">
+        <ul class="diag-list">
+          <li>Objectif #1 avec le protocole</li>
+          <li>Niveau d'engagement (1-10)</li>
+          <li>Disponibilite pour les calls</li>
+          <li>Acces WhatsApp quotidien</li>
+          <li>Disponibilite pour cuisine/preparation</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════ -->
+  <!-- SECTION 5: SKOOL SETUP                      -->
+  <!-- ════════════════════════════════════════════ -->
+  <div class="section" id="skool">
+    <div class="section-header">
+      <div class="section-number">Section 05</div>
+      <div class="section-title">Setup Skool</div>
+      <div class="section-desc">Checklist pour donner acces a la plateforme de formation.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Checklist acces Skool</div>
+      <div class="checklist-group" data-group="skool">
+        <div class="checklist-item" data-key="skool-1">
+          <div class="check-box"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+          <div class="check-label">Creer le compte Skool pour la cliente (email)</div>
+        </div>
+        <div class="checklist-item" data-key="skool-2">
+          <div class="check-box"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+          <div class="check-label">Ajouter au groupe prive SAPIENS 360</div>
+        </div>
+        <div class="checklist-item" data-key="skool-3">
+          <div class="check-box"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+          <div class="check-label">Envoyer le lien d'acces + tutoriel video (2 min)</div>
+        </div>
+        <div class="checklist-item" data-key="skool-4">
+          <div class="check-box"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+          <div class="check-label">Verifier qu'elle a acces aux 3 phases de modules</div>
+        </div>
+        <div class="checklist-item" data-key="skool-5">
+          <div class="check-box"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+          <div class="check-label">Lui indiquer : "Commence par les 3 premieres videos de Phase 1 avant notre call"</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════ -->
+  <!-- SECTION 6: TRACKER                          -->
+  <!-- ════════════════════════════════════════════ -->
+  <div class="section" id="tracker">
+    <div class="section-header">
+      <div class="section-number">Section 06</div>
+      <div class="section-title">Commande Tracker Keto-Mojo</div>
+      <div class="section-desc">Gestion de la commande selon le type de paiement.</div>
+    </div>
+
+    <div class="payment-toggle">
+      <button class="toggle-btn active" onclick="togglePayment(this, '1x')">Paiement 1x</button>
+      <button class="toggle-btn" onclick="togglePayment(this, '3x')">Paiement 3x</button>
+    </div>
+
+    <div id="tracker-1x">
+      <div class="card">
+        <div class="card-title">Commande tracker — Paiement 1x <span class="badge">INCLUS</span></div>
+        <div class="checklist-group" data-group="tracker1x">
+          <div class="checklist-item" data-key="trk-1">
+            <div class="check-box"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+            <div class="check-label">Commander sur le site Keto-Mojo</div>
+          </div>
+          <div class="checklist-item" data-key="trk-2">
+            <div class="check-box"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+            <div class="check-label">Inclure : 1 tracker + 60 bandelettes + lancettes</div>
+          </div>
+          <div class="checklist-item" data-key="trk-3">
+            <div class="check-box"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+            <div class="check-label">Adresse livraison : celle du client</div>
+          </div>
+          <div class="checklist-item" data-key="trk-4">
+            <div class="check-box"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+            <div class="check-label">Envoyer numero de suivi a la cliente</div>
+          </div>
+        </div>
+        <div class="info-alert" style="margin-top:12px;">
+          <strong>Cout :</strong> ~130 EUR (inclus dans le prix, pas facture a part)<br>
+          <strong>Delai :</strong> 3-5 jours ouvrables
+        </div>
+      </div>
+    </div>
+
+    <div id="tracker-3x" style="display:none;">
+      <div class="card">
+        <div class="card-title">Tracker — Paiement 3x <span class="badge">NON INCLUS</span></div>
+        <div class="warn-alert">
+          <strong>Attention :</strong> Le tracker n'est pas inclus dans le paiement en 3x. Deux options :
+        </div>
+        <ul class="diag-list" style="margin-top:8px;">
+          <li>Informer la cliente qu'elle devra acheter son propre tracker (~80 EUR)</li>
+          <li>Proposer l'upgrade vers le paiement 1x pour inclure le tracker</li>
+          <li>En attendant le tracker, elle note ses mesures manuellement</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════ -->
+  <!-- SECTION 7: PREMIER CALL                     -->
+  <!-- ════════════════════════════════════════════ -->
+  <div class="section" id="premier-call">
+    <div class="section-header">
+      <div class="section-number">Section 07</div>
+      <div class="section-title">Preparation Premier Call (J+2)</div>
+      <div class="section-desc">Structure du call d'1 heure et checklist de preparation.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Checklist Geoffrey avant le call</div>
+      <div class="checklist-group" data-group="precall">
+        <div class="checklist-item" data-key="pc-1">
+          <div class="check-box"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+          <div class="check-label">Relire le questionnaire diagnostic complet</div>
+        </div>
+        <div class="checklist-item" data-key="pc-2">
+          <div class="check-box"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+          <div class="check-label">Identifier les 3 problemes principaux</div>
+        </div>
+        <div class="checklist-item" data-key="pc-3">
+          <div class="check-box"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+          <div class="check-label">Preparer le protocole Phase 1 personnalise</div>
+        </div>
+        <div class="checklist-item" data-key="pc-4">
+          <div class="check-box"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+          <div class="check-label">Preparer le menu Semaine 1 adapte</div>
+        </div>
+        <div class="checklist-item" data-key="pc-5">
+          <div class="check-box"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+          <div class="check-label">Avoir le suivi cetose pret (Google Sheets)</div>
+        </div>
+        <div class="checklist-item" data-key="pc-6">
+          <div class="check-box"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+          <div class="check-label">Avoir les recettes pertinentes selectionnees</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Structure du premier call (1h)</div>
+
+      <div class="call-step">
+        <div class="call-step-num">1</div>
+        <div class="call-step-content">
+          <div class="call-step-title">Accueil + retour diagnostic</div>
+          <div class="call-step-time">10 min</div>
+          <div class="call-step-desc">"J'ai lu tes reponses. Voila ce que je vois..."</div>
+        </div>
+      </div>
+
+      <div class="call-step">
+        <div class="call-step-num">2</div>
+        <div class="call-step-content">
+          <div class="call-step-title">Explication du protocole</div>
+          <div class="call-step-time">15 min</div>
+          <div class="call-step-desc">3 phases, ce qu'on va faire exactement</div>
+        </div>
+      </div>
+
+      <div class="call-step">
+        <div class="call-step-num">3</div>
+        <div class="call-step-content">
+          <div class="call-step-title">Menu Semaine 1</div>
+          <div class="call-step-time">10 min</div>
+          <div class="call-step-desc">Repas par repas, liste courses</div>
+        </div>
+      </div>
+
+      <div class="call-step">
+        <div class="call-step-num">4</div>
+        <div class="call-step-content">
+          <div class="call-step-title">Tracker cetose</div>
+          <div class="call-step-time">10 min</div>
+          <div class="call-step-desc">Comment mesurer, quand, ou noter</div>
+        </div>
+      </div>
+
+      <div class="call-step">
+        <div class="call-step-num">5</div>
+        <div class="call-step-content">
+          <div class="call-step-title">Regles du jeu</div>
+          <div class="call-step-time">10 min</div>
+          <div class="call-step-desc">WhatsApp quotidien, photo cetose 18h, honnete si ecart</div>
+        </div>
+      </div>
+
+      <div class="call-step">
+        <div class="call-step-num">6</div>
+        <div class="call-step-content">
+          <div class="call-step-title">Questions</div>
+          <div class="call-step-time">5 min</div>
+          <div class="call-step-desc">"T'as des questions?"</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════ -->
+  <!-- SECTION 8: HANDOFF                          -->
+  <!-- ════════════════════════════════════════════ -->
+  <div class="section" id="handoff">
+    <div class="section-header">
+      <div class="section-number">Section 08</div>
+      <div class="section-title">Handoff Jad &rarr; Geoffrey</div>
+      <div class="section-desc">Template WhatsApp de transfert d'information apres le close.</div>
+    </div>
+
+    <div class="info-alert">
+      <strong>Quand :</strong> Immediatement apres la confirmation de paiement (H+0). Jad envoie ce message a Geoffrey sur WhatsApp.
+    </div>
+
+    <div class="copy-block">
+      <button class="copy-btn" onclick="copyBlock(this)">COPIER</button>
+      <pre>Nouveau client!
+
+Prenom: [X]
+Condition: [X]
+Duree: [X] ans
+Archetype: [1-5]
+Points cles du call:
+- [Douleur principale exprimee]
+- [Ce qui l'a convaincue]
+- [Objection surmontee]
+- [Situation personnelle notable]
+
+Paiement: [1x ou 3x]
+Email: [X]
+WhatsApp: [X]
+
+Note: [Tout element utile pour Geoffrey]</pre>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Informations essentielles</div>
+      <ul class="diag-list">
+        <li><strong>Prenom</strong> — pour personnaliser le vocal et le premier call</li>
+        <li><strong>Condition</strong> — pour adapter le protocole (eczema, psoriasis, acne...)</li>
+        <li><strong>Duree</strong> — pour mesurer l'anciennete du probleme</li>
+        <li><strong>Archetype (1-5)</strong> — pour adapter le niveau de communication</li>
+        <li><strong>Points cles du call</strong> — ce qui a ete dit pendant le closing call</li>
+        <li><strong>Type de paiement</strong> — determine si le tracker est inclus ou non</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════ -->
+  <!-- SECTION 9: TEMPLATES                        -->
+  <!-- ════════════════════════════════════════════ -->
+  <div class="section" id="templates">
+    <div class="section-header">
+      <div class="section-number">Section 09</div>
+      <div class="section-title">Templates Messages</div>
+      <div class="section-desc">Tous les messages pre-rediges avec bouton copier.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Message bienvenue Jad (WhatsApp)</div>
+      <div class="copy-block">
+        <button class="copy-btn" onclick="copyBlock(this)">COPIER</button>
+        <pre>[Prenom], bienvenue officiellement dans SAPIENS 360! Geoffrey va te contacter dans les prochaines heures pour t'accueillir personnellement. D'ici la, si tu as la moindre question, je suis la. On va faire du bon travail.</pre>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Message acces Skool (Geoffrey)</div>
+      <div class="copy-block">
+        <button class="copy-btn" onclick="copyBlock(this)">COPIER</button>
+        <pre>[Prenom], voila ton acces a la plateforme SAPIENS 360: [LIEN SKOOL]. Commence par les 3 premieres videos de Phase 1 avant notre premier call. Et remplis le questionnaire diagnostic que je t'ai envoye — c'est la base de tout.</pre>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Message tracker expedie</div>
+      <div class="copy-block">
+        <button class="copy-btn" onclick="copyBlock(this)">COPIER</button>
+        <pre>[Prenom], ton tracker Keto-Mojo est en route! Tu devrais le recevoir d'ici 3-5 jours. En attendant, on commence le protocole et tu noteras tes mesures manuellement.</pre>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Rappel premier call (J+1 soir)</div>
+      <div class="copy-block">
+        <button class="copy-btn" onclick="copyBlock(this)">COPIER</button>
+        <pre>[Prenom], demain on a notre premier call a [heure]. Assure-toi d'avoir rempli le questionnaire diagnostic. C'est ce qui me permet de construire TON protocole. A demain!</pre>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ── FOOTER ── -->
+<div class="footer">
+  <span>SAPIENS 360</span> | Process Onboarding | Derniere MAJ : Avril 2026
+</div>
+
+<script>
+/* ── Tab Navigation ── */
+const tabs = document.querySelectorAll('.nav-tab');
+const sections = document.querySelectorAll('.section');
+
+tabs.forEach(tab => {
+  tab.addEventListener('click', () => {
+    const target = tab.dataset.tab;
+    tabs.forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    sections.forEach(s => {
+      s.classList.remove('active');
+      if (s.id === target) s.classList.add('active');
+    });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+});
+
+/* ── Client Name & localStorage ── */
+let currentClient = '';
+
+function getStorageKey() {
+  return currentClient ? 'sapiens360_onboarding_' + currentClient.toLowerCase().trim() : null;
+}
+
+function setClientName() {
+  const input = document.getElementById('clientNameInput');
+  const name = input.value.trim();
+  if (!name) return;
+  currentClient = name;
+  loadChecklist();
+}
+
+function loadChecklist() {
+  const key = getStorageKey();
+  if (!key) return;
+  const data = JSON.parse(localStorage.getItem(key) || '{}');
+  document.querySelectorAll('.checklist-item').forEach(item => {
+    const k = item.dataset.key;
+    if (data[k]) {
+      item.classList.add('checked');
+    } else {
+      item.classList.remove('checked');
+    }
+  });
+  updateProgress();
+}
+
+function saveChecklist() {
+  const key = getStorageKey();
+  if (!key) return;
+  const data = {};
+  document.querySelectorAll('.checklist-item').forEach(item => {
+    data[item.dataset.key] = item.classList.contains('checked');
+  });
+  localStorage.setItem(key, JSON.stringify(data));
+}
+
+function resetChecklist() {
+  const key = getStorageKey();
+  if (!key) { alert('Charge un nom de client d\'abord.'); return; }
+  if (!confirm('Remettre a zero la checklist pour ' + currentClient + ' ?')) return;
+  localStorage.removeItem(key);
+  document.querySelectorAll('.checklist-item').forEach(item => item.classList.remove('checked'));
+  updateProgress();
+}
+
+function updateProgress() {
+  const all = document.querySelectorAll('.checklist-item');
+  const checked = document.querySelectorAll('.checklist-item.checked');
+  const pct = all.length > 0 ? Math.round((checked.length / all.length) * 100) : 0;
+  const fill = document.getElementById('progressFill');
+  const label = document.getElementById('progressPercent');
+  if (fill) fill.style.width = pct + '%';
+  if (label) label.textContent = pct + '%';
+}
+
+/* Checklist click handlers */
+document.querySelectorAll('.checklist-item').forEach(item => {
+  item.addEventListener('click', () => {
+    if (!currentClient) {
+      alert('Entre le nom de la cliente d\'abord pour sauvegarder la progression.');
+      return;
+    }
+    item.classList.toggle('checked');
+    saveChecklist();
+    updateProgress();
+  });
+});
+
+/* ── Copy Blocks ── */
+function copyBlock(btn) {
+  const block = btn.closest('.copy-block');
+  const text = block.querySelector('pre').textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = 'COPIE!';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.textContent = 'COPIER';
+      btn.classList.remove('copied');
+    }, 2000);
+  });
+}
+
+/* ── Collapsible Sections ── */
+function toggleCollapsible(header) {
+  const parent = header.closest('.collapsible');
+  parent.classList.toggle('open');
+}
+
+/* ── Payment Toggle ── */
+function togglePayment(btn, type) {
+  document.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('tracker-1x').style.display = type === '1x' ? 'block' : 'none';
+  document.getElementById('tracker-3x').style.display = type === '3x' ? 'block' : 'none';
+}
+
+/* ── Init ── */
+updateProgress();
+</script>
+</body>
+</html>

@@ -1,0 +1,1302 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAPIENS 360 — Systeme de Relance</title>
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg: #111;
+  --card: #161616;
+  --border: #2C4A3555;
+  --gold: #B8956A;
+  --green: #2C4A35;
+  --ivory: #FAF7F2;
+  --stone: #888;
+  --gold-glow: #B8956A44;
+  --green-glow: #2C4A3544;
+  --danger: #8B2020;
+  --danger-bg: #2a1010;
+}
+
+body {
+  background: var(--bg);
+  color: var(--ivory);
+  font-family: 'Segoe UI', Arial, sans-serif;
+  line-height: 1.6;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Hero ── */
+.hero {
+  text-align: center;
+  padding: 60px 24px 40px;
+  border-bottom: 1px solid var(--border);
+}
+.hero-brand {
+  font-family: Georgia, serif;
+  font-size: 14px;
+  color: var(--gold);
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.hero-title {
+  font-family: Georgia, serif;
+  font-size: 42px;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.15;
+  margin-bottom: 8px;
+}
+.hero-title .gold { color: var(--gold); }
+.hero-desc {
+  color: var(--stone);
+  font-size: 15px;
+  max-width: 600px;
+  margin: 0 auto;
+  font-style: italic;
+}
+
+/* ── Scenario Selector ── */
+.scenario-selector {
+  max-width: 700px;
+  margin: 32px auto 0;
+  padding: 0 24px;
+}
+.scenario-selector label {
+  display: block;
+  font-family: Georgia, serif;
+  font-size: 13px;
+  color: var(--gold);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  text-align: center;
+}
+.scenario-selector select {
+  width: 100%;
+  padding: 14px 18px;
+  background: var(--card);
+  color: var(--ivory);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 15px;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23B8956A' d='M6 8L0 0h12z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  transition: border-color 0.2s;
+}
+.scenario-selector select:hover,
+.scenario-selector select:focus {
+  border-color: var(--gold);
+  outline: none;
+}
+.scenario-selector select option {
+  background: var(--card);
+  color: var(--ivory);
+}
+
+/* ── Sticky Nav ── */
+.sticky-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  padding: 0;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.sticky-nav::-webkit-scrollbar { height: 0; }
+.nav-tabs {
+  display: flex;
+  max-width: 1200px;
+  margin: 0 auto;
+  min-width: max-content;
+}
+.nav-tab {
+  padding: 14px 20px;
+  font-size: 13px;
+  color: var(--stone);
+  text-decoration: none;
+  white-space: nowrap;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+.nav-tab:hover {
+  color: var(--ivory);
+}
+.nav-tab.active {
+  color: var(--gold);
+  border-bottom-color: var(--gold);
+}
+
+/* ── Main Content ── */
+.content {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 40px 24px 80px;
+}
+
+/* ── Section Headers ── */
+.section {
+  margin-bottom: 64px;
+  scroll-margin-top: 60px;
+}
+.section.highlighted {
+  animation: sectionPulse 1.5s ease-out;
+}
+@keyframes sectionPulse {
+  0% { outline: 2px solid var(--gold); outline-offset: 8px; border-radius: 12px; }
+  100% { outline: 2px solid transparent; outline-offset: 16px; }
+}
+.section-header {
+  margin-bottom: 32px;
+}
+.section-number {
+  font-family: Georgia, serif;
+  font-size: 12px;
+  color: var(--gold);
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.section-title {
+  font-family: Georgia, serif;
+  font-size: 28px;
+  color: #fff;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+.section-subtitle {
+  color: var(--stone);
+  font-size: 14px;
+}
+
+/* ── Timeline Visual ── */
+.timeline-overview {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 32px;
+  font-family: 'Courier New', monospace;
+  font-size: 14px;
+  line-height: 1.8;
+  overflow-x: auto;
+}
+.timeline-overview .node {
+  color: #fff;
+  font-weight: 700;
+}
+.timeline-overview .branch {
+  color: var(--gold);
+}
+.timeline-overview .action {
+  color: var(--stone);
+}
+.timeline-overview .result {
+  color: var(--green);
+  filter: brightness(1.5);
+}
+.timeline-extra {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+}
+
+/* ── Timeline Steps ── */
+.timeline {
+  position: relative;
+  margin: 24px 0;
+  padding-left: 32px;
+}
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 8px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--gold), var(--green));
+}
+.timeline-badges {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+}
+.timeline-badge {
+  padding: 6px 14px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  font-size: 12px;
+  color: var(--gold);
+  font-weight: 600;
+}
+.timeline-step {
+  position: relative;
+  margin-bottom: 32px;
+}
+.timeline-step::before {
+  content: '';
+  position: absolute;
+  left: -28px;
+  top: 8px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--gold);
+  border: 2px solid var(--bg);
+}
+.step-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+.step-time {
+  font-family: Georgia, serif;
+  font-size: 18px;
+  color: var(--gold);
+  font-weight: 700;
+}
+.step-label {
+  font-size: 13px;
+  color: var(--stone);
+  padding: 3px 10px;
+  background: var(--green);
+  border-radius: 4px;
+}
+.step-channel {
+  font-size: 11px;
+  color: var(--ivory);
+  padding: 3px 10px;
+  background: #333;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* ── Message Cards ── */
+.message-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.message-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+  background: #1a1a1a;
+}
+.message-card-header .subject {
+  font-size: 13px;
+  color: var(--gold);
+  font-weight: 600;
+}
+.copy-btn {
+  padding: 6px 14px;
+  background: var(--green);
+  color: var(--ivory);
+  border: none;
+  border-radius: 6px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: 'Segoe UI', Arial, sans-serif;
+}
+.copy-btn:hover {
+  background: var(--gold);
+  color: #111;
+}
+.copy-btn.copied {
+  background: var(--gold);
+  color: #111;
+}
+.message-card-body {
+  padding: 20px;
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--ivory);
+  white-space: pre-wrap;
+}
+.message-card-body .placeholder {
+  color: var(--gold);
+  font-weight: 600;
+}
+
+/* ── Stop Banner ── */
+.stop-banner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 20px;
+  background: var(--danger-bg);
+  border: 1px solid var(--danger);
+  border-radius: 8px;
+  margin-top: 24px;
+}
+.stop-banner .icon {
+  font-size: 20px;
+  flex-shrink: 0;
+}
+.stop-banner .text {
+  font-size: 14px;
+  color: #ccc;
+}
+.stop-banner .tag {
+  color: var(--gold);
+  font-weight: 600;
+  font-family: 'Courier New', monospace;
+  font-size: 13px;
+}
+
+/* ── Checklist ── */
+.checklist {
+  list-style: none;
+  margin: 24px 0;
+}
+.checklist li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 16px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.checklist li:hover {
+  border-color: var(--gold);
+}
+.checklist li.checked {
+  opacity: 0.6;
+}
+.checklist li.checked .check-text {
+  text-decoration: line-through;
+}
+.check-box {
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--stone);
+  border-radius: 4px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1px;
+  transition: all 0.2s;
+}
+.checklist li.checked .check-box {
+  background: var(--gold);
+  border-color: var(--gold);
+}
+.check-box::after {
+  content: '';
+  display: none;
+}
+.checklist li.checked .check-box::after {
+  content: '';
+  display: block;
+  width: 6px;
+  height: 10px;
+  border: solid #111;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+  margin-top: -2px;
+}
+.check-text {
+  font-size: 14px;
+  color: var(--ivory);
+  line-height: 1.5;
+}
+
+/* ── Danger Box ── */
+.danger-box {
+  background: var(--danger-bg);
+  border: 1px solid var(--danger);
+  border-radius: 12px;
+  padding: 28px;
+}
+.danger-box-title {
+  font-family: Georgia, serif;
+  font-size: 18px;
+  color: #e04040;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.danger-rule {
+  display: flex;
+  gap: 14px;
+  padding: 12px 0;
+  border-bottom: 1px solid #3a1515;
+}
+.danger-rule:last-child {
+  border-bottom: none;
+}
+.danger-num {
+  font-family: Georgia, serif;
+  font-size: 18px;
+  color: var(--gold);
+  font-weight: 700;
+  flex-shrink: 0;
+  width: 28px;
+}
+.danger-text {
+  font-size: 14px;
+  color: #ccc;
+  line-height: 1.6;
+}
+.danger-text strong {
+  color: #e04040;
+}
+
+/* ── Referral Cards ── */
+.referral-grid {
+  display: grid;
+  gap: 20px;
+  margin-top: 24px;
+}
+.referral-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.referral-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 18px;
+  background: #1a1a1a;
+  border-bottom: 1px solid var(--border);
+}
+.referral-moment {
+  font-family: Georgia, serif;
+  font-size: 15px;
+  color: var(--gold);
+  font-weight: 600;
+}
+.referral-card-body {
+  padding: 20px;
+  font-size: 14px;
+  line-height: 1.7;
+  white-space: pre-wrap;
+}
+
+/* ── Nurture Section ── */
+.nurture-rules {
+  display: grid;
+  gap: 12px;
+  margin-top: 20px;
+}
+.nurture-rule {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 16px 20px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+.nurture-icon {
+  font-size: 18px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.nurture-text {
+  font-size: 14px;
+  line-height: 1.6;
+}
+.nurture-text strong {
+  color: var(--gold);
+}
+
+/* ── Footer ── */
+.footer {
+  text-align: center;
+  padding: 40px 24px;
+  border-top: 1px solid var(--border);
+  color: var(--stone);
+  font-size: 13px;
+}
+.footer .brand {
+  color: var(--gold);
+  font-family: Georgia, serif;
+  letter-spacing: 3px;
+}
+
+/* ── Toast ── */
+.toast {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: var(--gold);
+  color: #111;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.3s;
+  z-index: 200;
+  pointer-events: none;
+}
+.toast.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .hero { padding: 40px 16px 28px; }
+  .hero-title { font-size: 28px; }
+  .content { padding: 28px 16px 60px; }
+  .section-title { font-size: 22px; }
+  .timeline-overview { padding: 20px; font-size: 12px; }
+  .nav-tab { padding: 12px 14px; font-size: 12px; }
+  .message-card-body { padding: 16px; font-size: 13px; }
+  .step-header { gap: 8px; }
+  .step-time { font-size: 15px; }
+  .danger-box { padding: 20px; }
+}
+@media (max-width: 480px) {
+  .hero-title { font-size: 24px; }
+  .hero-brand { font-size: 11px; letter-spacing: 4px; }
+  .scenario-selector select { font-size: 13px; padding: 12px 14px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── Hero ── -->
+<div class="hero">
+  <div class="hero-brand">SAPIENS 360</div>
+  <h1 class="hero-title">Systeme de <span class="gold">Relance</span></h1>
+  <p class="hero-desc">"Post-call, no-show, rescue, nurture — chaque scenario avec ses templates"</p>
+
+  <!-- Scenario Selector -->
+  <div class="scenario-selector">
+    <label>Scenario rapide</label>
+    <select id="scenarioSelect">
+      <option value="">-- Choisir un scenario --</option>
+      <option value="sec-postcall">1. Elle a dit "je reflechis" (Post-call sans vente)</option>
+      <option value="sec-noshow">2. Elle ne s'est pas presentee (No-show)</option>
+      <option value="sec-rescue">3. Elle a dit non (Rescue → Nurture)</option>
+      <option value="sec-vsl">4. Elle n'a pas booke apres la VSL (VSL Relance)</option>
+      <option value="sec-postclose">5. Elle a achete (Post-close referral)</option>
+    </select>
+  </div>
+</div>
+
+<!-- ── Sticky Nav ── -->
+<nav class="sticky-nav">
+  <div class="nav-tabs">
+    <a class="nav-tab active" data-target="sec-overview">Scenarios</a>
+    <a class="nav-tab" data-target="sec-postcall">Post-Call Rescue</a>
+    <a class="nav-tab" data-target="sec-noshow">No-Show</a>
+    <a class="nav-tab" data-target="sec-vsl">VSL Relance</a>
+    <a class="nav-tab" data-target="sec-postclose">Post-Close</a>
+    <a class="nav-tab" data-target="sec-nurture">Nurture Long Terme</a>
+    <a class="nav-tab" data-target="sec-referral">Referral</a>
+    <a class="nav-tab" data-target="sec-regles">Regles</a>
+  </div>
+</nav>
+
+<!-- ── Main Content ── -->
+<div class="content">
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- SECTION 1: VUE D'ENSEMBLE                              -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <div class="section" id="sec-overview">
+    <div class="section-header">
+      <div class="section-number">Section 01</div>
+      <h2 class="section-title">Vue d'ensemble — Timeline Visuelle</h2>
+      <p class="section-subtitle">Tous les scenarios branches a partir du call</p>
+    </div>
+
+    <div class="timeline-overview">
+<span class="node">CALL</span>
+<span class="branch">  |</span>
+<span class="branch">  +-- </span><span class="result">CLOSE</span><span class="action"> -----> Post-Close (Referral J+0, J+7, J+14, J+30)</span>
+<span class="branch">  |</span>
+<span class="branch">  +-- </span><span class="node">"JE REFLECHIS"</span><span class="action"> -> Post-Call Rescue (H+2, H+24, H+48, H+72)</span>
+<span class="branch">  |</span>
+<span class="branch">  +-- </span><span class="node">NON</span><span class="action"> -----------> Rescue (H+24, H+48, H+72) -> Nurture</span>
+<span class="branch">  |</span>
+<span class="branch">  +-- </span><span class="node">NO-SHOW</span><span class="action"> -------> Recovery (H+2, H+24, H+48)</span>
+
+<div class="timeline-extra">
+<span class="node">VSL ENVOYEE</span><span class="action"> sans booking -> VSL Relance (J+0, J+1, J+3)</span>
+</div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- SECTION 2: POST-CALL RESCUE                             -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <div class="section" id="sec-postcall">
+    <div class="section-header">
+      <div class="section-number">Section 02</div>
+      <h2 class="section-title">Post-Call Rescue — "Je reflechis"</h2>
+      <p class="section-subtitle">WF3 + WF3b — Sequence de relance apres un call sans vente</p>
+    </div>
+
+    <div class="timeline-badges">
+      <span class="timeline-badge">H+2</span>
+      <span class="timeline-badge">H+24</span>
+      <span class="timeline-badge">H+48</span>
+      <span class="timeline-badge">H+72</span>
+    </div>
+
+    <div class="timeline">
+
+      <!-- H+2 -->
+      <div class="timeline-step">
+        <div class="step-header">
+          <span class="step-time">H+2</span>
+          <span class="step-label">Message Jad</span>
+          <span class="step-channel">DM / WhatsApp</span>
+        </div>
+        <div class="message-card">
+          <div class="message-card-header">
+            <span class="subject">Message personnel post-call</span>
+            <button class="copy-btn" data-copy="postcall-h2">Copier</button>
+          </div>
+          <div class="message-card-body" id="postcall-h2">[Prenom], merci pour notre echange. Je voulais juste te dire — ce que tu m'as partage sur [reprendre un element personnel], ca m'a touche. C'est rare que quelqu'un soit aussi honnete.
+
+Si tu as des questions qui te sont venues depuis, je suis la. Et si tu veux avancer, le lien est toujours actif: [LIEN WHOP]</div>
+        </div>
+      </div>
+
+      <!-- H+24 -->
+      <div class="timeline-step">
+        <div class="step-header">
+          <span class="step-time">H+24</span>
+          <span class="step-label">Email Geoffrey</span>
+          <span class="step-channel">Email (WF3b)</span>
+        </div>
+        <div class="message-card">
+          <div class="message-card-header">
+            <span class="subject">Objet: "[Prenom], Geoffrey ici"</span>
+            <button class="copy-btn" data-copy="postcall-h24">Copier</button>
+          </div>
+          <div class="message-card-body" id="postcall-h24">Salut [prenom],
+
+Jad m'a parle de ton profil. Honnetement, c'est exactement le type de situation ou le protocole fait la plus grosse difference.
+
+J'ai accompagne plusieurs personnes avec [condition] depuis [duree]. Le pattern que tu decris — amelioration puis rechute — c'est le signe d'un terrain qui n'a jamais ete stabilise en profondeur.
+
+Si tu veux qu'on en parle directement, je suis dispo cette semaine pour un echange rapide.
+
+Geoffrey</div>
+        </div>
+      </div>
+
+      <!-- H+48 -->
+      <div class="timeline-step">
+        <div class="step-header">
+          <span class="step-time">H+48</span>
+          <span class="step-label">Message Jad</span>
+          <span class="step-channel">DM / WhatsApp</span>
+        </div>
+        <div class="message-card">
+          <div class="message-card-header">
+            <span class="subject">Derniere question directe</span>
+            <button class="copy-btn" data-copy="postcall-h48">Copier</button>
+          </div>
+          <div class="message-card-body" id="postcall-h48">[Prenom], je ne vais pas te relancer indefiniment. Mais je voulais te poser une derniere question:
+
+Qu'est-ce qui te retient vraiment? Si c'est le prix, on a des options. Si c'est la peur, je comprends — et c'est pour ca qu'on a la garantie 30 jours.
+
+Dis-moi juste ou tu en es.</div>
+        </div>
+      </div>
+
+      <!-- H+72 -->
+      <div class="timeline-step">
+        <div class="step-header">
+          <span class="step-time">H+72</span>
+          <span class="step-label">Message Geoffrey</span>
+          <span class="step-channel">DM / WhatsApp</span>
+        </div>
+        <div class="message-card">
+          <div class="message-card-header">
+            <span class="subject">Message humain — sans CTA</span>
+            <button class="copy-btn" data-copy="postcall-h72">Copier</button>
+          </div>
+          <div class="message-card-body" id="postcall-h72">[Prenom], c'est Geoffrey.
+
+Je voulais juste te dire: ce que tu vis avec ta peau, c'est pas une fatalite. On a les outils pour t'aider.
+
+Si un jour tu es prete, on sera la. Je te souhaite le meilleur.
+
+Geoffrey</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="stop-banner">
+      <span class="icon">&#9632;</span>
+      <div>
+        <div class="text"><strong style="color:#e04040">STOP.</strong> Tag <span class="tag">"lead-froid-post-call"</span>. GHL workflow prend le relais (nurture email).</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- SECTION 3: NO-SHOW RECOVERY                             -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <div class="section" id="sec-noshow">
+    <div class="section-header">
+      <div class="section-number">Section 03</div>
+      <h2 class="section-title">No-Show Recovery</h2>
+      <p class="section-subtitle">WF4 — Recuperation apres absence au call</p>
+    </div>
+
+    <div class="timeline-badges">
+      <span class="timeline-badge">H+2</span>
+      <span class="timeline-badge">H+24</span>
+      <span class="timeline-badge">H+48</span>
+    </div>
+
+    <div class="timeline">
+
+      <!-- H+2 -->
+      <div class="timeline-step">
+        <div class="step-header">
+          <span class="step-time">H+2</span>
+          <span class="step-label">SMS</span>
+          <span class="step-channel">SMS</span>
+        </div>
+        <div class="message-card">
+          <div class="message-card-header">
+            <span class="subject">SMS de re-booking rapide</span>
+            <button class="copy-btn" data-copy="noshow-h2">Copier</button>
+          </div>
+          <div class="message-card-body" id="noshow-h2">Hey [prenom]! On avait un appel prevu ensemble. Pas de souci si t'as eu un empechement! Voici le lien pour reserver un autre creneau: [LIEN CALENDLY]</div>
+        </div>
+      </div>
+
+      <!-- H+24 -->
+      <div class="timeline-step">
+        <div class="step-header">
+          <span class="step-time">H+24</span>
+          <span class="step-label">Email</span>
+          <span class="step-channel">Email</span>
+        </div>
+        <div class="message-card">
+          <div class="message-card-header">
+            <span class="subject">Objet: "On s'est rate — mais c'est pas grave"</span>
+            <button class="copy-btn" data-copy="noshow-h24">Copier</button>
+          </div>
+          <div class="message-card-body" id="noshow-h24">Salut [prenom],
+
+Ca arrive! On avait un appel hier et tu n'as pas pu etre la.
+
+Si tu veux toujours comprendre ce qui se passe avec ta peau et pourquoi rien de ce que tu as essaye n'a tenu — l'appel est toujours gratuit.
+
+Rebook ici: [LIEN CALENDLY]
+
+On s'adapte a ton emploi du temps.
+
+Jad</div>
+        </div>
+      </div>
+
+      <!-- H+48 -->
+      <div class="timeline-step">
+        <div class="step-header">
+          <span class="step-time">H+48</span>
+          <span class="step-label">Dernier message</span>
+          <span class="step-channel">DM / WhatsApp</span>
+        </div>
+        <div class="message-card">
+          <div class="message-card-header">
+            <span class="subject">Dernier message — humain</span>
+            <button class="copy-btn" data-copy="noshow-h48">Copier</button>
+          </div>
+          <div class="message-card-body" id="noshow-h48">[Prenom], dernier message de ma part.
+
+Si ta situation avec [condition] est toujours un sujet pour toi — on est la. L'appel est gratuit, 30 min, sans engagement.
+
+[LIEN CALENDLY]
+
+Apres ca, je ne te relancerai plus. Mais sache que Geoffrey accompagne des personnes avec exactement ton profil, et les resultats sont la.
+
+Bonne continuation.</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="stop-banner">
+      <span class="icon">&#9632;</span>
+      <div>
+        <div class="text"><strong style="color:#e04040">STOP.</strong> Tag <span class="tag">"no-show-froid"</span>.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- SECTION 3b: RESCUE (dit non)                            -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <div class="section" id="sec-rescue">
+    <div class="section-header">
+      <div class="section-number">Section 03b</div>
+      <h2 class="section-title">Rescue — "Elle a dit non"</h2>
+      <p class="section-subtitle">Meme timeline que Post-Call Rescue (H+24, H+48, H+72) avec tonalite adaptee, puis nurture automatique</p>
+    </div>
+    <p style="color:var(--stone);font-size:14px;line-height:1.7;padding:16px 0;">Utilise les templates de la Section 02 (Post-Call Rescue) en adaptant le ton : pas de "je reflechis" a adresser, juste un message humain et respectueux. Le dernier message (H+72) est identique — sans CTA.</p>
+    <div class="stop-banner">
+      <span class="icon">&#9632;</span>
+      <div>
+        <div class="text"><strong style="color:#e04040">STOP apres H+72.</strong> Tag <span class="tag">"lead-froid-rescue"</span>. Passe en <strong style="color:var(--gold)">Nurture Long Terme</strong> automatique.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- SECTION 4: VSL RELANCE                                  -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <div class="section" id="sec-vsl">
+    <div class="section-header">
+      <div class="section-number">Section 04</div>
+      <h2 class="section-title">VSL Relance</h2>
+      <p class="section-subtitle">WF1 — Trigger: tag "vsl-envoyee", pas de booking</p>
+    </div>
+
+    <div class="timeline-badges">
+      <span class="timeline-badge">J+0 (immediat)</span>
+      <span class="timeline-badge">J+1</span>
+      <span class="timeline-badge">J+3</span>
+    </div>
+
+    <div class="timeline">
+
+      <!-- J+0 -->
+      <div class="timeline-step">
+        <div class="step-header">
+          <span class="step-time">J+0</span>
+          <span class="step-label">Email 1 — Curiosity Open Loop</span>
+          <span class="step-channel">Email</span>
+        </div>
+        <div class="message-card">
+          <div class="message-card-header">
+            <span class="subject">Objet: "Il y a quelque chose que personne ne t'a montre"</span>
+            <button class="copy-btn" data-copy="vsl-j0">Copier</button>
+          </div>
+          <div class="message-card-body" id="vsl-j0">[Prenom],
+
+Il y a quelque chose que je voudrais te montrer. Pas un produit. Pas une creme. Quelque chose que personne ne t'a jamais montre — parce que ca remet en question tout ce qu'on t'a dit sur ta peau.
+
+C'est une video de 20 minutes. Si tu ne l'as pas encore vue — c'est le moment.
+
+[BOUTON: Regarder la video]
+
+Geoffrey</div>
+        </div>
+      </div>
+
+      <!-- J+1 -->
+      <div class="timeline-step">
+        <div class="step-header">
+          <span class="step-time">J+1</span>
+          <span class="step-label">Email 2 — Pattern Interrupt</span>
+          <span class="step-channel">Email</span>
+        </div>
+        <div class="message-card">
+          <div class="message-card-header">
+            <span class="subject">Objet: "Le cycle que personne ne t'a explique"</span>
+            <button class="copy-btn" data-copy="vsl-j1">Copier</button>
+          </div>
+          <div class="message-card-body" id="vsl-j1">[Prenom],
+
+Il y a un pattern que je vois chez presque toutes les personnes que j'accompagne: amelioration, espoir, rechute, epuisement. A chaque fois.
+
+Ce cycle existe parce que tout ce que tu as essaye jusqu'ici traitait ce que tu VOIS — ta peau. Pas ce qui PRODUIT le probleme.
+
+Dans cette video, j'explique exactement ce mecanisme et pourquoi il se repete.
+
+[BOUTON: Comprendre le mecanisme]
+
+Geoffrey</div>
+        </div>
+      </div>
+
+      <!-- J+3 -->
+      <div class="timeline-step">
+        <div class="step-header">
+          <span class="step-time">J+3</span>
+          <span class="step-label">Email 3 — Urgence douce</span>
+          <span class="step-channel">Email</span>
+        </div>
+        <div class="message-card">
+          <div class="message-card-header">
+            <span class="subject">Objet: "Derniere chose, [prenom]"</span>
+            <button class="copy-btn" data-copy="vsl-j3">Copier</button>
+          </div>
+          <div class="message-card-body" id="vsl-j3">[Prenom],
+
+Je ne vais pas t'envoyer 50 emails. Mais si ce que tu vis avec ta peau te pese encore — je voulais que tu saches qu'on peut t'aider.
+
+On prend 10 profils par mois maximum. Pas par marketing — parce que le suivi est humain et individuel.
+
+Si tu veux qu'on regarde ta situation ensemble, l'appel est gratuit:
+
+[BOUTON: Reserver un appel]
+
+Bonne continuation.
+
+Geoffrey</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="stop-banner">
+      <span class="icon">&#9632;</span>
+      <div>
+        <div class="text"><strong style="color:#e04040">STOP WF1.</strong> Si pas de booking → nurture email long terme.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- SECTION 5: POST-CLOSE                                   -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <div class="section" id="sec-postclose">
+    <div class="section-header">
+      <div class="section-number">Section 05</div>
+      <h2 class="section-title">Post-Close — Actions immediates</h2>
+      <p class="section-subtitle">Checklist a executer des que le paiement est confirme</p>
+    </div>
+
+    <ul class="checklist" id="postCloseChecklist">
+      <li data-key="pc-1">
+        <div class="check-box"></div>
+        <span class="check-text">Lien Whop envoye + paiement confirme</span>
+      </li>
+      <li data-key="pc-2">
+        <div class="check-box"></div>
+        <span class="check-text">Geoffrey prevenu (WhatsApp: prenom, condition, duree, points cles du call)</span>
+      </li>
+      <li data-key="pc-3">
+        <div class="check-box"></div>
+        <span class="check-text">Tag GHL: "client" + "condition-[X]"</span>
+      </li>
+      <li data-key="pc-4">
+        <div class="check-box"></div>
+        <span class="check-text">Referral demande (voir scripts Section 07)</span>
+      </li>
+      <li data-key="pc-5">
+        <div class="check-box"></div>
+        <span class="check-text">Message perso Jad: "Bienvenue! Geoffrey te contacte dans les prochaines heures."</span>
+      </li>
+    </ul>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- SECTION 6: NURTURE LONG TERME                           -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <div class="section" id="sec-nurture">
+    <div class="section-header">
+      <div class="section-number">Section 06</div>
+      <h2 class="section-title">Nurture Long Terme</h2>
+      <p class="section-subtitle">Pour les leads qui ont dit non mais restent tiedes</p>
+    </div>
+
+    <div class="nurture-rules">
+      <div class="nurture-rule">
+        <span class="nurture-icon">&#9654;</span>
+        <div class="nurture-text"><strong>Entrent dans la sequence email GHL automatique</strong> — aucune action manuelle requise. Le workflow gere l'envoi et le timing.</div>
+      </div>
+      <div class="nurture-rule">
+        <span class="nurture-icon">&#10005;</span>
+        <div class="nurture-text"><strong>Pas de relance manuelle</strong> — le workflow gere. Respecter le STOP apres la derniere relance manuelle.</div>
+      </div>
+      <div class="nurture-rule">
+        <span class="nurture-icon">&#8634;</span>
+        <div class="nurture-text"><strong>Si elle revient d'elle-meme</strong> → traiter comme un nouveau lead qualifie. Pas besoin de re-qualifier, pas besoin de reprendre la ou on avait laisse.</div>
+      </div>
+      <div class="nurture-rule">
+        <span class="nurture-icon">&#9829;</span>
+        <div class="nurture-text"><strong>Si elle interagit avec du contenu</strong> (commente un reel, like) → Jad peut re-engager manuellement. Signal d'interet = opportunite.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- SECTION 7: REFERRAL                                     -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <div class="section" id="sec-referral">
+    <div class="section-header">
+      <div class="section-number">Section 07</div>
+      <h2 class="section-title">Referral — Scripts par moment</h2>
+      <p class="section-subtitle">4 moments cles, 4 scripts copy-paste</p>
+    </div>
+
+    <div class="referral-grid">
+
+      <!-- Post-Close -->
+      <div class="referral-card">
+        <div class="referral-card-header">
+          <span class="referral-moment">Post-Close (jour meme)</span>
+          <button class="copy-btn" data-copy="ref-postclose">Copier</button>
+        </div>
+        <div class="referral-card-body" id="ref-postclose">Derniere chose, [prenom]. Tu connais quelqu'un dans ton entourage qui vit la meme chose? Une amie, une soeur, un collegue qui a des problemes de peau depuis longtemps?
+
+Si cette personne signe, tu gagnes un mois d'accompagnement gratuit en plus.</div>
+      </div>
+
+      <!-- Post-Call sans vente -->
+      <div class="referral-card">
+        <div class="referral-card-header">
+          <span class="referral-moment">Post-Call sans vente</span>
+          <button class="copy-btn" data-copy="ref-postcall">Copier</button>
+        </div>
+        <div class="referral-card-body" id="ref-postcall">Meme si c'est pas le bon moment pour toi — tu connais quelqu'un qui souffre de [condition] depuis longtemps? Je serais ravi de l'aider.</div>
+      </div>
+
+      <!-- J+7 -->
+      <div class="referral-card">
+        <div class="referral-card-header">
+          <span class="referral-moment">J+7 (email auto)</span>
+          <button class="copy-btn" data-copy="ref-j7">Copier</button>
+        </div>
+        <div class="referral-card-body" id="ref-j7">[Prenom], ca fait une semaine que tu as commence! Comment tu te sens?
+
+D'ailleurs, tu connais quelqu'un dans ton entourage qui vit la meme chose? Si tu la referes et qu'elle signe → 1 mois d'accompagnement gratuit pour toi.</div>
+      </div>
+
+      <!-- J+30 -->
+      <div class="referral-card">
+        <div class="referral-card-header">
+          <span class="referral-moment">J+30 (email auto)</span>
+          <button class="copy-btn" data-copy="ref-j30">Copier</button>
+        </div>
+        <div class="referral-card-body" id="ref-j30">[Prenom], 30 jours! Les resultats que tu as, quelqu'un dans ton entourage les merite aussi. Partage ton code [PRENOM_2026] — pour chaque personne qui signe, tu gagnes 1 mois supplementaire.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- SECTION 8: REGLES ABSOLUES                              -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <div class="section" id="sec-regles">
+    <div class="section-header">
+      <div class="section-number">Section 08</div>
+      <h2 class="section-title">Regles Absolues de la Relance</h2>
+      <p class="section-subtitle">Les enfreindre = perdre le lead definitivement</p>
+    </div>
+
+    <div class="danger-box">
+      <div class="danger-box-title">&#9888; NON-NEGOCIABLE</div>
+
+      <div class="danger-rule">
+        <span class="danger-num">1.</span>
+        <div class="danger-text"><strong>JAMAIS</strong> plus de 4 relances manuelles (au-dela = harcelement)</div>
+      </div>
+      <div class="danger-rule">
+        <span class="danger-num">2.</span>
+        <div class="danger-text"><strong>TOUJOURS</strong> reprendre un element personnel du call (pas de message generique)</div>
+      </div>
+      <div class="danger-rule">
+        <span class="danger-num">3.</span>
+        <div class="danger-text">Le dernier message est <strong>TOUJOURS</strong> sans CTA — juste humain</div>
+      </div>
+      <div class="danger-rule">
+        <span class="danger-num">4.</span>
+        <div class="danger-text">Geoffrey intervient a H+24 ou H+72 pour <strong>credibilite</strong></div>
+      </div>
+      <div class="danger-rule">
+        <span class="danger-num">5.</span>
+        <div class="danger-text"><strong>JAMAIS</strong> reduire le prix en relance — le prix se discute en call</div>
+      </div>
+      <div class="danger-rule">
+        <span class="danger-num">6.</span>
+        <div class="danger-text">Si elle revient apres des semaines → traiter comme <strong>nouveau lead</strong>, pas reprendre la ou on avait laisse</div>
+      </div>
+      <div class="danger-rule">
+        <span class="danger-num">7.</span>
+        <div class="danger-text">Tag <strong>TOUJOURS</strong> dans GHL apres chaque etape (tracking = intelligence)</div>
+      </div>
+      <div class="danger-rule">
+        <span class="danger-num">8.</span>
+        <div class="danger-text">Le workflow email GHL prend le relais apres le <strong>STOP</strong> manuel</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ── Footer ── -->
+<footer class="footer">
+  <span class="brand">SAPIENS 360</span> &nbsp;|&nbsp; Systeme de Relance &nbsp;|&nbsp; Derniere MAJ: Avril 2026
+</footer>
+
+<!-- ── Toast ── -->
+<div class="toast" id="toast">Copie!</div>
+
+<script>
+(function() {
+  // ── Copy buttons ──
+  const toast = document.getElementById('toast');
+  let toastTimer;
+
+  function showToast(msg) {
+    toast.textContent = msg || 'Copie!';
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove('show'), 1800);
+  }
+
+  document.querySelectorAll('.copy-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const targetId = btn.getAttribute('data-copy');
+      const el = document.getElementById(targetId);
+      if (!el) return;
+      const text = el.textContent.trim();
+      navigator.clipboard.writeText(text).then(() => {
+        btn.textContent = 'Copie!';
+        btn.classList.add('copied');
+        showToast();
+        setTimeout(() => {
+          btn.textContent = 'Copier';
+          btn.classList.remove('copied');
+        }, 2000);
+      }).catch(() => {
+        // Fallback
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.position = 'fixed';
+        ta.style.left = '-9999px';
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        btn.textContent = 'Copie!';
+        btn.classList.add('copied');
+        showToast();
+        setTimeout(() => {
+          btn.textContent = 'Copier';
+          btn.classList.remove('copied');
+        }, 2000);
+      });
+    });
+  });
+
+  // ── Sticky Nav ──
+  const tabs = document.querySelectorAll('.nav-tab');
+  const sections = [];
+
+  tabs.forEach(tab => {
+    const id = tab.getAttribute('data-target');
+    const sec = document.getElementById(id);
+    if (sec) sections.push({ tab, sec, id });
+
+    tab.addEventListener('click', (e) => {
+      e.preventDefault();
+      const target = document.getElementById(id);
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+
+  // Active tab on scroll
+  function updateActiveTab() {
+    let current = sections[0];
+    for (const s of sections) {
+      const rect = s.sec.getBoundingClientRect();
+      if (rect.top <= 80) current = s;
+    }
+    tabs.forEach(t => t.classList.remove('active'));
+    if (current) current.tab.classList.add('active');
+  }
+
+  let scrollRaf;
+  window.addEventListener('scroll', () => {
+    if (scrollRaf) return;
+    scrollRaf = requestAnimationFrame(() => {
+      updateActiveTab();
+      scrollRaf = null;
+    });
+  }, { passive: true });
+
+  // ── Scenario Selector ──
+  const scenarioSelect = document.getElementById('scenarioSelect');
+  scenarioSelect.addEventListener('change', () => {
+    const val = scenarioSelect.value;
+    if (!val) return;
+    const target = document.getElementById(val);
+    if (!target) return;
+
+    // Remove previous highlights
+    document.querySelectorAll('.section.highlighted').forEach(s => s.classList.remove('highlighted'));
+
+    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    setTimeout(() => {
+      target.classList.add('highlighted');
+    }, 400);
+  });
+
+  // ── Post-Close Checklist (localStorage) ──
+  const STORAGE_KEY = 'sapiens360_postclose_checklist';
+
+  function loadChecklist() {
+    try {
+      return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
+    } catch { return {}; }
+  }
+
+  function saveChecklist(state) {
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch {}
+  }
+
+  const checklist = document.getElementById('postCloseChecklist');
+  if (checklist) {
+    const state = loadChecklist();
+    const items = checklist.querySelectorAll('li');
+
+    items.forEach(li => {
+      const key = li.getAttribute('data-key');
+      if (state[key]) li.classList.add('checked');
+
+      li.addEventListener('click', () => {
+        li.classList.toggle('checked');
+        const s = loadChecklist();
+        s[key] = li.classList.contains('checked');
+        saveChecklist(s);
+      });
+    });
+  }
+
+  // Initial active tab
+  updateActiveTab();
+})();
+</script>
+</body>
+</html>
