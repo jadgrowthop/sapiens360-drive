@@ -1,0 +1,1876 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAPIENS 360 — Ads & Scaling Strategy</title>
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg: #111;
+  --card: #161616;
+  --border: #2C4A3555;
+  --gold: #B8956A;
+  --green: #2C4A35;
+  --ivory: #FAF7F2;
+  --stone: #888;
+  --gold-glow: #B8956A44;
+  --green-glow: #2C4A3544;
+  --danger: #c17b5a;
+  --red: #C75050;
+  --blue: #5B9BD5;
+  --purple: #C77DBA;
+  --success: #6BC77A;
+}
+
+body {
+  background: var(--bg);
+  color: var(--ivory);
+  font-family: 'Segoe UI', Arial, sans-serif;
+  line-height: 1.65;
+  font-size: 15px;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+.container { max-width: 1100px; margin: 0 auto; padding: 20px; }
+
+/* -- Hero -- */
+.hero {
+  text-align: center;
+  padding: 70px 24px 44px;
+  border-bottom: 2px solid var(--green);
+  margin-bottom: 0;
+  background: radial-gradient(ellipse at 50% 0%, rgba(184,149,106,0.06), transparent 60%);
+}
+.hero-brand {
+  font-family: Georgia, serif;
+  font-size: 14px;
+  color: var(--gold);
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.hero-360 {
+  font-family: Georgia, serif;
+  font-size: clamp(42px, 7vw, 62px);
+  color: #fff;
+  line-height: 1.05;
+  margin-bottom: 6px;
+}
+.hero-360 span { color: var(--gold); }
+.hero-title {
+  font-family: Georgia, serif;
+  font-size: clamp(20px, 3.5vw, 28px);
+  color: var(--gold);
+  font-weight: 400;
+  letter-spacing: 2px;
+  margin-bottom: 18px;
+}
+.hero-desc {
+  color: var(--stone);
+  font-size: 14px;
+  max-width: 720px;
+  margin: 0 auto;
+  line-height: 1.8;
+}
+.hero-desc strong { color: var(--ivory); }
+
+/* -- Sticky Nav -- */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(17,17,17,0.97);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border);
+  overflow-x: auto;
+  white-space: nowrap;
+  scrollbar-width: thin;
+  scrollbar-color: var(--green) transparent;
+}
+.nav::-webkit-scrollbar { height: 3px; }
+.nav::-webkit-scrollbar-track { background: transparent; }
+.nav::-webkit-scrollbar-thumb { background: var(--green); border-radius: 3px; }
+.nav a {
+  display: inline-block;
+  padding: 14px 14px;
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.35);
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+.nav a:hover { color: var(--ivory); }
+.nav a.active { color: var(--gold); border-bottom-color: var(--gold); }
+
+/* -- Search -- */
+.search-bar {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 24px 24px 0;
+}
+.search-wrap { position: relative; }
+.search-icon {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #555;
+  font-size: 18px;
+  pointer-events: none;
+}
+.search-input {
+  width: 100%;
+  padding: 14px 20px 14px 48px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  color: var(--ivory);
+  font-size: 15px;
+  font-family: inherit;
+  outline: none;
+  transition: border-color .2s;
+}
+.search-input:focus { border-color: var(--gold); }
+.search-input::placeholder { color: #555; }
+
+/* -- Sections -- */
+.section {
+  margin-bottom: 50px;
+  scroll-margin-top: 60px;
+}
+.section-header {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  margin-bottom: 22px;
+  padding-bottom: 14px;
+  border-bottom: 2px solid var(--green);
+}
+.section-num {
+  font-family: Georgia, serif;
+  font-size: 48px;
+  color: var(--green);
+  line-height: 1;
+}
+.section-title {
+  font-family: Georgia, serif;
+  font-size: 28px;
+  color: var(--gold);
+}
+.section-subtitle {
+  font-size: 13px;
+  color: var(--stone);
+  margin-top: 2px;
+}
+
+/* -- Cards -- */
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 24px 28px;
+  margin-bottom: 18px;
+}
+.card.gold {
+  border-color: var(--gold);
+  background: linear-gradient(135deg, rgba(184,149,106,0.1), var(--card));
+}
+.card.green { border-left: 4px solid var(--green); }
+.card.red { border-left: 4px solid var(--danger); }
+.card.danger {
+  border: 1px solid var(--danger);
+  background: linear-gradient(135deg, rgba(193,123,90,0.08), var(--card));
+}
+.card.vision-card {
+  border: 2px solid var(--gold);
+  background: linear-gradient(135deg, rgba(184,149,106,0.12), var(--card));
+  padding: 36px 32px;
+  text-align: center;
+}
+.card h3 {
+  font-family: Georgia, serif;
+  font-size: 20px;
+  color: var(--gold);
+  margin-bottom: 12px;
+}
+.card h4 {
+  font-size: 13px;
+  color: var(--gold);
+  font-weight: 700;
+  margin: 18px 0 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.card h4:first-child { margin-top: 0; }
+.card p { margin-bottom: 12px; }
+.card p:last-child { margin-bottom: 0; }
+.card ul, .card ol { padding-left: 20px; margin-bottom: 14px; }
+.card li { margin-bottom: 8px; }
+.card li strong { color: #fff; }
+.card p strong { color: var(--gold); }
+
+/* -- Vision big quote -- */
+.vision-quote {
+  font-family: Georgia, serif;
+  font-size: clamp(18px, 2.5vw, 24px);
+  color: var(--ivory);
+  line-height: 1.5;
+  margin-bottom: 16px;
+}
+.vision-quote em { color: var(--gold); font-style: normal; font-weight: 700; }
+
+/* -- Collapsible -- */
+.collapsible { margin-bottom: 18px; }
+.collapsible-header {
+  background: #1a1a1a;
+  border: 1px solid var(--border);
+  border-radius: 10px 10px 0 0;
+  padding: 16px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.collapsible-header:hover { background: #1e1e1e; }
+.collapsible-header h3 {
+  font-family: Georgia, serif;
+  font-size: 18px;
+  color: var(--gold);
+  margin: 0;
+}
+.collapsible-header .toggle-icon {
+  color: var(--gold);
+  font-size: 20px;
+  transition: transform 0.3s;
+}
+.collapsible-header.open .toggle-icon { transform: rotate(45deg); }
+.collapsible-body {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-top: none;
+  border-radius: 0 0 10px 10px;
+  padding: 24px 28px;
+  display: none;
+}
+.collapsible-body.open { display: block; }
+.collapsible.start-open .collapsible-body { display: block; }
+.collapsible.start-open .collapsible-header .toggle-icon { transform: rotate(45deg); }
+
+/* -- Copy button -- */
+.copy-block {
+  position: relative;
+  background: #0d0d0d;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 18px 20px;
+  margin: 14px 0;
+  font-size: 14px;
+  line-height: 1.7;
+  color: #d4d0c4;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+.copy-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: var(--green);
+  color: var(--gold);
+  border: none;
+  border-radius: 6px;
+  padding: 5px 14px;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: all 0.2s;
+}
+.copy-btn:hover { background: var(--gold); color: #111; }
+.copy-btn.copied { background: var(--success); color: #111; }
+
+/* -- Tables -- */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 16px 0;
+  background: var(--card);
+  border-radius: 8px;
+  overflow: hidden;
+  font-size: 14px;
+}
+th {
+  background: var(--green);
+  color: var(--ivory);
+  padding: 12px 16px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+td {
+  padding: 12px 16px;
+  border-bottom: 1px solid #2C4A3522;
+  color: #d4d0c4;
+}
+tr:last-child td { border-bottom: none; }
+td strong { color: var(--ivory); }
+td em { color: var(--gold); font-style: normal; }
+
+/* -- Grids -- */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin: 18px 0; }
+.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 18px; margin: 18px 0; }
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin: 18px 0; }
+.grid-5 { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; margin: 18px 0; }
+@media (max-width: 900px) { .grid-3 { grid-template-columns: 1fr; } .grid-5 { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 768px) { .grid-2 { grid-template-columns: 1fr; } .grid-4 { grid-template-columns: repeat(2, 1fr); } }
+
+/* -- Quote -- */
+.quote {
+  border-left: 3px solid var(--gold);
+  padding: 16px 22px;
+  margin: 16px 0;
+  background: rgba(184,149,106,0.06);
+  font-style: italic;
+  color: #d4d0c4;
+  border-radius: 0 8px 8px 0;
+  font-size: 15px;
+  line-height: 1.7;
+}
+.quote strong { color: var(--ivory); font-style: normal; }
+
+/* -- Metric cards -- */
+.metric-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 22px;
+  text-align: center;
+}
+.metric-value {
+  font-family: Georgia, serif;
+  font-size: 36px;
+  color: var(--gold);
+  margin-bottom: 4px;
+}
+.metric-label {
+  font-size: 12px;
+  color: var(--stone);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* -- Stat row -- */
+.stat-row {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 14px;
+  margin: 18px 0;
+}
+@media (max-width: 768px) {
+  .stat-row { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* -- Tags -- */
+.tag {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+.tag.green { background: var(--green); color: var(--gold); }
+.tag.gold { background: var(--gold); color: #111; }
+.tag.red { background: var(--red); color: #fff; }
+.tag.blue { background: var(--blue); color: #111; }
+.tag.purple { background: var(--purple); color: #111; }
+.tag.stone { background: #333; color: var(--stone); }
+
+/* -- Timeline -- */
+.timeline { position: relative; padding-left: 30px; border-left: 2px solid var(--green); margin: 24px 0; }
+.timeline-item { margin-bottom: 24px; position: relative; }
+.timeline-item::before {
+  content: '';
+  width: 14px;
+  height: 14px;
+  background: var(--gold);
+  border-radius: 50%;
+  position: absolute;
+  left: -38px;
+  top: 4px;
+  box-shadow: 0 0 0 4px var(--bg);
+}
+.timeline-item .period {
+  font-size: 11px;
+  color: var(--gold);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-weight: 700;
+}
+.timeline-item .desc { color: #d4d0c4; margin-top: 4px; }
+.timeline-item .desc strong { color: var(--ivory); }
+
+/* -- Progress bars -- */
+.progress-row { margin: 12px 0; }
+.progress-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  margin-bottom: 4px;
+}
+.progress-label span:first-child { color: var(--ivory); }
+.progress-label span:last-child { color: var(--gold); font-weight: 700; }
+.progress-track {
+  height: 8px;
+  background: #222;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.5s;
+  background: linear-gradient(90deg, var(--green), var(--gold));
+}
+
+/* -- Flowchart -- */
+.flowchart {
+  background: #0d0d0d;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 28px;
+  margin: 18px 0;
+  font-family: 'Courier New', monospace;
+  font-size: 13px;
+  line-height: 1.8;
+  color: var(--stone);
+  overflow-x: auto;
+}
+.flowchart strong { color: var(--gold); }
+.flowchart em { color: var(--success); font-style: normal; }
+
+/* -- Checklist -- */
+.checklist { list-style: none; padding: 0; }
+.checklist li {
+  padding: 10px 0;
+  border-bottom: 1px solid #222;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+.checklist li:last-child { border-bottom: none; }
+.checklist input[type="checkbox"] {
+  margin-top: 4px;
+  accent-color: var(--gold);
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+.checklist .done { text-decoration: line-through; color: #555; }
+
+/* -- Phase cards -- */
+.phase-card {
+  background: var(--card);
+  border: 2px solid var(--green);
+  border-radius: 10px;
+  padding: 28px;
+}
+.phase-card.active-phase { border-color: var(--gold); }
+.phase-num {
+  font-family: Georgia, serif;
+  font-size: 42px;
+  color: var(--green);
+  margin-bottom: 6px;
+}
+.phase-card.active-phase .phase-num { color: var(--gold); }
+.phase-card h4 {
+  font-family: Georgia, serif;
+  font-size: 18px;
+  color: var(--gold);
+  margin-bottom: 10px;
+  text-transform: none;
+  letter-spacing: 0;
+}
+.phase-card p { color: var(--stone); font-size: 14px; }
+.phase-card ul { padding-left: 18px; margin-top: 10px; }
+.phase-card li { color: #d4d0c4; font-size: 14px; margin-bottom: 6px; }
+
+/* -- Responsive table wrapper -- */
+.table-wrap { overflow-x: auto; margin: 16px 0; }
+.table-wrap table { min-width: 600px; }
+
+/* -- Footer -- */
+footer {
+  text-align: center;
+  padding: 40px 20px;
+  border-top: 1px solid var(--border);
+  color: #555;
+  font-size: 12px;
+  margin-top: 60px;
+  letter-spacing: 1px;
+}
+footer a { color: var(--gold); text-decoration: none; }
+footer a:hover { text-decoration: underline; }
+
+/* -- Responsive -- */
+@media (max-width: 600px) {
+  .container { padding: 14px; }
+  .card { padding: 18px 16px; }
+  .section-num { font-size: 36px; }
+  .section-title { font-size: 22px; }
+  .hero { padding: 40px 16px 30px; }
+  .stat-row { grid-template-columns: 1fr 1fr; }
+  .nav a { padding: 12px 10px; font-size: 10px; }
+  table { font-size: 12px; }
+  th, td { padding: 8px 10px; }
+}
+
+/* -- Hidden for search -- */
+.search-hidden { display: none !important; }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-brand">SAPIENS</div>
+  <div class="hero-360">3<span>6</span>0</div>
+  <div class="hero-title">Ads & Scaling Strategy</div>
+  <p class="hero-desc">
+    <strong>De l'organique au paid</strong> — Meta Ads, YouTube Ads, retargeting, creatives, budgets, unit economics.<br>
+    Le blueprint pour passer de 15-20K/mois a <strong>100K/mois</strong> avec un systeme publicitaire rentable et scalable.
+  </p>
+</div>
+
+<!-- NAV -->
+<div class="nav" id="nav">
+  <a href="#pourquoi" class="active">Pourquoi les Ads</a>
+  <a href="#economics">Unit Economics</a>
+  <a href="#meta">Meta Ads</a>
+  <a href="#youtube">YouTube Ads</a>
+  <a href="#creatives">Creatives</a>
+  <a href="#retargeting">Retargeting</a>
+  <a href="#budgets">Budgets</a>
+  <a href="#upsell">Upsell & LTV</a>
+  <a href="#legal">Legal</a>
+  <a href="#checklist">Checklist</a>
+</div>
+
+<!-- SEARCH -->
+<div class="search-bar">
+  <div class="search-wrap">
+    <span class="search-icon">&#128269;</span>
+    <input type="text" class="search-input" id="globalSearch" placeholder="Rechercher dans la strategie (ex: CPL, retargeting, creative, budget, ROAS...)">
+  </div>
+</div>
+
+<div class="container">
+
+<!-- ═══════════════════════════════════════════════════════════════════════════════════════════════ -->
+<!-- SECTION 1: POURQUOI LES ADS MAINTENANT -->
+<!-- ═══════════════════════════════════════════════════════════════════════════════════════════════ -->
+<div class="section" id="pourquoi">
+  <div class="section-header">
+    <div class="section-num">01</div>
+    <div>
+      <div class="section-title">Pourquoi les Ads Maintenant</div>
+      <div class="section-subtitle">L'organique a un plafond. Les ads le cassent.</div>
+    </div>
+  </div>
+
+  <div class="card vision-card">
+    <div class="vision-quote">
+      "L'organique donne du trafic. <em>900K vues/mois</em> sur Instagram. Mais l'organique a un plafond. Pour passer de 15-20K/mois a <em>100K/mois</em>, il faut du <em>PAID</em>."
+    </div>
+  </div>
+
+  <div class="card danger">
+    <h3>NE PAS lancer les ads avant que :</h3>
+    <ul>
+      <li><strong>Close rate > 30% sur l'organique</strong> (sinon on brule du budget)</li>
+      <li><strong>3 creatives organiques validees</strong> (Reels avec >100K vues = elles marchent)</li>
+      <li><strong>Funnel complet teste</strong> (ManyChat -> VSL -> Call -> Close)</li>
+      <li><strong>Au moins 10 temoignages collectes</strong> (preuve sociale pour les ads)</li>
+    </ul>
+    <p style="color:var(--danger); font-weight:700; margin-top:10px;">Si le close rate est sous 30%, chaque euro en ads est gaspille. Corriger le closing AVANT de scaler.</p>
+  </div>
+
+  <div class="card gold">
+    <h3>Le Calcul du Scaling</h3>
+    <div class="table-wrap">
+    <table>
+      <tr>
+        <th>Source</th>
+        <th>Leads/mois</th>
+        <th>Calls/mois</th>
+        <th>Close rate</th>
+        <th>Ventes</th>
+        <th>Revenue</th>
+      </tr>
+      <tr>
+        <td><strong>Organique seul</strong></td>
+        <td>100</td>
+        <td>30</td>
+        <td>30%</td>
+        <td>9</td>
+        <td><em>10,800</em></td>
+      </tr>
+      <tr>
+        <td><strong>Organique + Ads M1</strong> (1,000)</td>
+        <td>200</td>
+        <td>55</td>
+        <td>28%</td>
+        <td>15</td>
+        <td><em>18,000</em></td>
+      </tr>
+      <tr>
+        <td><strong>Organique + Ads M3</strong> (3,000)</td>
+        <td>400</td>
+        <td>100</td>
+        <td>30%</td>
+        <td>30</td>
+        <td><em>36,000</em></td>
+      </tr>
+      <tr>
+        <td><strong>Organique + Ads M6</strong> (10,000)</td>
+        <td>1,000</td>
+        <td>250</td>
+        <td>30%</td>
+        <td>75</td>
+        <td><em>90,000</em></td>
+      </tr>
+    </table>
+    </div>
+    <div class="quote">
+      <strong>Note :</strong> Le close rate sur paid est 2-5% plus bas que l'organique (leads moins chauds). C'est normal. On compense par le volume.
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════════════════════════════════ -->
+<!-- SECTION 2: UNIT ECONOMICS -->
+<!-- ═══════════════════════════════════════════════════════════════════════════════════════════════ -->
+<div class="section" id="economics">
+  <div class="section-header">
+    <div class="section-num">02</div>
+    <div>
+      <div class="section-title">Unit Economics — Le Modele Financier</div>
+      <div class="section-subtitle">Chaque chiffre doit etre rentable avant de scaler</div>
+    </div>
+  </div>
+
+  <div class="stat-row">
+    <div class="metric-card">
+      <div class="metric-value">10</div>
+      <div class="metric-label">CPL cible</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value">33</div>
+      <div class="metric-label">CPBC cible</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value">157</div>
+      <div class="metric-label">CPA moyen</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value">7.6x</div>
+      <div class="metric-label">ROI a 1,200</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value">11.5x</div>
+      <div class="metric-label">ROI a 1,800</div>
+    </div>
+  </div>
+
+  <div class="collapsible start-open">
+    <div class="collapsible-header" onclick="toggleCollapsible(this)">
+      <h3>Cost per Lead (CPL)</h3>
+      <span class="toggle-icon">+</span>
+    </div>
+    <div class="collapsible-body">
+      <ul>
+        <li><strong>Meta Ads France, niche sante :</strong> 5-15 par lead</li>
+        <li><strong>YouTube Ads :</strong> 8-20 par lead</li>
+        <li><strong>Cible SAPIENS :</strong> 10 par lead</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="collapsible">
+    <div class="collapsible-header" onclick="toggleCollapsible(this)">
+      <h3>Cost per Booked Call (CPBC)</h3>
+      <span class="toggle-icon">+</span>
+    </div>
+    <div class="collapsible-body">
+      <ul>
+        <li>Si <strong>30% des leads bookent</strong> : CPBC = 10 / 30% = <strong>~33</strong></li>
+        <li>Si <strong>20% des leads bookent</strong> : CPBC = 10 / 20% = <strong>~50</strong></li>
+      </ul>
+      <p>Le setting ManyChat + emails nurture sont critiques pour maximiser le taux de booking.</p>
+    </div>
+  </div>
+
+  <div class="collapsible">
+    <div class="collapsible-header" onclick="toggleCollapsible(this)">
+      <h3>Cost per Acquisition (CPA)</h3>
+      <span class="toggle-icon">+</span>
+    </div>
+    <div class="collapsible-body">
+      <ul>
+        <li>CPBC 33 + show rate 70% + close rate 30% = <strong>CPA = 33 / (0.70 x 0.30) = ~157</strong></li>
+        <li>A 1,200 par vente : ROI = 1,200 / 157 = <strong>7.6x — TRES RENTABLE</strong></li>
+        <li>A 1,800 par vente : ROI = <strong>11.5x</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card green">
+    <h3>Seuil de Rentabilite</h3>
+    <p>CPA max = prix vente x marge. Si marge 80% (couts delivery faibles) :</p>
+    <p style="font-size:20px; color:var(--gold); font-family:Georgia, serif; margin:14px 0;"><strong>CPA max = 960 pour une vente a 1,200</strong></p>
+    <p>Tant que CPA < 400, on scale agressivement. Entre 400-600, on optimise. Au-dessus de 600, on pause et on diagnostique.</p>
+  </div>
+
+  <div class="card gold">
+    <h3>LTV avec Upsells</h3>
+    <div class="table-wrap">
+    <table>
+      <tr>
+        <th>Element</th>
+        <th>Revenue</th>
+        <th>Quand</th>
+      </tr>
+      <tr>
+        <td><strong>Vente initiale</strong></td>
+        <td><em>1,200-1,800</em></td>
+        <td>J0</td>
+      </tr>
+      <tr>
+        <td>Plan annuel maintenance</td>
+        <td><em>500/an</em></td>
+        <td>J+90</td>
+      </tr>
+      <tr>
+        <td>Upgrade Essentiel -> Integral</td>
+        <td><em>600</em></td>
+        <td>J+30</td>
+      </tr>
+      <tr>
+        <td>Masterclass individuelle</td>
+        <td><em>97-197</em></td>
+        <td>J+60</td>
+      </tr>
+      <tr>
+        <td>Referral (1 par client)</td>
+        <td><em>1,200 CPA 0</em></td>
+        <td>J+30</td>
+      </tr>
+      <tr style="background:rgba(184,149,106,0.1);">
+        <td><strong>LTV 12 mois</strong></td>
+        <td><strong style="color:var(--gold); font-size:18px;">2,500-4,000</strong></td>
+        <td></td>
+      </tr>
+    </table>
+    </div>
+    <div class="quote">
+      CPA de 157 pour un LTV de 3,000 = <strong>ROI x19</strong>. C'est pour ca qu'on scale.
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Cash Flow Table (mois par mois avec ads)</h3>
+    <div class="table-wrap">
+    <table>
+      <tr>
+        <th>Mois</th>
+        <th>Budget Ads</th>
+        <th>Revenue Ads</th>
+        <th>Revenue Organique</th>
+        <th>Total Revenue</th>
+        <th>Profit</th>
+      </tr>
+      <tr>
+        <td><strong>M1 (test)</strong></td>
+        <td>1,000</td>
+        <td>3,600</td>
+        <td>10,800</td>
+        <td><em>14,400</em></td>
+        <td><em>13,400</em></td>
+      </tr>
+      <tr>
+        <td><strong>M2</strong></td>
+        <td>2,000</td>
+        <td>7,200</td>
+        <td>12,000</td>
+        <td><em>19,200</em></td>
+        <td><em>17,200</em></td>
+      </tr>
+      <tr>
+        <td><strong>M3</strong></td>
+        <td>3,000</td>
+        <td>14,400</td>
+        <td>15,000</td>
+        <td><em>29,400</em></td>
+        <td><em>26,400</em></td>
+      </tr>
+      <tr>
+        <td><strong>M4</strong></td>
+        <td>5,000</td>
+        <td>24,000</td>
+        <td>18,000</td>
+        <td><em>42,000</em></td>
+        <td><em>37,000</em></td>
+      </tr>
+      <tr>
+        <td><strong>M5</strong></td>
+        <td>8,000</td>
+        <td>36,000</td>
+        <td>20,000</td>
+        <td><em>56,000</em></td>
+        <td><em>48,000</em></td>
+      </tr>
+      <tr style="background:rgba(184,149,106,0.1);">
+        <td><strong>M6</strong></td>
+        <td>12,000</td>
+        <td>54,000</td>
+        <td>25,000</td>
+        <td><strong style="color:var(--gold); font-size:16px;">79,000</strong></td>
+        <td><strong style="color:var(--success); font-size:16px;">67,000</strong></td>
+      </tr>
+    </table>
+    </div>
+    <p style="color:var(--stone); font-size:13px;">Note : Revenue organique continue a augmenter grace a YouTube SEO et referrals.</p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════════════════════════════════ -->
+<!-- SECTION 3: META ADS -->
+<!-- ═══════════════════════════════════════════════════════════════════════════════════════════════ -->
+<div class="section" id="meta">
+  <div class="section-header">
+    <div class="section-num">03</div>
+    <div>
+      <div class="section-title">Meta Ads (Instagram + Facebook)</div>
+      <div class="section-subtitle">La plateforme prioritaire — l'audience est DEJA la</div>
+    </div>
+  </div>
+
+  <div class="card gold">
+    <h3>Pourquoi Meta d'abord</h3>
+    <ul>
+      <li><strong>L'audience est DEJA la</strong> — 900K vues organiques = Meta connait votre ICP</li>
+      <li><strong>Le pixel a deja des donnees</strong> — visiteurs VSL, bookings, clients</li>
+      <li><strong>Les creatives organiques validees</strong> = directement utilisables en ads</li>
+      <li><strong>Le CPL est le plus bas</strong> — 5-15 vs YouTube 8-20</li>
+    </ul>
+  </div>
+
+  <!-- Campagne 1 -->
+  <div class="collapsible start-open">
+    <div class="collapsible-header" onclick="toggleCollapsible(this)">
+      <h3>Campagne 1 : TOFU — Acquisition froide (80% du budget)</h3>
+      <span class="toggle-icon">+</span>
+    </div>
+    <div class="collapsible-body">
+      <h4>Objectif</h4>
+      <p>Conversions (Lead)</p>
+
+      <h4>Audiences</h4>
+      <ul>
+        <li><strong>Lookalike 1%</strong> des clients existants (meme 8 clients = assez pour commencer)</li>
+        <li><strong>Lookalike 1%</strong> des visiteurs VSL</li>
+        <li><strong>Interests :</strong> dermatologue, psoriasis, eczema, rosacee, acne, naturopathie, sante naturelle, alimentation anti-inflammatoire</li>
+        <li><strong>Age :</strong> 27-55 femmes, France + Suisse + Belgique + Canada francophone</li>
+        <li><strong>Exclure :</strong> clients existants, leads deja dans GHL</li>
+      </ul>
+
+      <h4>Creative</h4>
+      <p>Reel organique top performer -> ad</p>
+
+      <h4>Funnel</h4>
+      <div class="flowchart">
+<strong>Ad (Reel)</strong> -> <strong>Landing VSL</strong> -> <em>Email capture</em> -> <strong>ManyChat</strong> -> <em>Setting</em> -> <strong>Call booking</strong> -> <em>Close</em>
+      </div>
+    </div>
+  </div>
+
+  <!-- Campagne 2 -->
+  <div class="collapsible">
+    <div class="collapsible-header" onclick="toggleCollapsible(this)">
+      <h3>Campagne 2 : RETARGETING — Leads chauds (20% du budget)</h3>
+      <span class="toggle-icon">+</span>
+    </div>
+    <div class="collapsible-body">
+      <h4>Objectif</h4>
+      <p>Conversions (Booking)</p>
+
+      <h4>Audiences</h4>
+      <ul>
+        <li>Visiteurs VSL qui n'ont pas booke (7 derniers jours)</li>
+        <li>Leads email qui n'ont pas booke (14 derniers jours)</li>
+        <li>Engagers Instagram 30 jours qui n'ont pas booke</li>
+        <li>Viewers YouTube 50%+ qui n'ont pas booke</li>
+      </ul>
+
+      <h4>Creative</h4>
+      <p>Temoignage video + CTA booking direct</p>
+
+      <h4>Landing</h4>
+      <p>Calendly direct (pas de VSL — ils l'ont deja vue)</p>
+    </div>
+  </div>
+
+  <!-- 5 Creatives -->
+  <div class="card">
+    <h3>5 Creatives a Tester (Ad Set Structure)</h3>
+
+    <div class="grid-2" style="margin-top:14px;">
+      <div class="card green" style="margin-bottom:0;">
+        <h4 style="margin-top:0;">Creative 1 : "Le Reel Gagnant"</h4>
+        <p><span class="tag green">Organique valide</span></p>
+        <p>Prendre le Reel organique qui a fait le plus de vues. L'utiliser tel quel en ad. Ajouter le CTA Facebook "En savoir plus" -> VSL.</p>
+        <p style="color:var(--stone); font-size:13px;">Deja valide par l'algorithme. Si ca marche en organique, ca marche en paid.</p>
+      </div>
+
+      <div class="card green" style="margin-bottom:0;">
+        <h4 style="margin-top:0;">Creative 2 : "Temoignage Brut"</h4>
+        <p><span class="tag gold">UGC Style</span></p>
+        <p>Video selfie d'une cliente qui raconte son parcours. 30-60 sec. Brut, pas monte. CTA: "Moi aussi j'ai essaye tout. Voila ce qui a marche."</p>
+        <p style="color:var(--stone); font-size:13px;">UGC outperforms produced content en ads x2-3.</p>
+      </div>
+
+      <div class="card green" style="margin-bottom:0;">
+        <h4 style="margin-top:0;">Creative 3 : "Geoffrey Parle"</h4>
+        <p><span class="tag blue">Autorite</span></p>
+        <p>Geoffrey face camera, 45 sec : "Si ta peau flambe sans logique, si les cremes ne tiennent pas, si tes bilans sont normaux — je vais te montrer quelque chose que personne ne t'a jamais montre." -> VSL</p>
+        <p style="color:var(--stone); font-size:13px;">La credibilite du praticien + le hook anti-objection.</p>
+      </div>
+
+      <div class="card green" style="margin-bottom:0;">
+        <h4 style="margin-top:0;">Creative 4 : "Le Chiffre Choc"</h4>
+        <p><span class="tag purple">Pattern Interrupt</span></p>
+        <p>Texte anime sur fond noir :<br>"70% de ton systeme immunitaire est dans ton intestin.<br>Ta peau n'est pas le probleme. C'est le messager.<br>Regarde cette video de 10 min qui explique tout." -> VSL</p>
+        <p style="color:var(--stone); font-size:13px;">Pattern interrupt pur, arrete le scroll.</p>
+      </div>
+    </div>
+
+    <div class="card green" style="margin-top:18px;">
+      <h4 style="margin-top:0;">Creative 5 : "Avant/Apres"</h4>
+      <p><span class="tag red">Attention regles Meta</span></p>
+      <p>Split screen avant/apres (anonymise ou avec permission). Texte : "8 ans de psoriasis. 5 semaines de protocole." -> VSL</p>
+      <p style="color:var(--stone); font-size:13px;">La preuve visuelle est imbattable. Attention aux regles Meta sur les images medicales (voir section Legal).</p>
+    </div>
+  </div>
+
+  <!-- Regles Meta -->
+  <div class="card danger">
+    <h3>Regles Meta Ads Sante — DANGER</h3>
+    <ul>
+      <li><strong>JAMAIS</strong> montrer des images "avant" degradantes (Meta peut bannir)</li>
+      <li><strong>JAMAIS</strong> promettre de "guerison" dans l'ad copy</li>
+      <li><strong>JAMAIS</strong> cibler par condition medicale directement (Meta l'interdit)</li>
+      <li><strong>Utiliser interests indirects :</strong> "alimentation sante", "naturopathie", pas "psoriasis"</li>
+      <li>Les temoignages doivent inclure <strong>"resultats individuels, peuvent varier"</strong></li>
+      <li>Pas de comparaison "avant/apres" trop dramatique sur les images</li>
+      <li><strong>Si l'ad est refusee :</strong> reformuler sans termes medicaux, resubmit</li>
+    </ul>
+  </div>
+
+  <!-- Ad Copy Templates -->
+  <div class="card">
+    <h3>Ad Copy Templates (3 versions)</h3>
+
+    <h4>Version A — Question Hook</h4>
+    <div class="copy-block">Ta peau flambe sans logique ?
+Cremes, cortisone, naturopathe — rien ne tient ?
+
+Il y a une raison que personne ne t'a jamais expliquee.
+
+Geoffrey, praticien terrain biologique, a accompagne plus de 100 personnes qui vivaient exactement la meme chose.
+
+Regarde cette video de 10 minutes (gratuit) :<button class="copy-btn" onclick="copyBlock(this)">Copier</button></div>
+
+    <h4>Version B — Stat Hook</h4>
+    <div class="copy-block">70% de ton systeme immunitaire est dans ton intestin.
+
+Quand ce systeme est deregle, ton corps s'enflamme.
+Et cette inflammation s'exprime sur ta peau.
+
+Les cremes traitent ce que tu VOIS.
+Le protocole traite ce qui le PRODUIT.
+
+Comprendre le mecanisme (10 min, gratuit) :<button class="copy-btn" onclick="copyBlock(this)">Copier</button></div>
+
+    <h4>Version C — Story Hook</h4>
+    <div class="copy-block">J'etais sportif de combat de haut niveau.
+Mon corps, c'etait tout pour moi.
+Et pourtant — ma peau flambait.
+
+Aucun dermato ne savait pourquoi.
+
+J'ai mis des annees a comprendre que le probleme
+n'etait pas ma peau. C'etait mon intestin.
+
+Aujourd'hui, j'ai accompagne plus de 100 personnes
+vers le meme resultat.
+
+Regarde cette video — ca va tout changer :<button class="copy-btn" onclick="copyBlock(this)">Copier</button></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════════════════════════════════ -->
+<!-- SECTION 4: YOUTUBE ADS -->
+<!-- ═══════════════════════════════════════════════════════════════════════════════════════════════ -->
+<div class="section" id="youtube">
+  <div class="section-header">
+    <div class="section-num">04</div>
+    <div>
+      <div class="section-title">YouTube Ads</div>
+      <div class="section-subtitle">M3+ — Apres Meta valide, prospects plus qualifies</div>
+    </div>
+  </div>
+
+  <div class="card gold">
+    <h3>Pourquoi YouTube Ads (M3+)</h3>
+    <ul>
+      <li>Les prospects YouTube sont <strong>PLUS qualifies</strong> (ils cherchent activement des solutions)</li>
+      <li>Le format video longue = <strong>plus de confiance</strong> avant le call</li>
+      <li>On peut cibler les gens qui recherchent <strong>"psoriasis traitement", "acne solution"</strong></li>
+      <li>CPL plus eleve (8-20) mais <strong>close rate plus eleve aussi</strong></li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>Format : In-Stream Skippable (pre-roll)</h3>
+    <p>L'ad joue avant une video YouTube. Le prospect peut skip apres 5 sec. On ne paye que si il regarde 30 sec+.</p>
+  </div>
+
+  <div class="collapsible start-open">
+    <div class="collapsible-header" onclick="toggleCollapsible(this)">
+      <h3>Creative YouTube Ad (2 min) — Script Complet</h3>
+      <span class="toggle-icon">+</span>
+    </div>
+    <div class="collapsible-body">
+      <div class="card danger" style="margin-bottom:14px;">
+        <h4 style="margin-top:0;">Sec 0-5 — HOOK (avant skip) — CRITIQUE</h4>
+        <div class="copy-block">"Si ta peau flambe et que rien ne tient — ne skip pas cette video."<button class="copy-btn" onclick="copyBlock(this)">Copier</button></div>
+      </div>
+
+      <div class="card green" style="margin-bottom:14px;">
+        <h4 style="margin-top:0;">Sec 5-30 — PROBLEME</h4>
+        <div class="copy-block">"Tu as probablement tout essaye. Cremes, dermatos, regimes, complements. Ca ameliore. Puis ca revient. Toujours. En fait, le probleme n'est pas ta peau."<button class="copy-btn" onclick="copyBlock(this)">Copier</button></div>
+      </div>
+
+      <div class="card green" style="margin-bottom:14px;">
+        <h4 style="margin-top:0;">Sec 30-90 — MECANISME</h4>
+        <div class="copy-block">"70% de ton systeme immunitaire est dans ton intestin. Quand le terrain est deregle, l'inflammation s'exprime sur la peau. Tout ce que tu as essaye traitait le symptome. Personne n'a traite la cause."<button class="copy-btn" onclick="copyBlock(this)">Copier</button></div>
+      </div>
+
+      <div class="card gold" style="margin-bottom:0;">
+        <h4 style="margin-top:0;">Sec 90-120 — CTA</h4>
+        <div class="copy-block">"J'ai cree un protocole en 90 jours qui traite le terrain, pas les symptomes. Plus de 100 personnes accompagnees. Si tu veux comprendre ce qui se passe dans TON corps — clique sur le lien en dessous. C'est gratuit."<button class="copy-btn" onclick="copyBlock(this)">Copier</button></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Ciblage YouTube</h3>
+    <div class="grid-2">
+      <div>
+        <h4>Mots-cles</h4>
+        <ul>
+          <li>psoriasis, eczema, rosacee, acne adulte</li>
+          <li>traitement naturel peau, inflammation</li>
+          <li>naturopathie, microbiome</li>
+        </ul>
+      </div>
+      <div>
+        <h4>Placements</h4>
+        <ul>
+          <li>Videos sante, dermatologie, nutrition</li>
+          <li>Bien-etre, mode de vie sain</li>
+        </ul>
+      </div>
+      <div>
+        <h4>Audiences</h4>
+        <ul>
+          <li>In-market "sante et beaute"</li>
+          <li>Affinity "vie saine"</li>
+        </ul>
+      </div>
+      <div>
+        <h4>Custom Audiences</h4>
+        <ul>
+          <li>Gens qui ont cherche des termes lies a la peau sur Google</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════════════════════════════════ -->
+<!-- SECTION 5: CREATIVES — LE SYSTEME DE TEST -->
+<!-- ═══════════════════════════════════════════════════════════════════════════════════════════════ -->
+<div class="section" id="creatives">
+  <div class="section-header">
+    <div class="section-num">05</div>
+    <div>
+      <div class="section-title">Creatives — Le Systeme de Test</div>
+      <div class="section-subtitle">Organique -> Paid. Tester. Tuer. Scaler. Repeter.</div>
+    </div>
+  </div>
+
+  <div class="card gold">
+    <h3>La Methode : Organique -> Paid</h3>
+    <ol>
+      <li><strong>Poster 30 Reels organiques par semaine</strong></li>
+      <li><strong>Chaque semaine, identifier le TOP 3</strong> (plus de vues, plus d'engagement, plus de saves)</li>
+      <li><strong>Transformer le TOP 1 en ad</strong> (meme video, meme hook)</li>
+      <li><strong>Tester 3-5 ads en parallele</strong>, $20/jour chacune, pendant 3 jours</li>
+      <li><strong>Tuer ce qui est sous CPA cible. Scaler ce qui est au-dessus.</strong></li>
+      <li><strong>Chaque semaine : 1 nouvelle creative testee</strong></li>
+    </ol>
+
+    <div class="flowchart">
+<strong>30 Reels/sem</strong> -> Identifier <em>TOP 3</em> -> Transformer <strong>TOP 1 en ad</strong> -> Test $20/j x 3j
+     |                                                                    |
+     v                                                                    v
+<em>Pipeline continu</em>                                    CPA < cible ? <strong>SCALE</strong> : <em>KILL</em>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Metrics a Tracker par Creative</h3>
+    <div class="table-wrap">
+    <table>
+      <tr>
+        <th>Metrique</th>
+        <th>Cible</th>
+        <th>Action si en dessous</th>
+      </tr>
+      <tr>
+        <td><strong>Hook rate (3 sec)</strong></td>
+        <td><em>>30%</em></td>
+        <td>Changer le hook</td>
+      </tr>
+      <tr>
+        <td><strong>CPC (cout par clic)</strong></td>
+        <td><em>&lt;2</em></td>
+        <td>Changer l'audience ou le hook</td>
+      </tr>
+      <tr>
+        <td><strong>CPL (cout par lead)</strong></td>
+        <td><em>&lt;15</em></td>
+        <td>Changer la landing ou le CTA</td>
+      </tr>
+      <tr>
+        <td><strong>CPBC (cout par booking)</strong></td>
+        <td><em>&lt;50</em></td>
+        <td>Verifier le setting/ManyChat</td>
+      </tr>
+      <tr>
+        <td><strong>CPA (cout par vente)</strong></td>
+        <td><em>&lt;300</em></td>
+        <td>Verifier le closing</td>
+      </tr>
+      <tr>
+        <td><strong>ROAS</strong></td>
+        <td><em>>4x</em></td>
+        <td>Si &lt;2x : tuer. Si 2-4x : optimiser. Si >4x : scaler.</td>
+      </tr>
+    </table>
+    </div>
+  </div>
+
+  <div class="card danger">
+    <h3>Creative Fatigue</h3>
+    <p>Une ad fatigue apres <strong>7-14 jours</strong>. Signes : CPL monte, CTR baisse.</p>
+    <p><strong>Solution :</strong> avoir un PIPELINE de creatives (organique -> paid). Chaque semaine 1 nouvelle. Si tu n'as pas de pipeline, tu meurs.</p>
+    <div class="progress-row">
+      <div class="progress-label">
+        <span>Pipeline creatives (objectif: 4 en rotation)</span>
+        <span id="creativePipeline">0 / 4</span>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill" id="creativePipelineFill" style="width:0%"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════════════════════════════════ -->
+<!-- SECTION 6: RETARGETING — LE FILET -->
+<!-- ═══════════════════════════════════════════════════════════════════════════════════════════════ -->
+<div class="section" id="retargeting">
+  <div class="section-header">
+    <div class="section-num">06</div>
+    <div>
+      <div class="section-title">Retargeting — Le Filet</div>
+      <div class="section-subtitle">Rattraper chaque prospect qui est passe a travers les mailles</div>
+    </div>
+  </div>
+
+  <div class="grid-3">
+    <div class="card" style="border-top:4px solid var(--red); margin-bottom:0;">
+      <h3>Tier 1 — BRULANT</h3>
+      <p style="color:var(--red); font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:1px;">CPA le plus bas</p>
+      <h4>Audiences</h4>
+      <ul>
+        <li>Visiteurs page VSL qui n'ont pas booke (J-7)</li>
+        <li>Leads email GHL sans booking (J-14)</li>
+        <li>50% viewers YouTube (J-30)</li>
+      </ul>
+      <h4>Creative</h4>
+      <div class="copy-block" style="font-size:13px;">Tu as regarde la video. Tu sais que c'est different. Reserve ton appel — c'est gratuit.<button class="copy-btn" onclick="copyBlock(this)">Copier</button></div>
+    </div>
+
+    <div class="card" style="border-top:4px solid var(--gold); margin-bottom:0;">
+      <h3>Tier 2 — CHAUD</h3>
+      <p style="color:var(--gold); font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:1px;">Engagement recent</p>
+      <h4>Audiences</h4>
+      <ul>
+        <li>Engagers Instagram 30j (likes, comments, saves, shares)</li>
+        <li>Visiteurs site web 30j (toutes pages)</li>
+        <li>Quiz completeurs sans booking</li>
+      </ul>
+      <h4>Creative</h4>
+      <div class="copy-block" style="font-size:13px;">Tu me suis depuis un moment. Si ta peau te pese encore — on peut en parler. 30 min. Gratuit.<button class="copy-btn" onclick="copyBlock(this)">Copier</button></div>
+    </div>
+
+    <div class="card" style="border-top:4px solid var(--stone); margin-bottom:0;">
+      <h3>Tier 3 — TIEDE</h3>
+      <p style="color:var(--stone); font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:1px;">Rechauffer d'abord</p>
+      <h4>Audiences</h4>
+      <ul>
+        <li>Engagers Instagram 60-90j</li>
+        <li>Abonnes email non-openers 30j</li>
+        <li>YouTube subscribers</li>
+      </ul>
+      <h4>Creative</h4>
+      <p style="font-size:14px;">Nouveau temoignage ou nouveau contenu de valeur (pas CTA direct — rechauffer d'abord).</p>
+    </div>
+  </div>
+
+  <div class="card green" style="margin-top:18px;">
+    <h3>Retargeting Email (pas juste ads)</h3>
+    <p>Les leads dans GHL qui n'ont pas booke recoivent la <strong>sequence email educative de 10 emails sur 30 jours</strong> (deja dans le drive — site 08 Nurture).</p>
+    <p>Le retargeting ads + retargeting email en parallele = double la probabilite de conversion.</p>
+    <div class="flowchart">
+<strong>Lead entre dans GHL</strong>
+     |
+     +-- <em>Email nurture (10 emails / 30j)</em>
+     |
+     +-- <strong>Retargeting Meta</strong> (Tier 1 -> 2 -> 3)
+     |
+     +-- <em>ManyChat relance</em> (J+3, J+7)
+     |
+     v
+<strong>BOOKING</strong> ou <em>sortie apres 60j</em>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════════════════════════════════ -->
+<!-- SECTION 7: BUDGETS — SCALING PROGRESSIF -->
+<!-- ═══════════════════════════════════════════════════════════════════════════════════════════════ -->
+<div class="section" id="budgets">
+  <div class="section-header">
+    <div class="section-num">07</div>
+    <div>
+      <div class="section-title">Budgets — Scaling Progressif</div>
+      <div class="section-subtitle">De 1,000 a 15,000/mois en 6 mois. Pas de raccourci.</div>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="phase-card active-phase">
+      <div class="phase-num">P1</div>
+      <h4>Phase 1 : Test (M1 — 1,000/mois)</h4>
+      <ul>
+        <li>3 ad sets de test, $10/jour chacune</li>
+        <li>Objectif : identifier la creative gagnante + audience gagnante</li>
+        <li>KPI : CPL, CPBC, ROAS</li>
+      </ul>
+      <p style="color:var(--gold); font-weight:700; margin-top:10px;">Decision fin M1 : si ROAS > 3x -> Phase 2</p>
+    </div>
+
+    <div class="phase-card">
+      <div class="phase-num">P2</div>
+      <h4>Phase 2 : Validation (M2 — 2,000-3,000/mois)</h4>
+      <ul>
+        <li>Scaler la creative gagnante a $50/jour</li>
+        <li>Tester 2 nouvelles creatives a $10/jour</li>
+        <li>Lancer le retargeting ($10/jour)</li>
+      </ul>
+      <p style="color:var(--gold); font-weight:700; margin-top:10px;">Objectif : CPA stable < 200</p>
+    </div>
+
+    <div class="phase-card">
+      <div class="phase-num">P3</div>
+      <h4>Phase 3 : Scale (M3-4 — 5,000-8,000/mois)</h4>
+      <ul>
+        <li>Creative gagnante a $100-150/jour</li>
+        <li>3-5 creatives en rotation</li>
+        <li>Retargeting tous les tiers</li>
+        <li>Lookalike 1-3% en test</li>
+        <li>YouTube Ads lance ($30/jour)</li>
+      </ul>
+      <p style="color:var(--gold); font-weight:700; margin-top:10px;">Objectif : 30+ ventes/mois depuis les ads</p>
+    </div>
+
+    <div class="phase-card">
+      <div class="phase-num">P4</div>
+      <h4>Phase 4 : Aggressive (M5-6 — 10,000-15,000/mois)</h4>
+      <ul>
+        <li>Scaling horizontal (nouvelles audiences, geos : Suisse, Belgique, Canada)</li>
+        <li>Scaling vertical (budget augmente sur les gagnants)</li>
+        <li>UGC pipeline : 3-5 nouvelles creatives temoignage/mois</li>
+        <li>YouTube Ads scale</li>
+      </ul>
+      <p style="color:var(--success); font-weight:700; margin-top:10px;">Objectif : 50+ ventes ads + 20+ ventes organique = 100K+</p>
+    </div>
+  </div>
+
+  <div class="card danger" style="margin-top:18px;">
+    <h3>Regle d'Or du Scaling</h3>
+    <p style="font-family:Georgia, serif; font-size:20px; color:var(--ivory); text-align:center; margin:10px 0;">
+      "Ne jamais augmenter le budget de plus de <strong style="color:var(--danger);">20% par jour</strong>."
+    </p>
+    <p style="text-align:center;">Si tu doubles du jour au lendemain, l'algo perd le CPA. Le scaling est un marathon, pas un sprint.</p>
+  </div>
+
+  <div class="card">
+    <h3>Visualisation du Scaling</h3>
+    <div class="progress-row">
+      <div class="progress-label">
+        <span>M1 — Test (1,000)</span>
+        <span>7%</span>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill" style="width:7%"></div>
+      </div>
+    </div>
+    <div class="progress-row">
+      <div class="progress-label">
+        <span>M2 — Validation (2,500)</span>
+        <span>17%</span>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill" style="width:17%"></div>
+      </div>
+    </div>
+    <div class="progress-row">
+      <div class="progress-label">
+        <span>M3 — Scale (5,000)</span>
+        <span>33%</span>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill" style="width:33%"></div>
+      </div>
+    </div>
+    <div class="progress-row">
+      <div class="progress-label">
+        <span>M4 — Scale (8,000)</span>
+        <span>53%</span>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill" style="width:53%"></div>
+      </div>
+    </div>
+    <div class="progress-row">
+      <div class="progress-label">
+        <span>M5 — Aggressive (12,000)</span>
+        <span>80%</span>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill" style="width:80%"></div>
+      </div>
+    </div>
+    <div class="progress-row">
+      <div class="progress-label">
+        <span>M6 — Aggressive (15,000)</span>
+        <span>100%</span>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill" style="width:100%"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════════════════════════════════ -->
+<!-- SECTION 8: UPSELL & LTV -->
+<!-- ═══════════════════════════════════════════════════════════════════════════════════════════════ -->
+<div class="section" id="upsell">
+  <div class="section-header">
+    <div class="section-num">08</div>
+    <div>
+      <div class="section-title">Upsell & LTV — Revenue Recurrent</div>
+      <div class="section-subtitle">4 sources de revenue supplementaire post-protocole 90 jours</div>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card gold" style="margin-bottom:0;">
+      <h3>1. Plan Annuel Maintenance (500/an)</h3>
+      <p>Pour les clients qui terminent le protocole. Geoffrey reste disponible pour 1 call/trimestre + acces communaute premium + mises a jour protocole.</p>
+      <h4>Pitch</h4>
+      <div class="copy-block" style="font-size:13px;">"Tu as stabilise ton terrain en 90 jours. Le plan annuel, c'est l'assurance que ca tient pour les 20 prochaines annees."<button class="copy-btn" onclick="copyBlock(this)">Copier</button></div>
+      <p><strong>Target :</strong> 60% des clients souscrivent</p>
+      <p style="color:var(--success);">Revenue : 60% x 10 clients/mois x 500 = <strong>3,000/mois recurrent</strong></p>
+    </div>
+
+    <div class="card gold" style="margin-bottom:0;">
+      <h3>2. Upgrade Essentiel -> Integral (600)</h3>
+      <p>Les clients Essentiel qui veulent les calls 1:1 avec Geoffrey.</p>
+      <h4>Pitch</h4>
+      <p>Automatique J+30 email + Geoffrey en live.</p>
+      <p><strong>Target :</strong> 30% upgrade rate (Ryan Clogg benchmark: 20-40%)</p>
+      <p style="color:var(--success);">Revenue : 30% x clients Essentiel x 600</p>
+    </div>
+
+    <div class="card" style="margin-bottom:0;">
+      <h3>3. Masterclasses Individuelles (97-197)</h3>
+      <p>Vente separee a la communaute elargie (meme non-clients) :</p>
+      <ul>
+        <li>Microbiome Masterclass (90 min) — 197</li>
+        <li>Hormones Feminines (90 min) — 197</li>
+        <li>Lecture de Bilans (2h) — 197</li>
+        <li>Supplements (60 min) — 97</li>
+      </ul>
+      <p style="color:var(--success);">Revenue : 20 ventes/mois x 150 moyen = <strong>3,000/mois</strong></p>
+    </div>
+
+    <div class="card" style="border-color:var(--success); margin-bottom:0;">
+      <h3>4. Referral Revenue (0 CPA)</h3>
+      <p>Chaque client refere 0.5 client en moyenne.</p>
+      <p style="color:var(--success); font-size:18px; font-family:Georgia, serif; margin:14px 0;">Revenue : 10 clients/mois x 0.5 x 1,200 = <strong>6,000/mois CPA zero</strong></p>
+      <p>C'est le canal le plus profitable. Il faut le systematiser (voir 18_REFERRAL_SYSTEM.html).</p>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:18px;">
+    <h3>LTV Table Complete</h3>
+    <div class="table-wrap">
+    <table>
+      <tr>
+        <th>Scenario</th>
+        <th>Vente initiale</th>
+        <th>Plan annuel</th>
+        <th>Upgrade</th>
+        <th>Masterclass</th>
+        <th>Referral</th>
+        <th>LTV 12 mois</th>
+      </tr>
+      <tr>
+        <td><strong>Client Essentiel</strong></td>
+        <td>1,200</td>
+        <td>500</td>
+        <td>600</td>
+        <td>100</td>
+        <td>600</td>
+        <td><em>3,000</em></td>
+      </tr>
+      <tr>
+        <td><strong>Client Integral</strong></td>
+        <td>1,800</td>
+        <td>500</td>
+        <td>—</td>
+        <td>200</td>
+        <td>900</td>
+        <td><em>3,400</em></td>
+      </tr>
+      <tr style="background:rgba(184,149,106,0.1);">
+        <td><strong>Moyenne ponderee</strong></td>
+        <td>1,400</td>
+        <td>400</td>
+        <td>180</td>
+        <td>130</td>
+        <td>700</td>
+        <td><strong style="color:var(--gold); font-size:18px;">2,810</strong></td>
+      </tr>
+    </table>
+    </div>
+    <div class="quote" style="margin-top:14px;">
+      CPA de 157 pour un LTV de 2,810 = <strong>ROI x18</strong>. C'est pour ca qu'on peut scaler les ads agressivement.
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════════════════════════════════ -->
+<!-- SECTION 9: LEGAL & COMPLIANCE -->
+<!-- ═══════════════════════════════════════════════════════════════════════════════════════════════ -->
+<div class="section" id="legal">
+  <div class="section-header">
+    <div class="section-num">09</div>
+    <div>
+      <div class="section-title">Legal & Compliance (France)</div>
+      <div class="section-subtitle">Les regles a respecter ABSOLUMENT pour eviter les sanctions</div>
+    </div>
+  </div>
+
+  <div class="collapsible start-open">
+    <div class="collapsible-header" onclick="toggleCollapsible(this)">
+      <h3>Claims Sante (DGCCRF)</h3>
+      <span class="toggle-icon">+</span>
+    </div>
+    <div class="collapsible-body">
+      <div class="grid-2">
+        <div class="card danger" style="margin-bottom:0;">
+          <h4 style="margin-top:0; color:var(--danger);">INTERDIT</h4>
+          <ul>
+            <li><strong>JAMAIS</strong> dire "guerir" ou "traitement" (Geoffrey n'est pas medecin)</li>
+            <li><strong>JAMAIS</strong> promettre des resultats specifiques ("disparition en X semaines")</li>
+            <li><strong>JAMAIS</strong> comparer a un traitement medical</li>
+          </ul>
+        </div>
+        <div class="card green" style="margin-bottom:0;">
+          <h4 style="margin-top:0; color:var(--success);">AUTORISE</h4>
+          <ul>
+            <li>"Stabiliser", "accompagner", "protocole bien-etre"</li>
+            <li>"Resultats individuels, protocole non medical"</li>
+            <li>Les temoignages avec mention "experience individuelle"</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="collapsible">
+    <div class="collapsible-header" onclick="toggleCollapsible(this)">
+      <h3>RGPD (Emails, Donnees)</h3>
+      <span class="toggle-icon">+</span>
+    </div>
+    <div class="collapsible-body">
+      <ul>
+        <li><strong>Consentement explicite</strong> avant tout email marketing</li>
+        <li><strong>Lien de desinscription</strong> dans CHAQUE email</li>
+        <li><strong>Politique de confidentialite</strong> sur le site</li>
+        <li><strong>Droit d'acces, modification, suppression</strong> des donnees</li>
+        <li>Les donnees de sante (condition, bilans) = <strong>donnees sensibles -> protection renforcee</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="collapsible">
+    <div class="collapsible-header" onclick="toggleCollapsible(this)">
+      <h3>CGV (Conditions Generales de Vente)</h3>
+      <span class="toggle-icon">+</span>
+    </div>
+    <div class="collapsible-body">
+      <ul>
+        <li><strong>Droit de retractation 14 jours</strong> (loi francaise)</li>
+        <li>Conditions de la <strong>garantie Reset 30 jours</strong> ecrites clairement</li>
+        <li>Process de remboursement documente</li>
+        <li>Pas de vente forcee / pratiques commerciales agressives</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="collapsible">
+    <div class="collapsible-header" onclick="toggleCollapsible(this)">
+      <h3>Meta Ads Sante — Regles Specifiques</h3>
+      <span class="toggle-icon">+</span>
+    </div>
+    <div class="collapsible-body">
+      <ul>
+        <li>Pas d'images avant/apres dramatiques</li>
+        <li>Pas de ciblage par condition medicale</li>
+        <li>Pas de claims medicales dans le copy</li>
+        <li><strong>"Bien-etre"</strong> et <strong>"accompagnement"</strong> OK. <strong>"Traitement"</strong> et <strong>"guerison"</strong> NON.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="collapsible">
+    <div class="collapsible-header" onclick="toggleCollapsible(this)">
+      <h3>YouTube — Disclaimers</h3>
+      <span class="toggle-icon">+</span>
+    </div>
+    <div class="collapsible-body">
+      <p>Disclaimer dans chaque description :</p>
+      <div class="copy-block">Ce contenu est a but educatif et ne remplace pas un avis medical. Les resultats presentes sont des experiences individuelles et peuvent varier. Consultez votre medecin avant tout changement de protocole.<button class="copy-btn" onclick="copyBlock(this)">Copier</button></div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:18px;">
+    <h3>Documents a Creer</h3>
+    <ul class="checklist" data-key="legal">
+      <li><input type="checkbox"><span>Politique de confidentialite (sapiens360.fr)</span></li>
+      <li><input type="checkbox"><span>CGV</span></li>
+      <li><input type="checkbox"><span>Mentions legales</span></li>
+      <li><input type="checkbox"><span>Disclaimer sante (template pour YouTube + site)</span></li>
+      <li><input type="checkbox"><span>Contrat client (ce qui est inclus, conditions garantie)</span></li>
+    </ul>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════════════════════════════════ -->
+<!-- SECTION 10: CHECKLIST LANCEMENT ADS -->
+<!-- ═══════════════════════════════════════════════════════════════════════════════════════════════ -->
+<div class="section" id="checklist">
+  <div class="section-header">
+    <div class="section-num">10</div>
+    <div>
+      <div class="section-title">Checklist Lancement Ads</div>
+      <div class="section-subtitle">Chaque case doit etre cochee avant de depenser 1 euro</div>
+    </div>
+  </div>
+
+  <div class="card gold">
+    <h3>Pre-requis avant de depenser 1 euro</h3>
+    <p style="color:var(--stone); font-size:13px; margin-bottom:14px;">Ces cases se sauvegardent automatiquement dans votre navigateur.</p>
+    <ul class="checklist" data-key="prereqs">
+      <li><input type="checkbox"><span>Close rate > 30% sur organique (3 semaines consecutives)</span></li>
+      <li><input type="checkbox"><span>Au moins 3 Reels organiques > 50K vues (creatives validees)</span></li>
+      <li><input type="checkbox"><span>Pixel Meta installe sur la page VSL + page merci</span></li>
+      <li><input type="checkbox"><span>10+ temoignages collectes (preuve sociale)</span></li>
+      <li><input type="checkbox"><span>Budget minimum 1,000/mois disponible</span></li>
+      <li><input type="checkbox"><span>Funnel complet teste end-to-end (ad -> VSL -> email -> ManyChat -> setting -> booking -> call -> close)</span></li>
+      <li><input type="checkbox"><span>Lien booking fonctionnel</span></li>
+      <li><input type="checkbox"><span>Compte Meta Business Manager configure</span></li>
+      <li><input type="checkbox"><span>Page Facebook creee et linkee a Instagram</span></li>
+      <li><input type="checkbox"><span>Modes de paiement configures dans Business Manager</span></li>
+    </ul>
+    <button onclick="resetChecklist('prereqs')" style="margin-top:14px; background:none; border:1px solid var(--border); color:var(--stone); padding:6px 16px; border-radius:6px; font-size:12px; cursor:pointer;">Reset checklist</button>
+  </div>
+
+  <div class="card">
+    <h3>Semaine 1 Ads</h3>
+    <ul class="checklist" data-key="week1">
+      <li><input type="checkbox"><span>Creer 3 audiences (Lookalike clients, Lookalike VSL viewers, Interests sante peau)</span></li>
+      <li><input type="checkbox"><span>Uploader 3 creatives (Reel gagnant, Temoignage, Geoffrey face camera)</span></li>
+      <li><input type="checkbox"><span>Lancer 3 ad sets a $10/jour chacun</span></li>
+      <li><input type="checkbox"><span>Installer le tracking de conversion (lead, booking, sale)</span></li>
+      <li><input type="checkbox"><span>Verifier les metriques apres 24h (hook rate, CPC)</span></li>
+      <li><input type="checkbox"><span>Verifier les metriques apres 72h (CPL, CPBC)</span></li>
+      <li><input type="checkbox"><span>Decision : tuer/garder/scaler chaque ad set</span></li>
+    </ul>
+    <button onclick="resetChecklist('week1')" style="margin-top:14px; background:none; border:1px solid var(--border); color:var(--stone); padding:6px 16px; border-radius:6px; font-size:12px; cursor:pointer;">Reset checklist</button>
+  </div>
+
+  <div class="card">
+    <h3>KPI Ads Hebdomadaire</h3>
+    <p style="color:var(--stone); font-size:13px; margin-bottom:14px;">Les donnees saisies dans ce tableau se sauvegardent automatiquement.</p>
+    <div class="table-wrap">
+    <table id="kpiTable">
+      <tr>
+        <th>Semaine</th>
+        <th>Depense</th>
+        <th>Leads</th>
+        <th>CPL</th>
+        <th>Bookings</th>
+        <th>CPBC</th>
+        <th>Ventes</th>
+        <th>CPA</th>
+        <th>ROAS</th>
+      </tr>
+      <tr>
+        <td><strong>S1</strong></td>
+        <td><input type="text" class="kpi-input" data-row="1" data-col="depense"></td>
+        <td><input type="text" class="kpi-input" data-row="1" data-col="leads"></td>
+        <td><input type="text" class="kpi-input" data-row="1" data-col="cpl"></td>
+        <td><input type="text" class="kpi-input" data-row="1" data-col="bookings"></td>
+        <td><input type="text" class="kpi-input" data-row="1" data-col="cpbc"></td>
+        <td><input type="text" class="kpi-input" data-row="1" data-col="ventes"></td>
+        <td><input type="text" class="kpi-input" data-row="1" data-col="cpa"></td>
+        <td><input type="text" class="kpi-input" data-row="1" data-col="roas"></td>
+      </tr>
+      <tr>
+        <td><strong>S2</strong></td>
+        <td><input type="text" class="kpi-input" data-row="2" data-col="depense"></td>
+        <td><input type="text" class="kpi-input" data-row="2" data-col="leads"></td>
+        <td><input type="text" class="kpi-input" data-row="2" data-col="cpl"></td>
+        <td><input type="text" class="kpi-input" data-row="2" data-col="bookings"></td>
+        <td><input type="text" class="kpi-input" data-row="2" data-col="cpbc"></td>
+        <td><input type="text" class="kpi-input" data-row="2" data-col="ventes"></td>
+        <td><input type="text" class="kpi-input" data-row="2" data-col="cpa"></td>
+        <td><input type="text" class="kpi-input" data-row="2" data-col="roas"></td>
+      </tr>
+      <tr>
+        <td><strong>S3</strong></td>
+        <td><input type="text" class="kpi-input" data-row="3" data-col="depense"></td>
+        <td><input type="text" class="kpi-input" data-row="3" data-col="leads"></td>
+        <td><input type="text" class="kpi-input" data-row="3" data-col="cpl"></td>
+        <td><input type="text" class="kpi-input" data-row="3" data-col="bookings"></td>
+        <td><input type="text" class="kpi-input" data-row="3" data-col="cpbc"></td>
+        <td><input type="text" class="kpi-input" data-row="3" data-col="ventes"></td>
+        <td><input type="text" class="kpi-input" data-row="3" data-col="cpa"></td>
+        <td><input type="text" class="kpi-input" data-row="3" data-col="roas"></td>
+      </tr>
+      <tr>
+        <td><strong>S4</strong></td>
+        <td><input type="text" class="kpi-input" data-row="4" data-col="depense"></td>
+        <td><input type="text" class="kpi-input" data-row="4" data-col="leads"></td>
+        <td><input type="text" class="kpi-input" data-row="4" data-col="cpl"></td>
+        <td><input type="text" class="kpi-input" data-row="4" data-col="bookings"></td>
+        <td><input type="text" class="kpi-input" data-row="4" data-col="cpbc"></td>
+        <td><input type="text" class="kpi-input" data-row="4" data-col="ventes"></td>
+        <td><input type="text" class="kpi-input" data-row="4" data-col="cpa"></td>
+        <td><input type="text" class="kpi-input" data-row="4" data-col="roas"></td>
+      </tr>
+    </table>
+    </div>
+  </div>
+
+  <!-- Booking link -->
+  <div class="card" style="margin-top:24px; text-align:center;">
+    <h3>Lien Booking (a utiliser PARTOUT)</h3>
+    <div class="copy-block" style="text-align:center; font-size:14px;">https://api.leadconnectorhq.com/widget/booking/exr3PQmMOOXUFOnkUfsJ<button class="copy-btn" onclick="copyBlock(this)">Copier</button></div>
+    <p style="color:var(--stone); font-size:13px;">Ce lien doit etre dans : chaque ad, chaque description YouTube, chaque bio, chaque email, chaque landing page.</p>
+  </div>
+</div>
+
+</div><!-- /container -->
+
+<!-- FOOTER -->
+<footer>
+  SAPIENS 360 | Ads & Scaling Strategy | Avril 2026<br>
+  Booking : <a href="https://api.leadconnectorhq.com/widget/booking/exr3PQmMOOXUFOnkUfsJ">https://api.leadconnectorhq.com/widget/booking/exr3PQmMOOXUFOnkUfsJ</a>
+</footer>
+
+<!-- JAVASCRIPT -->
+<script>
+// -- Collapsible sections --
+function toggleCollapsible(header) {
+  header.classList.toggle('open');
+  const body = header.nextElementSibling;
+  body.classList.toggle('open');
+}
+
+// -- Copy blocks --
+function copyBlock(btn) {
+  const block = btn.parentElement;
+  const text = block.textContent.replace('Copier', '').replace('Copie!', '').trim();
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = 'Copie!';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.textContent = 'Copier';
+      btn.classList.remove('copied');
+    }, 2000);
+  });
+}
+
+// -- Checklist persistence (localStorage) --
+function initChecklists() {
+  document.querySelectorAll('.checklist input[type="checkbox"]').forEach((cb, i) => {
+    const list = cb.closest('.checklist');
+    const key = 'sapiens_ads_' + (list.dataset.key || 'default') + '_' + i;
+    cb.checked = localStorage.getItem(key) === 'true';
+    cb.addEventListener('change', () => {
+      localStorage.setItem(key, cb.checked);
+      const label = cb.parentElement;
+      if (cb.checked) label.classList.add('done');
+      else label.classList.remove('done');
+    });
+    if (cb.checked) cb.parentElement.classList.add('done');
+  });
+}
+
+// -- Reset checklist --
+function resetChecklist(key) {
+  document.querySelectorAll('.checklist[data-key="' + key + '"] input[type="checkbox"]').forEach((cb, i) => {
+    const storageKey = 'sapiens_ads_' + key + '_' + i;
+    localStorage.removeItem(storageKey);
+    cb.checked = false;
+    cb.parentElement.classList.remove('done');
+  });
+}
+
+// -- KPI table persistence --
+function initKPITable() {
+  document.querySelectorAll('.kpi-input').forEach(input => {
+    const key = 'sapiens_ads_kpi_' + input.dataset.row + '_' + input.dataset.col;
+    input.value = localStorage.getItem(key) || '';
+    input.addEventListener('input', () => {
+      localStorage.setItem(key, input.value);
+    });
+    // Style
+    input.style.cssText = 'background:transparent; border:1px solid #2C4A3544; color:var(--ivory); padding:6px 8px; width:100%; border-radius:4px; font-size:13px; font-family:inherit; outline:none; text-align:center; min-width:60px;';
+    input.addEventListener('focus', function() { this.style.borderColor = '#B8956A'; });
+    input.addEventListener('blur', function() { this.style.borderColor = '#2C4A3544'; });
+  });
+}
+
+// -- Sticky nav active state --
+const navLinks = document.querySelectorAll('.nav a');
+const sections = document.querySelectorAll('.section');
+
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      navLinks.forEach(l => l.classList.remove('active'));
+      const link = document.querySelector('.nav a[href="#' + entry.target.id + '"]');
+      if (link) link.classList.add('active');
+    }
+  });
+}, { rootMargin: '-20% 0px -70% 0px' });
+
+sections.forEach(s => observer.observe(s));
+
+navLinks.forEach(link => {
+  link.addEventListener('click', e => {
+    e.preventDefault();
+    const target = document.querySelector(link.getAttribute('href'));
+    if (target) target.scrollIntoView({ behavior: 'smooth' });
+  });
+});
+
+// -- Global search --
+const searchInput = document.getElementById('globalSearch');
+searchInput.addEventListener('input', function() {
+  const query = this.value.toLowerCase().trim();
+  const allCards = document.querySelectorAll('.card, .collapsible, .phase-card');
+
+  if (!query) {
+    allCards.forEach(el => el.classList.remove('search-hidden'));
+    sections.forEach(s => s.classList.remove('search-hidden'));
+    return;
+  }
+
+  sections.forEach(section => {
+    let hasVisibleContent = false;
+    const sectionCards = section.querySelectorAll('.card, .collapsible, .phase-card');
+
+    sectionCards.forEach(card => {
+      const text = card.textContent.toLowerCase();
+      if (text.includes(query)) {
+        card.classList.remove('search-hidden');
+        hasVisibleContent = true;
+      } else {
+        card.classList.add('search-hidden');
+      }
+    });
+
+    if (hasVisibleContent) {
+      section.classList.remove('search-hidden');
+    } else {
+      section.classList.add('search-hidden');
+    }
+  });
+});
+
+// -- Init --
+initChecklists();
+initKPITable();
+
+// -- Init collapsible states --
+document.querySelectorAll('.collapsible.start-open .collapsible-header').forEach(h => {
+  h.classList.add('open');
+});
+</script>
+</body>
+</html>
