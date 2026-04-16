@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SAPIENS 360 — Machine a Contenu</title>
+<title>SAPIENS 360 — Machine a Contenu V2</title>
 <style>
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -22,6 +22,7 @@
   --identite: #C77DBA;
   --preuve: #6BC77A;
   --decision: #B8956A;
+  --anti-objection: #C75050;
 }
 
 body {
@@ -146,6 +147,7 @@ body {
 .filter-btn[data-type="identite"].active { background: var(--identite); border-color: var(--identite); }
 .filter-btn[data-type="preuve"].active { background: var(--preuve); border-color: var(--preuve); color: #111; }
 .filter-btn[data-type="decision"].active { background: var(--decision); border-color: var(--decision); }
+.filter-btn[data-type="anti-objection"].active { background: var(--anti-objection); border-color: var(--anti-objection); }
 
 .separator {
   width: 1px;
@@ -167,7 +169,7 @@ body {
 }
 .nav-tabs {
   display: flex;
-  max-width: 900px;
+  max-width: 960px;
   margin: 0 auto;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
@@ -176,13 +178,13 @@ body {
 .nav-tabs::-webkit-scrollbar { display: none; }
 .nav-tab {
   flex-shrink: 0;
-  padding: 14px 20px;
+  padding: 14px 16px;
   background: none;
   border: none;
   color: var(--stone);
   font-family: inherit;
-  font-size: 13px;
-  letter-spacing: 1.5px;
+  font-size: 12px;
+  letter-spacing: 1.2px;
   text-transform: uppercase;
   cursor: pointer;
   border-bottom: 2px solid transparent;
@@ -297,9 +299,16 @@ tr:last-child td { border-bottom: none; }
 .badge-identite { background: var(--identite); color: #fff; }
 .badge-preuve { background: var(--preuve); color: #111; }
 .badge-decision { background: var(--decision); color: #111; }
+.badge-anti-objection { background: var(--anti-objection); color: #fff; }
 .badge-tofu { background: #333; color: var(--revelation); border: 1px solid var(--revelation); }
 .badge-mofu { background: #333; color: var(--mecanisme); border: 1px solid var(--mecanisme); }
 .badge-bofu { background: #333; color: var(--preuve); border: 1px solid var(--preuve); }
+.badge-douleur { background: #4a2020; color: #E06C4F; border: 1px solid #E06C4F; }
+.badge-misconception { background: #2a2040; color: #9B7DD5; border: 1px solid #9B7DD5; }
+.badge-reframe { background: #203040; color: #5B9BD5; border: 1px solid #5B9BD5; }
+.badge-desir { background: #204030; color: #6BC77A; border: 1px solid #6BC77A; }
+.badge-cta { background: #403020; color: var(--gold); border: 1px solid var(--gold); }
+.badge-lien-yt { background: #402020; color: var(--anti-objection); border: 1px solid var(--anti-objection); }
 
 /* ── Hooks List ── */
 .hook-item {
@@ -336,6 +345,12 @@ tr:last-child td { border-bottom: none; }
   display: flex;
   align-items: center;
   gap: 8px;
+  flex-wrap: wrap;
+}
+.hook-detail {
+  font-size: 12px;
+  color: var(--stone);
+  font-style: italic;
 }
 .copy-btn {
   margin-left: auto;
@@ -363,6 +378,8 @@ tr:last-child td { border-bottom: none; }
   transition: border-color .2s;
 }
 .yt-card:hover { border-color: var(--gold); }
+.yt-card.anti-objection-card { border-color: rgba(199,80,80,.3); }
+.yt-card.anti-objection-card:hover { border-color: var(--anti-objection); }
 .yt-header {
   display: flex;
   align-items: center;
@@ -378,6 +395,7 @@ tr:last-child td { border-bottom: none; }
   color: var(--gold);
   min-width: 32px;
 }
+.anti-objection-card .yt-num { color: var(--anti-objection); }
 .yt-title {
   flex: 1;
   font-size: 15px;
@@ -409,6 +427,48 @@ tr:last-child td { border-bottom: none; }
   color: var(--mecanisme);
   margin-bottom: 10px;
 }
+.yt-objection-killed {
+  background: rgba(199,80,80,.12);
+  border: 1px solid rgba(199,80,80,.3);
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin-bottom: 14px;
+}
+.yt-objection-killed-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--anti-objection);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 6px;
+}
+.yt-objection-killed-text {
+  font-size: 13px;
+  color: var(--ivory);
+  line-height: 1.6;
+}
+.yt-quotes {
+  background: rgba(184,149,106,.08);
+  border-left: 3px solid var(--gold);
+  padding: 10px 16px;
+  margin-bottom: 14px;
+  border-radius: 0 8px 8px 0;
+}
+.yt-quotes-title {
+  font-size: 11px;
+  color: var(--gold);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 6px;
+}
+.yt-quote {
+  font-size: 13px;
+  color: var(--stone);
+  font-style: italic;
+  line-height: 1.6;
+  margin-bottom: 4px;
+}
+.yt-quote strong { color: var(--ivory); font-style: normal; }
 .yt-outline {
   list-style: none;
   padding: 0;
@@ -430,6 +490,19 @@ tr:last-child td { border-bottom: none; }
   border-radius: 50%;
   background: var(--green);
 }
+.anti-objection-card .yt-outline li::before {
+  background: var(--anti-objection);
+}
+.yt-cta-box {
+  background: rgba(44,74,53,.15);
+  border: 1px solid var(--green);
+  border-radius: 8px;
+  padding: 10px 14px;
+  margin-top: 12px;
+  font-size: 13px;
+  color: var(--ivory);
+}
+.yt-cta-box strong { color: var(--gold); }
 
 /* ── Gold Rules ── */
 .rule-card {
@@ -555,6 +628,19 @@ tr:last-child td { border-bottom: none; }
 }
 .info-box strong { color: var(--gold); }
 
+/* ── Warning Box ── */
+.warning-box {
+  background: rgba(199,80,80,.08);
+  border: 1px solid var(--anti-objection);
+  border-radius: 10px;
+  padding: 20px 24px;
+  margin: 24px 0;
+  font-size: 14px;
+  color: var(--ivory);
+  line-height: 1.7;
+}
+.warning-box strong { color: var(--anti-objection); }
+
 /* ── YouTube Rules Box ── */
 .yt-rules {
   background: rgba(184,149,106,.08);
@@ -612,6 +698,16 @@ tr:last-child td { border-bottom: none; }
 }
 .diag-card strong { color: var(--revelation); }
 
+/* ── Priority Card ── */
+.priority-card {
+  background: rgba(199,80,80,.08);
+  border: 1px solid var(--anti-objection);
+  border-radius: 10px;
+  padding: 20px 24px;
+  margin-bottom: 24px;
+}
+.priority-card strong { color: var(--anti-objection); }
+
 /* ── No Results ── */
 .no-results {
   text-align: center;
@@ -620,6 +716,29 @@ tr:last-child td { border-bottom: none; }
   font-size: 15px;
   display: none;
 }
+
+/* ── Synergy Arrow ── */
+.synergy-row {
+  display: grid;
+  grid-template-columns: 1fr 40px 1fr;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 12px;
+}
+.synergy-arrow {
+  text-align: center;
+  font-size: 24px;
+  color: var(--gold);
+}
+.synergy-item {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px 16px;
+  font-size: 13px;
+  color: var(--ivory);
+}
+.synergy-item strong { color: var(--gold); }
 
 /* ── Responsive ── */
 @media (max-width: 640px) {
@@ -631,36 +750,38 @@ tr:last-child td { border-bottom: none; }
   .cal-time { font-size: 16px; }
   .hook-item { flex-wrap: wrap; }
   .copy-btn { margin-left: 48px; }
-  .nav-tab { padding: 12px 14px; font-size: 12px; }
+  .nav-tab { padding: 12px 10px; font-size: 11px; letter-spacing: .5px; }
   .yt-header { flex-wrap: wrap; gap: 8px; }
   .yt-body { padding-left: 20px; }
   .story-block { grid-template-columns: 60px 1fr; }
   .filter-row { gap: 6px; }
   .separator { display: none; }
+  .synergy-row { grid-template-columns: 1fr; }
+  .synergy-arrow { transform: rotate(90deg); }
 }
 </style>
 </head>
 <body>
 
-<!-- ═══════ HERO ═══════ -->
+<!-- HERO -->
 <div class="hero">
   <div class="hero-brand">SAPIENS 360</div>
-  <div class="hero-title">Machine a <span class="gold">Contenu</span></div>
-  <div class="hero-subtitle">Content Engine</div>
+  <div class="hero-title">Machine a <span class="gold">Contenu</span> V2</div>
+  <div class="hero-subtitle">Content Engine — Calibre sur 18 calls reels</div>
   <div class="hero-desc">
-    <strong>300 idees reels + 50 hooks + 12 YouTube</strong> — calendrier quotidien pret a l'emploi.<br>
-    Strategie de contenu organique complete pour Geoffrey et SAPIENS 360.
+    <strong>15 YouTube Anti-Objections + 12 YouTube Autorite + 65 Reels Pre-Close + 50 Hooks</strong><br>
+    Strategie de contenu organique calibree sur le langage exact des prospects SAPIENS 360.
   </div>
 </div>
 
-<!-- ═══════ SEARCH + FILTERS ═══════ -->
+<!-- SEARCH + FILTERS -->
 <div class="search-bar">
   <div class="search-wrap">
     <span class="search-icon">&#x1F50D;</span>
-    <input type="text" class="search-input" id="searchInput" placeholder="Rechercher un hook, une idee, un mot-cle...">
+    <input type="text" class="search-input" id="searchInput" placeholder="Rechercher un hook, une idee, un mot-cle, une objection...">
   </div>
   <div class="filter-row">
-    <div class="filter-group">
+    <div class="filter-group" id="typeFilterGroup">
       <span class="filter-group-label">Type</span>
       <button class="filter-btn active" data-type="tous" onclick="setTypeFilter('tous')">Tous</button>
       <button class="filter-btn" data-type="revelation" onclick="setTypeFilter('revelation')">Revelation</button>
@@ -668,6 +789,7 @@ tr:last-child td { border-bottom: none; }
       <button class="filter-btn" data-type="identite" onclick="setTypeFilter('identite')">Identite</button>
       <button class="filter-btn" data-type="preuve" onclick="setTypeFilter('preuve')">Preuve</button>
       <button class="filter-btn" data-type="decision" onclick="setTypeFilter('decision')">Decision</button>
+      <button class="filter-btn" data-type="anti-objection" onclick="setTypeFilter('anti-objection')">Anti-Objection</button>
     </div>
     <div class="separator"></div>
     <div class="filter-group">
@@ -680,13 +802,15 @@ tr:last-child td { border-bottom: none; }
   </div>
 </div>
 
-<!-- ═══════ STICKY NAV ═══════ -->
+<!-- STICKY NAV -->
 <nav class="sticky-nav">
   <div class="nav-tabs">
     <button class="nav-tab active" onclick="showSection('strategie')">Strategie</button>
     <button class="nav-tab" onclick="showSection('calendrier')">Calendrier</button>
+    <button class="nav-tab" onclick="showSection('yt-anti-objections')">YT Anti-Objections</button>
+    <button class="nav-tab" onclick="showSection('yt-autorite')">YT Autorite</button>
+    <button class="nav-tab" onclick="showSection('reels-preclose')">Reels Pre-Close</button>
     <button class="nav-tab" onclick="showSection('hooks')">Hooks (50)</button>
-    <button class="nav-tab" onclick="showSection('youtube')">YouTube (12)</button>
     <button class="nav-tab" onclick="showSection('stories')">Stories</button>
     <button class="nav-tab" onclick="showSection('regles')">Regles</button>
   </div>
@@ -695,10 +819,14 @@ tr:last-child td { border-bottom: none; }
 <!-- ═══════ SECTION: STRATEGIE ═══════ -->
 <div class="section active" id="sec-strategie">
   <div class="section-title">Strategie Vue d'ensemble</div>
-  <div class="section-subtitle">Architecture de contenu organique SAPIENS 360</div>
+  <div class="section-subtitle">Architecture de contenu organique SAPIENS 360 — V2 calibree sur 18 calls reels</div>
+
+  <div class="priority-card">
+    <strong>PRIORITE #1:</strong> Les 12 videos YouTube Anti-Objections tuent les VRAIES objections identifiees dans 18 calls de closing. Chaque video utilise le langage exact des prospects. C'est le contenu le plus strategique de tout l'ecosysteme — il pre-close avant meme le premier appel.
+  </div>
 
   <div class="diag-card">
-    <strong>Diagnostic:</strong> 900K vues/mois mais sous-monetisees. Le probleme n'est pas la visibilite — c'est le mix. Trop de TOFU (audience froide), pas assez de BOFU (contenu de conversion). Le contenu attire mais ne convertit pas.
+    <strong>Diagnostic:</strong> 900K vues/mois mais sous-monetisees. Le probleme n'est pas la visibilite — c'est le mix. Trop de TOFU (audience froide), pas assez de BOFU (contenu de conversion). Le contenu attire mais ne convertit pas. Les videos Anti-Objections corrigent ca en traitant les blocages d'achat EN AMONT.
   </div>
 
   <div class="stat-row">
@@ -711,7 +839,7 @@ tr:last-child td { border-bottom: none; }
       <div class="stat-label">Reels / jour</div>
     </div>
     <div class="stat-card">
-      <div class="stat-number">2</div>
+      <div class="stat-number">3-4</div>
       <div class="stat-label">YouTube / sem</div>
     </div>
     <div class="stat-card">
@@ -775,8 +903,49 @@ tr:last-child td { border-bottom: none; }
   </div>
 
   <div class="card">
-    <div class="card-title">YouTube — Strategie Long Format</div>
-    <p style="font-size:14px;color:var(--stone);margin-bottom:8px;">2 videos/semaine, 8-15 min, facecam Geoffrey, SEO-focused. Le but: construire l'autorite et le SEO. Zero pitch dans la video.</p>
+    <div class="card-title">YouTube — Double Strategie</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Serie</th>
+            <th>Videos</th>
+            <th>Objectif</th>
+            <th>Priorite</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="badge badge-anti-objection">Anti-Objections</span></td>
+            <td>12</td>
+            <td>Tuer les objections AVANT le call de closing</td>
+            <td style="color:var(--anti-objection);font-weight:700;">MAXIMALE</td>
+          </tr>
+          <tr>
+            <td><span class="badge badge-mecanisme">Autorite/SEO</span></td>
+            <td>12</td>
+            <td>Construire l'autorite et le trafic organique</td>
+            <td style="color:var(--stone);">Haute</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="font-size:14px;color:var(--stone);margin-top:8px;">ZERO pitch, ZERO prix, ZERO "cetose" dans AUCUNE video YouTube. Lien VSL + lien booking dans CHAQUE description.</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Synergie YouTube + Reels</div>
+    <p style="font-size:14px;color:var(--stone);margin-bottom:16px;">Chaque YouTube = 3-5 Reels extraits avec lien. Les Reels servent de teaser, YouTube fait le travail profond.</p>
+    <div class="synergy-row">
+      <div class="synergy-item"><strong>YouTube Anti-Objection</strong><br>"La viande rouge est cancerigene ?" (15 min)</div>
+      <div class="synergy-arrow">&#8594;</div>
+      <div class="synergy-item"><strong>3-5 Reels extraits</strong><br>"La viande rouge c'est cancerigene. Geoffrey explique en 30 sec" + lien YT</div>
+    </div>
+    <div class="synergy-row">
+      <div class="synergy-item"><strong>YouTube Anti-Objection</strong><br>"Le cycle espoir-rechute-epuisement" (15 min)</div>
+      <div class="synergy-arrow">&#8594;</div>
+      <div class="synergy-item"><strong>3-5 Reels extraits</strong><br>"Ca s'ameliore. Ca revient. Toujours." + lien YT</div>
+    </div>
   </div>
 
   <div class="card">
@@ -788,34 +957,68 @@ tr:last-child td { border-bottom: none; }
 <!-- ═══════ SECTION: CALENDRIER ═══════ -->
 <div class="section" id="sec-calendrier">
   <div class="section-title">Calendrier Quotidien</div>
-  <div class="section-subtitle">Planning de publication — 5 reels/jour + stories</div>
+  <div class="section-subtitle">Planning de publication — 5 reels/jour + stories + YouTube</div>
 
   <div class="card">
-    <div class="card-title">Reels — Planning Quotidien</div>
+    <div class="card-title">Reels — Planning Quotidien (Synergie YouTube)</div>
     <div class="cal-block">
       <div class="cal-time">7h</div>
-      <div class="cal-badge"><span class="badge badge-revelation">Revelation</span></div>
-      <div class="cal-desc">Casser une croyance, audience froide. Hook fort. ZERO CTA.</div>
+      <div class="cal-badge"><span class="badge badge-tofu">TOFU</span></div>
+      <div class="cal-desc"><span class="badge badge-revelation" style="font-size:9px;margin-right:6px;">Revelation</span> Casser une croyance, audience froide. Hook fort. ZERO CTA.</div>
     </div>
     <div class="cal-block">
       <div class="cal-time">11h</div>
-      <div class="cal-badge"><span class="badge badge-preuve">Preuve</span></div>
-      <div class="cal-desc">Temoignage, screenshot, avant/apres. CTA: "Tu veux le meme resultat?"</div>
+      <div class="cal-badge"><span class="badge badge-bofu">BOFU</span></div>
+      <div class="cal-desc"><span class="badge badge-preuve" style="font-size:9px;margin-right:6px;">Preuve</span> Temoignage, screenshot, avant/apres. CTA: "Tu veux le meme resultat?"</div>
     </div>
     <div class="cal-block">
       <div class="cal-time">14h</div>
-      <div class="cal-badge"><span class="badge badge-mecanisme">Mecanisme</span></div>
-      <div class="cal-desc">Eduquer, aha moment. CTA leger: "commente SAPIENS"</div>
+      <div class="cal-badge"><span class="badge badge-mofu">MOFU</span></div>
+      <div class="cal-desc"><span class="badge badge-mecanisme" style="font-size:9px;margin-right:6px;">Mecanisme</span> <strong style="color:var(--anti-objection);">+ LIEN YOUTUBE</strong> — Teaser 30 sec du mecanisme, renvoyer vers la video complete</div>
     </div>
     <div class="cal-block">
       <div class="cal-time">18h</div>
-      <div class="cal-badge"><span class="badge badge-identite">Identite</span></div>
-      <div class="cal-desc">Lea se reconnait. Empathique. CTA: "Si tu te reconnais..."</div>
+      <div class="cal-badge"><span class="badge badge-mofu">MOFU</span></div>
+      <div class="cal-desc"><span class="badge badge-identite" style="font-size:9px;margin-right:6px;">Identite</span> Lea se reconnait. Empathique. CTA: "Si tu te reconnais... commente SAPIENS"</div>
     </div>
     <div class="cal-block">
       <div class="cal-time">21h</div>
-      <div class="cal-badge"><span class="badge badge-decision">Decision</span></div>
-      <div class="cal-desc">CTA direct, ton certain. "Commente SAPIENS"</div>
+      <div class="cal-badge"><span class="badge badge-bofu">BOFU</span></div>
+      <div class="cal-desc"><span class="badge badge-decision" style="font-size:9px;margin-right:6px;">Decision</span> CTA direct, ton certain. "Commente SAPIENS"</div>
+    </div>
+  </div>
+
+  <div class="info-box" style="border-color:var(--anti-objection);background:rgba(199,80,80,.08);">
+    <strong style="color:var(--anti-objection);">Repartition Reels CTA:</strong><br>
+    &#8226; <strong>40% des Reels</strong> pointent vers YouTube (MECANISME + PREUVE) — "L'explication complete ici"<br>
+    &#8226; <strong>60% des Reels</strong> gardent "commente SAPIENS" (IDENTITE + DECISION)
+  </div>
+
+  <div class="card" style="margin-top:20px;">
+    <div class="card-title">YouTube — Planning Hebdomadaire</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Jour</th><th>Type</th><th>Contenu</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Lundi</td>
+            <td><span class="badge badge-anti-objection">Anti-Objection</span></td>
+            <td>Video qui tue 1 objection identifiee dans les calls</td>
+          </tr>
+          <tr>
+            <td>Mercredi</td>
+            <td><span class="badge badge-mecanisme">Autorite/SEO</span></td>
+            <td>Video education/autorite SEO-focused</td>
+          </tr>
+          <tr>
+            <td>Vendredi</td>
+            <td><span class="badge badge-anti-objection">Anti-Objection</span></td>
+            <td>Alterner: preuve sociale / reframe / trust builder</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 
@@ -854,6 +1057,1587 @@ tr:last-child td { border-bottom: none; }
   <div class="info-box">
     <strong>Rappel:</strong> Les heures de Lea sont 7h, 12h, 15h, 19h, 21h. Poster aux moments ou elle scroll. Le week-end, privilegier les stories perso et les contenus IDENTITE (Lea a plus de temps pour consommer du contenu long).
   </div>
+</div>
+
+<!-- ═══════ SECTION: YOUTUBE ANTI-OBJECTIONS ═══════ -->
+<div class="section" id="sec-yt-anti-objections">
+  <div class="section-title">YouTube Anti-Objections</div>
+  <div class="section-subtitle">12 videos qui tuent les objections reelles de 18 calls de closing — LA PRIORITE ABSOLUE</div>
+
+  <div class="priority-card">
+    <strong>POURQUOI C'EST LA PRIORITE #1:</strong> Ces videos sont concues pour que chaque prospect qui arrive en call ait DEJA vu au moins 2-3 d'entre elles. Resultat: les objections sont tuees AVANT le call, le taux de closing explose. Chaque video utilise les mots exacts des prospects, pas du jargon marketing.
+  </div>
+
+  <div id="antiObjectionList">
+
+    <!-- VIDEO 1 -->
+    <div class="yt-card anti-objection-card" data-type="anti-objection" data-platform="youtube">
+      <div class="yt-header" onclick="toggleYt(this)">
+        <div class="yt-num">01</div>
+        <div class="yt-title">La viande rouge est cancerigene ? La verite scientifique</div>
+        <div class="yt-duration">15 min</div>
+        <div class="yt-toggle">&#9660;</div>
+      </div>
+      <div class="yt-body">
+        <div class="yt-objection-killed">
+          <div class="yt-objection-killed-title">Objection tuee</div>
+          <div class="yt-objection-killed-text">"La viande rouge c'est cancerigene ?" — LA peur #1 qui tue les closes. Presente dans la majorite des appels.</div>
+        </div>
+        <div class="yt-quotes">
+          <div class="yt-quotes-title">Citations prospects reelles</div>
+          <div class="yt-quote">"<strong>La viande rouge c'est pas cancerigene ?</strong>" — Sonia</div>
+          <div class="yt-quote">"<strong>Pagano disait que la viande rouge c'etait vraiment pas bon</strong>" — Gautier</div>
+        </div>
+        <ul class="yt-outline">
+          <li>Demystifier l'etude OMS: ce qu'elle dit VRAIMENT (et ce qu'elle ne dit pas)</li>
+          <li>La difference fondamentale entre viande transformee (charcuterie, nuggets) et viande entiere de qualite</li>
+          <li>La cetose therapeutique n'est PAS un "regime viande" — c'est un protocole terrain</li>
+          <li>Le role anti-inflammatoire des graisses animales (omega-3, CLA, acide butyrique)</li>
+          <li>Etudes cliniques: viande entiere et marqueurs inflammatoires</li>
+        </ul>
+        <div class="yt-cta-box">
+          <strong>CTA:</strong> Lien VSL + booking en description. Pinned comment: "Tu as des questions sur la viande rouge et ta peau ? Commente et je te reponds."<br>
+          <strong>Lien booking:</strong> https://api.leadconnectorhq.com/widget/booking/exr3PQmMOOXUFOnkUfsJ
+        </div>
+      </div>
+    </div>
+
+    <!-- VIDEO 2 -->
+    <div class="yt-card anti-objection-card" data-type="anti-objection" data-platform="youtube">
+      <div class="yt-header" onclick="toggleYt(this)">
+        <div class="yt-num">02</div>
+        <div class="yt-title">J'ai TOUT essaye — pourquoi rien ne tient (et ce que personne ne t'a dit)</div>
+        <div class="yt-duration">18 min</div>
+        <div class="yt-toggle">&#9660;</div>
+      </div>
+      <div class="yt-body">
+        <div class="yt-objection-killed">
+          <div class="yt-objection-killed-title">Objection tuee</div>
+          <div class="yt-objection-killed-text">"J'ai tout essaye, rien ne tient" — L'objection universelle. Presente dans CHAQUE appel. Le prospect est epuise et sceptique.</div>
+        </div>
+        <div class="yt-quotes">
+          <div class="yt-quotes-title">Citations prospects reelles</div>
+          <div class="yt-quote">"<strong>J'ai du tester 40 traitements</strong>" — Gautier</div>
+          <div class="yt-quote">"<strong>J'ai tout essaye rien ne tient</strong>" — multiple prospects</div>
+          <div class="yt-quote">"<strong>A chaque fois on m'a dit que c'etait la cle de la guerison</strong>" — Nathalianne</div>
+          <div class="yt-quote">"<strong>Je me suis encore fait baiser</strong>" — Charon</div>
+          <div class="yt-quote">"<strong>Des pansements sur une jambe de bois</strong>" — Delattre</div>
+        </div>
+        <ul class="yt-outline">
+          <li>Lister TOUS les traitements classiques que les prospects ont essayes: cremes, cortisone, antibiotiques, sans gluten, probiotiques, naturopathe, acupuncture, jeune, frugivorisme</li>
+          <li>Expliquer POURQUOI chacun echoue — un par un, avec le mecanisme</li>
+          <li>La raison commune a tous ces echecs: ils traitent le SYMPTOME, pas le TERRAIN</li>
+          <li>La difference fondamentale du protocole: on ne traite pas la peau, on traite ce qui PRODUIT les symptomes</li>
+          <li>L'analogie du voyant moteur: eteindre le voyant vs ouvrir le capot</li>
+        </ul>
+        <div class="yt-cta-box">
+          <strong>CTA:</strong> Lien VSL + booking en description.<br>
+          <strong>Lien booking:</strong> https://api.leadconnectorhq.com/widget/booking/exr3PQmMOOXUFOnkUfsJ
+        </div>
+      </div>
+    </div>
+
+    <!-- VIDEO 3 -->
+    <div class="yt-card anti-objection-card" data-type="anti-objection" data-platform="youtube">
+      <div class="yt-header" onclick="toggleYt(this)">
+        <div class="yt-num">03</div>
+        <div class="yt-title">"C'est chronique" — ce que ton dermatologue ne t'a pas dit</div>
+        <div class="yt-duration">12 min</div>
+        <div class="yt-toggle">&#9660;</div>
+      </div>
+      <div class="yt-body">
+        <div class="yt-objection-killed">
+          <div class="yt-objection-killed-title">Objection tuee</div>
+          <div class="yt-objection-killed-text">"Mon dermato dit que c'est chronique / irreversible / hereditaire" — La condamnation medicale qui cree la resignation.</div>
+        </div>
+        <div class="yt-quotes">
+          <div class="yt-quotes-title">Citations prospects reelles</div>
+          <div class="yt-quote">"<strong>Mon dermato dit que c'est chronique</strong>" — multiple prospects</div>
+          <div class="yt-quote">"<strong>Peut-etre que c'est irreversible</strong>" — Kessiri</div>
+          <div class="yt-quote">"<strong>Peut-etre que c'est hereditaire</strong>" — Charon</div>
+        </div>
+        <ul class="yt-outline">
+          <li>Chronique = qui dure dans le temps. PAS = irreversible. Clarifier la definition medicale</li>
+          <li>Pourquoi les dermatologues ne regardent QUE la peau (formation, specialisation, biais systemique)</li>
+          <li>L'axe intestin-immunite-peau: le chainon manquant que la dermatologie classique ignore</li>
+          <li>Hereditaire = predisposition genetique, PAS condamnation. L'epigenetique: tes genes s'expriment en fonction de ton terrain</li>
+          <li>Exemples de conditions "chroniques" qui se sont ameliorees en traitant le terrain</li>
+        </ul>
+        <div class="yt-cta-box">
+          <strong>CTA:</strong> Lien VSL + booking en description.<br>
+          <strong>Lien booking:</strong> https://api.leadconnectorhq.com/widget/booking/exr3PQmMOOXUFOnkUfsJ
+        </div>
+      </div>
+    </div>
+
+    <!-- VIDEO 4 -->
+    <div class="yt-card anti-objection-card" data-type="anti-objection" data-platform="youtube">
+      <div class="yt-header" onclick="toggleYt(this)">
+        <div class="yt-num">04</div>
+        <div class="yt-title">Combien tu as deja depense pour ta peau ? (le calcul qui fait mal)</div>
+        <div class="yt-duration">10 min</div>
+        <div class="yt-toggle">&#9660;</div>
+      </div>
+      <div class="yt-body">
+        <div class="yt-objection-killed">
+          <div class="yt-objection-killed-title">Objection tuee</div>
+          <div class="yt-objection-killed-text">"C'est trop cher" / "C'est une question de budget" — L'objection prix. Recadrer le cout reel de l'errance medicale.</div>
+        </div>
+        <div class="yt-quotes">
+          <div class="yt-quotes-title">Citations prospects reelles</div>
+          <div class="yt-quote">"<strong>1800 balles ca fait cher</strong>" — Gautier</div>
+          <div class="yt-quote">"<strong>C'est une question de disponibilite financiere</strong>" — Olivia</div>
+          <div class="yt-quote">"<strong>Un milliard de traitements</strong>" — Gautier</div>
+          <div class="yt-quote">"<strong>J'ai tout balance a la poubelle</strong>" — Sonia</div>
+        </div>
+        <ul class="yt-outline">
+          <li>Le calcul annuel de l'errance medicale: cremes (30-80EUR/mois), dermatos (50-100EUR/visite x 4-6/an), supplements (40-100EUR/mois), naturopathe (70EUR/seance x 12/an)</li>
+          <li>Sur 3 ans: 2 400 - 8 000 EUR depenses. Sur 5 ans: 4 000 - 15 000 EUR. Sur 10 ans: c'est vertigineux</li>
+          <li>Prospect type: 800 - 5 000 EUR deja depenses au moment du call</li>
+          <li>Tout ca pour traiter les SYMPTOMES. Le protocole = investissement UNIQUE pour traiter la CAUSE</li>
+          <li>L'analogie: reparer le meme pneu creve tous les mois vs changer la route</li>
+        </ul>
+        <div class="yt-cta-box">
+          <strong>CTA:</strong> Lien VSL + booking en description.<br>
+          <strong>Lien booking:</strong> https://api.leadconnectorhq.com/widget/booking/exr3PQmMOOXUFOnkUfsJ
+        </div>
+      </div>
+    </div>
+
+    <!-- VIDEO 5 -->
+    <div class="yt-card anti-objection-card" data-type="anti-objection" data-platform="youtube">
+      <div class="yt-header" onclick="toggleYt(this)">
+        <div class="yt-num">05</div>
+        <div class="yt-title">Le cycle espoir - rechute - epuisement : pourquoi ca se repete</div>
+        <div class="yt-duration">15 min</div>
+        <div class="yt-toggle">&#9660;</div>
+      </div>
+      <div class="yt-body">
+        <div class="yt-objection-killed">
+          <div class="yt-objection-killed-title">Pattern universel tue</div>
+          <div class="yt-objection-killed-text">LE pattern decrit par 100% des prospects. Chaque personne qui arrive en call vit ce cycle en boucle depuis des annees.</div>
+        </div>
+        <div class="yt-quotes">
+          <div class="yt-quotes-title">Citations prospects reelles</div>
+          <div class="yt-quote">"<strong>Ca s'ameliore toujours. Ca revient toujours.</strong>" — pattern universel</div>
+          <div class="yt-quote">"<strong>J'en peux plus de recommencer a zero</strong>" — multiple prospects</div>
+          <div class="yt-quote">"<strong>J'ai encore depense tant de temps, tant d'argent et puis a la finale je suis encore la comme ca</strong>" — Charon</div>
+        </div>
+        <ul class="yt-outline">
+          <li>Phase 1: Amelioration (cortisone, regime, complement) — ca semble marcher</li>
+          <li>Phase 2: Espoir — "ca y est, j'ai trouve"</li>
+          <li>Phase 3: Rechute — les symptomes reviennent, souvent pires</li>
+          <li>Phase 4: Epuisement — fatigue physique et emotionnelle</li>
+          <li>Phase 5: Resignation — "c'est chronique", "j'ai appris a vivre avec"</li>
+          <li>POURQUOI ca se repete: parce que le terrain n'a JAMAIS ete stabilise. Le traitement symptomatique NE PEUT PAS tenir</li>
+          <li>La seule facon de sortir du cycle: traiter ce qui PRODUIT l'inflammation, pas l'inflammation elle-meme</li>
+        </ul>
+        <div class="yt-cta-box">
+          <strong>CTA:</strong> Lien VSL + booking en description.<br>
+          <strong>Lien booking:</strong> https://api.leadconnectorhq.com/widget/booking/exr3PQmMOOXUFOnkUfsJ
+        </div>
+      </div>
+    </div>
+
+    <!-- VIDEO 6 -->
+    <div class="yt-card anti-objection-card" data-type="anti-objection" data-platform="youtube">
+      <div class="yt-header" onclick="toggleYt(this)">
+        <div class="yt-num">06</div>
+        <div class="yt-title">"C'est le stress" — la phrase qui bloque ta guerison</div>
+        <div class="yt-duration">12 min</div>
+        <div class="yt-toggle">&#9660;</div>
+      </div>
+      <div class="yt-body">
+        <div class="yt-objection-killed">
+          <div class="yt-objection-killed-title">Misconception tuee</div>
+          <div class="yt-objection-killed-text">"C'est le stress" / "C'est emotionnel" — La phrase que TOUT le monde repete et qui culpabilise le prospect sans resoudre le probleme.</div>
+        </div>
+        <div class="yt-quotes">
+          <div class="yt-quotes-title">Citations prospects reelles</div>
+          <div class="yt-quote">"<strong>Tout le monde me dit c'est parce que t'es stressee</strong>" — Doris</div>
+          <div class="yt-quote">"<strong>La solitude. Parce que tout le monde me dit c'est parce que t'es stressee</strong>" — Doris</div>
+          <div class="yt-quote">"<strong>C'est emotionnel</strong>" — multiple prospects</div>
+        </div>
+        <ul class="yt-outline">
+          <li>Le stress AGGRAVE mais N'EST PAS la cause. Distinction fondamentale</li>
+          <li>Le cortisol amplifie l'inflammation EXISTANTE mais ne la CREE pas</li>
+          <li>La vraie cause: un terrain inflammatoire deregle (intestin, immunite, alimentation)</li>
+          <li>Arreter de culpabiliser les gens: "gere ton stress" n'est PAS un plan de traitement</li>
+          <li>Le stress est l'accelerateur. Pas le moteur. Il faut couper le moteur</li>
+        </ul>
+        <div class="yt-cta-box">
+          <strong>CTA:</strong> Lien VSL + booking en description.<br>
+          <strong>Lien booking:</strong> https://api.leadconnectorhq.com/widget/booking/exr3PQmMOOXUFOnkUfsJ
+        </div>
+      </div>
+    </div>
+
+    <!-- VIDEO 7 -->
+    <div class="yt-card anti-objection-card" data-type="anti-objection" data-platform="youtube">
+      <div class="yt-header" onclick="toggleYt(this)">
+        <div class="yt-num">07</div>
+        <div class="yt-title">Pourquoi le sans gluten, les probiotiques et les complements n'ont pas marche</div>
+        <div class="yt-duration">15 min</div>
+        <div class="yt-toggle">&#9660;</div>
+      </div>
+      <div class="yt-body">
+        <div class="yt-objection-killed">
+          <div class="yt-objection-killed-title">Misconceptions tuees</div>
+          <div class="yt-objection-killed-text">Les "solutions" que TOUS les prospects ont deja essayees sans resultat durable. Expliquer pourquoi chacune echoue cree de la credibilite massive.</div>
+        </div>
+        <div class="yt-quotes">
+          <div class="yt-quotes-title">Citations prospects reelles</div>
+          <div class="yt-quote">"<strong>Sans lait, gluten, sucre pendant 8 ans — ca n'a rien change du tout</strong>" — Nathalianne</div>
+          <div class="yt-quote">"<strong>Les probiotiques du commerce</strong>" — multiple prospects</div>
+          <div class="yt-quote">"<strong>Regime frugivore: pire, dermite s'est etendue</strong>" — Kessiri</div>
+        </div>
+        <ul class="yt-outline">
+          <li>Sans gluten = necessaire mais PAS suffisant. Le gluten est UN facteur parmi 10</li>
+          <li>Probiotiques commerciaux = mauvaises souches, mauvais dosage, mauvais moment. Pas personnalise</li>
+          <li>Complements = pansement temporaire. Comme arroser une plante sans changer la terre</li>
+          <li>Fruits/legumes = peuvent EMPIRER certaines conditions (oxalates, lectines, fibres fermentescibles)</li>
+          <li>La raison commune: AUCUNE de ces approches ne traite le terrain dans sa GLOBALITE</li>
+          <li>Le protocole: approche systemique — alimentation + microbiote + inflammation + suivi</li>
+        </ul>
+        <div class="yt-cta-box">
+          <strong>CTA:</strong> Lien VSL + booking en description.<br>
+          <strong>Lien booking:</strong> https://api.leadconnectorhq.com/widget/booking/exr3PQmMOOXUFOnkUfsJ
+        </div>
+      </div>
+    </div>
+
+    <!-- VIDEO 8 -->
+    <div class="yt-card anti-objection-card" data-type="anti-objection" data-platform="youtube">
+      <div class="yt-header" onclick="toggleYt(this)">
+        <div class="yt-num">08</div>
+        <div class="yt-title">Tu ne supportes pas la viande ? Voici ce qu'on fait</div>
+        <div class="yt-duration">10 min</div>
+        <div class="yt-toggle">&#9660;</div>
+      </div>
+      <div class="yt-body">
+        <div class="yt-objection-killed">
+          <div class="yt-objection-killed-title">Objection tuee</div>
+          <div class="yt-objection-killed-text">"Je suis vegetarienne" / "J'ai du mal avec la viande" — L'objection alimentaire qui bloque les prospects deja convaincus par le reste.</div>
+        </div>
+        <div class="yt-quotes">
+          <div class="yt-quotes-title">Citations prospects reelles</div>
+          <div class="yt-quote">"<strong>Je suis vegetarienne</strong>" — Charon</div>
+          <div class="yt-quote">"<strong>Je n'arrivais meme plus a l'avaler</strong>" — Nathalianne</div>
+          <div class="yt-quote">"<strong>J'ai vraiment du mal avec ca</strong>" — Olivia</div>
+        </div>
+        <ul class="yt-outline">
+          <li>Le protocole n'est PAS "manger que de la viande". C'est un protocole terrain qui INCLUT des proteines animales de qualite</li>
+          <li>Les options: poisson gras, oeufs, abats, bouillon d'os, beurre clarifie</li>
+          <li>Progression graduelle: on ne demande pas de changer du jour au lendemain</li>
+          <li>Adaptation PERSONNALISEE par Geoffrey — chaque profil est different</li>
+          <li>Pourquoi les proteines animales sont importantes pour la reparation de la barriere intestinale (glycine, collagene, zinc, B12)</li>
+        </ul>
+        <div class="yt-cta-box">
+          <strong>CTA:</strong> Lien VSL + booking en description.<br>
+          <strong>Lien booking:</strong> https://api.leadconnectorhq.com/widget/booking/exr3PQmMOOXUFOnkUfsJ
+        </div>
+      </div>
+    </div>
+
+    <!-- VIDEO 9 -->
+    <div class="yt-card anti-objection-card" data-type="anti-objection" data-platform="youtube">
+      <div class="yt-header" onclick="toggleYt(this)">
+        <div class="yt-num">09</div>
+        <div class="yt-title">Psoriasis, eczema, rosacee, acne — c'est le MEME probleme</div>
+        <div class="yt-duration">18 min</div>
+        <div class="yt-toggle">&#9660;</div>
+      </div>
+      <div class="yt-body">
+        <div class="yt-objection-killed">
+          <div class="yt-objection-killed-title">Insight fondamental</div>
+          <div class="yt-objection-killed-text">La confusion entre "conditions separees" qui seraient des maladies differentes. En realite, c'est le MEME terrain inflammatoire deregle qui s'exprime differemment.</div>
+        </div>
+        <div class="yt-quotes">
+          <div class="yt-quotes-title">Citations prospects reelles</div>
+          <div class="yt-quote">"<strong>C'est des craquelures qui vont jusqu'au sang... je finis par dormir avec des gants en latex</strong>" — Delattre</div>
+          <div class="yt-quote">"<strong>Meme la sensation de l'eau sur la tete... ca fait mal</strong>" — Doris</div>
+        </div>
+        <ul class="yt-outline">
+          <li>Toutes ces conditions = expression differente du MEME terrain inflammatoire deregle</li>
+          <li>L'intestin controle 70% du systeme immunitaire. Quand le microbiote est deregle, l'inflammation s'exprime ou tu es genetiquement vulnerable</li>
+          <li>C'est pour ca que "tout est lie": apnee du sommeil, brouillard mental, fatigue chronique, peau — meme source</li>
+          <li>La dermatologie classique traite chaque condition separement. Le protocole terrain traite la SOURCE commune</li>
+          <li>Schema visuel: intestin au centre, fleches vers peau/energie/sommeil/immunite/humeur</li>
+        </ul>
+        <div class="yt-cta-box">
+          <strong>CTA:</strong> Lien VSL + booking en description.<br>
+          <strong>Lien booking:</strong> https://api.leadconnectorhq.com/widget/booking/exr3PQmMOOXUFOnkUfsJ
+        </div>
+      </div>
+    </div>
+
+    <!-- VIDEO 10 -->
+    <div class="yt-card anti-objection-card" data-type="anti-objection" data-platform="youtube">
+      <div class="yt-header" onclick="toggleYt(this)">
+        <div class="yt-num">10</div>
+        <div class="yt-title">Geoffrey : mon histoire (et pourquoi j'ai cree SAPIENS)</div>
+        <div class="yt-duration">20 min</div>
+        <div class="yt-toggle">&#9660;</div>
+      </div>
+      <div class="yt-body">
+        <div class="yt-objection-killed">
+          <div class="yt-objection-killed-title">Trust builder</div>
+          <div class="yt-objection-killed-text">Credibilite personnelle. Qui est Geoffrey, pourquoi il est legitime, pourquoi il comprend. Emotionnel et authentique — pas un pitch.</div>
+        </div>
+        <ul class="yt-outline">
+          <li>Sportif de combat, son corps le trahit, sa peau flambe</li>
+          <li>Bilans "normaux", dermatos sans reponse, errance medicale personnelle</li>
+          <li>La decouverte qui change tout: formation clinique avec Dr Dufournet et Dr Florent</li>
+          <li>Le protocole applique sur LUI-MEME d'abord — pas de theorie, du vecu</li>
+          <li>Les resultats. La decision d'aider les autres. La creation de SAPIENS</li>
+          <li>Ton: vulnerable, authentique, emotionnel. PAS un pitch. Une conversation</li>
+        </ul>
+        <div class="yt-cta-box">
+          <strong>CTA:</strong> Lien VSL + booking en description.<br>
+          <strong>Lien booking:</strong> https://api.leadconnectorhq.com/widget/booking/exr3PQmMOOXUFOnkUfsJ
+        </div>
+      </div>
+    </div>
+
+    <!-- VIDEO 11 -->
+    <div class="yt-card anti-objection-card" data-type="anti-objection" data-platform="youtube">
+      <div class="yt-header" onclick="toggleYt(this)">
+        <div class="yt-num">11</div>
+        <div class="yt-title">"J'ai peur que ca marche pas" — je comprends (et voila pourquoi c'est different)</div>
+        <div class="yt-duration">12 min</div>
+        <div class="yt-toggle">&#9660;</div>
+      </div>
+      <div class="yt-body">
+        <div class="yt-objection-killed">
+          <div class="yt-objection-killed-title">Objection tuee</div>
+          <div class="yt-objection-killed-text">"J'ai peur de me faire avoir encore une fois" — La peur profonde apres des annees d'echec. Necessaire de la valider PUIS de la recadrer.</div>
+        </div>
+        <div class="yt-quotes">
+          <div class="yt-quotes-title">Citations prospects reelles</div>
+          <div class="yt-quote">"<strong>J'ai pas envie d'echec</strong>" — Sonia</div>
+          <div class="yt-quote">"<strong>J'ai peur de ne pas tenir</strong>" — Melanie</div>
+          <div class="yt-quote">"<strong>J'ai perdu confiance</strong>" — Charon</div>
+          <div class="yt-quote">"<strong>J'ai pas envie d'avoir peur de me faire avoir</strong>" — Aurelie</div>
+        </div>
+        <ul class="yt-outline">
+          <li>VALIDER la peur: c'est NORMAL apres des annees d'echec. Tu n'es pas parano, tu es lucide</li>
+          <li>Expliquer la difference STRUCTURELLE: terrain vs symptome. C'est pas "encore un truc", c'est une approche fondamentalement differente</li>
+          <li>La garantie: on s'engage sur des resultats mesurables</li>
+          <li>Le suivi quotidien: tu n'es PAS seule. Geoffrey est la chaque jour, pas un PDF et un "bonne chance"</li>
+          <li>Les donnees objectives: le tracker te montre tes progres semaine par semaine</li>
+        </ul>
+        <div class="yt-cta-box">
+          <strong>CTA:</strong> Lien VSL + booking en description.<br>
+          <strong>Lien booking:</strong> https://api.leadconnectorhq.com/widget/booking/exr3PQmMOOXUFOnkUfsJ
+        </div>
+      </div>
+    </div>
+
+    <!-- VIDEO 12 -->
+    <div class="yt-card anti-objection-card" data-type="anti-objection" data-platform="youtube">
+      <div class="yt-header" onclick="toggleYt(this)">
+        <div class="yt-num">12</div>
+        <div class="yt-title">Ce que ta peau essaie de te dire (et que personne n'ecoute)</div>
+        <div class="yt-duration">15 min</div>
+        <div class="yt-toggle">&#9660;</div>
+      </div>
+      <div class="yt-body">
+        <div class="yt-objection-killed">
+          <div class="yt-objection-killed-title">Deep content — Mecanisme complet</div>
+          <div class="yt-objection-killed-text">La video fondamentale qui explique TOUT le mecanisme de facon accessible. Le contenu "pilier" de la chaine.</div>
+        </div>
+        <ul class="yt-outline">
+          <li>La peau est un MESSAGER, pas le probleme. Elle te parle. Personne ne t'a appris son langage</li>
+          <li>Quand ton corps s'enflamme de l'interieur, la peau est le premier organe a le montrer</li>
+          <li>Les cremes = mettre du scotch sur le voyant moteur. Il faut OUVRIR LE CAPOT</li>
+          <li>L'axe intestin-immunite-peau en detail accessible (zero jargon)</li>
+          <li>Le microbiote: 2 kg de bacteries qui controlent ton inflammation, ton immunite, ta peau</li>
+          <li>Pourquoi la medecine classique ne regarde pas ca: specialisation, formation, protocoles</li>
+          <li>Ce qui se passe quand on traite la SOURCE: les resultats en cascade (peau + energie + sommeil + humeur)</li>
+        </ul>
+        <div class="yt-cta-box">
+          <strong>CTA:</strong> Lien VSL + booking en description.<br>
+          <strong>Lien booking:</strong> https://api.leadconnectorhq.com/widget/booking/exr3PQmMOOXUFOnkUfsJ
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ 3 NOUVELLES VIDEOS (analyse 30+ calls) ═══ -->
+
+  <div class="yt-card" data-tags="cortisone traitement empire champignon diagnostic erreur">
+    <div class="yt-card-header">
+      <div class="yt-number">#13</div>
+      <div class="yt-title">Quand le traitement EMPIRE ton probleme</div>
+      <div class="yt-duration">10 min</div>
+    </div>
+    <div class="yt-card-body">
+      <div class="yt-objection-box">
+        <strong>Objection tuee:</strong> "J'ai peur que ca empire" + mefiance envers les traitements
+      </div>
+      <div class="yt-quote-box">
+        <strong>Citations reelles (30+ calls):</strong><br>
+        Belgin: <em>"la cortisone, lorsque je l'appliquais sur les champignons... ca flambait... j'ai eu une poussee enorme"</em><br>
+        Valmira: <em>"Humira a EMPIRE le psoriasis"</em><br>
+        Aurelie: <em>"effet rebond cortisone, phototherapie = depigmentation"</em>
+      </div>
+      <div class="yt-outline-title">Contenu:</div>
+      <ul class="yt-outline">
+        <li>Quand la cortisone est appliquee sur le mauvais diagnostic (champignons vs psoriasis) = catastrophe</li>
+        <li>Biotherapies qui empirent: Humira, methotrexate — pourquoi ca arrive</li>
+        <li>L'effet rebond: cortisone stop → poussee pire qu'avant</li>
+        <li>Le vrai probleme: on traite sans diagnostiquer la CAUSE</li>
+        <li>La difference entre supprimer un symptome et traiter un terrain</li>
+      </ul>
+      <div class="yt-cta-box">
+        <strong>CTA:</strong> Lien VSL + booking en description.<br>
+        <strong>Lien booking:</strong> https://api.leadconnectorhq.com/widget/booking/exr3PQmMOOXUFOnkUfsJ
+      </div>
+    </div>
+  </div>
+
+  <div class="yt-card" data-tags="arnaque confiance temoignages avis marketing ia">
+    <div class="yt-card-header">
+      <div class="yt-number">#14</div>
+      <div class="yt-title">Est-ce que c'est une arnaque ? Comment verifier</div>
+      <div class="yt-duration">8 min</div>
+    </div>
+    <div class="yt-card-body">
+      <div class="yt-objection-box">
+        <strong>Objection tuee:</strong> "C'est du marketing" / "Est-ce que Geoffrey existe vraiment?" / "Je veux verifier que c'est pas une arnaque"
+      </div>
+      <div class="yt-quote-box">
+        <strong>Citations reelles (30+ calls):</strong><br>
+        Ibtissam: <em>"Est-ce que Geoffrey existe vraiment?"</em><br>
+        Ibtissam: <em>"j'ai l'impression que c'est plus du marketing... je ne sais pas si c'est des scripts proposes par l'IA"</em><br>
+        Marion: <em>"verifier que ce n'est pas une arnaque. Je suis desolee, mais je prefere verifier quand meme."</em><br>
+        Aurelie: <em>"j'ai pas envie d'avoir peur de me faire avoir"</em>
+      </div>
+      <div class="yt-outline-title">Contenu:</div>
+      <ul class="yt-outline">
+        <li>Adresser la mefiance HEAD-ON: "Tu as raison de te mefier. Voici comment verifier."</li>
+        <li>Montrer la communaute Skool reelle (screenshots, temoignages video)</li>
+        <li>Montrer un call 1:1 reel avec Geoffrey (extrait anonymise)</li>
+        <li>Les formations cliniques (Dr Dufournet, Dr Florent) — verifiables</li>
+        <li>La garantie 30 jours: un arnaqueur ne proposerait JAMAIS ca</li>
+        <li>Comment differencier un vrai accompagnement d'un programme IA generique</li>
+      </ul>
+      <div class="yt-cta-box">
+        <strong>CTA:</strong> Lien VSL + booking en description.<br>
+        <strong>Lien booking:</strong> https://api.leadconnectorhq.com/widget/booking/exr3PQmMOOXUFOnkUfsJ
+      </div>
+    </div>
+  </div>
+
+  <div class="yt-card" data-tags="grossesse hormones psoriasis reversible preuve anti-inflammatoire">
+    <div class="yt-card-header">
+      <div class="yt-number">#15</div>
+      <div class="yt-title">Grossesse et psoriasis : pourquoi ca disparait (et ce que ca prouve)</div>
+      <div class="yt-duration">12 min</div>
+    </div>
+    <div class="yt-card-body">
+      <div class="yt-objection-box">
+        <strong>Objection tuee:</strong> "C'est irreversible" / "C'est genetique" / "C'est chronique a vie"
+      </div>
+      <div class="yt-quote-box">
+        <strong>Citations reelles (30+ calls):</strong><br>
+        Kharmalia: <em>Zero psoriasis pendant la grossesse. Poussee massive post-fausse couche.</em><br>
+        Doris: <em>"ma best life c'etait quand j'etais enceinte. Les ongles, les cheveux, pas une croute"</em><br>
+        Charon: <em>"peut-etre que c'est hereditaire... ma mere fait du psoriasis, mon frere aussi"</em>
+      </div>
+      <div class="yt-outline-title">Contenu:</div>
+      <ul class="yt-outline">
+        <li>Le phenomene: 70-80% des femmes voient leur psoriasis disparaitre pendant la grossesse</li>
+        <li>Pourquoi: les hormones de grossesse (progesterone, cortisol eleve) = anti-inflammatoire naturel puissant</li>
+        <li>Ce que ca PROUVE: si ca disparait pendant la grossesse, c'est que ce n'est PAS irreversible. Ton corps SAIT comment ne pas avoir de psoriasis</li>
+        <li>Le lien: si l'inflammation diminue → le psoriasis recule. La question c'est COMMENT diminuer l'inflammation sans etre enceinte</li>
+        <li>La reponse: le terrain biologique. Stabiliser l'inflammation par l'alimentation = mimer l'effet anti-inflammatoire de la grossesse</li>
+        <li>Hereditaire = predisposition, pas condamnation. Ta mere avait aussi le terrain deregle, pas un "gene du psoriasis"</li>
+      </ul>
+      <div class="yt-cta-box">
+        <strong>CTA:</strong> Lien VSL + booking en description.<br>
+        <strong>Lien booking:</strong> https://api.leadconnectorhq.com/widget/booking/exr3PQmMOOXUFOnkUfsJ
+      </div>
+    </div>
+  </div>
+
+  <div class="no-results" id="noResultsAntiObj">Aucune video ne correspond a ta recherche.</div>
+
+  <div class="yt-rules">
+    <div class="yt-rules-title">Regles YouTube Anti-Objections</div>
+    <ul>
+      <li>ZERO pitch dans la video — jamais de vente directe, jamais de prix</li>
+      <li>ZERO mot "cetose" — utiliser "protocole terrain" ou "approche terrain biologique"</li>
+      <li>Lien VSL en description (premiere ligne)</li>
+      <li>Lien booking en description: https://api.leadconnectorhq.com/widget/booking/exr3PQmMOOXUFOnkUfsJ</li>
+      <li>Pinned comment: "Tu te reconnais ? Commente et je te reponds."</li>
+      <li>Chaque video = 3-5 Reels extraits avec lien vers la video complete</li>
+      <li>Utiliser le langage EXACT des prospects, pas du jargon marketing</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ═══════ SECTION: YOUTUBE AUTORITE ═══════ -->
+<div class="section" id="sec-yt-autorite">
+  <div class="section-title">YouTube Autorite / SEO</div>
+  <div class="section-subtitle">12 videos long format — 8-15 min, facecam Geoffrey, SEO-focused. Construire l'autorite.</div>
+
+  <div class="info-box">
+    <strong>Difference avec les Anti-Objections:</strong> Ces videos construisent l'autorite SEO et attirent du trafic organique. Les Anti-Objections tuent les blocages d'achat. Les deux sont necessaires, mais les Anti-Objections sont la PRIORITE pour le closing.
+  </div>
+
+  <div id="autoriteList">
+    <div class="yt-card" data-type="revelation" data-platform="youtube">
+      <div class="yt-header" onclick="toggleYt(this)">
+        <div class="yt-num">01</div>
+        <div class="yt-title">Rosacee: pourquoi ton dermatologue ne regarde pas au bon endroit</div>
+        <div class="yt-duration">12 min</div>
+        <div class="yt-toggle">&#9660;</div>
+      </div>
+      <div class="yt-body">
+        <div class="yt-keyword">SEO: rosacee cause intestin, rosacee traitement naturel</div>
+        <ul class="yt-outline">
+          <li>Introduction: pourquoi 80% des traitements echouent</li>
+          <li>L'axe intestin-peau: mecanisme detaille</li>
+          <li>Etude de cas: avant/apres d'une cliente rosacee</li>
+          <li>Les 3 axes du protocole SAPIENS pour la rosacee</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="yt-card" data-type="mecanisme" data-platform="youtube">
+      <div class="yt-header" onclick="toggleYt(this)">
+        <div class="yt-num">02</div>
+        <div class="yt-title">L'axe intestin-immunite-peau: explication complete</div>
+        <div class="yt-duration">15 min</div>
+        <div class="yt-toggle">&#9660;</div>
+      </div>
+      <div class="yt-body">
+        <div class="yt-keyword">SEO: lien intestin peau, microbiote et peau, gut skin axis</div>
+        <ul class="yt-outline">
+          <li>70% du systeme immunitaire = intestin (sourcer)</li>
+          <li>Permeabilite intestinale → inflammation systemique → peau</li>
+          <li>Schema visuel du mecanisme complet</li>
+          <li>Pourquoi les cremes ne traitent que le messager</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="yt-card" data-type="preuve" data-platform="youtube">
+      <div class="yt-header" onclick="toggleYt(this)">
+        <div class="yt-num">03</div>
+        <div class="yt-title">J'ai gueri ma peau en changeant ce que je mangeais — voici la science</div>
+        <div class="yt-duration">10 min</div>
+        <div class="yt-toggle">&#9660;</div>
+      </div>
+      <div class="yt-body">
+        <div class="yt-keyword">SEO: alimentation et peau, regime peau claire, nutrition dermatologie</div>
+        <ul class="yt-outline">
+          <li>Storytelling: parcours personnel ou client</li>
+          <li>Les aliments inflammatoires: mecanisme scientifique</li>
+          <li>Protocole alimentaire en 3 phases</li>
+          <li>Resultats documentes semaine par semaine</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="yt-card" data-type="revelation" data-platform="youtube">
+      <div class="yt-header" onclick="toggleYt(this)">
+        <div class="yt-num">04</div>
+        <div class="yt-title">Acne adulte apres 25 ans: la vraie cause (ce n'est pas hormonal)</div>
+        <div class="yt-duration">12 min</div>
+        <div class="yt-toggle">&#9660;</div>
+      </div>
+      <div class="yt-body">
+        <div class="yt-keyword">SEO: acne adulte cause, acne apres 25 ans, acne hormonal traitement</div>
+        <ul class="yt-outline">
+          <li>Demystifier le "c'est hormonal" — le raccourci dangereux</li>
+          <li>Le vrai triangle: intestin + inflammation + hormones</li>
+          <li>Pourquoi Roaccutane ne resout pas le fond</li>
+          <li>L'approche integrative: traiter la cause, pas le symptome</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="yt-card" data-type="mecanisme" data-platform="youtube">
+      <div class="yt-header" onclick="toggleYt(this)">
+        <div class="yt-num">05</div>
+        <div class="yt-title">Pourquoi tes bilans sont 'normaux' mais ta peau flambe</div>
+        <div class="yt-duration">10 min</div>
+        <div class="yt-toggle">&#9660;</div>
+      </div>
+      <div class="yt-body">
+        <div class="yt-keyword">SEO: bilans sanguins normaux mais malade, inflammation silencieuse</div>
+        <ul class="yt-outline">
+          <li>Les limites des bilans standards (ce qu'ils ne mesurent pas)</li>
+          <li>L'inflammation de bas grade: invisible mais reelle</li>
+          <li>Les marqueurs a demander a son medecin</li>
+          <li>Comment le protocole SAPIENS complete le diagnostic</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="yt-card" data-type="mecanisme" data-platform="youtube">
+      <div class="yt-header" onclick="toggleYt(this)">
+        <div class="yt-num">06</div>
+        <div class="yt-title">Le regime qui a tout change pour ma peau (protocole carnivore therapeutique)</div>
+        <div class="yt-duration">15 min</div>
+        <div class="yt-toggle">&#9660;</div>
+      </div>
+      <div class="yt-body">
+        <div class="yt-keyword">SEO: regime carnivore peau, elimination diet dermatologie, carnivore therapeutique</div>
+        <ul class="yt-outline">
+          <li>Pourquoi l'elimination radicale fonctionne (science)</li>
+          <li>Le protocole carnivore therapeutique: phase par phase</li>
+          <li>Reintroduction progressive: identifier les declencheurs</li>
+          <li>Etude de cas avec timeline de resultats</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="yt-card" data-type="preuve" data-platform="youtube">
+      <div class="yt-header" onclick="toggleYt(this)">
+        <div class="yt-num">07</div>
+        <div class="yt-title">Psoriasis: comment j'ai accompagne [prenom] en 90 jours</div>
+        <div class="yt-duration">12 min</div>
+        <div class="yt-toggle">&#9660;</div>
+      </div>
+      <div class="yt-body">
+        <div class="yt-keyword">SEO: psoriasis traitement naturel, psoriasis guerison, psoriasis intestin</div>
+        <ul class="yt-outline">
+          <li>Profil client: historique medical, traitements essayes</li>
+          <li>Diagnostic SAPIENS: ce que les bilans ne montraient pas</li>
+          <li>Protocole semaine par semaine avec photos</li>
+          <li>Resultat a J90 et suivi 6 mois</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="yt-card" data-type="mecanisme" data-platform="youtube">
+      <div class="yt-header" onclick="toggleYt(this)">
+        <div class="yt-num">08</div>
+        <div class="yt-title">Eczema chronique: la connexion intestin que personne ne t'explique</div>
+        <div class="yt-duration">12 min</div>
+        <div class="yt-toggle">&#9660;</div>
+      </div>
+      <div class="yt-body">
+        <div class="yt-keyword">SEO: eczema chronique cause, eczema intestin, eczema microbiote</div>
+        <ul class="yt-outline">
+          <li>L'eczema n'est pas une maladie de peau — c'est un signal</li>
+          <li>Le lien prouve entre dysbiose et eczema atopique</li>
+          <li>Pourquoi les corticoides aggravent le probleme a long terme</li>
+          <li>L'approche en 3 piliers: restaurer, nourrir, proteger</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="yt-card" data-type="revelation" data-platform="youtube">
+      <div class="yt-header" onclick="toggleYt(this)">
+        <div class="yt-num">09</div>
+        <div class="yt-title">Les 5 erreurs qui font flamber ta peau (et que tout le monde fait)</div>
+        <div class="yt-duration">10 min</div>
+        <div class="yt-toggle">&#9660;</div>
+      </div>
+      <div class="yt-body">
+        <div class="yt-keyword">SEO: erreurs peau, peau qui flambe, soins peau erreurs</div>
+        <ul class="yt-outline">
+          <li>Erreur 1: Multiplier les produits (surcharge cutanee)</li>
+          <li>Erreur 2: Traiter le symptome sans chercher la cause</li>
+          <li>Erreur 3: Eliminer sans plan de reintroduction</li>
+          <li>Erreur 4: Ignorer le stress (cortisol → inflammation)</li>
+          <li>Erreur 5: Arreter le protocole des que ca va mieux</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="yt-card" data-type="mecanisme" data-platform="youtube">
+      <div class="yt-header" onclick="toggleYt(this)">
+        <div class="yt-num">10</div>
+        <div class="yt-title">Cortisol et peau: pourquoi le stress aggrave mais n'est PAS la cause</div>
+        <div class="yt-duration">10 min</div>
+        <div class="yt-toggle">&#9660;</div>
+      </div>
+      <div class="yt-body">
+        <div class="yt-keyword">SEO: stress et peau, cortisol eczema, stress acne, stress rosacee</div>
+        <ul class="yt-outline">
+          <li>Le mecanisme cortisol → permeabilite intestinale → peau</li>
+          <li>Pourquoi "gere ton stress" n'est pas une solution</li>
+          <li>Les vrais leviers: sommeil, HRV, nutrition anti-stress</li>
+          <li>Le stress est l'accelerateur, pas le moteur</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="yt-card" data-type="identite" data-platform="youtube">
+      <div class="yt-header" onclick="toggleYt(this)">
+        <div class="yt-num">11</div>
+        <div class="yt-title">Mon histoire: de sportif de haut niveau a praticien du terrain biologique</div>
+        <div class="yt-duration">15 min</div>
+        <div class="yt-toggle">&#9660;</div>
+      </div>
+      <div class="yt-body">
+        <div class="yt-keyword">SEO: naturopathe peau, praticien terrain biologique, Geoffrey SAPIENS</div>
+        <ul class="yt-outline">
+          <li>Parcours sport de haut niveau: blessures, systeme medical</li>
+          <li>La decouverte du terrain biologique: le declic</li>
+          <li>Pourquoi la peau est devenue sa specialite</li>
+          <li>La mission SAPIENS: donner une explication, pas une promesse</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="yt-card" data-type="mecanisme" data-platform="youtube">
+      <div class="yt-header" onclick="toggleYt(this)">
+        <div class="yt-num">12</div>
+        <div class="yt-title">Le cycle amelioration → rechute → epuisement: comment en sortir</div>
+        <div class="yt-duration">12 min</div>
+        <div class="yt-toggle">&#9660;</div>
+      </div>
+      <div class="yt-body">
+        <div class="yt-keyword">SEO: rechute eczema, peau qui revient, cycle inflammation peau</div>
+        <ul class="yt-outline">
+          <li>Pourquoi le cycle se repete: l'illusion de la remission</li>
+          <li>La difference entre supprimer et resoudre</li>
+          <li>Le protocole de sortie: stabiliser le terrain, pas masquer</li>
+          <li>Temoignage: "Ca faisait 7 ans que je tournais en boucle"</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="no-results" id="noResultsAutorite">Aucune video ne correspond a ta recherche.</div>
+
+  <div class="yt-rules">
+    <div class="yt-rules-title">Regles YouTube Autorite</div>
+    <ul>
+      <li>ZERO pitch dans la video — jamais de vente directe</li>
+      <li>Lien VSL en description (premiere ligne)</li>
+      <li>Lien booking en description: https://api.leadconnectorhq.com/widget/booking/exr3PQmMOOXUFOnkUfsJ</li>
+      <li>Pinned comment: "Tu as des questions? Commente et je te reponds."</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ═══════ SECTION: REELS PRE-CLOSE ═══════ -->
+<div class="section" id="sec-reels-preclose">
+  <div class="section-title">65 Reels Pre-Close</div>
+  <div class="section-subtitle">Hooks bases sur le LANGAGE EXACT des prospects — extraits de 30+ calls reels</div>
+
+  <div class="warning-box">
+    <strong>REGLE #1:</strong> Ces hooks utilisent les mots EXACTS des prospects. Ne PAS les reformuler en jargon marketing. La puissance vient du fait que Lea se dit "c'est exactement ce que je vis / pense / ressens".
+  </div>
+
+  <div id="reelsPrecloseList">
+
+    <!-- DOULEUR -->
+    <div class="hook-item" data-type="identite" data-platform="reels" data-category="douleur">
+      <div class="hook-num">01</div>
+      <div class="hook-content">
+        <div class="hook-text">"J'evite le miroir."</div>
+        <div class="hook-meta">
+          <span class="badge badge-identite">Identite</span>
+          <span class="badge badge-douleur">Douleur</span>
+        </div>
+        <div class="hook-detail">Verbatim prospect — identite, honte, quotidien</div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+
+    <div class="hook-item" data-type="identite" data-platform="reels" data-category="douleur">
+      <div class="hook-num">02</div>
+      <div class="hook-content">
+        <div class="hook-text">"Meme en plein ete, t'es en manche longue."</div>
+        <div class="hook-meta">
+          <span class="badge badge-identite">Identite</span>
+          <span class="badge badge-douleur">Douleur</span>
+        </div>
+        <div class="hook-detail">Verbatim prospect — honte vestimentaire, limitation quotidienne</div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+
+    <div class="hook-item" data-type="identite" data-platform="reels" data-category="douleur">
+      <div class="hook-num">03</div>
+      <div class="hook-content">
+        <div class="hook-text">"Les gamins: 'qu'est-ce qu'elle a la dame?'"</div>
+        <div class="hook-meta">
+          <span class="badge badge-identite">Identite</span>
+          <span class="badge badge-douleur">Douleur</span>
+        </div>
+        <div class="hook-detail">Verbatim prospect — douleur sociale, regard des autres</div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+
+    <div class="hook-item" data-type="identite" data-platform="reels" data-category="douleur">
+      <div class="hook-num">04</div>
+      <div class="hook-content">
+        <div class="hook-text">"Je me suis encore fait baiser. J'ai encore depense tant de temps, tant d'argent."</div>
+        <div class="hook-meta">
+          <span class="badge badge-identite">Identite</span>
+          <span class="badge badge-douleur">Douleur</span>
+        </div>
+        <div class="hook-detail">Verbatim Charon — frustration, echec repete, argent perdu</div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+
+    <div class="hook-item" data-type="identite" data-platform="reels" data-category="douleur">
+      <div class="hook-num">05</div>
+      <div class="hook-content">
+        <div class="hook-text">"C'est des craquelures qui vont jusqu'au sang."</div>
+        <div class="hook-meta">
+          <span class="badge badge-identite">Identite</span>
+          <span class="badge badge-douleur">Douleur</span>
+        </div>
+        <div class="hook-detail">Verbatim Delattre — douleur physique brute</div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+
+    <div class="hook-item" data-type="identite" data-platform="reels" data-category="douleur">
+      <div class="hook-num">06</div>
+      <div class="hook-content">
+        <div class="hook-text">"J'ai appele ma mere la derniere fois et j'avais la tete en sang."</div>
+        <div class="hook-meta">
+          <span class="badge badge-identite">Identite</span>
+          <span class="badge badge-douleur">Douleur</span>
+        </div>
+        <div class="hook-detail">Verbatim prospect — douleur physique, impuissance</div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+
+    <div class="hook-item" data-type="identite" data-platform="reels" data-category="douleur">
+      <div class="hook-num">07</div>
+      <div class="hook-content">
+        <div class="hook-text">"Desseperant."</div>
+        <div class="hook-meta">
+          <span class="badge badge-identite">Identite</span>
+          <span class="badge badge-douleur">Douleur</span>
+        </div>
+        <div class="hook-detail">Un seul mot qui dit tout — resignation totale</div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+
+    <div class="hook-item" data-type="identite" data-platform="reels" data-category="douleur">
+      <div class="hook-num">08</div>
+      <div class="hook-content">
+        <div class="hook-text">"Ca me pompe de l'energie."</div>
+        <div class="hook-meta">
+          <span class="badge badge-identite">Identite</span>
+          <span class="badge badge-douleur">Douleur</span>
+        </div>
+        <div class="hook-detail">Verbatim prospect — fatigue, charge mentale permanente</div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+
+    <div class="hook-item" data-type="identite" data-platform="reels" data-category="douleur">
+      <div class="hook-num">09</div>
+      <div class="hook-content">
+        <div class="hook-text">"Je me sens coincee, pas de solution."</div>
+        <div class="hook-meta">
+          <span class="badge badge-identite">Identite</span>
+          <span class="badge badge-douleur">Douleur</span>
+        </div>
+        <div class="hook-detail">Verbatim prospect — impuissance, blocage total</div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+
+    <div class="hook-item" data-type="identite" data-platform="reels" data-category="douleur">
+      <div class="hook-num">10</div>
+      <div class="hook-content">
+        <div class="hook-text">"Un decalage entre qui je suis et ce que je vois."</div>
+        <div class="hook-meta">
+          <span class="badge badge-identite">Identite</span>
+          <span class="badge badge-douleur">Douleur</span>
+        </div>
+        <div class="hook-detail">Verbatim prospect — crise identitaire profonde</div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+
+    <div class="hook-item" data-type="identite" data-platform="reels" data-category="douleur">
+      <div class="hook-num">11</div>
+      <div class="hook-content">
+        <div class="hook-text">"Ca fait sale."</div>
+        <div class="hook-meta">
+          <span class="badge badge-identite">Identite</span>
+          <span class="badge badge-douleur">Douleur</span>
+        </div>
+        <div class="hook-detail">Verbatim prospect — honte, stigmatisation</div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+
+    <div class="hook-item" data-type="identite" data-platform="reels" data-category="douleur">
+      <div class="hook-num">12</div>
+      <div class="hook-content">
+        <div class="hook-text">"J'ai toujours l'esprit sur ca."</div>
+        <div class="hook-meta">
+          <span class="badge badge-identite">Identite</span>
+          <span class="badge badge-douleur">Douleur</span>
+        </div>
+        <div class="hook-detail">Verbatim prospect — charge mentale permanente</div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+
+    <div class="hook-item" data-type="identite" data-platform="reels" data-category="douleur">
+      <div class="hook-num">13</div>
+      <div class="hook-content">
+        <div class="hook-text">"Annuler des plans parce que ta peau flambe."</div>
+        <div class="hook-meta">
+          <span class="badge badge-identite">Identite</span>
+          <span class="badge badge-douleur">Douleur</span>
+        </div>
+        <div class="hook-detail">Verbatim prospect — impact social, isolation</div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+
+    <div class="hook-item" data-type="identite" data-platform="reels" data-category="douleur">
+      <div class="hook-num">14</div>
+      <div class="hook-content">
+        <div class="hook-text">"Comme un echec personnel."</div>
+        <div class="hook-meta">
+          <span class="badge badge-identite">Identite</span>
+          <span class="badge badge-douleur">Douleur</span>
+        </div>
+        <div class="hook-detail">Verbatim prospect — culpabilite internalisee</div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+
+    <div class="hook-item" data-type="identite" data-platform="reels" data-category="douleur">
+      <div class="hook-num">15</div>
+      <div class="hook-content">
+        <div class="hook-text">"En revolte contre mon corps."</div>
+        <div class="hook-meta">
+          <span class="badge badge-identite">Identite</span>
+          <span class="badge badge-douleur">Douleur</span>
+        </div>
+        <div class="hook-detail">Verbatim prospect — conflit interne, rupture avec son corps</div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+
+    <!-- MISCONCEPTIONS -->
+    <div class="hook-item" data-type="revelation" data-platform="reels" data-category="misconception">
+      <div class="hook-num">16</div>
+      <div class="hook-content">
+        <div class="hook-text">"La viande rouge c'est cancerigene." — Geoffrey explique en 30 sec.</div>
+        <div class="hook-meta">
+          <span class="badge badge-revelation">Revelation</span>
+          <span class="badge badge-misconception">Misconception</span>
+        </div>
+        <div class="hook-detail">Tue l'objection #1 — renvoyer vers YouTube Video Anti-Obj #1</div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+
+    <div class="hook-item" data-type="revelation" data-platform="reels" data-category="misconception">
+      <div class="hook-num">17</div>
+      <div class="hook-content">
+        <div class="hook-text">"C'est le stress." — Non, le stress aggrave mais n'est pas la cause.</div>
+        <div class="hook-meta">
+          <span class="badge badge-revelation">Revelation</span>
+          <span class="badge badge-misconception">Misconception</span>
+        </div>
+        <div class="hook-detail">Tue la misconception stress — renvoyer vers YouTube Video Anti-Obj #6</div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+
+    <div class="hook-item" data-type="revelation" data-platform="reels" data-category="misconception">
+      <div class="hook-num">18</div>
+      <div class="hook-content">
+        <div class="hook-text">"C'est genetique, j'y peux rien." — Genetique = predisposition, pas condamnation.</div>
+        <div class="hook-meta">
+          <span class="badge badge-revelation">Revelation</span>
+          <span class="badge badge-misconception">Misconception</span>
+        </div>
+        <div class="hook-detail">Tue la resignation hereditaire — renvoyer vers YouTube Video Anti-Obj #3</div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+
+    <div class="hook-item" data-type="revelation" data-platform="reels" data-category="misconception">
+      <div class="hook-num">19</div>
+      <div class="hook-content">
+        <div class="hook-text">"Les probiotiques ca devrait marcher." — Mauvaises souches, mauvais dosage.</div>
+        <div class="hook-meta">
+          <span class="badge badge-revelation">Revelation</span>
+          <span class="badge badge-misconception">Misconception</span>
+        </div>
+        <div class="hook-detail">Tue la fausse solution probiotiques — renvoyer vers YouTube Video Anti-Obj #7</div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+
+    <div class="hook-item" data-type="revelation" data-platform="reels" data-category="misconception">
+      <div class="hook-num">20</div>
+      <div class="hook-content">
+        <div class="hook-text">"Sans gluten ca devrait suffire." — Necessaire mais pas suffisant.</div>
+        <div class="hook-meta">
+          <span class="badge badge-revelation">Revelation</span>
+          <span class="badge badge-misconception">Misconception</span>
+        </div>
+        <div class="hook-detail">Tue la fausse solution sans gluten — renvoyer vers YouTube Video Anti-Obj #7</div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+
+    <div class="hook-item" data-type="revelation" data-platform="reels" data-category="misconception">
+      <div class="hook-num">21</div>
+      <div class="hook-content">
+        <div class="hook-text">"Le jeune devrait tout regler." — 72h de jeune: rien n'a change.</div>
+        <div class="hook-meta">
+          <span class="badge badge-revelation">Revelation</span>
+          <span class="badge badge-misconception">Misconception</span>
+        </div>
+        <div class="hook-detail">Verbatim Kessiri — detruire le mythe du jeune miracle</div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+
+    <div class="hook-item" data-type="revelation" data-platform="reels" data-category="misconception">
+      <div class="hook-num">22</div>
+      <div class="hook-content">
+        <div class="hook-text">"Les fruits et legumes c'est toujours bon." — Oxalates, lectines, fibres: peuvent empirer.</div>
+        <div class="hook-meta">
+          <span class="badge badge-revelation">Revelation</span>
+          <span class="badge badge-misconception">Misconception</span>
+        </div>
+        <div class="hook-detail">Revelation contre-intuitive — forte viralite potentielle</div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+
+    <div class="hook-item" data-type="revelation" data-platform="reels" data-category="misconception">
+      <div class="hook-num">23</div>
+      <div class="hook-content">
+        <div class="hook-text">"Mes bilans sont normaux donc je vais bien." — Ils ne mesurent pas l'inflammation de bas grade.</div>
+        <div class="hook-meta">
+          <span class="badge badge-revelation">Revelation</span>
+          <span class="badge badge-misconception">Misconception</span>
+        </div>
+        <div class="hook-detail">Tue la fausse reassurance medicale</div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+
+    <div class="hook-item" data-type="revelation" data-platform="reels" data-category="misconception">
+      <div class="hook-num">24</div>
+      <div class="hook-content">
+        <div class="hook-text">"C'est un regime hyperproteine." — Non, c'est riche en graisses, pas en proteines.</div>
+        <div class="hook-meta">
+          <span class="badge badge-revelation">Revelation</span>
+          <span class="badge badge-misconception">Misconception</span>
+        </div>
+        <div class="hook-detail">Geoffrey corrige Sonia en call — clarification fondamentale</div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+
+    <div class="hook-item" data-type="revelation" data-platform="reels" data-category="misconception">
+      <div class="hook-num">25</div>
+      <div class="hook-content">
+        <div class="hook-text">"Il faut faire des tests d'intolerance." — Ca ne traite pas la base.</div>
+        <div class="hook-meta">
+          <span class="badge badge-revelation">Revelation</span>
+          <span class="badge badge-misconception">Misconception</span>
+        </div>
+        <div class="hook-detail">Tue la fausse solution tests — symptome vs terrain</div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+
+    <!-- PREUVE SOCIALE -->
+    <div class="hook-item" data-type="preuve" data-platform="reels" data-category="preuve-sociale">
+      <div class="hook-num">26</div>
+      <div class="hook-content">
+        <div class="hook-text">"Elle avait du psoriasis depuis 8 ans. Plaques disparues en 5 semaines."</div>
+        <div class="hook-meta">
+          <span class="badge badge-preuve">Preuve</span>
+        </div>
+        <div class="hook-detail">Temoignage anonyme — avant/apres + timeline</div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+
+    <div class="hook-item" data-type="preuve" data-platform="reels" data-category="preuve-sociale">
+      <div class="hook-num">27</div>
+      <div class="hook-content">
+        <div class="hook-text">"Son dermato ne comprend pas pourquoi ca a change."</div>
+        <div class="hook-meta">
+          <span class="badge badge-preuve">Preuve</span>
+        </div>
+        <div class="hook-detail">Temoignage anonyme — autorite par le contraste</div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+
+    <div class="hook-item" data-type="preuve" data-platform="reels" data-category="preuve-sociale">
+      <div class="hook-num">28</div>
+      <div class="hook-content">
+        <div class="hook-text">"Pour la premiere fois, quelqu'un m'a explique POURQUOI."</div>
+        <div class="hook-meta">
+          <span class="badge badge-preuve">Preuve</span>
+        </div>
+        <div class="hook-detail">Temoignage anonyme — la comprehension comme valeur #1</div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+
+    <div class="hook-item" data-type="preuve" data-platform="reels" data-category="preuve-sociale">
+      <div class="hook-num">29</div>
+      <div class="hook-content">
+        <div class="hook-text">"Ma best life c'etait quand j'etais enceinte. Les ongles, les cheveux, pas une croute." — Et pourquoi.</div>
+        <div class="hook-meta">
+          <span class="badge badge-preuve">Preuve</span>
+        </div>
+        <div class="hook-detail">Verbatim Doris — hormones = anti-inflammatoire naturel, prouve le mecanisme</div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+
+    <div class="hook-item" data-type="preuve" data-platform="reels" data-category="preuve-sociale">
+      <div class="hook-num">30</div>
+      <div class="hook-content">
+        <div class="hook-text">"Premiere nuit sans se reveiller depuis des annees."</div>
+        <div class="hook-meta">
+          <span class="badge badge-preuve">Preuve</span>
+        </div>
+        <div class="hook-detail">Temoignage Yahya — resultat concret, emotionnel</div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+
+    <!-- REFRAMES PUISSANTS -->
+    <div class="hook-item" data-type="mecanisme" data-platform="reels" data-category="reframe">
+      <div class="hook-num">31</div>
+      <div class="hook-content">
+        <div class="hook-text">"Tout ce que t'as essaye traitait la surface. Personne n'a regarde ce qui produit tes symptomes."</div>
+        <div class="hook-meta">
+          <span class="badge badge-mecanisme">Mecanisme</span>
+          <span class="badge badge-reframe">Reframe</span>
+        </div>
+        <div class="hook-detail">Reframe fondamental — symptome vs cause racine</div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+
+    <div class="hook-item" data-type="mecanisme" data-platform="reels" data-category="reframe">
+      <div class="hook-num">32</div>
+      <div class="hook-content">
+        <div class="hook-text">"Ton dermatologue traite la peau. Moi je traite ce qui fait flamber la peau. C'est pas le meme travail."</div>
+        <div class="hook-meta">
+          <span class="badge badge-mecanisme">Mecanisme</span>
+          <span class="badge badge-reframe">Reframe</span>
+        </div>
+        <div class="hook-detail">Positionnement Geoffrey — pas contre le dermato, complementaire</div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+
+    <div class="hook-item" data-type="mecanisme" data-platform="reels" data-category="reframe">
+      <div class="hook-num">33</div>
+      <div class="hook-content">
+        <div class="hook-text">"Chronique ca veut dire que ca dure. Ca veut pas dire que c'est irreversible."</div>
+        <div class="hook-meta">
+          <span class="badge badge-mecanisme">Mecanisme</span>
+          <span class="badge badge-reframe">Reframe</span>
+        </div>
+        <div class="hook-detail">Tue la resignation "c'est chronique" — renvoyer vers YouTube Anti-Obj #3</div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+
+    <div class="hook-item" data-type="mecanisme" data-platform="reels" data-category="reframe">
+      <div class="hook-num">34</div>
+      <div class="hook-content">
+        <div class="hook-text">"Ta peau n'est pas le probleme. Ta peau est le messager."</div>
+        <div class="hook-meta">
+          <span class="badge badge-mecanisme">Mecanisme</span>
+          <span class="badge badge-reframe">Reframe</span>
+        </div>
+        <div class="hook-detail">Le reframe le plus puissant — renvoyer vers YouTube Anti-Obj #12</div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+
+    <div class="hook-item" data-type="mecanisme" data-platform="reels" data-category="reframe">
+      <div class="hook-num">35</div>
+      <div class="hook-content">
+        <div class="hook-text">"Un pansement sur une jambe de bois." — C'est exactement ca les cremes.</div>
+        <div class="hook-meta">
+          <span class="badge badge-mecanisme">Mecanisme</span>
+          <span class="badge badge-reframe">Reframe</span>
+        </div>
+        <div class="hook-detail">Verbatim Delattre — image memorable, forte viralite</div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+
+    <!-- DESIRS -->
+    <div class="hook-item" data-type="identite" data-platform="reels" data-category="desir">
+      <div class="hook-num">36</div>
+      <div class="hook-content">
+        <div class="hook-text">"Etre pleinement moi-meme... remettre des robes."</div>
+        <div class="hook-meta">
+          <span class="badge badge-identite">Identite</span>
+          <span class="badge badge-desir">Desir</span>
+        </div>
+        <div class="hook-detail">Verbatim Aurelie — desir de liberte vestimentaire, feminite</div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+
+    <div class="hook-item" data-type="identite" data-platform="reels" data-category="desir">
+      <div class="hook-num">37</div>
+      <div class="hook-content">
+        <div class="hook-text">"Une benediction, une renaissance."</div>
+        <div class="hook-meta">
+          <span class="badge badge-identite">Identite</span>
+          <span class="badge badge-desir">Desir</span>
+        </div>
+        <div class="hook-detail">Verbatim Nathalianne — desir de transformation totale</div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+
+    <div class="hook-item" data-type="identite" data-platform="reels" data-category="desir">
+      <div class="hook-num">38</div>
+      <div class="hook-content">
+        <div class="hook-text">"Je me sentirais forte. Je me dirais que j'ai gagne."</div>
+        <div class="hook-meta">
+          <span class="badge badge-identite">Identite</span>
+          <span class="badge badge-desir">Desir</span>
+        </div>
+        <div class="hook-detail">Verbatim Olivia — desir de victoire personnelle</div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+
+    <div class="hook-item" data-type="identite" data-platform="reels" data-category="desir">
+      <div class="hook-num">39</div>
+      <div class="hook-content">
+        <div class="hook-text">"Ne pas avoir a y penser. Prendre la place pour d'autres choses."</div>
+        <div class="hook-meta">
+          <span class="badge badge-identite">Identite</span>
+          <span class="badge badge-desir">Desir</span>
+        </div>
+        <div class="hook-detail">Verbatim Valmira — desir de liberation mentale</div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+
+    <div class="hook-item" data-type="identite" data-platform="reels" data-category="desir">
+      <div class="hook-num">40</div>
+      <div class="hook-content">
+        <div class="hook-text">"Etre libre, pas limitee."</div>
+        <div class="hook-meta">
+          <span class="badge badge-identite">Identite</span>
+          <span class="badge badge-desir">Desir</span>
+        </div>
+        <div class="hook-detail">Verbatim Sonia — desir de liberte totale</div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+
+    <!-- CTA DECISION -->
+    <div class="hook-item" data-type="decision" data-platform="reels" data-category="cta">
+      <div class="hook-num">41</div>
+      <div class="hook-content">
+        <div class="hook-text">"Ca fait combien de temps que tu attends le bon moment?"</div>
+        <div class="hook-meta">
+          <span class="badge badge-decision">Decision</span>
+          <span class="badge badge-cta">CTA</span>
+        </div>
+        <div class="hook-detail">Decision — urgence naturelle, pas artificielle</div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+
+    <div class="hook-item" data-type="decision" data-platform="reels" data-category="cta">
+      <div class="hook-num">42</div>
+      <div class="hook-content">
+        <div class="hook-text">"Tu as tout essaye. Essaie la cause racine."</div>
+        <div class="hook-meta">
+          <span class="badge badge-decision">Decision</span>
+          <span class="badge badge-cta">CTA</span>
+        </div>
+        <div class="hook-detail">Decision — reframe + CTA implicite</div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+
+    <div class="hook-item" data-type="decision" data-platform="reels" data-category="cta">
+      <div class="hook-num">43</div>
+      <div class="hook-content">
+        <div class="hook-text">"Le risque c'est nous. Pas toi."</div>
+        <div class="hook-meta">
+          <span class="badge badge-decision">Decision</span>
+          <span class="badge badge-cta">CTA</span>
+        </div>
+        <div class="hook-detail">Decision — risk reversal fort</div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+
+    <div class="hook-item" data-type="decision" data-platform="reels" data-category="cta">
+      <div class="hook-num">44</div>
+      <div class="hook-content">
+        <div class="hook-text">"30 minutes. Gratuites. Sans engagement. Commente SAPIENS."</div>
+        <div class="hook-meta">
+          <span class="badge badge-decision">Decision</span>
+          <span class="badge badge-cta">CTA</span>
+        </div>
+        <div class="hook-detail">Decision — friction minimale, CTA direct</div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+
+    <div class="hook-item" data-type="decision" data-platform="reels" data-category="cta">
+      <div class="hook-num">45</div>
+      <div class="hook-content">
+        <div class="hook-text">"On prend 10 profils par mois. Commente SAPIENS."</div>
+        <div class="hook-meta">
+          <span class="badge badge-decision">Decision</span>
+          <span class="badge badge-cta">CTA</span>
+        </div>
+        <div class="hook-detail">Decision — rarete naturelle + CTA direct</div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+
+    <!-- LIEN YOUTUBE -->
+    <div class="hook-item" data-type="mecanisme" data-platform="reels" data-category="lien-yt">
+      <div class="hook-num">46</div>
+      <div class="hook-content">
+        <div class="hook-text">"70% de ton systeme immunitaire est dans ton intestin. L'explication complete en lien."</div>
+        <div class="hook-meta">
+          <span class="badge badge-mecanisme">Mecanisme</span>
+          <span class="badge badge-lien-yt">Lien YT</span>
+        </div>
+        <div class="hook-detail">Renvoie vers YouTube Anti-Obj #9 — Psoriasis, eczema, rosacee = meme probleme</div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+
+    <div class="hook-item" data-type="mecanisme" data-platform="reels" data-category="lien-yt">
+      <div class="hook-num">47</div>
+      <div class="hook-content">
+        <div class="hook-text">"Pourquoi le sans gluten n'a pas marche pour toi. La reponse en 15 min en lien."</div>
+        <div class="hook-meta">
+          <span class="badge badge-mecanisme">Mecanisme</span>
+          <span class="badge badge-lien-yt">Lien YT</span>
+        </div>
+        <div class="hook-detail">Renvoie vers YouTube Anti-Obj #7 — Sans gluten, probiotiques, complements</div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+
+    <div class="hook-item" data-type="mecanisme" data-platform="reels" data-category="lien-yt">
+      <div class="hook-num">48</div>
+      <div class="hook-content">
+        <div class="hook-text">"Le cycle qui se repete depuis des annees — explique en detail en lien."</div>
+        <div class="hook-meta">
+          <span class="badge badge-mecanisme">Mecanisme</span>
+          <span class="badge badge-lien-yt">Lien YT</span>
+        </div>
+        <div class="hook-detail">Renvoie vers YouTube Anti-Obj #5 — Le cycle espoir-rechute-epuisement</div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+
+    <div class="hook-item" data-type="mecanisme" data-platform="reels" data-category="lien-yt">
+      <div class="hook-num">49</div>
+      <div class="hook-content">
+        <div class="hook-text">"La verite sur la viande rouge et ta peau — en lien."</div>
+        <div class="hook-meta">
+          <span class="badge badge-mecanisme">Mecanisme</span>
+          <span class="badge badge-lien-yt">Lien YT</span>
+        </div>
+        <div class="hook-detail">Renvoie vers YouTube Anti-Obj #1 — La viande rouge est cancerigene?</div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+
+    <div class="hook-item" data-type="mecanisme" data-platform="reels" data-category="lien-yt">
+      <div class="hook-num">50</div>
+      <div class="hook-content">
+        <div class="hook-text">"Ce que ton dermato ne t'a jamais dit — en lien."</div>
+        <div class="hook-meta">
+          <span class="badge badge-mecanisme">Mecanisme</span>
+          <span class="badge badge-lien-yt">Lien YT</span>
+        </div>
+        <div class="hook-detail">Renvoie vers YouTube Anti-Obj #3 — "C'est chronique"</div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+
+    <!-- ═══ BATCH 2: 15 NOUVEAUX REELS (analyse 30+ calls) ═══ -->
+
+    <div style="margin:32px 0 16px;padding:12px 0;border-top:2px solid #C75050;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#C75050;font-weight:700;">Nouveaux — Extraits de 30+ calls analyses</div>
+
+    <div class="hook-item" data-type="identite" data-platform="reels" data-category="douleur">
+      <div class="hook-num">51</div>
+      <div class="hook-content">
+        <div class="hook-text">"Je me gratte jusqu'au sang tous les soirs."</div>
+        <div class="hook-meta"><span class="badge badge-identite">Identite</span><span class="badge" style="background:rgba(199,80,80,0.15);color:#C75050;">Douleur</span></div>
+        <div class="hook-detail">Belgin — psoriasis 10 ans. Douleur physique brute qui arrete le scroll.</div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+
+    <div class="hook-item" data-type="identite" data-platform="reels" data-category="douleur">
+      <div class="hook-num">52</div>
+      <div class="hook-content">
+        <div class="hook-text">"J'ai l'impression que j'ai de la neige qui tombe."</div>
+        <div class="hook-meta"><span class="badge badge-identite">Identite</span><span class="badge" style="background:rgba(199,80,80,0.15);color:#C75050;">Douleur</span></div>
+        <div class="hook-detail">Milene — dermite cuir chevelu. Image visuelle puissante. Toute personne avec des pellicules se reconnait.</div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+
+    <div class="hook-item" data-type="mecanisme" data-platform="reels" data-category="reframe">
+      <div class="hook-num">53</div>
+      <div class="hook-content">
+        <div class="hook-text">"Ton corps sonne l'alarme depuis 10 ans. Tu continues a couper la sonnerie."</div>
+        <div class="hook-meta"><span class="badge badge-mecanisme">Mecanisme</span><span class="badge" style="background:rgba(184,149,106,0.15);color:#B8956A;">Reframe</span></div>
+        <div class="hook-detail">Inspire de Belgin: "repondre a l'alarme que mon corps sonne depuis 10 ans." Les cremes = couper l'alarme.</div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+
+    <div class="hook-item" data-type="identite" data-platform="reels" data-category="desir">
+      <div class="hook-num">54</div>
+      <div class="hook-content">
+        <div class="hook-text">"Je ne demande pas la lune. Je demande juste d'etre bien."</div>
+        <div class="hook-meta"><span class="badge badge-identite">Identite</span><span class="badge" style="background:rgba(74,122,90,0.2);color:#6a9a78;">Desir</span></div>
+        <div class="hook-detail">Bettina — rosacee 6 ans, mariage en octobre. La simplicite du desir touche profondement.</div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+
+    <div class="hook-item" data-type="identite" data-platform="reels" data-category="desir">
+      <div class="hook-num">55</div>
+      <div class="hook-content">
+        <div class="hook-text">"J'aimerais juste me lever, mettre une creme et sortir."</div>
+        <div class="hook-meta"><span class="badge badge-identite">Identite</span><span class="badge" style="background:rgba(74,122,90,0.2);color:#6a9a78;">Desir</span></div>
+        <div class="hook-detail">Maria — acne 17 ans. Le reve de la normalite. Chaque femme avec de l'acne se reconnait.</div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+
+    <div class="hook-item" data-type="identite" data-platform="reels" data-category="douleur">
+      <div class="hook-num">56</div>
+      <div class="hook-content">
+        <div class="hook-text">"Meme devant mon mari, je cache certaines parties de mon corps."</div>
+        <div class="hook-meta"><span class="badge badge-identite">Identite</span><span class="badge" style="background:rgba(199,80,80,0.15);color:#C75050;">Intimite</span></div>
+        <div class="hook-detail">Kharmalia — psoriasis. L'impact sur l'intimite que personne n'ose mentionner. Tabou = engagement massif.</div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+
+    <div class="hook-item" data-type="identite" data-platform="reels" data-category="desir">
+      <div class="hook-num">57</div>
+      <div class="hook-content">
+        <div class="hook-text">"Je serais fiere de moi. Je serais fiere de moi, je pense."</div>
+        <div class="hook-meta"><span class="badge badge-identite">Identite</span><span class="badge" style="background:rgba(74,122,90,0.2);color:#6a9a78;">Desir</span></div>
+        <div class="hook-detail">Belgin — la fierte de reprendre le controle. Double repetition = poids emotionnel.</div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+
+    <div class="hook-item" data-type="identite" data-platform="reels" data-category="douleur">
+      <div class="hook-num">58</div>
+      <div class="hook-content">
+        <div class="hook-text">"J'ai l'impression que tout le monde est focalise sur mon acne. C'est le centre de ma vie."</div>
+        <div class="hook-meta"><span class="badge badge-identite">Identite</span><span class="badge" style="background:rgba(199,80,80,0.15);color:#C75050;">Douleur</span></div>
+        <div class="hook-detail">Maria — 17 ans d'acne. La peau qui devient l'identite. Quand ta condition TE definit.</div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+
+    <div class="hook-item" data-type="identite" data-platform="reels" data-category="douleur">
+      <div class="hook-num">59</div>
+      <div class="hook-content">
+        <div class="hook-text">"On est cense continuer notre vie mais on est completement a cote de la plaque."</div>
+        <div class="hook-meta"><span class="badge badge-identite">Identite</span><span class="badge" style="background:rgba(199,80,80,0.15);color:#C75050;">Fatigue</span></div>
+        <div class="hook-detail">Jennifer — post-Covid. Le brouillard mental + la fatigue chronique. Applicable a toute condition invisible.</div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+
+    <div class="hook-item" data-type="identite" data-platform="reels" data-category="douleur">
+      <div class="hook-num">60</div>
+      <div class="hook-content">
+        <div class="hook-text">"Je ne peux meme pas sortir sans maquillage."</div>
+        <div class="hook-meta"><span class="badge badge-identite">Identite</span><span class="badge" style="background:rgba(199,80,80,0.15);color:#C75050;">Impact social</span></div>
+        <div class="hook-detail">Maria — la prison du maquillage. Chaque femme avec de l'acne ou de la rosacee le vit.</div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+
+    <div class="hook-item" data-type="revelation" data-platform="reels" data-category="misconception">
+      <div class="hook-num">61</div>
+      <div class="hook-content">
+        <div class="hook-text">"La cortisone a EMPIRE mon probleme pendant 10 ans."</div>
+        <div class="hook-meta"><span class="badge badge-revelation">Revelation</span><span class="badge" style="background:rgba(199,80,80,0.15);color:#C75050;">Misconception</span></div>
+        <div class="hook-detail">Belgin — cortisone sur champignons non diagnostiques. Le traitement lui-meme peut etre le probleme.</div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+
+    <div class="hook-item" data-type="preuve" data-platform="reels" data-category="preuve">
+      <div class="hook-num">62</div>
+      <div class="hook-content">
+        <div class="hook-text">"Pendant ma grossesse, zero psoriasis. Ca prouve que c'est reversible."</div>
+        <div class="hook-meta"><span class="badge badge-preuve">Preuve</span><span class="badge" style="background:rgba(74,122,90,0.2);color:#6a9a78;">Mecanisme</span></div>
+        <div class="hook-detail">Kharmalia + Doris. Les hormones de grossesse = anti-inflammatoire naturel. Si ca disparait pendant la grossesse, c'est que c'est PAS permanent.</div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+
+    <div class="hook-item" data-type="revelation" data-platform="reels" data-category="misconception">
+      <div class="hook-num">63</div>
+      <div class="hook-content">
+        <div class="hook-text">"5,000€ en 17 ans de traitements. Rien n'a change."</div>
+        <div class="hook-meta"><span class="badge badge-revelation">Revelation</span><span class="badge" style="background:rgba(184,149,106,0.15);color:#B8956A;">Reframe prix</span></div>
+        <div class="hook-detail">Maria — le vrai cout de l'errance medicale. Pre-handle l'objection prix avant le call.</div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+
+    <div class="hook-item" data-type="revelation" data-platform="reels" data-category="misconception">
+      <div class="hook-num">64</div>
+      <div class="hook-content">
+        <div class="hook-text">"Un regime vegan m'a fait chuter la feritine a 12."</div>
+        <div class="hook-meta"><span class="badge badge-revelation">Revelation</span><span class="badge" style="background:rgba(199,80,80,0.15);color:#C75050;">Misconception</span></div>
+        <div class="hook-detail">Safa — 40 ans, psoriasis 20 ans. Le vegan presente comme solution miracle peut EMPIRER la sante globale. Attention aux regimes non adaptes.</div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+
+    <div class="hook-item" data-type="mecanisme" data-platform="reels" data-category="lien-yt">
+      <div class="hook-num">65</div>
+      <div class="hook-content">
+        <div class="hook-text">"Quand le traitement lui-meme empire le probleme — l'histoire complete en lien."</div>
+        <div class="hook-meta"><span class="badge badge-mecanisme">Mecanisme</span><span class="badge badge-lien-yt">Lien YT</span></div>
+        <div class="hook-detail">Renvoie vers YouTube Anti-Obj #13 — Quand le traitement empire</div>
+      </div>
+      <button class="copy-btn" onclick="copyHook(this)">Copier</button>
+    </div>
+
+  </div>
+
+  <div class="no-results" id="noResultsReelsPreclose">Aucun reel ne correspond a ta recherche.</div>
 </div>
 
 <!-- ═══════ SECTION: HOOKS ═══════ -->
@@ -1276,243 +3060,6 @@ tr:last-child td { border-bottom: none; }
   <div class="no-results" id="noResultsHooks">Aucun hook ne correspond a ta recherche.</div>
 </div>
 
-<!-- ═══════ SECTION: YOUTUBE ═══════ -->
-<div class="section" id="sec-youtube">
-  <div class="section-title">12 Idees YouTube</div>
-  <div class="section-subtitle">Videos long format — 8-15 min, facecam Geoffrey, SEO-focused</div>
-
-  <div id="youtubeList">
-    <div class="yt-card" data-type="revelation" data-platform="youtube">
-      <div class="yt-header" onclick="toggleYt(this)">
-        <div class="yt-num">01</div>
-        <div class="yt-title">Rosacee: pourquoi ton dermatologue ne regarde pas au bon endroit</div>
-        <div class="yt-duration">12 min</div>
-        <div class="yt-toggle">&#9660;</div>
-      </div>
-      <div class="yt-body">
-        <div class="yt-keyword">SEO: rosacee cause intestin, rosacee traitement naturel</div>
-        <ul class="yt-outline">
-          <li>Introduction: pourquoi 80% des traitements echouent</li>
-          <li>L'axe intestin-peau: mecanisme detaille</li>
-          <li>Etude de cas: avant/apres d'une cliente rosacee</li>
-          <li>Les 3 axes du protocole SAPIENS pour la rosacee</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="yt-card" data-type="mecanisme" data-platform="youtube">
-      <div class="yt-header" onclick="toggleYt(this)">
-        <div class="yt-num">02</div>
-        <div class="yt-title">L'axe intestin-immunite-peau: explication complete</div>
-        <div class="yt-duration">15 min</div>
-        <div class="yt-toggle">&#9660;</div>
-      </div>
-      <div class="yt-body">
-        <div class="yt-keyword">SEO: lien intestin peau, microbiote et peau, gut skin axis</div>
-        <ul class="yt-outline">
-          <li>70% du systeme immunitaire = intestin (sourcer)</li>
-          <li>Permeabilite intestinale → inflammation systemique → peau</li>
-          <li>Schema visuel du mecanisme complet</li>
-          <li>Pourquoi les cremes ne traitent que le messager</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="yt-card" data-type="preuve" data-platform="youtube">
-      <div class="yt-header" onclick="toggleYt(this)">
-        <div class="yt-num">03</div>
-        <div class="yt-title">J'ai gueri ma peau en changeant ce que je mangeais — voici la science</div>
-        <div class="yt-duration">10 min</div>
-        <div class="yt-toggle">&#9660;</div>
-      </div>
-      <div class="yt-body">
-        <div class="yt-keyword">SEO: alimentation et peau, regime peau claire, nutrition dermatologie</div>
-        <ul class="yt-outline">
-          <li>Storytelling: parcours personnel ou client</li>
-          <li>Les aliments inflammatoires: mecanisme scientifique</li>
-          <li>Protocole alimentaire en 3 phases</li>
-          <li>Resultats documentes semaine par semaine</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="yt-card" data-type="revelation" data-platform="youtube">
-      <div class="yt-header" onclick="toggleYt(this)">
-        <div class="yt-num">04</div>
-        <div class="yt-title">Acne adulte apres 25 ans: la vraie cause (ce n'est pas hormonal)</div>
-        <div class="yt-duration">12 min</div>
-        <div class="yt-toggle">&#9660;</div>
-      </div>
-      <div class="yt-body">
-        <div class="yt-keyword">SEO: acne adulte cause, acne apres 25 ans, acne hormonal traitement</div>
-        <ul class="yt-outline">
-          <li>Demystifier le "c'est hormonal" — le raccourci dangereux</li>
-          <li>Le vrai triangle: intestin + inflammation + hormones</li>
-          <li>Pourquoi Roaccutane ne resout pas le fond</li>
-          <li>L'approche integrative: traiter la cause, pas le symptome</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="yt-card" data-type="mecanisme" data-platform="youtube">
-      <div class="yt-header" onclick="toggleYt(this)">
-        <div class="yt-num">05</div>
-        <div class="yt-title">Pourquoi tes bilans sont 'normaux' mais ta peau flambe</div>
-        <div class="yt-duration">10 min</div>
-        <div class="yt-toggle">&#9660;</div>
-      </div>
-      <div class="yt-body">
-        <div class="yt-keyword">SEO: bilans sanguins normaux mais malade, inflammation silencieuse</div>
-        <ul class="yt-outline">
-          <li>Les limites des bilans standards (ce qu'ils ne mesurent pas)</li>
-          <li>L'inflammation de bas grade: invisible mais reelle</li>
-          <li>Les marqueurs a demander a son medecin</li>
-          <li>Comment le protocole SAPIENS complete le diagnostic</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="yt-card" data-type="mecanisme" data-platform="youtube">
-      <div class="yt-header" onclick="toggleYt(this)">
-        <div class="yt-num">06</div>
-        <div class="yt-title">Le regime qui a tout change pour ma peau (protocole carnivore therapeutique)</div>
-        <div class="yt-duration">15 min</div>
-        <div class="yt-toggle">&#9660;</div>
-      </div>
-      <div class="yt-body">
-        <div class="yt-keyword">SEO: regime carnivore peau, elimination diet dermatologie, carnivore therapeutique</div>
-        <ul class="yt-outline">
-          <li>Pourquoi l'elimination radicale fonctionne (science)</li>
-          <li>Le protocole carnivore therapeutique: phase par phase</li>
-          <li>Reintroduction progressive: identifier les declencheurs</li>
-          <li>Etude de cas avec timeline de resultats</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="yt-card" data-type="preuve" data-platform="youtube">
-      <div class="yt-header" onclick="toggleYt(this)">
-        <div class="yt-num">07</div>
-        <div class="yt-title">Psoriasis: comment j'ai accompagne [prenom] en 90 jours</div>
-        <div class="yt-duration">12 min</div>
-        <div class="yt-toggle">&#9660;</div>
-      </div>
-      <div class="yt-body">
-        <div class="yt-keyword">SEO: psoriasis traitement naturel, psoriasis guerison, psoriasis intestin</div>
-        <ul class="yt-outline">
-          <li>Profil client: historique medical, traitements essayes</li>
-          <li>Diagnostic SAPIENS: ce que les bilans ne montraient pas</li>
-          <li>Protocole semaine par semaine avec photos</li>
-          <li>Resultat a J90 et suivi 6 mois</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="yt-card" data-type="mecanisme" data-platform="youtube">
-      <div class="yt-header" onclick="toggleYt(this)">
-        <div class="yt-num">08</div>
-        <div class="yt-title">Eczema chronique: la connexion intestin que personne ne t'explique</div>
-        <div class="yt-duration">12 min</div>
-        <div class="yt-toggle">&#9660;</div>
-      </div>
-      <div class="yt-body">
-        <div class="yt-keyword">SEO: eczema chronique cause, eczema intestin, eczema microbiote</div>
-        <ul class="yt-outline">
-          <li>L'eczema n'est pas une maladie de peau — c'est un signal</li>
-          <li>Le lien prouve entre dysbiose et eczema atopique</li>
-          <li>Pourquoi les corticoides aggravent le probleme a long terme</li>
-          <li>L'approche en 3 piliers: restaurer, nourrir, proteger</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="yt-card" data-type="revelation" data-platform="youtube">
-      <div class="yt-header" onclick="toggleYt(this)">
-        <div class="yt-num">09</div>
-        <div class="yt-title">Les 5 erreurs qui font flamber ta peau (et que tout le monde fait)</div>
-        <div class="yt-duration">10 min</div>
-        <div class="yt-toggle">&#9660;</div>
-      </div>
-      <div class="yt-body">
-        <div class="yt-keyword">SEO: erreurs peau, peau qui flambe, soins peau erreurs</div>
-        <ul class="yt-outline">
-          <li>Erreur 1: Multiplier les produits (surcharge cutanee)</li>
-          <li>Erreur 2: Traiter le symptome sans chercher la cause</li>
-          <li>Erreur 3: Eliminer sans plan de reintroduction</li>
-          <li>Erreur 4: Ignorer le stress (cortisol → inflammation)</li>
-          <li>Erreur 5: Arreter le protocole des que ca va mieux</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="yt-card" data-type="mecanisme" data-platform="youtube">
-      <div class="yt-header" onclick="toggleYt(this)">
-        <div class="yt-num">10</div>
-        <div class="yt-title">Cortisol et peau: pourquoi le stress aggrave mais n'est PAS la cause</div>
-        <div class="yt-duration">10 min</div>
-        <div class="yt-toggle">&#9660;</div>
-      </div>
-      <div class="yt-body">
-        <div class="yt-keyword">SEO: stress et peau, cortisol eczema, stress acne, stress rosacee</div>
-        <ul class="yt-outline">
-          <li>Le mecanisme cortisol → permeabilite intestinale → peau</li>
-          <li>Pourquoi "gere ton stress" n'est pas une solution</li>
-          <li>Les vrais leviers: sommeil, HRV, nutrition anti-stress</li>
-          <li>Le stress est l'accelerateur, pas le moteur</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="yt-card" data-type="identite" data-platform="youtube">
-      <div class="yt-header" onclick="toggleYt(this)">
-        <div class="yt-num">11</div>
-        <div class="yt-title">Mon histoire: de sportif de haut niveau a praticien du terrain biologique</div>
-        <div class="yt-duration">15 min</div>
-        <div class="yt-toggle">&#9660;</div>
-      </div>
-      <div class="yt-body">
-        <div class="yt-keyword">SEO: naturopathe peau, praticien terrain biologique, Geoffrey SAPIENS</div>
-        <ul class="yt-outline">
-          <li>Parcours sport de haut niveau: blessures, systeme medical</li>
-          <li>La decouverte du terrain biologique: le declic</li>
-          <li>Pourquoi la peau est devenue sa specialite</li>
-          <li>La mission SAPIENS: donner une explication, pas une promesse</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="yt-card" data-type="mecanisme" data-platform="youtube">
-      <div class="yt-header" onclick="toggleYt(this)">
-        <div class="yt-num">12</div>
-        <div class="yt-title">Le cycle amelioration → rechute → epuisement: comment en sortir</div>
-        <div class="yt-duration">12 min</div>
-        <div class="yt-toggle">&#9660;</div>
-      </div>
-      <div class="yt-body">
-        <div class="yt-keyword">SEO: rechute eczema, peau qui revient, cycle inflammation peau</div>
-        <ul class="yt-outline">
-          <li>Pourquoi le cycle se repete: l'illusion de la remission</li>
-          <li>La difference entre supprimer et resoudre</li>
-          <li>Le protocole de sortie: stabiliser le terrain, pas masquer</li>
-          <li>Temoignage: "Ca faisait 7 ans que je tournais en boucle"</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-
-  <div class="no-results" id="noResultsYt">Aucune video ne correspond a ta recherche.</div>
-
-  <div class="yt-rules">
-    <div class="yt-rules-title">Regles YouTube</div>
-    <ul>
-      <li>ZERO pitch dans la video — jamais de vente directe</li>
-      <li>Lien VSL en description (premiere ligne)</li>
-      <li>Lien Calendly en description (deuxieme ligne)</li>
-      <li>Pinned comment: "Tu as des questions? Commente et je te reponds."</li>
-    </ul>
-  </div>
-</div>
-
 <!-- ═══════ SECTION: STORIES ═══════ -->
 <div class="section" id="sec-stories">
   <div class="section-title">Strategie Stories</div>
@@ -1596,7 +3143,7 @@ tr:last-child td { border-bottom: none; }
 <!-- ═══════ SECTION: REGLES ═══════ -->
 <div class="section" id="sec-regles">
   <div class="section-title">Regles d'Or du Contenu</div>
-  <div class="section-subtitle">7 principes non-negociables pour chaque piece de contenu</div>
+  <div class="section-subtitle">13 principes non-negociables pour chaque piece de contenu</div>
 
   <div class="rule-card">
     <div class="rule-num">01</div>
@@ -1625,6 +3172,36 @@ tr:last-child td { border-bottom: none; }
   <div class="rule-card">
     <div class="rule-num">07</div>
     <div class="rule-text"><strong style="color:var(--gold)">Jamais de jargon medical complexe.</strong> "Dysbiose intestinale" → "ton intestin est deregle". "Permeabilite intestinale" → "ton intestin laisse passer des choses qu'il ne devrait pas". Parler comme Lea parle.</div>
+  </div>
+
+  <div style="margin-top:32px;margin-bottom:24px;border-top:2px solid var(--anti-objection);padding-top:24px;">
+    <div class="section-title" style="font-size:22px;color:var(--anti-objection);">Regles Anti-Objections (NOUVELLES)</div>
+    <div class="section-subtitle">6 regles supplementaires basees sur l'analyse des 18 calls reels</div>
+  </div>
+
+  <div class="rule-card" style="border-color:var(--anti-objection);">
+    <div class="rule-num" style="color:rgba(199,80,80,.3);">08</div>
+    <div class="rule-text"><strong style="color:var(--anti-objection)">Chaque video YouTube doit tuer au moins 1 objection identifiee dans les calls reels.</strong> Pas d'objections inventees. On travaille avec les mots exacts des prospects, pas des hypotheses marketing.</div>
+  </div>
+  <div class="rule-card" style="border-color:var(--anti-objection);">
+    <div class="rule-num" style="color:rgba(199,80,80,.3);">09</div>
+    <div class="rule-text"><strong style="color:var(--anti-objection)">Les hooks des Reels utilisent le LANGAGE EXACT des prospects.</strong> "J'evite le miroir" > "L'impact psychologique des problemes cutanes". Le verbatim cree la resonance. Le jargon marketing cree la distance.</div>
+  </div>
+  <div class="rule-card" style="border-color:var(--anti-objection);">
+    <div class="rule-num" style="color:rgba(199,80,80,.3);">10</div>
+    <div class="rule-text"><strong style="color:var(--anti-objection)">40% des Reels pointent vers YouTube (MECANISME + PREUVE).</strong> Format: teaser 30 sec + "L'explication complete en lien". Les Reels attirent, YouTube pre-close.</div>
+  </div>
+  <div class="rule-card" style="border-color:var(--anti-objection);">
+    <div class="rule-num" style="color:rgba(199,80,80,.3);">11</div>
+    <div class="rule-text"><strong style="color:var(--anti-objection)">60% des Reels gardent "commente SAPIENS" (IDENTITE + DECISION).</strong> Ces Reels travaillent l'engagement direct et alimentent ManyChat.</div>
+  </div>
+  <div class="rule-card" style="border-color:var(--anti-objection);">
+    <div class="rule-num" style="color:rgba(199,80,80,.3);">12</div>
+    <div class="rule-text"><strong style="color:var(--anti-objection)">YouTube: ZERO pitch, ZERO prix, ZERO "cetose".</strong> Utiliser "protocole terrain" ou "approche terrain biologique". Le mot "cetose" declenche des associations negatives ("regime Keto", "dangereux", "extreme").</div>
+  </div>
+  <div class="rule-card" style="border-color:var(--anti-objection);">
+    <div class="rule-num" style="color:rgba(199,80,80,.3);">13</div>
+    <div class="rule-text"><strong style="color:var(--anti-objection)">Lien VSL + lien booking dans CHAQUE description YouTube.</strong><br>Booking: https://api.leadconnectorhq.com/widget/booking/exr3PQmMOOXUFOnkUfsJ</div>
   </div>
 
   <div style="margin-top:40px;">
@@ -1670,7 +3247,7 @@ tr:last-child td { border-bottom: none; }
             <li>Facecam 30-60 sec</li>
             <li>Pedagogique, clair</li>
             <li>Schemas visuels si possible</li>
-            <li>CTA leger: "commente SAPIENS"</li>
+            <li>CTA leger: "commente SAPIENS" OU lien YouTube</li>
           </ul>
         </div>
         <div class="dont-col">
@@ -1696,8 +3273,8 @@ tr:last-child td { border-bottom: none; }
           <ul style="padding-left:16px;">
             <li>Facecam empathique</li>
             <li>Decrire la realite de Lea</li>
-            <li>Ton doux, comprenant</li>
-            <li>CTA: "Si tu te reconnais..."</li>
+            <li>Utiliser les MOTS EXACTS des prospects</li>
+            <li>CTA: "Si tu te reconnais... commente SAPIENS"</li>
           </ul>
         </div>
         <div class="dont-col">
@@ -1770,7 +3347,7 @@ tr:last-child td { border-bottom: none; }
 
 <!-- ═══════ FOOTER ═══════ -->
 <div class="footer">
-  <span>SAPIENS 360</span> | Machine a Contenu | Derniere MAJ: Avril 2026
+  <span>SAPIENS 360</span> | Machine a Contenu V2 | Calibree sur 18 calls reels | Avril 2026
 </div>
 
 <!-- ═══════ JAVASCRIPT ═══════ -->
@@ -1781,21 +3358,22 @@ let activePlatform = 'all';
 let searchQuery = '';
 
 // ── Tab Navigation ──
+const sectionNames = ['strategie','calendrier','yt-anti-objections','yt-autorite','reels-preclose','hooks','stories','regles'];
+
 function showSection(id) {
   document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
   document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
   const sec = document.getElementById('sec-' + id);
   if (sec) sec.classList.add('active');
   const tabs = document.querySelectorAll('.nav-tab');
-  const names = ['strategie','calendrier','hooks','youtube','stories','regles'];
-  const idx = names.indexOf(id);
+  const idx = sectionNames.indexOf(id);
   if (idx >= 0 && tabs[idx]) tabs[idx].classList.add('active');
 }
 
 // ── Type Filter ──
 function setTypeFilter(type) {
   activeType = type;
-  document.querySelectorAll('.filter-group:first-child .filter-btn').forEach(b => {
+  document.querySelectorAll('#typeFilterGroup .filter-btn').forEach(b => {
     b.classList.toggle('active', b.dataset.type === type);
   });
   applyFilters();
@@ -1807,9 +3385,8 @@ function setPlatformFilter(platform) {
   document.querySelectorAll('.platform-btn').forEach(b => {
     b.classList.toggle('active', b.dataset.platform === platform);
   });
-  // Auto-switch to relevant tab
   if (platform === 'reels') showSection('hooks');
-  else if (platform === 'youtube') showSection('youtube');
+  else if (platform === 'youtube') showSection('yt-anti-objections');
   else if (platform === 'stories') showSection('stories');
   applyFilters();
 }
@@ -1823,34 +3400,50 @@ document.getElementById('searchInput').addEventListener('input', function() {
 // ── Apply All Filters ──
 function applyFilters() {
   // Filter hooks
-  let hooksVisible = 0;
-  document.querySelectorAll('#hooksList .hook-item').forEach(item => {
+  filterList('#hooksList .hook-item', '.hook-text', 'noResultsHooks');
+  // Filter reels pre-close
+  filterList('#reelsPrecloseList .hook-item', '.hook-text', 'noResultsReelsPreclose');
+  // Filter YouTube Anti-Objections
+  filterYtList('#antiObjectionList .yt-card', 'noResultsAntiObj');
+  // Filter YouTube Autorite
+  filterYtList('#autoriteList .yt-card', 'noResultsAutorite');
+}
+
+function filterList(selector, textSelector, noResultsId) {
+  let visible = 0;
+  document.querySelectorAll(selector).forEach(item => {
     const type = item.dataset.type;
     const platform = item.dataset.platform;
-    const text = item.querySelector('.hook-text').textContent.toLowerCase();
+    const text = item.querySelector(textSelector).textContent.toLowerCase();
+    const detail = item.querySelector('.hook-detail');
+    const detailText = detail ? detail.textContent.toLowerCase() : '';
     const typeMatch = activeType === 'tous' || type === activeType;
     const platformMatch = activePlatform === 'all' || platform === activePlatform;
-    const searchMatch = !searchQuery || text.includes(searchQuery);
+    const searchMatch = !searchQuery || text.includes(searchQuery) || detailText.includes(searchQuery);
     const show = typeMatch && platformMatch && searchMatch;
     item.classList.toggle('hidden', !show);
-    if (show) hooksVisible++;
+    if (show) visible++;
   });
-  document.getElementById('noResultsHooks').style.display = hooksVisible === 0 ? 'block' : 'none';
+  const nr = document.getElementById(noResultsId);
+  if (nr) nr.style.display = visible === 0 ? 'block' : 'none';
+}
 
-  // Filter YouTube
-  let ytVisible = 0;
-  document.querySelectorAll('#youtubeList .yt-card').forEach(card => {
+function filterYtList(selector, noResultsId) {
+  let visible = 0;
+  document.querySelectorAll(selector).forEach(card => {
     const type = card.dataset.type;
     const platform = card.dataset.platform;
-    const text = card.querySelector('.yt-title').textContent.toLowerCase();
+    const title = card.querySelector('.yt-title').textContent.toLowerCase();
+    const bodyText = card.querySelector('.yt-body') ? card.querySelector('.yt-body').textContent.toLowerCase() : '';
     const typeMatch = activeType === 'tous' || type === activeType;
     const platformMatch = activePlatform === 'all' || platform === activePlatform;
-    const searchMatch = !searchQuery || text.includes(searchQuery);
+    const searchMatch = !searchQuery || title.includes(searchQuery) || bodyText.includes(searchQuery);
     const show = typeMatch && platformMatch && searchMatch;
     card.style.display = show ? '' : 'none';
-    if (show) ytVisible++;
+    if (show) visible++;
   });
-  document.getElementById('noResultsYt').style.display = ytVisible === 0 ? 'block' : 'none';
+  const nr = document.getElementById(noResultsId);
+  if (nr) nr.style.display = visible === 0 ? 'block' : 'none';
 }
 
 // ── Copy Hook ──
