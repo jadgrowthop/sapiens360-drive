@@ -1,0 +1,2330 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAPIENS 360 — Setter Playbook V3 — Copier-coller DM</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Jost:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --green-deep:#2C4A35;
+  --green-soft:#3F6049;
+  --gold:#B8956A;
+  --gold-bright:#D4B58A;
+  --gold-pale:#E8D4B5;
+  --ivory:#FAF7F2;
+  --ivory-soft:#F2EDE3;
+  --anthracite:#1A1A1A;
+  --anthracite-soft:#2A2A2A;
+  --stone:#7A7065;
+  --red:#8B3A3A;
+  --red-bg:#F5E8E8;
+  --green-bg:#E8EFE9;
+  --shadow:0 2px 14px rgba(26,26,26,0.06);
+  --shadow-strong:0 8px 28px rgba(26,26,26,0.10);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:90px}
+body{
+  background:var(--ivory);
+  color:var(--anthracite);
+  font-family:'Jost',sans-serif;
+  font-weight:400;
+  font-size:16px;
+  line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+}
+.serif{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:500}
+.mono{font-family:'JetBrains Mono',monospace;font-size:0.92em}
+h1,h2,h3,h4{font-family:'Cormorant Garamond',serif;font-weight:500;color:var(--green-deep);letter-spacing:-0.01em}
+h1{font-size:clamp(40px,6vw,68px);font-style:italic;line-height:1.05}
+h2{font-size:clamp(28px,4vw,42px);font-style:italic;line-height:1.15}
+h3{font-size:clamp(22px,3vw,30px);line-height:1.25}
+h4{font-size:20px;line-height:1.3}
+
+.cover{
+  min-height:100vh;
+  background:linear-gradient(180deg,var(--green-deep) 0%,#1F3526 100%);
+  color:var(--ivory);
+  display:flex;flex-direction:column;
+  justify-content:center;align-items:center;text-align:center;
+  padding:80px 24px;position:relative;
+}
+.cover::before{
+  content:'';position:absolute;inset:24px;
+  border:1px solid rgba(184,149,106,0.35);pointer-events:none;
+}
+.cover-tag{
+  font-family:'Jost',sans-serif;font-weight:500;
+  font-size:11px;letter-spacing:5px;text-transform:uppercase;
+  color:var(--gold-bright);margin-bottom:32px;
+}
+.cover h1{color:var(--ivory);margin-bottom:18px}
+.cover h1 em{color:var(--gold-bright)}
+.cover-sub{
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:clamp(20px,2.4vw,28px);
+  color:var(--ivory-soft);max-width:680px;
+  margin:0 auto 40px;line-height:1.4;
+}
+.cover-meta{
+  font-family:'JetBrains Mono',monospace;
+  font-size:12px;color:var(--gold);
+  letter-spacing:2px;margin-top:60px;
+}
+.cover-meta span{color:var(--ivory-soft);margin:0 12px}
+
+.nav{
+  position:sticky;top:0;z-index:50;
+  background:rgba(250,247,242,0.95);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border-bottom:1px solid rgba(184,149,106,0.25);
+  overflow-x:auto;
+}
+.nav-inner{
+  display:flex;gap:0;
+  max-width:1100px;margin:0 auto;padding:0 12px;
+  min-width:max-content;
+}
+.nav a{
+  padding:14px 18px;
+  font-size:12px;letter-spacing:2px;text-transform:uppercase;
+  color:var(--stone);text-decoration:none;font-weight:500;
+  border-bottom:2px solid transparent;
+  white-space:nowrap;transition:color .2s,border-color .2s;
+}
+.nav a:hover{color:var(--green-deep)}
+.nav a.active{color:var(--gold);border-bottom-color:var(--gold)}
+
+.wrap{max-width:920px;margin:0 auto;padding:0 28px}
+section{padding:90px 0;border-bottom:1px solid rgba(184,149,106,0.2)}
+section:last-of-type{border-bottom:none}
+.section-num{
+  display:inline-block;
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;letter-spacing:4px;color:var(--gold);
+  margin-bottom:18px;text-transform:uppercase;
+}
+.intro{
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:clamp(20px,2vw,24px);color:var(--green-deep);
+  margin:24px 0 40px;max-width:740px;line-height:1.4;
+}
+
+.card{
+  background:#fff;
+  border:1px solid rgba(184,149,106,0.3);
+  border-radius:4px;padding:32px;margin-bottom:24px;
+  box-shadow:var(--shadow);
+}
+.card-gold{border-left:4px solid var(--gold)}
+.card h3,.card h4{margin-bottom:14px}
+.card-title{
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:24px;color:var(--green-deep);margin-bottom:18px;
+}
+
+/* MICRO-MESSAGE SCRIPT BOX */
+.script{
+  background:var(--ivory-soft);
+  border:1px solid var(--gold);
+  border-radius:4px;
+  padding:18px 22px;
+  margin:14px 0;
+  position:relative;
+}
+.script::before{
+  content:'';position:absolute;left:-1px;top:-1px;bottom:-1px;
+  width:4px;background:var(--gold);
+}
+.script-label{
+  display:block;
+  font-family:'JetBrains Mono',monospace;font-style:normal;
+  font-size:10px;letter-spacing:3px;text-transform:uppercase;
+  color:var(--gold);margin-bottom:14px;font-weight:500;
+}
+.msg{
+  display:grid;
+  grid-template-columns:auto 1fr;
+  gap:14px;
+  padding:8px 0;
+  border-bottom:1px dashed rgba(184,149,106,0.25);
+  align-items:start;
+}
+.msg:last-of-type{border-bottom:none}
+.msg-tag{
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px;letter-spacing:2px;color:var(--gold);
+  font-weight:500;padding-top:3px;white-space:nowrap;
+}
+.msg-text{
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:16.5px;color:var(--anthracite);line-height:1.5;
+}
+.script-note{
+  font-family:'Jost',sans-serif;font-style:normal;
+  font-size:13px;color:var(--stone);
+  margin-top:14px;padding-top:12px;
+  border-top:1px dashed rgba(184,149,106,0.35);
+  line-height:1.55;
+}
+
+.prospect{
+  background:#fff;
+  border-left:3px solid var(--stone);
+  padding:10px 18px;
+  margin:14px 0;
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:14.5px;color:var(--stone);
+  border-radius:0 4px 4px 0;
+}
+.prospect::before{
+  content:'Prospect — ';
+  font-family:'JetBrains Mono',monospace;font-style:normal;
+  font-size:10px;letter-spacing:2px;text-transform:uppercase;
+  color:var(--stone);font-weight:500;
+}
+
+.principles{counter-reset:p}
+.principle{
+  display:flex;gap:24px;padding:22px 0;
+  border-bottom:1px solid rgba(184,149,106,0.18);
+  counter-increment:p;
+}
+.principle:last-child{border-bottom:none}
+.principle-num{
+  flex-shrink:0;
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:42px;color:var(--gold);line-height:1;
+  min-width:60px;
+}
+.principle-num::before{content:counter(p,decimal-leading-zero)}
+.principle-body h4{
+  font-size:20px;color:var(--green-deep);margin-bottom:6px;
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+}
+.principle-body p{color:var(--anthracite);font-size:15px}
+
+.cadence{
+  display:grid;
+  grid-template-columns:auto 1fr auto;
+  gap:0;
+  background:#fff;border:1px solid rgba(184,149,106,0.3);
+  border-radius:4px;overflow:hidden;
+}
+.cadence-row{display:contents}
+.cadence-row > *{
+  padding:18px 22px;
+  border-bottom:1px solid rgba(184,149,106,0.15);
+  font-size:15px;
+}
+.cadence-row:last-child > *{border-bottom:none}
+.cad-time{
+  font-family:'JetBrains Mono',monospace;
+  font-size:14px;color:var(--gold);
+  font-weight:500;letter-spacing:1px;
+  background:rgba(184,149,106,0.05);
+}
+.cad-task{color:var(--anthracite);font-weight:500}
+.cad-prio{
+  font-family:'JetBrains Mono',monospace;font-size:11px;
+  letter-spacing:2px;color:var(--green-deep);
+  text-transform:uppercase;text-align:right;
+}
+.cad-prio.p1{color:var(--red)}
+.cad-prio.p2{color:var(--gold)}
+.cad-prio.p3{color:var(--green-soft)}
+
+.relance{
+  position:relative;
+  padding:24px 0 24px 60px;
+  border-left:2px solid var(--gold);
+  margin-left:20px;
+}
+.relance-item{position:relative;margin-bottom:36px}
+.relance-item::before{
+  content:'';position:absolute;
+  left:-69px;top:8px;width:18px;height:18px;
+  background:var(--ivory);border:2px solid var(--gold);border-radius:50%;
+}
+.relance-item::after{
+  content:attr(data-r);
+  position:absolute;left:-95px;top:6px;
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:18px;color:var(--gold);font-weight:500;
+}
+.relance-header{
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:22px;color:var(--green-deep);margin-bottom:4px;
+}
+.relance-when{
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;letter-spacing:2px;color:var(--gold);
+  text-transform:uppercase;margin-bottom:14px;
+}
+
+.obj{
+  background:#fff;
+  border:1px solid rgba(184,149,106,0.3);
+  border-radius:4px;margin-bottom:28px;
+  overflow:hidden;box-shadow:var(--shadow);
+}
+.obj-q{
+  background:linear-gradient(90deg,rgba(139,58,58,0.06),transparent);
+  border-bottom:1px solid rgba(184,149,106,0.25);
+  padding:20px 28px;
+}
+.obj-q-label{
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px;letter-spacing:3px;color:var(--red);
+  text-transform:uppercase;margin-bottom:4px;font-weight:500;
+}
+.obj-q-text{
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:22px;color:var(--anthracite);
+}
+.obj-body{padding:24px 28px}
+.obj-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:18px;
+}
+@media (max-width:680px){.obj-grid{grid-template-columns:1fr}}
+.obj-bad,.obj-good{
+  padding:18px;border-radius:4px;
+  font-size:14px;line-height:1.55;
+}
+.obj-bad{
+  background:rgba(139,58,58,0.05);
+  border-left:3px solid var(--red);color:var(--anthracite);
+}
+.obj-good{
+  background:rgba(44,74,53,0.05);
+  border-left:3px solid var(--green-deep);color:var(--anthracite);
+}
+.obj-tag{
+  font-family:'JetBrains Mono',monospace;font-size:10px;
+  letter-spacing:2px;text-transform:uppercase;
+  display:inline-block;padding:3px 8px;border-radius:2px;
+  margin-bottom:10px;font-weight:500;
+}
+.obj-tag-bad{background:var(--red);color:#fff}
+.obj-tag-good{background:var(--gold);color:#fff}
+
+.map-table{
+  width:100%;border-collapse:collapse;background:#fff;
+  border:1px solid rgba(184,149,106,0.3);
+  border-radius:4px;overflow:hidden;box-shadow:var(--shadow);
+}
+.map-table th{
+  background:var(--green-deep);color:var(--gold-bright);
+  text-align:left;padding:14px 18px;
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:500;
+}
+.map-table td{
+  padding:18px;border-bottom:1px solid rgba(184,149,106,0.15);
+  font-size:14px;vertical-align:top;
+}
+.map-table tr:last-child td{border-bottom:none}
+.map-trigger{
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:15px;color:var(--anthracite);
+}
+.map-code{
+  font-family:'JetBrains Mono',monospace;
+  font-size:12px;letter-spacing:2px;
+  color:var(--gold);font-weight:500;
+}
+.map-video{font-size:13px;color:var(--green-deep);font-weight:500}
+
+.kpi{
+  background:#fff;border:1px solid rgba(184,149,106,0.3);
+  border-radius:4px;overflow:hidden;box-shadow:var(--shadow);
+}
+.kpi-row{
+  display:grid;grid-template-columns:1fr auto auto;
+  gap:0;padding:16px 24px;
+  border-bottom:1px solid rgba(184,149,106,0.15);
+  align-items:center;
+}
+.kpi-row:last-child{border-bottom:none}
+.kpi-row.head{
+  background:var(--green-deep);color:var(--gold-bright);
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;letter-spacing:2px;text-transform:uppercase;
+}
+.kpi-metric{font-size:14px;color:var(--anthracite)}
+.kpi-target{
+  font-family:'JetBrains Mono',monospace;
+  font-size:14px;color:var(--gold);font-weight:500;
+  text-align:center;min-width:80px;padding:0 12px;
+}
+.kpi-row.head .kpi-target{color:var(--gold-bright)}
+.kpi-status{
+  font-size:12px;color:var(--stone);
+  text-align:right;min-width:90px;
+}
+
+.note{
+  background:rgba(184,149,106,0.08);
+  border-left:3px solid var(--gold);
+  padding:18px 22px;border-radius:0 4px 4px 0;
+  margin:20px 0;font-size:14px;color:var(--anthracite);line-height:1.6;
+}
+.note strong{color:var(--green-deep);font-weight:600}
+.warning{
+  background:rgba(139,58,58,0.06);
+  border-left:3px solid var(--red);
+  padding:18px 22px;border-radius:0 4px 4px 0;
+  margin:20px 0;font-size:14px;color:var(--anthracite);
+}
+.warning strong{color:var(--red);font-weight:600}
+
+.profile-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:18px;margin:24px 0;
+}
+.profile{
+  background:#fff;border:1px solid rgba(184,149,106,0.3);
+  border-radius:4px;padding:22px;
+}
+.profile-name{
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:22px;color:var(--green-deep);margin-bottom:4px;
+}
+.profile-desc{
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px;letter-spacing:2px;text-transform:uppercase;
+  color:var(--gold);margin-bottom:14px;
+}
+.profile-body{font-size:13px;line-height:1.55;color:var(--anthracite)}
+
+.tree{
+  background:#fff;border:1px solid rgba(184,149,106,0.3);
+  border-radius:4px;padding:24px 28px;margin:20px 0;
+  font-family:'Jost',sans-serif;font-size:14px;
+}
+.tree-branch{padding:8px 0;line-height:1.7}
+.tree-branch .arrow{color:var(--gold);font-weight:600;margin:0 6px}
+.tree-branch .key{color:var(--green-deep);font-weight:600}
+
+.checklist{list-style:none;padding:0}
+.checklist li{
+  display:flex;align-items:flex-start;gap:14px;
+  padding:14px 0;border-bottom:1px solid rgba(184,149,106,0.15);
+  font-size:14px;line-height:1.55;
+}
+.checklist li:last-child{border-bottom:none}
+.check{
+  flex-shrink:0;width:22px;height:22px;border-radius:50%;
+  background:var(--green-bg);color:var(--green-deep);
+  border:1px solid var(--green-deep);
+  display:flex;align-items:center;justify-content:center;
+  font-size:12px;font-weight:bold;margin-top:2px;
+}
+.check.x{background:var(--red-bg);color:var(--red);border-color:var(--red)}
+
+.tracker{
+  width:100%;border-collapse:collapse;background:#fff;
+  border:1px solid rgba(184,149,106,0.3);
+  border-radius:4px;overflow:hidden;font-size:13px;
+}
+.tracker th{
+  background:var(--green-deep);color:var(--gold-bright);
+  padding:12px 14px;text-align:left;
+  font-family:'JetBrains Mono',monospace;font-size:10px;
+  letter-spacing:2px;text-transform:uppercase;font-weight:500;
+}
+.tracker td{
+  padding:12px 14px;
+  border-bottom:1px solid rgba(184,149,106,0.15);
+  vertical-align:top;
+}
+.tracker .col-name{color:var(--green-deep);font-weight:500}
+
+.empathy-bank{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:12px;margin:18px 0;
+}
+.empathy-card{
+  background:rgba(44,74,53,0.05);
+  border-left:3px solid var(--green-deep);
+  padding:14px 18px;font-size:14px;line-height:1.5;
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  color:var(--anthracite);border-radius:0 3px 3px 0;
+}
+.q-bank{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+  gap:10px;margin:18px 0;
+}
+.q-card{
+  background:#fff;
+  border:1px solid rgba(184,149,106,0.3);
+  border-left:3px solid var(--gold);
+  padding:12px 16px;font-size:14px;line-height:1.5;
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  color:var(--anthracite);border-radius:0 3px 3px 0;
+}
+
+.phase-box{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:24px 0;
+}
+@media (max-width:680px){.phase-box{grid-template-columns:1fr}}
+.phase{
+  background:#fff;
+  border:1px solid rgba(184,149,106,0.3);
+  border-top:4px solid var(--gold);
+  padding:20px;border-radius:0 0 4px 4px;
+}
+.phase-num{
+  font-family:'JetBrains Mono',monospace;font-size:10px;
+  letter-spacing:3px;color:var(--gold);text-transform:uppercase;
+  margin-bottom:6px;font-weight:500;
+}
+.phase-name{
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:20px;color:var(--green-deep);margin-bottom:8px;
+}
+.phase-when{
+  font-size:12px;color:var(--stone);font-style:italic;margin-bottom:10px;
+}
+.phase-body{font-size:13px;line-height:1.55;color:var(--anthracite)}
+
+.footer{
+  background:var(--green-deep);color:var(--ivory);
+  padding:60px 28px 40px;text-align:center;
+}
+.footer h3{color:var(--gold-bright);margin-bottom:14px}
+.footer p{font-size:13px;color:var(--ivory-soft);margin-bottom:6px}
+.footer .meta{
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;letter-spacing:2px;color:var(--gold);
+  margin-top:30px;
+}
+
+@media print{
+  body{font-size:11pt;background:#fff}
+  .nav{display:none}
+  .cover{min-height:auto;page-break-after:always}
+  section{padding:30px 0;page-break-inside:auto;border:none}
+  .card,.script,.obj,.profile{page-break-inside:avoid}
+  h1,h2,h3{page-break-after:avoid}
+  .footer{background:#fff;color:var(--anthracite);border-top:2px solid var(--gold)}
+  .footer h3{color:var(--green-deep)}
+  .footer p{color:var(--anthracite)}
+}
+
+@media (max-width:680px){
+  .wrap{padding:0 18px}
+  section{padding:60px 0}
+  .card{padding:22px}
+  .script{padding:14px 16px}
+  .msg-text{font-size:15.5px}
+  .relance{padding-left:50px;margin-left:10px}
+  .relance-item::before{left:-59px}
+  .relance-item::after{left:-85px;font-size:16px}
+  .principle{flex-direction:column;gap:8px}
+  .principle-num{font-size:32px;min-width:0}
+  .obj-q-text{font-size:18px}
+}
+
+/* ───────────────────────────────────────────────────
+   DARK THEME OVERRIDE — matches 01_SCRIPT_SETTING.html
+   plus COPY BUTTONS + SEARCH + TOAST
+   ─────────────────────────────────────────────────── */
+:root{
+  --bg:#111;
+  --card-bg:#161616;
+  --card-bg-2:#1c1c1c;
+  --border-dark:#2C4A3555;
+  --ivory:#FAF7F2;
+  --ivory-soft:#e8e3d8;
+  --stone-light:#9a9080;
+  --gold:#B8956A;
+  --gold-bright:#D4B58A;
+  --green:#2C4A35;
+  --green-bright:#5A9E6F;
+  --red-dark:#C06060;
+}
+html{scroll-padding-top:140px}
+body{background:var(--bg);color:var(--ivory);font-family:'Jost',sans-serif}
+h1,h2,h3,h4{color:var(--ivory)}
+h1 em,h2 em,h3 em,h4 em{color:var(--gold-bright)}
+
+.cover{background:linear-gradient(180deg,#0d0d0d 0%,#1a1a1a 100%);color:var(--ivory)}
+.cover::before{border-color:rgba(184,149,106,0.4)}
+.cover h1{color:var(--ivory)}
+.cover h1 em{color:var(--gold-bright)}
+.cover-sub{color:var(--ivory-soft)}
+.cover-tag{color:var(--gold-bright)}
+.cover-meta{color:var(--gold)}
+.cover-meta span{color:var(--ivory-soft)}
+
+.nav{background:rgba(17,17,17,0.94);border-bottom:1px solid var(--border-dark)}
+.nav a{color:var(--stone-light)}
+.nav a:hover{color:var(--ivory)}
+.nav a.active{color:var(--gold);border-bottom-color:var(--gold)}
+
+section{border-bottom:1px solid var(--border-dark)}
+.section-num{color:var(--gold)}
+.intro{color:var(--ivory-soft)}
+
+.card{background:var(--card-bg);border:1px solid var(--border-dark);box-shadow:none}
+.card-gold{border-left:4px solid var(--gold)}
+.card-title{color:var(--gold)}
+.card p,.card li,.card div{color:var(--ivory-soft)}
+.card strong{color:var(--ivory)}
+
+/* SCRIPT box dark */
+.script{
+  background:#0d0d0d;
+  border:1px solid var(--border-dark);
+  border-left:4px solid var(--gold);
+  border-radius:6px;
+  padding:18px 22px;
+  position:relative;
+}
+.script::before{display:none}
+.script-label{color:var(--gold-bright)}
+.msg{border-bottom:1px dashed rgba(184,149,106,0.15)}
+.msg-tag{color:var(--gold)}
+.msg-text{color:var(--ivory)}
+.script-note{color:var(--stone-light);border-top:1px dashed rgba(184,149,106,0.2)}
+
+.prospect{
+  background:#1a1a1a;
+  border-left:3px solid var(--stone-light);
+  color:var(--ivory-soft);
+}
+.prospect::before{color:var(--stone-light)}
+
+.principles .principle{border-bottom-color:rgba(184,149,106,0.12)}
+.principle-num{color:var(--gold)}
+.principle-body h4{color:var(--gold-bright)}
+.principle-body p{color:var(--ivory-soft)}
+
+.cadence{background:var(--card-bg);border:1px solid var(--border-dark)}
+.cadence-row > *{border-bottom-color:rgba(184,149,106,0.1)}
+.cad-time{background:rgba(184,149,106,0.07);color:var(--gold)}
+.cad-task{color:var(--ivory)}
+.cad-prio{color:var(--green-bright)}
+.cad-prio.p1{color:var(--red-dark)}
+.cad-prio.p2{color:var(--gold)}
+.cad-prio.p3{color:var(--green-bright)}
+
+.relance{border-left-color:var(--gold)}
+.relance-item::before{background:var(--bg);border-color:var(--gold)}
+.relance-item::after{color:var(--gold)}
+.relance-header{color:var(--gold-bright)}
+.relance-when{color:var(--gold)}
+
+.obj{background:var(--card-bg);border:1px solid var(--border-dark);box-shadow:none}
+.obj-q{background:linear-gradient(90deg,rgba(192,96,96,0.08),transparent);border-bottom:1px solid var(--border-dark)}
+.obj-q-label{color:var(--red-dark)}
+.obj-q-text{color:var(--ivory)}
+.obj-bad{background:rgba(192,96,96,0.08);border-left-color:var(--red-dark);color:var(--ivory-soft)}
+.obj-good{background:rgba(90,158,111,0.08);border-left-color:var(--green-bright);color:var(--ivory-soft)}
+.obj-bad p,.obj-good p{color:var(--stone-light)}
+.obj-tag-bad{background:var(--red-dark);color:#111}
+.obj-tag-good{background:var(--gold);color:#111}
+
+.map-table{background:var(--card-bg);border:1px solid var(--border-dark)}
+.map-table th{background:var(--green);color:var(--gold-bright)}
+.map-table td{border-bottom-color:rgba(184,149,106,0.1);color:var(--ivory-soft)}
+.map-trigger{color:var(--ivory)}
+.map-code{color:var(--gold)}
+.map-video{color:var(--gold-bright)}
+
+.kpi{background:var(--card-bg);border:1px solid var(--border-dark)}
+.kpi-row{border-bottom-color:rgba(184,149,106,0.1)}
+.kpi-row.head{background:var(--green);color:var(--gold-bright)}
+.kpi-metric{color:var(--ivory)}
+.kpi-target{color:var(--gold)}
+.kpi-status{color:var(--stone-light)}
+
+.note{background:rgba(184,149,106,0.07);border-left-color:var(--gold);color:var(--ivory-soft)}
+.note strong{color:var(--gold-bright)}
+.warning{background:rgba(192,96,96,0.08);border-left-color:var(--red-dark);color:var(--ivory-soft)}
+.warning strong{color:var(--red-dark)}
+
+.profile{background:var(--card-bg);border:1px solid var(--border-dark)}
+.profile-name{color:var(--gold-bright)}
+.profile-desc{color:var(--gold)}
+.profile-body{color:var(--ivory-soft)}
+
+.tree{background:var(--card-bg);border:1px solid var(--border-dark);color:var(--ivory-soft)}
+.tree-branch .arrow{color:var(--gold)}
+.tree-branch .key{color:var(--gold-bright)}
+
+.checklist li{border-bottom-color:rgba(184,149,106,0.1);color:var(--ivory-soft)}
+.check{background:rgba(90,158,111,0.15);color:var(--green-bright);border-color:var(--green-bright)}
+.check.x{background:rgba(192,96,96,0.15);color:var(--red-dark);border-color:var(--red-dark)}
+
+.tracker{background:var(--card-bg);border:1px solid var(--border-dark);color:var(--ivory-soft)}
+.tracker th{background:var(--green);color:var(--gold-bright)}
+.tracker td{border-bottom-color:rgba(184,149,106,0.1);color:var(--ivory-soft)}
+.tracker .col-name{color:var(--gold-bright)}
+
+.empathy-card{background:rgba(90,158,111,0.08);border-left-color:var(--green-bright);color:var(--ivory-soft)}
+.q-card{background:var(--card-bg);border:1px solid var(--border-dark);border-left:3px solid var(--gold);color:var(--ivory-soft)}
+
+.phase{background:var(--card-bg);border:1px solid var(--border-dark);border-top:4px solid var(--gold)}
+.phase-num{color:var(--gold)}
+.phase-name{color:var(--gold-bright)}
+.phase-when{color:var(--stone-light)}
+.phase-body{color:var(--ivory-soft)}
+
+.footer{background:linear-gradient(180deg,#0d0d0d 0%,#1a1a1a 100%);color:var(--ivory)}
+.footer h3{color:var(--gold-bright)}
+.footer p{color:var(--ivory-soft)}
+.footer .meta{color:var(--gold)}
+
+/* ─── COPY BUTTONS ─── */
+.script{position:relative}
+.copy-seq-btn{
+  position:absolute;top:12px;right:12px;
+  background:var(--green);color:var(--ivory);
+  border:1px solid var(--gold);border-radius:4px;
+  padding:6px 14px;cursor:pointer;
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px;letter-spacing:2px;text-transform:uppercase;font-weight:500;
+  transition:background .15s,transform .1s,color .15s;
+  z-index:2;
+}
+.copy-seq-btn:hover{background:var(--gold);color:#111}
+.copy-seq-btn:active{transform:scale(0.96)}
+.copy-seq-btn.copied{background:var(--gold);color:#111}
+
+.msg{position:relative;padding-right:34px}
+.copy-msg-btn{
+  position:absolute;top:8px;right:0;
+  background:transparent;color:var(--stone-light);
+  border:1px solid var(--border-dark);border-radius:3px;
+  width:26px;height:24px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  font-size:11px;
+  transition:color .15s,border-color .15s,background .15s;
+  padding:0;
+}
+.copy-msg-btn:hover{color:var(--gold);border-color:var(--gold)}
+.copy-msg-btn.copied{background:var(--gold);color:#111;border-color:var(--gold)}
+.copy-msg-btn svg{width:12px;height:12px;display:block}
+
+/* push script-label down to clear copy button */
+.script-label{padding-right:120px}
+
+/* ─── SEARCH BAR + STICKY HEADER ─── */
+.search-bar{
+  position:sticky;top:0;z-index:60;
+  background:rgba(17,17,17,0.96);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--border-dark);
+  padding:12px 16px;
+  display:flex;gap:10px;align-items:center;justify-content:center;
+}
+.search-wrap{position:relative;flex:1;max-width:520px}
+.search-wrap svg{
+  position:absolute;left:12px;top:50%;transform:translateY(-50%);
+  opacity:0.45;pointer-events:none;
+}
+#playbook-search{
+  width:100%;
+  background:#0d0d0d;color:var(--ivory);
+  border:1px solid var(--border-dark);
+  padding:10px 14px 10px 38px;border-radius:6px;
+  font-family:'Jost',sans-serif;font-size:14px;outline:none;
+  transition:border-color .2s;
+}
+#playbook-search:focus{border-color:var(--gold)}
+#playbook-search::placeholder{color:var(--stone-light)}
+#clear-search{
+  background:transparent;border:1px solid var(--border-dark);
+  color:var(--stone-light);padding:9px 16px;border-radius:6px;
+  font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1px;
+  text-transform:uppercase;cursor:pointer;
+  transition:color .15s,border-color .15s;
+}
+#clear-search:hover{color:var(--ivory);border-color:var(--gold)}
+
+.nav{top:53px}
+
+/* search highlight + dim */
+mark.search-hit{
+  background:var(--gold);color:#111;padding:1px 3px;border-radius:2px;
+  font-weight:500;
+}
+section.search-no-match,
+.script.search-no-match,
+.card.search-no-match,
+.obj.search-no-match,
+.profile.search-no-match,
+.empathy-card.search-no-match,
+.q-card.search-no-match,
+.relance-item.search-no-match{
+  display:none !important;
+}
+.search-active section{padding-top:40px;padding-bottom:40px}
+
+/* TOAST */
+#copy-toast{
+  position:fixed;bottom:32px;left:50%;transform:translateX(-50%) translateY(20px);
+  background:var(--gold);color:#111;
+  padding:12px 22px;border-radius:6px;
+  font-family:'JetBrains Mono',monospace;
+  font-size:12px;letter-spacing:2px;text-transform:uppercase;font-weight:600;
+  box-shadow:0 8px 24px rgba(0,0,0,0.4);
+  opacity:0;pointer-events:none;
+  transition:opacity .25s,transform .25s;
+  z-index:1000;
+}
+#copy-toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+@media (max-width:680px){
+  .search-bar{padding:10px 10px}
+  #playbook-search{font-size:13px;padding:9px 12px 9px 36px}
+  #clear-search{padding:8px 12px}
+  .nav{top:50px}
+  html{scroll-padding-top:130px}
+  .copy-seq-btn{font-size:9px;padding:5px 10px;letter-spacing:1px}
+  .script-label{padding-right:90px;font-size:9px}
+  .msg{padding-right:28px}
+  .copy-msg-btn{width:22px;height:22px}
+}
+
+@media print{
+  .search-bar{display:none}
+  .copy-seq-btn,.copy-msg-btn{display:none}
+  body{background:#fff;color:#111}
+  .script{background:#fafafa;border-color:#ddd}
+}
+</style>
+</head>
+<body>
+
+<!-- SEARCH BAR (sticky top) -->
+<div class="search-bar" id="search-bar">
+  <div class="search-wrap">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    <input type="text" id="playbook-search" placeholder="Rechercher : prix, cortisone, biothérapie, naturopathe, terrain..." autocomplete="off">
+  </div>
+  <button id="clear-search" type="button">Effacer</button>
+</div>
+
+<!-- COVER -->
+<header class="cover">
+  <div class="cover-tag">SAPIENS 360 · V3 · WEB SETTER</div>
+  <h1>Setter Playbook <em>DM</em><br>Geoffrey / Setter</h1>
+  <p class="cover-sub">Manuel opérationnel des DMs SAPIENS — 158 micro-messages prêts à copier-coller, première personne Geoffrey, relances 5 niveaux, 8 objections, mapping signal-vidéo. Bouton « Copier séquence » sur chaque bloc, icône copie par message, recherche rapide (touche « / »).</p>
+  <div class="cover-meta">V3 <span>·</span> MAI 2026 <span>·</span> JAD + GEOFFREY</div>
+</header>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="#mission" class="active">01 Mission</a>
+    <a href="#cadence">02 Cadence</a>
+    <a href="#flow-new">03 Nouveaux</a>
+    <a href="#flow-old">04 Anciens</a>
+    <a href="#relances">05 Relances</a>
+    <a href="#post-vsl">06 Post-VSL</a>
+    <a href="#mapping">07 Mapping</a>
+    <a href="#objections">08 Objections</a>
+    <a href="#protocole">09 Protocole</a>
+    <a href="#anti-cramage">10 Anti-cramage</a>
+    <a href="#tracker">11 Tracker</a>
+    <a href="#kpi">12 KPI</a>
+  </div>
+</nav>
+
+<main class="wrap">
+
+<!-- SECTION 1 — MISSION -->
+<section id="mission">
+  <div class="section-num">01 — Mission</div>
+  <h2>Ma mission en DM — Geoffrey</h2>
+  <p class="intro">Je suis Geoffrey. Je parle directement à la personne qui me suit. Pas d'intermédiaire, pas d'assistant. Mon job : qualifier la douleur, envoyer la bonne vidéo, ouvrir un call quand elle ou il est mûr. Le tout en micro-messages courts, comme un vrai texto. Le mot « setter » désigne la fonction — qu'elle soit tenue par moi ou par un futur setter, le playbook reste le même.</p>
+
+  <div class="card card-gold">
+    <div class="card-title">Objectif chiffré</div>
+    <p style="font-size:17px;line-height:1.7;color:var(--anthracite);">
+      <strong style="color:var(--gold);font-family:'JetBrains Mono',monospace;font-size:32px;">20%</strong>
+      &nbsp;de taux de booking qualifié — du premier message jusqu'au call confirmé dans le calendrier de Jad.
+    </p>
+    <p style="font-size:14px;color:var(--stone);margin-top:12px;">
+      Standard très haut dans la niche santé/coaching FR. Atteignable seulement si chaque conversation respecte les 7 principes ci-dessous.
+    </p>
+  </div>
+
+  <h3 style="margin-top:50px;margin-bottom:20px;">Les 7 principes non-négociables V3</h3>
+
+  <div class="principles">
+    <div class="principle">
+      <div class="principle-num"></div>
+      <div class="principle-body">
+        <h4>3 petits messages &gt; 1 gros message</h4>
+        <p>Règle d'or. Chaque idée = 1 message. Max 12 mots si possible, jamais plus de 25. On envoie en rafale courte : msg 1, pause 5-15 sec, msg 2, pause, msg 3. Ça respire, ça ressemble à un texte humain, pas à un pavé commercial.</p>
+      </div>
+    </div>
+
+    <div class="principle">
+      <div class="principle-num"></div>
+      <div class="principle-body">
+        <h4>C'est moi, Geoffrey, qui parle</h4>
+        <p>Je parle en première personne. « Je », « moi », « mon ». Pas de « Geoffrey vous répondra ». Pas de « je suis l'assistant de Geoffrey ». La personne en face me parle à moi, l'expert PKD — direct, sans filtre, sans intermédiaire artificiel.</p>
+      </div>
+    </div>
+
+    <div class="principle">
+      <div class="principle-num"></div>
+      <div class="principle-body">
+        <h4>Empathie AVANT question</h4>
+        <p>Je n'enchaîne JAMAIS 3 questions d'affilée. Pattern obligatoire : 1 phrase empathique → 1 question. Mon job c'est de m'intéresser sincèrement, pas d'interroger comme un flic. Si elle vient de me dire qu'elle souffre depuis 8 ans, je réagis à ça AVANT de creuser.</p>
+      </div>
+    </div>
+
+    <div class="principle">
+      <div class="principle-num"></div>
+      <div class="principle-body">
+        <h4>Cas par cas — jamais copier-coller brut</h4>
+        <p>Les scripts du playbook sont des bases. Je change le prénom, je cite un mot exact qu'elle ou il vient d'utiliser, je reflète son ton. Si court, j'écris court. Mimétisme.</p>
+      </div>
+    </div>
+
+    <div class="principle">
+      <div class="principle-num"></div>
+      <div class="principle-body">
+        <h4>Pas de smileys</h4>
+        <p>Aucun. Ni emoji. Le ton SAPIENS est intime et professionnel — pas wellness influencer. Zéro smiley en DM. Zéro point d'exclamation double.</p>
+      </div>
+    </div>
+
+    <div class="principle">
+      <div class="principle-num"></div>
+      <div class="principle-body">
+        <h4>Renvoyer vers mes vidéos — valeur d'abord</h4>
+        <p>Mes vidéos font 80% du travail de conviction. Mon job en DM n'est PAS de pitcher — c'est d'envoyer la bonne vidéo Geoffrey au bon moment. Le mapping signal → vidéo (section 07) est ma bible. Quand la VSL fait 8 min, c'est facile à proposer.</p>
+      </div>
+    </div>
+
+    <div class="principle">
+      <div class="principle-num"></div>
+      <div class="principle-body">
+        <h4>Ne pas réserver trop vite</h4>
+        <p>Un call sans qualification = no-show ou call perdu. Lien Calendly seulement quand : (a) la douleur est verbalisée, (b) le bon profil ICP est confirmé, (c) elle ou il a vu au moins 1 vidéo. Pas avant.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="note">
+    <strong>Rappel vocabulaire SAPIENS V3.</strong> Geoffrey assume le langage technique précis. <strong>« Cétose », « cétose thérapeutique », « PKD », « guérir »</strong> sont OK et même attendus quand on parle protocole. Expressions signatures à utiliser systématiquement : <em class="serif">terrain biologique, la peau est le messager, axe intestin-immunité-peau, errance médicale, protocole clinique adapté, 3 phases sur 3 mois.</em> Le seul filtre : pas de wellness slop (pas de « détox », pas de « toxines » génériques).
+  </div>
+</section>
+
+<!-- SECTION 2 — CADENCE -->
+<section id="cadence">
+  <div class="section-num">02 — Cadence daily</div>
+  <h2>Conversations chaudes toute la journée — 3 blocs par cas</h2>
+  <p class="intro">Les conversations chaudes ne se fragmentent pas dans un slot. Elles vivent toute la journée. Les 50 messages par cas (relances jour précédent · nouveaux abonnés · anciens abonnés) se répartissent sur 3 blocs : matin, après-midi, soir. Première session 10h, dernière vers 20h.</p>
+
+  <div class="cadence">
+    <div class="cadence-row">
+      <div class="cad-time">TOUTE LA JOURNÉE</div>
+      <div class="cad-task">Conversations chaudes ouvertes — réponses dans l'heure si possible — envoi lien Calendly quand mûr</div>
+      <div class="cad-prio p1">P1</div>
+    </div>
+    <div class="cadence-row">
+      <div class="cad-time">10:00</div>
+      <div class="cad-task">Bloc 1 (matin) — ~17 relances jour précédent + ~17 nouveaux abonnés + ~17 anciens abonnés</div>
+      <div class="cad-prio p1">P1</div>
+    </div>
+    <div class="cadence-row">
+      <div class="cad-time">15:00</div>
+      <div class="cad-task">Bloc 2 (après-midi) — ~17 relances + ~17 nouveaux + ~17 anciens</div>
+      <div class="cad-prio p2">P2</div>
+    </div>
+    <div class="cadence-row">
+      <div class="cad-time">20:00</div>
+      <div class="cad-task">Bloc 3 (soir) — ~16 relances + ~16 nouveaux + ~16 anciens + planning lendemain</div>
+      <div class="cad-prio p2">P2</div>
+    </div>
+  </div>
+
+  <div class="note">
+    <strong>Logique de répartition.</strong> 50 messages × 3 cas = 150 touches « cold/lukewarm » par jour, sur 3 blocs (≈ 50 par bloc, ≈ 17 par cas par bloc). Les conversations chaudes (vrai dialogue en cours) ne comptent pas dans ces 150 — elles tournent en continu, dès qu'une notif arrive on traite si on est dispo. Total réaliste ≈ 200 touches/jour comme avant, mais réparti naturellement.
+  </div>
+
+  <div class="note">
+    <strong>Règle d'or cadence.</strong> Jamais plus de 30 nouveaux DMs ouverts simultanément en attente de réponse. Si on en a 30, on n'en ouvre plus — on relance ceux déjà ouverts. Sinon on se noie, qualité tombe.
+  </div>
+
+  <div class="warning">
+    <strong>Anti-cramage Instagram.</strong> Maximum 5 messages/min vers la même conversation. Pause 60 sec toutes les 10 ouvertures de DM. Si Meta montre un captcha ou warning, on arrête immédiatement pour la journée.
+  </div>
+</section>
+
+<!-- SECTION 3 — NOUVEAUX ABONNÉS -->
+<section id="flow-new">
+  <div class="section-num">03 — Flow 1</div>
+  <h2>Nouveaux abonnés (~50/jour)</h2>
+  <p class="intro">Quelqu'un vient de follow @sapiens.360. On lui demande la problématique AU PREMIER MESSAGE. Pas de chichi. Direct mais chaleureux. C'est le pattern verbatim Jad.</p>
+
+  <h3>Script ouverture obligatoire — verbatim Jad</h3>
+
+  <div class="script">
+    <span class="script-label">Geoffrey — H+0 — nouveau abonné</span>
+    <div class="msg"><div class="msg-tag">Msg 1</div><div class="msg-text">salut · je viens de voir que tu t'es abonné(e) à mon compte · merci</div></div>
+    <div class="msg"><div class="msg-tag">Msg 2</div><div class="msg-text">tu vis une problématique en particulier ?</div></div>
+    <div class="script-note">2 messages. Ouverture chaleureuse + demande de pathologie immédiate. Pas de présupposé, pas de pitch.</div>
+  </div>
+
+  <h3 style="margin-top:50px;">3 branches selon sa réponse</h3>
+
+  <div class="profile-grid">
+    <div class="profile">
+      <div class="profile-name">Branche A</div>
+      <div class="profile-desc">Pathologie nommée</div>
+      <div class="profile-body">Eczéma, psoriasis, rosacée, acné, etc. → empathie + mapping signal → envoi vidéo Geoffrey.</div>
+    </div>
+    <div class="profile">
+      <div class="profile-name">Branche B</div>
+      <div class="profile-desc">Rien de spécial — juste intéressé</div>
+      <div class="profile-body">Tu suis pour toi ou pour un proche ? → qualification rapide.</div>
+    </div>
+    <div class="profile">
+      <div class="profile-name">Branche C</div>
+      <div class="profile-desc">Silence J+2</div>
+      <div class="profile-body">Relance courte : « hey · t'as eu le temps de me dire ? »</div>
+    </div>
+  </div>
+
+  <h3 style="margin-top:40px;">Branche A — pathologie nommée</h3>
+
+  <div class="prospect">« psoriasis depuis 5 ans »</div>
+
+  <div class="script">
+    <span class="script-label">Geoffrey — empathie + qualification douce</span>
+    <div class="msg"><div class="msg-tag">Msg 1</div><div class="msg-text">ok je comprends · 5 ans c'est long à porter</div></div>
+    <div class="msg"><div class="msg-tag">Msg 2</div><div class="msg-text">t'en es où aujourd'hui ?</div></div>
+    <div class="script-note">Pattern V3 : empathie courte AVANT question. UNE question à la fois, pas trois. Elle répond → on enchaîne sur 1 nouvelle question + mapping vidéo.</div>
+  </div>
+
+  <h3 style="margin-top:40px;">Branche B — « rien de spécial »</h3>
+
+  <div class="prospect">« non rien · je trouvais ça intéressant »</div>
+
+  <div class="script">
+    <span class="script-label">Geoffrey — qualif douce</span>
+    <div class="msg"><div class="msg-tag">Msg 1</div><div class="msg-text">ok cool</div></div>
+    <div class="msg"><div class="msg-tag">Msg 2</div><div class="msg-text">tu suis pour toi ou pour un proche ?</div></div>
+    <div class="script-note">Ouvre la porte sans forcer. Si « proche » → creuse 1 fois. Si « juste curieux » → on lâche, pas de relance avant 60 jours.</div>
+  </div>
+
+  <h3 style="margin-top:40px;">Branche C — silence J+2</h3>
+
+  <div class="script">
+    <span class="script-label">Geoffrey — relance courte</span>
+    <div class="msg"><div class="msg-tag">Msg 1</div><div class="msg-text">hey · t'as eu le temps de me dire ?</div></div>
+    <div class="script-note">1 message. Pas de re-justification. Si silence à nouveau → on attend R3 (envoi vidéo Geoffrey thématique).</div>
+  </div>
+
+  <h3 style="margin-top:50px;">Arbre de décision</h3>
+
+  <div class="tree">
+    <div class="tree-branch">
+      <span class="key">Pathologie nommée (pso / eczéma / rosacée / acné)</span> <span class="arrow">→</span> empathie + mapping signal section 07 <span class="arrow">→</span> envoi vidéo Geoffrey thématique.
+    </div>
+    <div class="tree-branch">
+      <span class="key">« Juste intéressé »</span> <span class="arrow">→</span> « tu suis pour toi ou pour un proche ? »
+    </div>
+    <div class="tree-branch">
+      <span class="key">Silence J+2</span> <span class="arrow">→</span> « hey · t'as eu le temps de me dire ? »
+    </div>
+    <div class="tree-branch">
+      <span class="key">« Juste curiosité, pas concerné(e) »</span> <span class="arrow">→</span> « ok cool · bonne découverte alors » et on lâche.
+    </div>
+    <div class="tree-branch">
+      <span class="key">Question technique direct</span> <span class="arrow">→</span> empathie + réponse en micro-messages + vidéo Geoffrey qui développe.
+    </div>
+  </div>
+
+  <div class="warning">
+    <strong>Interdit en Flow 1.</strong> Aucun pitch, aucun lien Calendly dans les 3 premiers échanges sans qualification. Le prix peut être donné si demandé (voir Objection 03 — réponse directe). Conversation moyenne nouveau abonné = 4-7 échanges sur 5-10 jours avant le booking.
+  </div>
+</section>
+
+<!-- SECTION 4 — ANCIENS ABONNÉS -->
+<section id="flow-old">
+  <div class="section-num">04 — Flow 2</div>
+  <h2>Anciens abonnés (~50/jour)</h2>
+  <p class="intro">Ces personnes me suivent. Je ne sais pas depuis quand — Instagram ne le dit pas. Et surtout : je ne présume RIEN sur leur pathologie. Approche neutre, question ouverte. Si on présume « problème de peau » et que la personne suit juste par curiosité, on perd la conversation immédiatement.</p>
+
+  <h3>Variante 1 — neutre via le compte</h3>
+
+  <div class="script">
+    <span class="script-label">Geoffrey — ouverture neutre</span>
+    <div class="msg"><div class="msg-tag">Msg 1</div><div class="msg-text">salut · je vois que tu suis le compte</div></div>
+    <div class="msg"><div class="msg-tag">Msg 2</div><div class="msg-text">c'est par curiosité ou tu cherches une réponse à un truc précis ?</div></div>
+    <div class="script-note">Pas de présupposé. Ouvre les deux portes : curiosité (lâcher si confirmé) OU recherche (creuser).</div>
+  </div>
+
+  <h3 style="margin-top:40px;">Variante 2 — direct compréhension</h3>
+
+  <div class="script">
+    <span class="script-label">Geoffrey — alternative</span>
+    <div class="msg"><div class="msg-tag">Msg 1</div><div class="msg-text">hey · juste un message pour comprendre</div></div>
+    <div class="msg"><div class="msg-tag">Msg 2</div><div class="msg-text">qu'est-ce qui t'a fait t'abonner ?</div></div>
+    <div class="script-note">Question ouverte 100% neutre. Laisse la personne raconter. Si elle parle pathologie → on enchaîne empathie + mapping. Si elle dit curiosité → respecter, lâcher.</div>
+  </div>
+
+  <h3 style="margin-top:40px;">Variante 3 — re-contact (a déjà DM'd)</h3>
+
+  <div class="script">
+    <span class="script-label">Geoffrey — re-contact</span>
+    <div class="msg"><div class="msg-tag">Msg 1</div><div class="msg-text">hey · on s'était parlé il y a un moment</div></div>
+    <div class="msg"><div class="msg-tag">Msg 2</div><div class="msg-text">t'avais [bref rappel · sa condition]</div></div>
+    <div class="msg"><div class="msg-tag">Msg 3</div><div class="msg-text">t'en es où aujourd'hui ?</div></div>
+    <div class="script-note">Important : tracker ouvert, CITER un détail réel. Si plus de souvenir, ne pas contacter.</div>
+  </div>
+
+  <h3 style="margin-top:50px;">Décision après sa réponse</h3>
+
+  <div class="tree">
+    <div class="tree-branch">
+      <span class="key">« Toujours la même galère »</span> <span class="arrow">→</span> empathie courte + 1 question : « t'as essayé quoi entre temps ? » → vidéo Geoffrey TERRAIN.
+    </div>
+    <div class="tree-branch">
+      <span class="key">« Ça va mieux »</span> <span class="arrow">→</span> « top · t'as fait quoi qui a marché ? » → si approche surface : « et si ça flambait à nouveau t'aurais quoi comme plan B ? »
+    </div>
+    <div class="tree-branch">
+      <span class="key">« J'ai abandonné »</span> <span class="arrow">→</span> « je comprends · c'est épuisant » + « t'avais essayé quoi avant de lâcher ? » → vidéo Geoffrey sur pourquoi les régimes/approches surface échouent.
+    </div>
+    <div class="tree-branch">
+      <span class="key">« Juste curieux/curieuse »</span> <span class="arrow">→</span> « ok cool · merci pour le suivi alors » → on lâche, pas de relance.
+    </div>
+    <div class="tree-branch">
+      <span class="key">Silence</span> <span class="arrow">→</span> J+5 puis R3 (vidéo Geoffrey thématique sans transition). Si silence après R5, archive.
+    </div>
+  </div>
+
+  <div class="note">
+    <strong>Ratio attendu Flow 2.</strong> Anciens abonnés répondent moins (15-25%) que nouveaux (40-50%). Mais quand ils répondent = leads ULTRA mûrs. Taux de booking 2-3x supérieur. Flow 2 sous-côté par setters moyens.
+  </div>
+</section>
+
+<!-- SECTION 5 — RELANCES 5 NIVEAUX -->
+<section id="relances">
+  <div class="section-num">05 — Flow 3</div>
+  <h2>Relances — 5 niveaux, 14 jours</h2>
+  <p class="intro">Conversation qui démarre puis s'éteint = argent par terre. On relance 5 fois sur 14 jours (V3 — passage de 10 à 5 niveaux pour plus de qualité, moins de bruit). Pattern qui alterne valeur, question, silence. Format micro-messages, jamais un pavé. Jamais désespéré.</p>
+
+  <div class="relance">
+
+    <div class="relance-item" data-r="R1">
+      <div class="relance-header">Question ouverte courte</div>
+      <div class="relance-when">J+1 — lendemain du dernier échange</div>
+      <div class="script">
+        <span class="script-label">Geoffrey — R1</span>
+        <div class="msg"><div class="msg-tag">Msg 1</div><div class="msg-text">hey · j'y repense</div></div>
+        <div class="msg"><div class="msg-tag">Msg 2</div><div class="msg-text">quand tu m'as dit [citation exacte d'un mot d'hier]</div></div>
+        <div class="msg"><div class="msg-tag">Msg 3</div><div class="msg-text">c'est nouveau ou ça t'arrive depuis longtemps ?</div></div>
+        <div class="script-note">Citer son mot = preuve d'écoute. Question qui creuse, pas qui vend.</div>
+      </div>
+    </div>
+
+    <div class="relance-item" data-r="R2">
+      <div class="relance-header">Check VSL / vidéo envoyée</div>
+      <div class="relance-when">J+3 — si vidéo Geoffrey envoyée</div>
+      <div class="script">
+        <span class="script-label">Geoffrey — R2</span>
+        <div class="msg"><div class="msg-tag">Msg 1</div><div class="msg-text">t'as eu le temps de regarder la vidéo ?</div></div>
+        <div class="script-note">7 mots. OUI/NON. Si OUI → « qu'est-ce que t'as compris ? ». Si NON → attendre 2 jours, envoyer R3.</div>
+      </div>
+    </div>
+
+    <div class="relance-item" data-r="R3">
+      <div class="relance-header">Envoi nouvelle vidéo Geoffrey pertinente</div>
+      <div class="relance-when">J+5 — angle différent qui matche son cas</div>
+      <div class="script">
+        <span class="script-label">Geoffrey — R3</span>
+        <div class="msg"><div class="msg-tag">Msg 1</div><div class="msg-text">tu m'avais parlé de [détail spécifique]</div></div>
+        <div class="msg"><div class="msg-tag">Msg 2</div><div class="msg-text">j'ai une vidéo qui parle exactement de ça</div></div>
+        <div class="msg"><div class="msg-tag">Msg 3</div><div class="msg-text">8 min · regarde quand t'as un moment posé</div></div>
+        <div class="msg"><div class="msg-tag">Msg 4</div><div class="msg-text">tu me dis ce que t'en penses</div></div>
+        <div class="script-note">VSL 8 min = facile à proposer. On vise une vidéo Geoffrey ciblée (mapping section 07). Pas la même que R2 — angle différent, complémentaire.</div>
+      </div>
+    </div>
+
+    <div class="relance-item" data-r="R4">
+      <div class="relance-header">Récap insight — point d'interrogation ou éclair</div>
+      <div class="relance-when">J+8 — réveil minimaliste ou cadeau</div>
+      <div class="script">
+        <span class="script-label">Geoffrey — R4 option courte</span>
+        <div class="msg"><div class="msg-tag">Msg 1</div><div class="msg-text">?</div></div>
+        <div class="script-note">Un seul caractère. Volontairement intriguant. Force une réponse. Marche 1 fois sur 2.</div>
+      </div>
+      <div class="script" style="margin-top:14px;">
+        <span class="script-label">Geoffrey — R4 option insight</span>
+        <div class="msg"><div class="msg-tag">Msg 1</div><div class="msg-text">truc que je voulais te dire</div></div>
+        <div class="msg"><div class="msg-tag">Msg 2</div><div class="msg-text">étude Yale 2024 · le BHB éteint l'inflammasome NLRP3</div></div>
+        <div class="msg"><div class="msg-tag">Msg 3</div><div class="msg-text">qui starte la plupart des inflammations chroniques de peau</div></div>
+        <div class="msg"><div class="msg-tag">Msg 4</div><div class="msg-text">c'est précisément ce que la cétose thérapeutique active</div></div>
+        <div class="script-note">Choisir entre les deux options selon le profil. Option insight = pour Marc-archetype (entrepreneur 50s, aime la rigueur). Option « ? » = pour Léa/Camille.</div>
+      </div>
+    </div>
+
+    <div class="relance-item" data-r="R5">
+      <div class="relance-header">Dernière relance — porte ouverte</div>
+      <div class="relance-when">J+14 — message final, ensuite STOP</div>
+      <div class="script">
+        <span class="script-label">Geoffrey — R5</span>
+        <div class="msg"><div class="msg-tag">Msg 1</div><div class="msg-text">hey · j'arrête de te déranger après ça</div></div>
+        <div class="msg"><div class="msg-tag">Msg 2</div><div class="msg-text">si c'est pas le bon moment · pas de souci</div></div>
+        <div class="msg"><div class="msg-tag">Msg 3</div><div class="msg-text">tu reviens quand t'es prêt(e) · je serai là</div></div>
+        <div class="msg"><div class="msg-tag">Msg 4</div><div class="msg-text">prends soin de toi</div></div>
+        <div class="script-note">Aucun CTA. Aucun lien. Cadeau de fin. Archive la conversation. 60 jours plus tard → tentative réactivation possible (Flow 2 Variante 3).</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="warning">
+    <strong>Règle absolue 5 niveaux.</strong> Si à n'importe quel moment la personne dit clairement « non merci » ou « arrête de me contacter » → STOP immédiat. On répond une fois : <em class="serif">« bien reçu · je te laisse · prends soin de toi »</em>. Puis silence radio.
+  </div>
+
+  <div class="note">
+    <strong>Pourquoi 5 et pas 10.</strong> V2 avait 10 relances sur 30 jours. Trop. Le ratio bruit/signal devient mauvais après R5. Mieux vaut 5 relances de haute qualité (vraie écoute, contenu différencié à chaque coup) qu'une rafale qui crame la lead et finit en blocage Insta.
+  </div>
+</section>
+
+<!-- SECTION 6 — POST-VSL -->
+<section id="post-vsl">
+  <div class="section-num">06 — Flow 4</div>
+  <h2>Post-VSL (8 min) + vocal Geoffrey H+3</h2>
+  <p class="intro">Flow principal SAPIENS. Commentaire YT → ManyChat envoie la VSL de 8 min → vocal personnalisé à H+3 → je prends le relais quand la personne répond. Pattern obligatoire V3 : empathie sincère AVANT chaque question. Je ne suis pas un flic, je suis quelqu'un qui veut vraiment comprendre.</p>
+
+  <div class="card card-gold">
+    <div class="card-title">Séquence existante (validée)</div>
+    <div class="tree">
+      <div class="tree-branch"><span class="key">Vocal Geoffrey H+3</span> <span class="arrow">→</span> elle ou il répond</div>
+      <div class="tree-branch"><span class="key">Étape 0</span> <span class="arrow">→</span> <em class="serif">« t'as eu le temps de regarder la vidéo de 8 min ? »</em></div>
+      <div class="tree-branch">
+        <span class="key">OUI</span> <span class="arrow">→</span> Étape 1A : empathie + <em class="serif">« qu'est-ce qui t'a retenu(e) de réserver ? »</em>
+      </div>
+      <div class="tree-branch">
+        <span class="key">NON</span> <span class="arrow">→</span> Étape 1B : empathie + <em class="serif">« c'est quoi ta situation avec ta peau en ce moment ? »</em>
+      </div>
+      <div class="tree-branch"><span class="key">Étape 2</span> <span class="arrow">→</span> empathie + 1 question à la fois (banque ci-dessous)</div>
+      <div class="tree-branch"><span class="key">Étape 3</span> <span class="arrow">→</span> objection (voir section 08)</div>
+      <div class="tree-branch"><span class="key">Étape 4</span> <span class="arrow">→</span> envoi lien Calendly + transition Jad</div>
+      <div class="tree-branch"><span class="key">Étape 5</span> <span class="arrow">→</span> H+72 si silence : message final, puis STOP</div>
+    </div>
+    <p style="font-size:13px;color:var(--stone);margin-top:16px;">Référence : <a href="https://jadgrowthop.github.io/sapiens360-drive/01_SCRIPT_SETTING.html" style="color:var(--gold);text-decoration:none;font-weight:500;">jadgrowthop.github.io/sapiens360-drive/01_SCRIPT_SETTING.html</a></p>
+  </div>
+
+  <h3 style="margin-top:50px;">Banque d'empathie — à utiliser AVANT chaque question</h3>
+
+  <p style="font-size:14px;color:var(--stone);margin-bottom:14px;">Pattern obligatoire V3 : 1 phrase empathique → 1 question. Jamais 3 questions d'affilée. La personne doit sentir qu'on l'écoute vraiment, pas qu'on coche des cases.</p>
+
+  <div class="empathy-bank">
+    <div class="empathy-card">« ça doit être lourd à vivre au quotidien »</div>
+    <div class="empathy-card">« je te comprends · j'ai vécu cette forme d'errance médicale »</div>
+    <div class="empathy-card">« tu n'es pas le seul / la seule à vivre ça · tu sais »</div>
+    <div class="empathy-card">« franchement · j'ai vu beaucoup de personnes dans ta situation »</div>
+    <div class="empathy-card">« c'est normal d'être épuisé(e) par tout ça »</div>
+    <div class="empathy-card">« ok je comprends · [X] ans c'est long à porter »</div>
+    <div class="empathy-card">« ça me parle · c'est exactement ce que je vois en consultation »</div>
+    <div class="empathy-card">« ouais · c'est typique de ce genre de terrain »</div>
+  </div>
+
+  <h3 style="margin-top:50px;">Banque de questions — UNE à la fois</h3>
+
+  <p style="font-size:14px;color:var(--stone);margin-bottom:14px;">10+ questions pour creuser sans flicage. Toujours précédées d'une phrase empathique de la banque ci-dessus. Choisir selon où en est la conversation.</p>
+
+  <div class="q-bank">
+    <div class="q-card">« ça fait combien de temps que ça dure ? »</div>
+    <div class="q-card">« t'as essayé quoi avant ? »</div>
+    <div class="q-card">« le plus dur pour toi c'est la peau en elle-même ou le fait que rien ne tient jamais vraiment ? »</div>
+    <div class="q-card">« t'es vraiment motivé(e) à régler le fond du problème ? »</div>
+    <div class="q-card">« qu'est-ce qui te bloque aujourd'hui ? »</div>
+    <div class="q-card">« t'as une période où ça flambe plus que d'autres ? »</div>
+    <div class="q-card">« ça t'isole dans tes relations ? »</div>
+    <div class="q-card">« comment ça impacte ton boulot · tes journées ? »</div>
+    <div class="q-card">« si tu te projettes dans 3 mois sans ce truc · ça change quoi pour toi ? »</div>
+    <div class="q-card">« ton médecin te dit quoi actuellement ? »</div>
+    <div class="q-card">« t'as déjà entendu parler de la cétose thérapeutique ? »</div>
+    <div class="q-card">« qu'est-ce qui t'a fait t'intéresser au protocole ? »</div>
+  </div>
+
+  <h3 style="margin-top:50px;">Exemple complet — empathie + question (pattern V3)</h3>
+
+  <div class="prospect">« j'ai du psoriasis depuis 8 ans · j'ai tout essayé »</div>
+
+  <div class="script">
+    <span class="script-label">Geoffrey — réponse pattern V3</span>
+    <div class="msg"><div class="msg-tag">Msg 1</div><div class="msg-text">ok je comprends · 8 ans c'est long à porter</div></div>
+    <div class="msg"><div class="msg-tag">Msg 2</div><div class="msg-text">t'es loin d'être le seul / la seule à vivre ça</div></div>
+    <div class="msg"><div class="msg-tag">Msg 3</div><div class="msg-text">t'as essayé quoi exactement ?</div></div>
+    <div class="script-note">2 phrases empathie + 1 question. Pas 3 questions d'affilée. La personne se sent entendue avant d'être interrogée. Important.</div>
+  </div>
+
+  <h3 style="margin-top:50px;">Complément 1 — pas de réponse au vocal</h3>
+
+  <p style="font-size:14px;color:var(--stone);margin-bottom:14px;">Le vocal Geoffrey est parti à H+3. À H+24, toujours rien.</p>
+
+  <div class="script">
+    <span class="script-label">Geoffrey — H+24 silence vocal</span>
+    <div class="msg"><div class="msg-tag">Msg 1</div><div class="msg-text">hey · j'avais laissé un vocal hier</div></div>
+    <div class="msg"><div class="msg-tag">Msg 2</div><div class="msg-text">t'as pu l'écouter ?</div></div>
+    <div class="script-note">Texte simple. Pas de re-envoi de vocal. On vérifie l'écoute. Souvent la personne a écouté mais n'a pas su quoi répondre.</div>
+  </div>
+
+  <p style="font-size:13px;color:var(--stone);margin-top:18px;">À H+48 si toujours silence :</p>
+
+  <div class="script">
+    <span class="script-label">Geoffrey — H+48 silence</span>
+    <div class="msg"><div class="msg-tag">Msg 1</div><div class="msg-text">pas de souci si t'as pas le temps de répondre à un vocal</div></div>
+    <div class="msg"><div class="msg-tag">Msg 2</div><div class="msg-text">dis-moi juste en 2 mots où t'en es</div></div>
+    <div class="msg"><div class="msg-tag">Msg 3</div><div class="msg-text">je m'adapte</div></div>
+    <div class="script-note">« Pas de souci » + « je m'adapte » libère la pression. Beaucoup débloquent ici.</div>
+  </div>
+
+  <h3 style="margin-top:50px;">Complément 2 — questions techniques (micro-messages explicatifs)</h3>
+
+  <p style="font-size:14px;color:var(--stone);margin-bottom:14px;"><em>« comment ça marche la cétose ? » / « c'est quoi exactement ton protocole ? » / « tu utilises les BHB ? »</em></p>
+
+  <div class="script">
+    <span class="script-label">Geoffrey — explication courte en 5 messages</span>
+    <div class="msg"><div class="msg-tag">Msg 1</div><div class="msg-text">ok donc en gros · ta peau réagit à de l'inflammation chronique</div></div>
+    <div class="msg"><div class="msg-tag">Msg 2</div><div class="msg-text">l'inflammation vient de ton terrain intestinal · pas de ta peau</div></div>
+    <div class="msg"><div class="msg-tag">Msg 3</div><div class="msg-text">la cétose thérapeutique éteint cette inflammation à la source</div></div>
+    <div class="msg"><div class="msg-tag">Msg 4</div><div class="msg-text">études solides · Youm 2015 Yale · BHB et NLRP3</div></div>
+    <div class="msg"><div class="msg-tag">Msg 5</div><div class="msg-text">tu veux que je t'envoie une vidéo qui explique tout en 8 min ?</div></div>
+    <div class="script-note">5 micro-messages &gt; 1 pavé. Termine sur une question pour relancer le dialogue. Vocabulaire technique assumé : cétose thérapeutique, BHB, NLRP3 — Geoffrey est expert PKD, il parle la langue de l'expertise.</div>
+  </div>
+
+  <div class="warning">
+    <strong>Ne JAMAIS faire de consultation gratuite déguisée.</strong> Si on pose une question nutritionnelle ultra-personnalisée (« je dois manger quoi à mon âge avec mon poids ? ») :
+    <div class="script" style="margin-top:14px;">
+      <span class="script-label">Geoffrey — protection</span>
+      <div class="msg"><div class="msg-tag">Msg 1</div><div class="msg-text">là je peux pas te répondre sans connaître ton terrain</div></div>
+      <div class="msg"><div class="msg-tag">Msg 2</div><div class="msg-text">c'est exactement le travail qu'on fait sur le call</div></div>
+      <div class="msg"><div class="msg-tag">Msg 3</div><div class="msg-text">Jad analyse ton profil avec moi · on te dit ce qui correspond</div></div>
+    </div>
+    Audit closing mars 2026 = 0% close à cause de la consultation gratuite. Pattern à NE PAS reproduire.
+  </div>
+
+  <h3 style="margin-top:50px;">Complément 3 — bridge vers booking sans forcer</h3>
+
+  <div class="script">
+    <span class="script-label">Geoffrey — bridge soft</span>
+    <div class="msg"><div class="msg-tag">Msg 1</div><div class="msg-text">ok je comprends mieux ta situation</div></div>
+    <div class="msg"><div class="msg-tag">Msg 2</div><div class="msg-text">on peut prendre 30 min ensemble si tu veux</div></div>
+    <div class="msg"><div class="msg-tag">Msg 3</div><div class="msg-text">Jad analyse ton terrain · te dit honnêtement si on peut t'aider</div></div>
+    <div class="msg"><div class="msg-tag">Msg 4</div><div class="msg-text">c'est gratuit · sans engagement</div></div>
+    <div class="msg"><div class="msg-tag">Msg 5</div><div class="msg-text">tu veux le lien ?</div></div>
+    <div class="script-note">On pose la question. On n'envoie PAS le lien direct. La permission active l'engagement. Si OUI → on envoie. Si elle hésite → on revient à une question.</div>
+  </div>
+
+  <div class="prospect">« oui envoie-moi »</div>
+
+  <div class="script">
+    <span class="script-label">Geoffrey — envoi lien + transition Jad</span>
+    <div class="msg"><div class="msg-tag">Msg 1</div><div class="msg-text">parfait</div></div>
+    <div class="msg"><div class="msg-tag">Msg 2</div><div class="msg-text">voilà le lien · Jad voit ton créneau tout de suite</div></div>
+    <div class="msg"><div class="msg-tag">Msg 3</div><div class="msg-text">https://api.leadconnectorhq.com/widget/booking/exr3PQmMOOXUFOnkUfsJ</div></div>
+    <div class="msg"><div class="msg-tag">Msg 4</div><div class="msg-text">tu choisis ce qui t'arrange dans la semaine</div></div>
+    <div class="msg"><div class="msg-tag">Msg 5</div><div class="msg-text">à très vite</div></div>
+    <div class="script-note">Positionnement Jad = analyste qui filtre, pas vendeur. Augmente show-up rate. Pas de smiley.</div>
+  </div>
+</section>
+
+<!-- SECTION 7 — MAPPING -->
+<section id="mapping">
+  <div class="section-num">07 — Mapping signal → vidéo Geoffrey</div>
+  <h2>10 signaux, 10 thèmes vidéo Geoffrey</h2>
+  <p class="intro">La bible. Quand la personne dit X, je propose une vidéo Geoffrey thématique. Les vidéos Geoffrey ne sont pas encore toutes sorties — pour l'instant on utilise le format générique « j'ai fait une vidéo qui parle exactement de ça » sans URL. Quand les vidéos sortent, ce mapping devient plug &amp; play.</p>
+
+  <div class="warning">
+    <strong>État vidéos Geoffrey mai 2026.</strong> Les vidéos Geoffrey thématiques ne sont pas encore toutes en ligne. Ne JAMAIS inventer d'URL. Utiliser les scripts génériques ci-dessous (« j'ai fait une vidéo qui parle exactement de ça · je te l'envoie ? »). Dès que les vidéos sortent, le setter aura les URLs réelles à plug ici.
+  </div>
+
+  <table class="map-table">
+    <thead>
+      <tr>
+        <th>Signal qu'elle ou il dit</th>
+        <th>Thème vidéo Geoffrey</th>
+        <th>Mot-clé</th>
+        <th>Pilier</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="map-trigger">« je gratte la nuit jusqu'à saigner »</td>
+        <td class="map-video">Grattage nocturne · 8 min</td>
+        <td class="map-code">NUIT</td>
+        <td>P1 / P4</td>
+      </tr>
+      <tr>
+        <td class="map-trigger">« la cortisone marche plus » / « ça revient pire à l'arrêt »</td>
+        <td class="map-video">Sevrage cortisone sans rebond</td>
+        <td class="map-code">REBOND</td>
+        <td>P2</td>
+      </tr>
+      <tr>
+        <td class="map-trigger">« je suis fatigué(e) tout le temps » / « 3 cafés à 14h »</td>
+        <td class="map-video">Triangle peau-sommeil-énergie</td>
+        <td class="map-code">ENERGIE</td>
+        <td>P1</td>
+      </tr>
+      <tr>
+        <td class="map-trigger">« crise avant événement pro » / « plaque double avant ma réunion »</td>
+        <td class="map-video">Trigger socio-pro et impact miroir</td>
+        <td class="map-code">MIROIR</td>
+        <td>P4</td>
+      </tr>
+      <tr>
+        <td class="map-trigger">« j'ai essayé 1 milliard de crèmes »</td>
+        <td class="map-video">Pourquoi les crèmes tiennent jamais</td>
+        <td class="map-code">CREMES</td>
+        <td>P3</td>
+      </tr>
+      <tr>
+        <td class="map-trigger">« j'ai tout essayé en régimes » / « 8000€ en compléments »</td>
+        <td class="map-video">Pourquoi les régimes échouent</td>
+        <td class="map-code">REGIMES</td>
+        <td>P3</td>
+      </tr>
+      <tr>
+        <td class="map-trigger">« 5 dermatos en 7 ans » / « personne me parle d'intestin »</td>
+        <td class="map-video">Ce que les dermatos ne regardent pas</td>
+        <td class="map-code">TERRAIN</td>
+        <td>P2</td>
+      </tr>
+      <tr>
+        <td class="map-trigger">« on m'a dit que c'est génétique » / « faut vivre avec »</td>
+        <td class="map-video">Génétique, épigénétique, terrain</td>
+        <td class="map-code">GENES</td>
+        <td>P5</td>
+      </tr>
+      <tr>
+        <td class="map-trigger">« mon enfant commence à gratter » / « j'ai peur qu'il ait pareil »</td>
+        <td class="map-video">Transmission et prévention 0-7 ans</td>
+        <td class="map-code">TRANSMISSION</td>
+        <td>P5 / P4</td>
+      </tr>
+      <tr>
+        <td class="map-trigger">« mon dermato propose biothérapie / IL-17 / IL-23 »</td>
+        <td class="map-video">Dossier biothérapie complet</td>
+        <td class="map-code">DOSSIER</td>
+        <td>P2</td>
+      </tr>
+      <tr>
+        <td class="map-trigger">« entrepreneur · ma peau me freine en business »</td>
+        <td class="map-video">Protocole entrepreneur</td>
+        <td class="map-code">PERF</td>
+        <td>P4</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3 style="margin-top:50px;">Scripts d'envoi vidéo Geoffrey — 3 variantes universelles</h3>
+
+  <div class="script">
+    <span class="script-label">Variante 1 · « court &amp; direct » (format générique sans URL)</span>
+    <div class="msg"><div class="msg-tag">Msg 1</div><div class="msg-text">j'ai fait une vidéo qui parle exactement de ça</div></div>
+    <div class="msg"><div class="msg-tag">Msg 2</div><div class="msg-text">8 min · ça t'éclairera</div></div>
+    <div class="msg"><div class="msg-tag">Msg 3</div><div class="msg-text">je te l'envoie ?</div></div>
+    <div class="script-note">Format par défaut tant que la vidéo Geoffrey n'a pas d'URL stable. On demande permission avant. Si la personne dit oui → on envoie le lien quand disponible, sinon on dit « je te tag dès que c'est en ligne ».</div>
+  </div>
+
+  <div class="script">
+    <span class="script-label">Variante 2 · « preuve sociale » (quand URL dispo)</span>
+    <div class="msg"><div class="msg-tag">Msg 1</div><div class="msg-text">y a une vidéo où je décris exactement ton pattern</div></div>
+    <div class="msg"><div class="msg-tag">Msg 2</div><div class="msg-text">la peau qui flambe avant un événement pro</div></div>
+    <div class="msg"><div class="msg-tag">Msg 3</div><div class="msg-text">[URL vidéo Geoffrey quand dispo]</div></div>
+    <div class="msg"><div class="msg-tag">Msg 4</div><div class="msg-text">c'est typique de Camille · une de mes clientes</div></div>
+    <div class="msg"><div class="msg-tag">Msg 5</div><div class="msg-text">regarde · tu vas te reconnaître</div></div>
+    <div class="script-note">Pour Marc-archetype et Camille-archetype. Nomme un vrai client. Le mimétisme renforce la confiance.</div>
+  </div>
+
+  <div class="script">
+    <span class="script-label">Variante 3 · « qualification embedded »</span>
+    <div class="msg"><div class="msg-tag">Msg 1</div><div class="msg-text">vu ce que tu m'as dit</div></div>
+    <div class="msg"><div class="msg-tag">Msg 2</div><div class="msg-text">la vidéo qui correspond c'est celle-ci</div></div>
+    <div class="msg"><div class="msg-tag">Msg 3</div><div class="msg-text">[URL ou format générique]</div></div>
+    <div class="msg"><div class="msg-tag">Msg 4</div><div class="msg-text">j'y explique le mécanisme intestin-immunité-peau</div></div>
+    <div class="msg"><div class="msg-tag">Msg 5</div><div class="msg-text">regarde-la posée · ce soir ou demain · après on échange</div></div>
+    <div class="script-note">Forme la plus longue. À utiliser quand la personne a déjà donné 2-3 infos détaillées.</div>
+  </div>
+
+  <div class="note">
+    <strong>Bonus signal froid → conversion forte.</strong> Si elle dit « j'ai vu un de tes reels » sans préciser → demander lequel. Si elle se souvient = lead très chaude. Sinon → envoyer le reel viral le plus partagé (TERRAIN ou DOSSIER).
+  </div>
+</section>
+
+<!-- SECTION 8 — OBJECTIONS -->
+<section id="objections">
+  <div class="section-num">08 — Objections</div>
+  <h2>8 objections — handling V3</h2>
+  <p class="intro">Principe SAPIENS V3 : sur la plupart des objections, je pose des questions Socratiques qui font verbaliser à la personne elle-même que sa solution actuelle ne marche pas. MAIS sur le PRIX, je donne la vraie réponse direct. L'esquive Socratique sur le prix = perte de lead instantanée. Chaque objection = 2-5 micro-messages.</p>
+
+  <!-- OBJ 1 -->
+  <div class="obj">
+    <div class="obj-q">
+      <div class="obj-q-label">Objection 01</div>
+      <div class="obj-q-text">« j'ai pas le temps de regarder la vidéo »</div>
+    </div>
+    <div class="obj-body">
+      <div class="obj-grid">
+        <div class="obj-bad">
+          <div class="obj-tag obj-tag-bad">Mauvais</div>
+          « Tu peux la mettre en fond, prends 22 minutes pour ta santé c'est rien ! »
+          <p style="margin-top:8px;font-style:italic;color:var(--stone);">On juge son temps. Confrontation. Elle se braque.</p>
+        </div>
+        <div class="obj-good">
+          <div class="obj-tag obj-tag-good">Bon — VSL 8 min</div>
+          La VSL fait 8 min. C'est court. Pas besoin d'argumenter — on rappelle juste le format court.
+        </div>
+      </div>
+
+      <div class="script">
+        <span class="script-label">Geoffrey — réponse directe</span>
+        <div class="msg"><div class="msg-tag">Msg 1</div><div class="msg-text">je comprends</div></div>
+        <div class="msg"><div class="msg-tag">Msg 2</div><div class="msg-text">la vidéo fait juste 8 min</div></div>
+        <div class="msg"><div class="msg-tag">Msg 3</div><div class="msg-text">regarde quand t'as un moment posé</div></div>
+        <div class="msg"><div class="msg-tag">Msg 4</div><div class="msg-text">tu me dis ce que t'as compris ?</div></div>
+        <div class="script-note">Pas besoin de Socratique compliqué. La VSL est courte. On le rappelle. Friction disparaît.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- OBJ 2 -->
+  <div class="obj">
+    <div class="obj-q">
+      <div class="obj-q-label">Objection 02</div>
+      <div class="obj-q-text">« j'ai pas le temps de réserver un créneau »</div>
+    </div>
+    <div class="obj-body">
+      <div class="obj-grid">
+        <div class="obj-bad">
+          <div class="obj-tag obj-tag-bad">Mauvais</div>
+          « Je te propose lundi 14h ou mercredi 18h, ça t'arrange ? »
+          <p style="margin-top:8px;font-style:italic;color:var(--stone);">On présuppose qu'elle veut. Elle dit « non » à cause d'une vraie objection sous-jacente.</p>
+        </div>
+        <div class="obj-good">
+          <div class="obj-tag obj-tag-good">Bon — détecter</div>
+          Vérifier si c'est vraiment le temps OU si c'est une fausse objection qui cache autre chose (peur, doute, conjoint).
+        </div>
+      </div>
+
+      <div class="script">
+        <span class="script-label">Geoffrey — détecte vraie objection</span>
+        <div class="msg"><div class="msg-tag">Msg 1</div><div class="msg-text">ok</div></div>
+        <div class="msg"><div class="msg-tag">Msg 2</div><div class="msg-text">c'est vraiment le temps qui bloque</div></div>
+        <div class="msg"><div class="msg-tag">Msg 3</div><div class="msg-text">ou t'es pas sûr(e) que ça vaille le coup ?</div></div>
+        <div class="script-note">On nomme l'objection cachée. Permission de répondre franchement.</div>
+      </div>
+
+      <div class="script">
+        <span class="script-label">Geoffrey — si « vraiment le temps »</span>
+        <div class="msg"><div class="msg-tag">Msg 1</div><div class="msg-text">le call dure 30 min</div></div>
+        <div class="msg"><div class="msg-tag">Msg 2</div><div class="msg-text">y a des créneaux à 7h du matin et 21h le soir</div></div>
+        <div class="msg"><div class="msg-tag">Msg 3</div><div class="msg-text">pas besoin que ce soit cette semaine · dans 2-3 sem ok aussi</div></div>
+        <div class="msg"><div class="msg-tag">Msg 4</div><div class="msg-text">tu préfères tôt le matin ou tard le soir ?</div></div>
+      </div>
+
+      <div class="script">
+        <span class="script-label">Geoffrey — si « plus le doute »</span>
+        <div class="msg"><div class="msg-tag">Msg 1</div><div class="msg-text">ok ça c'est honnête</div></div>
+        <div class="msg"><div class="msg-tag">Msg 2</div><div class="msg-text">qu'est-ce qui te fait douter ?</div></div>
+        <div class="msg"><div class="msg-tag">Msg 3</div><div class="msg-text">que ça marche pas pour toi · ou autre chose ?</div></div>
+        <div class="script-note">Pivot vers objection réelle (probablement Obj 03 ou 04).</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- OBJ 3 — PRIX RÉPONSE DIRECTE -->
+  <div class="obj">
+    <div class="obj-q">
+      <div class="obj-q-label">Objection 03 — PRIX</div>
+      <div class="obj-q-text">« c'est combien ? »</div>
+    </div>
+    <div class="obj-body">
+      <div class="obj-grid">
+        <div class="obj-bad">
+          <div class="obj-tag obj-tag-bad">Mauvais V2 — esquive Socratique</div>
+          « Bonne question · mais avant que je te réponde · j'aimerais savoir où tu en es là · t'as déjà essayé des choses ? »
+          <p style="margin-top:8px;font-style:italic;color:var(--stone);">L'esquive sur le prix = la personne déteste. Elle se sent prise pour une cible commerciale. Mauvaise approche V2 — corrigée V3.</p>
+        </div>
+        <div class="obj-good">
+          <div class="obj-tag obj-tag-good">Bon V3 — réponse directe</div>
+          On donne le prix DIRECT. On contextualise la valeur. Puis on amène le call. Pas d'esquive Socratique sur le prix.
+        </div>
+      </div>
+
+      <div class="script">
+        <span class="script-label">Geoffrey — réponse directe V3</span>
+        <div class="msg"><div class="msg-tag">Msg 1</div><div class="msg-text">le protocole c'est 1200€ · payable en 3 fois</div></div>
+        <div class="msg"><div class="msg-tag">Msg 2</div><div class="msg-text">ça couvre 3 mois d'accompagnement · suivi hebdo · Skool complet · tout</div></div>
+        <div class="msg"><div class="msg-tag">Msg 3</div><div class="msg-text">et y a une garantie satisfait ou remboursé à 30 jours</div></div>
+        <div class="msg"><div class="msg-tag">Msg 4</div><div class="msg-text">maintenant si tu veux qu'on regarde si ça te correspond · le mieux c'est qu'on en parle 30 min</div></div>
+        <div class="msg"><div class="msg-tag">Msg 5</div><div class="msg-text">t'as un créneau cette semaine ?</div></div>
+        <div class="script-note">5 messages. Prix direct · valeur · garantie · amène call · question créneau. Pas de tortillage. La franchise renforce la confiance.</div>
+      </div>
+
+      <div class="warning">
+        <strong>Pourquoi V3 change la règle V2.</strong> L'audit comportemental Jad mai 2026 montre que l'esquive sur le prix génère 80% de pertes. Les prospects qualifiés VEULENT la vraie info. Ceux qui posent la question sont prêts à entendre la réponse. Donner le prix franchement = filtre les leads à coup sûr, repositionne SAPIENS comme honnête, accélère le booking.
+      </div>
+    </div>
+  </div>
+
+  <!-- OBJ 4 — TU ES QUI -->
+  <div class="obj">
+    <div class="obj-q">
+      <div class="obj-q-label">Objection 04 — IDENTITÉ</div>
+      <div class="obj-q-text">« tu es qui ? »</div>
+    </div>
+    <div class="obj-body">
+      <div class="obj-grid">
+        <div class="obj-bad">
+          <div class="obj-tag obj-tag-bad">Mauvais V2 — vague + humble</div>
+          « Je suis Geoffrey · praticien terrain biologique · à la base c'est très personnel · j'ai passé des années dans l'errance médicale... »
+          <p style="margin-top:8px;font-style:italic;color:var(--stone);">Le « praticien terrain biologique » = mou et flou. La story personnelle vient APRÈS, pas avant. La personne demande crédibilité, pas vulnérabilité.</p>
+        </div>
+        <div class="obj-good">
+          <div class="obj-tag obj-tag-good">Bon V3 — direct + crédible</div>
+          Geoffrey expert PKD · clinique Paleo Medicina Hongrie · 80+ personnes accompagnées · hommes ET femmes. Concret, crédible, pas humble bragging.
+        </div>
+      </div>
+
+      <div class="script">
+        <span class="script-label">Geoffrey — présentation V3</span>
+        <div class="msg"><div class="msg-tag">Msg 1</div><div class="msg-text">je suis Geoffrey Laguardia</div></div>
+        <div class="msg"><div class="msg-tag">Msg 2</div><div class="msg-text">expert des protocoles PKD appliqués aux problèmes de peau chroniques</div></div>
+        <div class="msg"><div class="msg-tag">Msg 3</div><div class="msg-text">j'accompagne hommes et femmes sur psoriasis · eczéma · rosacée · acné · etc</div></div>
+        <div class="msg"><div class="msg-tag">Msg 4</div><div class="msg-text">j'ai été formé à la clinique Paleo Medicina en Hongrie (Dr Tóth · Dr Clemens)</div></div>
+        <div class="msg"><div class="msg-tag">Msg 5</div><div class="msg-text">et j'ai accompagné 80+ personnes en sortie de protocole</div></div>
+        <div class="msg"><div class="msg-tag">Msg 6</div><div class="msg-text">tu veux que je t'explique plus ma méthode ?</div></div>
+        <div class="script-note">6 messages courts. Direct, concret, crédible. Nom complet · expertise précise (PKD) · genre neutre (hommes et femmes) · formation institutionnelle citée · résultats concrets · question ouverte de relance.</div>
+      </div>
+
+      <div class="script">
+        <span class="script-label">Geoffrey — story personnelle (si on creuse)</span>
+        <div class="msg"><div class="msg-tag">Msg 1</div><div class="msg-text">à la base c'est très personnel</div></div>
+        <div class="msg"><div class="msg-tag">Msg 2</div><div class="msg-text">j'ai passé des années dans l'errance médicale</div></div>
+        <div class="msg"><div class="msg-tag">Msg 3</div><div class="msg-text">dermatos · crèmes · cortisone · des dizaines de traitements</div></div>
+        <div class="msg"><div class="msg-tag">Msg 4</div><div class="msg-text">j'ai compris que le problème c'était pas ma peau · mais ce qui se passait en dessous</div></div>
+        <div class="msg"><div class="msg-tag">Msg 5</div><div class="msg-text">j'ai creusé · testé sur moi · et ça a tout changé</div></div>
+        <div class="script-note">Story Geoffrey signature en 5 micro-messages. Vient APRÈS la présentation crédible, pas avant. Authentique mais positionne comme survivant + expert, pas victime.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- OBJ 5 -->
+  <div class="obj">
+    <div class="obj-q">
+      <div class="obj-q-label">Objection 05</div>
+      <div class="obj-q-text">« t'as accompagné qui ? »</div>
+    </div>
+    <div class="obj-body">
+      <div class="obj-grid">
+        <div class="obj-bad">
+          <div class="obj-tag obj-tag-bad">Mauvais</div>
+          « J'ai accompagné 200+ personnes ! » (chiffre vide)
+          <p style="margin-top:8px;font-style:italic;color:var(--stone);">Chiffre = vide. La personne veut des noms, du concret.</p>
+        </div>
+        <div class="obj-good">
+          <div class="obj-tag obj-tag-good">Bon — 1 cas matching</div>
+          Cite UN client réel qui correspond à SA condition. Envoie son témoignage. Preuve sociale ciblée.
+        </div>
+      </div>
+
+      <div class="script">
+        <span class="script-label">Geoffrey — chiffre + précision</span>
+        <div class="msg"><div class="msg-tag">Msg 1</div><div class="msg-text">80+ hommes et femmes accompagnés en sortie de protocole</div></div>
+        <div class="msg"><div class="msg-tag">Msg 2</div><div class="msg-text">pso · rosacée · acné · eczéma chroniques</div></div>
+      </div>
+
+      <div class="script">
+        <span class="script-label">Geoffrey — cas matching</span>
+        <div class="msg"><div class="msg-tag">Msg 1</div><div class="msg-text">si tu veux je te cite une personne qui a ton profil</div></div>
+        <div class="msg"><div class="msg-tag">Msg 2</div><div class="msg-text">Camille · 28 ans · rosacée chronique 5 ans</div></div>
+        <div class="msg"><div class="msg-tag">Msg 3</div><div class="msg-text">plaques visage · crises pré-événement</div></div>
+        <div class="msg"><div class="msg-tag">Msg 4</div><div class="msg-text">voilà son témoignage en 2 min · [LIEN]</div></div>
+        <div class="script-note">Choisir le bon cas : Camille (rosacée), Jordan (psoriasis), Mintzior (entrepreneur), Marc-archetype (psoriasis homme 50s).</div>
+      </div>
+
+      <div class="script">
+        <span class="script-label">Geoffrey — bridge call</span>
+        <div class="msg"><div class="msg-tag">Msg 1</div><div class="msg-text">je peux t'en partager d'autres sur le call</div></div>
+        <div class="msg"><div class="msg-tag">Msg 2</div><div class="msg-text">Jad fera la lecture de ton terrain et te citera les plus proches de toi</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- OBJ 6 -->
+  <div class="obj">
+    <div class="obj-q">
+      <div class="obj-q-label">Objection 06</div>
+      <div class="obj-q-text">« quelle est ta méthode ? »</div>
+    </div>
+    <div class="obj-body">
+      <div class="obj-grid">
+        <div class="obj-bad">
+          <div class="obj-tag obj-tag-bad">Mauvais</div>
+          « On fait du BHB · NLRP3 · TMA-O... » (déballer tout le mécanisme moléculaire)
+          <p style="margin-top:8px;font-style:italic;color:var(--stone);">Trop technique en DM = décroche. Détail biochimique pour le call.</p>
+        </div>
+        <div class="obj-good">
+          <div class="obj-tag obj-tag-good">Bon — 3 phases sur 3 mois</div>
+          Vocabulaire assumé. Cétose thérapeutique en phase 1. Structure claire = premium. Le détail mécanisme arrive en call.
+        </div>
+      </div>
+
+      <div class="script">
+        <span class="script-label">Geoffrey — vue d'ensemble V3</span>
+        <div class="msg"><div class="msg-tag">Msg 1</div><div class="msg-text">je travaille l'axe intestin-immunité-peau</div></div>
+        <div class="msg"><div class="msg-tag">Msg 2</div><div class="msg-text">via un protocole clinique adapté · PKD à la base</div></div>
+        <div class="msg"><div class="msg-tag">Msg 3</div><div class="msg-text">3 phases sur 3 mois</div></div>
+        <div class="msg"><div class="msg-tag">Msg 4</div><div class="msg-text">phase 1 cétose thérapeutique reset · phase 2 tests vision claire · phase 3 réintégration tenable</div></div>
+      </div>
+
+      <div class="script">
+        <span class="script-label">Geoffrey — objectif + bridge</span>
+        <div class="msg"><div class="msg-tag">Msg 1</div><div class="msg-text">l'objectif c'est 0 frustration</div></div>
+        <div class="msg"><div class="msg-tag">Msg 2</div><div class="msg-text">pas un protocole à vie</div></div>
+        <div class="msg"><div class="msg-tag">Msg 3</div><div class="msg-text">on stabilise ton terrain pour que tu manges tenable 20-30 ans sans rechute</div></div>
+        <div class="msg"><div class="msg-tag">Msg 4</div><div class="msg-text">le détail mécanisme et protocole précis · c'est sur le call qu'on te le construit</div></div>
+        <div class="script-note">V3 : « cétose thérapeutique » assumée. PKD nommé. 3 phases sur 3 mois (pas 6-12). Détails section 09.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- OBJ 7 -->
+  <div class="obj">
+    <div class="obj-q">
+      <div class="obj-q-label">Objection 07</div>
+      <div class="obj-q-text">« je travaille déjà avec un naturopathe »</div>
+    </div>
+    <div class="obj-body">
+      <div class="obj-grid">
+        <div class="obj-bad">
+          <div class="obj-tag obj-tag-bad">Mauvais</div>
+          « Ah mais nous on est cliniques, eux c'est trop générique ! »
+          <p style="margin-top:8px;font-style:italic;color:var(--stone);">On attaque son choix. La personne défend son naturo et se ferme.</p>
+        </div>
+        <div class="obj-good">
+          <div class="obj-tag obj-tag-good">Bon — pattern Jeremy Miner</div>
+          Questions qui font verbaliser à elle-même que son naturo ne donne pas de résultats. Empathie d'abord. Elle conclut seule.
+        </div>
+      </div>
+
+      <div class="script">
+        <span class="script-label">Geoffrey — empathie + sonde 1</span>
+        <div class="msg"><div class="msg-tag">Msg 1</div><div class="msg-text">ok cool · c'est bien d'être suivi(e)</div></div>
+        <div class="msg"><div class="msg-tag">Msg 2</div><div class="msg-text">tu bosses avec lui depuis combien de temps ?</div></div>
+      </div>
+
+      <div class="prospect">« genre 1 an et demi »</div>
+
+      <div class="script">
+        <span class="script-label">Geoffrey — sonde 2</span>
+        <div class="msg"><div class="msg-tag">Msg 1</div><div class="msg-text">ok</div></div>
+        <div class="msg"><div class="msg-tag">Msg 2</div><div class="msg-text">et concrètement · ta peau a évolué comment depuis 1 an et demi ?</div></div>
+        <div class="script-note">Pattern Miner : « is there anything you would change about your provider ? ». La personne admet que rien n'a bougé.</div>
+      </div>
+
+      <div class="prospect">« honnêtement c'est mieux par moments mais ça revient toujours »</div>
+
+      <div class="script">
+        <span class="script-label">Geoffrey — sonde 3 (kill)</span>
+        <div class="msg"><div class="msg-tag">Msg 1</div><div class="msg-text">ouais je vois</div></div>
+        <div class="msg"><div class="msg-tag">Msg 2</div><div class="msg-text">tu penses que continuer la même approche 18 mois de plus</div></div>
+        <div class="msg"><div class="msg-tag">Msg 3</div><div class="msg-text">va donner un résultat différent ?</div></div>
+        <div class="script-note">Pure Socratique. Réponse honnête = NON.</div>
+      </div>
+
+      <div class="prospect">« ... bah probablement pas »</div>
+
+      <div class="script">
+        <span class="script-label">Geoffrey — repositionne</span>
+        <div class="msg"><div class="msg-tag">Msg 1</div><div class="msg-text">c'est exactement la question</div></div>
+        <div class="msg"><div class="msg-tag">Msg 2</div><div class="msg-text">si ça stabilise un peu mais sans aller au bout</div></div>
+        <div class="msg"><div class="msg-tag">Msg 3</div><div class="msg-text">c'est qu'il manque une pièce · pas qu'il fait mal son travail</div></div>
+        <div class="msg"><div class="msg-tag">Msg 4</div><div class="msg-text">on peut être complémentaire</div></div>
+        <div class="msg"><div class="msg-tag">Msg 5</div><div class="msg-text">sur le call avec Jad on regarde ce qui manque · et si on est cette pièce ou pas</div></div>
+        <div class="script-note">Repositionne SAPIENS comme complémentaire (pas remplaçant). La personne garde sa face.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- OBJ 8 -->
+  <div class="obj">
+    <div class="obj-q">
+      <div class="obj-q-label">Objection 08</div>
+      <div class="obj-q-text">« je travaille déjà avec un nutritionniste »</div>
+    </div>
+    <div class="obj-body">
+      <div class="obj-grid">
+        <div class="obj-bad">
+          <div class="obj-tag obj-tag-bad">Mauvais</div>
+          « Les nutritionnistes traitent pas le terrain immunitaire ! »
+          <p style="margin-top:8px;font-style:italic;color:var(--stone);">Attaque frontale. La personne a investi. Elle se braque.</p>
+        </div>
+        <div class="obj-good">
+          <div class="obj-tag obj-tag-good">Bon — pattern Socratique Obj 7</div>
+          Faire verbaliser le manque par les mêmes questions. Valider ce qui marche, faire ressortir ce qui ne marche pas.
+        </div>
+      </div>
+
+      <div class="script">
+        <span class="script-label">Geoffrey — empathie + sonde 1</span>
+        <div class="msg"><div class="msg-tag">Msg 1</div><div class="msg-text">ok cool</div></div>
+        <div class="msg"><div class="msg-tag">Msg 2</div><div class="msg-text">avec ton nutri vous bossez plus sur l'alimentation seule</div></div>
+        <div class="msg"><div class="msg-tag">Msg 3</div><div class="msg-text">ou aussi sur le système immunitaire / l'inflammation ?</div></div>
+        <div class="script-note">Force le diagnostic. La plupart des nutris travaillent juste l'aliment.</div>
+      </div>
+
+      <div class="prospect">« plutôt alimentation oui »</div>
+
+      <div class="script">
+        <span class="script-label">Geoffrey — sonde 2</span>
+        <div class="msg"><div class="msg-tag">Msg 1</div><div class="msg-text">ok</div></div>
+        <div class="msg"><div class="msg-tag">Msg 2</div><div class="msg-text">et ta peau a réagi comment depuis que vous bossez ensemble ?</div></div>
+      </div>
+
+      <div class="prospect">« c'est mitigé »</div>
+
+      <div class="script">
+        <span class="script-label">Geoffrey — repositionne</span>
+        <div class="msg"><div class="msg-tag">Msg 1</div><div class="msg-text">ce que je vois chez beaucoup de gens</div></div>
+        <div class="msg"><div class="msg-tag">Msg 2</div><div class="msg-text">un super nutri qui adresse l'aliment</div></div>
+        <div class="msg"><div class="msg-tag">Msg 3</div><div class="msg-text">mais qui touche pas à l'axe intestin-immunité-peau profond</div></div>
+        <div class="msg"><div class="msg-tag">Msg 4</div><div class="msg-text">ça peut stabiliser sans tenir dans la durée · c'est juste un travail différent</div></div>
+        <div class="msg"><div class="msg-tag">Msg 5</div><div class="msg-text">tu veux qu'on regarde ce qui manque en 30 min avec Jad ?</div></div>
+        <div class="script-note">« Tenir dans la durée » + objectif guérir le terrain. V3 assume le mot guérir si pertinent.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="note">
+    <strong>Principe transverse 8 objections.</strong> 80% du temps, l'objection nommée n'est pas la vraie. Sauf pour le PRIX (V3 réponse directe). Pour les autres, mon job : 1 phrase empathique + 1-2 micro-messages pour comprendre la vraie objection avant de répondre. Alexy Mouly : <em class="serif">« quand tu te justifies, tu te crucifies · pose une question »</em>.
+  </div>
+</section>
+
+<!-- SECTION 9 — PROTOCOLE 3 PHASES -->
+<section id="protocole">
+  <div class="section-num">09 — Protocole 3 phases / 3 mois</div>
+  <h2>Le protocole SAPIENS — structure exacte</h2>
+  <p class="intro">Si on me demande le protocole, je sais exactement quoi dire. 3 phases sur 3 mois d'accompagnement actif, puis suivi long terme. Cétose thérapeutique en phase 1 (assumée). Objectif central : 0 frustration. Tenable 20-30 ans. Différenciant majeur vs Pagano / AIP / sans gluten / probiotiques / crèmes.</p>
+
+  <div class="phase-box">
+    <div class="phase">
+      <div class="phase-num">PHASE 1</div>
+      <div class="phase-name">Cétose thérapeutique — RESET</div>
+      <div class="phase-when">Mois 1 (28-45 jours)</div>
+      <div class="phase-body">Remet le terrain biologique à zéro. Élimine le bruit de fond inflammatoire. Active BHB → éteint l'inflammasome NLRP3. Permet ensuite de lire les signaux du corps proprement.</div>
+    </div>
+    <div class="phase">
+      <div class="phase-num">PHASE 2</div>
+      <div class="phase-name">Tests avec vision claire</div>
+      <div class="phase-when">Mois 2</div>
+      <div class="phase-body">Stabilisation + réintégration progressive. Terrain stable = chaque aliment réintroduit donne un signal pur. Bio-individualité testée sur la personne elle-même. Pas une copie d'un protocole Insta.</div>
+    </div>
+    <div class="phase">
+      <div class="phase-num">PHASE 3</div>
+      <div class="phase-name">Réintégration intelligente</div>
+      <div class="phase-when">Mois 3+ (autonomie)</div>
+      <div class="phase-body">Diète tenable 20-30 prochaines années. Pas un régime à vie. Une méthode pour comprendre son corps. Sans rechute.</div>
+    </div>
+  </div>
+
+  <div class="card card-gold">
+    <div class="card-title">Objectif central · 0 FRUSTRATION</div>
+    <p style="font-size:15px;line-height:1.7;">Différenciant majeur vs Pagano / AIP / sans gluten / probiotiques / crèmes. Erwan a tenu 80% du protocole sans frustration → −70% pso en 1 mois. La promesse SAPIENS n'est pas « priver à vie » mais « apprendre à écouter son corps une fois pour toutes ».</p>
+  </div>
+
+  <h3 style="margin-top:50px;">Script DM — quand quelqu'un demande le protocole</h3>
+
+  <div class="prospect">« c'est quoi exactement ton protocole ? »</div>
+
+  <div class="script">
+    <span class="script-label">Geoffrey — réponse structure</span>
+    <div class="msg"><div class="msg-tag">Msg 1</div><div class="msg-text">3 phases sur 3 mois d'accompagnement actif</div></div>
+    <div class="msg"><div class="msg-tag">Msg 2</div><div class="msg-text">phase 1 · cétose thérapeutique pour reset le terrain (4-6 semaines)</div></div>
+    <div class="msg"><div class="msg-tag">Msg 3</div><div class="msg-text">phase 2 · tests des aliments avec vision claire (mois 2)</div></div>
+    <div class="msg"><div class="msg-tag">Msg 4</div><div class="msg-text">phase 3 · réintégration intelligente · tenable 20-30 ans (mois 3+)</div></div>
+    <div class="msg"><div class="msg-tag">Msg 5</div><div class="msg-text">objectif central · 0 frustration</div></div>
+    <div class="msg"><div class="msg-tag">Msg 6</div><div class="msg-text">le détail mécanisme et adaptation à ton cas · c'est ce qu'on construit sur le call</div></div>
+    <div class="script-note">6 messages clairs. Aucun mot esquivé. PKD/cétose assumés. Structure simple à mémoriser pour le prospect. Vente du résultat (« 20-30 ans tenable ») plus que du process.</div>
+  </div>
+
+  <h3 style="margin-top:50px;">Script DM — quand quelqu'un demande la durée</h3>
+
+  <div class="prospect">« ça dure combien de temps ? »</div>
+
+  <div class="script">
+    <span class="script-label">Geoffrey — réponse durée</span>
+    <div class="msg"><div class="msg-tag">Msg 1</div><div class="msg-text">3 mois d'accompagnement actif</div></div>
+    <div class="msg"><div class="msg-tag">Msg 2</div><div class="msg-text">puis suivi long terme tant que t'en as besoin</div></div>
+    <div class="msg"><div class="msg-tag">Msg 3</div><div class="msg-text">l'objectif c'est qu'au bout de 3 mois t'aies compris ton corps</div></div>
+    <div class="msg"><div class="msg-tag">Msg 4</div><div class="msg-text">et que tu sois autonome pour les 20-30 prochaines années</div></div>
+    <div class="script-note">Vend le résultat long terme. Pas de promesse de guérison instantanée — mais autonomie acquise.</div>
+  </div>
+</section>
+
+<!-- SECTION 10 — ANTI-CRAMAGE -->
+<section id="anti-cramage">
+  <div class="section-num">10 — Anti-cramage</div>
+  <h2>Protéger le compte et la qualité</h2>
+  <p class="intro">Un compte cramé = revenue à zéro. Une réputation cramée = pire. Règles strictes pour rester sain.</p>
+
+  <div class="card">
+    <div class="card-title">Protection Instagram (Meta)</div>
+    <ul class="checklist">
+      <li><div class="check x">!</div><div>Maximum <strong>5 messages/min</strong> vers la même conversation. Au-delà, Meta bloque temporairement.</div></li>
+      <li><div class="check x">!</div><div>Maximum <strong>30 nouveaux DMs ouverts simultanément</strong>. Au-delà on perd le fil.</div></li>
+      <li><div class="check x">!</div><div>Pause <strong>60 secondes</strong> toutes les 10 ouvertures de DM. Sinon comportement non-humain détecté.</div></li>
+      <li><div class="check x">!</div><div>Si Meta montre captcha ou warning → <strong>arrêt immédiat</strong>. Reprise lendemain à rythme 50% plus lent.</div></li>
+      <li><div class="check x">!</div><div><strong>ManyChat à éviter pour les conversations chaudes</strong>. La pre-séquence ManyChat (Flow 1 commentaire SAPIENS) reste OK. Dès qu'une vraie conversation démarre → passage en manuel.</div></li>
+    </ul>
+  </div>
+
+  <div class="card" style="margin-top:24px;">
+    <div class="card-title">Protection réputation SAPIENS</div>
+    <ul class="checklist">
+      <li><div class="check">+</div><div><strong>Tutoiement OK par défaut</strong> sur le compte SAPIENS (ton de proximité Instagram). Vouvoiement si la personne vouvoit en premier.</div></li>
+      <li><div class="check">+</div><div>Si elle dit clairement <strong>« non merci » ou « arrête »</strong> → STOP. Pas de dernière relance. Relance possible 60 jours plus tard, ultra light (Flow 2 V3).</div></li>
+      <li><div class="check">+</div><div><strong>Jamais de smileys</strong>. Pas d'emoji. Pas d'exclamations doubles. Ton intime ET professionnel.</div></li>
+      <li><div class="check">+</div><div><strong>« Hommes et femmes »</strong> ou neutre. Jamais « les femmes » seul. Geoffrey accompagne les deux.</div></li>
+      <li><div class="check">+</div><div><strong>Prix en DM = OK avec contexte valeur</strong> (V3 nouveau). 1200€ · 3 fois · 3 mois · garantie 30j. Direct, puis amène le call.</div></li>
+      <li><div class="check">+</div><div><strong>Ne JAMAIS faire de consultation gratuite déguisée</strong>. Pas de plan alimentaire personnalisé, pas de réponse ultra-spécifique au cas individuel. QUOI (mécanisme général) = gratuit. COMMENT personnalisé = payant (call).</div></li>
+      <li><div class="check">+</div><div><strong>Vocabulaire technique assumé</strong> (V3). Cétose thérapeutique, PKD, guérir = OK. Geoffrey est expert, il parle la langue de l'expertise. Seul filtre : pas de wellness slop (pas « détox », pas « toxines » génériques).</div></li>
+    </ul>
+  </div>
+
+  <div class="warning">
+    <strong>Si on doute — on n'envoie pas.</strong> Mieux vaut 0 message qu'un message qui crame une lead chaude. Hésitation → draft, attends 10 min, relire. Si doute → demander Jad / Geoffrey avant d'envoyer.
+  </div>
+</section>
+
+<!-- SECTION 11 — TRACKER -->
+<section id="tracker">
+  <div class="section-num">11 — Tracker daily</div>
+  <h2>Le tracker du setter</h2>
+  <p class="intro">Sans tracker = 30-50% de leads perdues. Template Notion ou Airtable. 10 colonnes obligatoires. Update à la fin de chaque bloc cadence (3×/jour).</p>
+
+  <div style="overflow-x:auto;margin:24px 0;">
+    <table class="tracker">
+      <thead>
+        <tr>
+          <th>Date premier contact</th>
+          <th>Nom prospect</th>
+          <th>Source</th>
+          <th>Pathologie / signal</th>
+          <th>Vidéo Geoffrey envoyée</th>
+          <th>Status</th>
+          <th>Last message</th>
+          <th>Next action + date</th>
+          <th>Relance count</th>
+          <th>Notes ICP</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>2026-05-12</td>
+          <td class="col-name">@laetitia_27</td>
+          <td>YT comment vidéo NUIT</td>
+          <td>Eczéma 8 ans, gratte la nuit</td>
+          <td>NUIT — vue</td>
+          <td>Relancé R3</td>
+          <td>15/05 — envoyé vidéo TERRAIN</td>
+          <td>R4 (« ? ») — 19/05</td>
+          <td>3</td>
+          <td>Léa-archetype, 34F, infirmière</td>
+        </tr>
+        <tr>
+          <td>2026-05-13</td>
+          <td class="col-name">@marc_fou</td>
+          <td>DM spontané</td>
+          <td>Psoriasis 15 ans, entrepreneur</td>
+          <td>PERF — vue 80%</td>
+          <td>Qualifié — call booké</td>
+          <td>14/05 — lien Calendly envoyé</td>
+          <td>Call 17/05 14h00</td>
+          <td>0</td>
+          <td>Marc-archetype, 52H, founder SaaS — close potentiel élevé</td>
+        </tr>
+        <tr>
+          <td>2026-05-08</td>
+          <td class="col-name">@nadia_rosa</td>
+          <td>IG follow nouveau</td>
+          <td>Rosacée 4 ans, crise avant mariage</td>
+          <td>MIROIR — pas vue</td>
+          <td>Silence R3</td>
+          <td>13/05 — vidéo MIROIR + Camille</td>
+          <td>R4 insight — 16/05</td>
+          <td>3</td>
+          <td>Camille-archetype, 28F — à creuser</td>
+        </tr>
+        <tr>
+          <td>2026-04-12</td>
+          <td class="col-name">@julie_b75</td>
+          <td>Ancien follow réactivé</td>
+          <td>Psoriasis 12 ans, dermato propose biothérapie</td>
+          <td>DOSSIER — vue</td>
+          <td>Qualifié — call booké</td>
+          <td>13/05 — lien Calendly envoyé</td>
+          <td>Call 16/05 18h30</td>
+          <td>2</td>
+          <td>Pre-convaincue, déjà bien lue — close très probable</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 style="margin-top:40px;">Légende des colonnes</h3>
+
+  <div class="card">
+    <ul class="checklist">
+      <li><div class="check">·</div><div><strong>Date premier contact</strong> — référence pour calculer J+N des relances.</div></li>
+      <li><div class="check">·</div><div><strong>Nom prospect</strong> — handle Instagram + prénom réel si connu.</div></li>
+      <li><div class="check">·</div><div><strong>Source</strong> — YT comment / IG follow / DM spontané / Ancien follow / ManyChat / Vocal Geoffrey.</div></li>
+      <li><div class="check">·</div><div><strong>Pathologie / signal principal</strong> — condition + mot-clé du mapping section 07.</div></li>
+      <li><div class="check">·</div><div><strong>Vidéo Geoffrey envoyée</strong> — code (NUIT / TERRAIN / etc) + status (envoyée / vue / pas vue).</div></li>
+      <li><div class="check">·</div><div><strong>Status</strong> — Nouveau / Relancé R[X] / Qualifié / Call booké / Show / No-show / Closed / Perdu.</div></li>
+      <li><div class="check">·</div><div><strong>Last message</strong> — date + résumé 1 ligne du dernier message envoyé.</div></li>
+      <li><div class="check">·</div><div><strong>Next action + date</strong> — la prochaine relance prévue.</div></li>
+      <li><div class="check">·</div><div><strong>Relance count</strong> — nombre de relances. Stop à 5 (V3).</div></li>
+      <li><div class="check">·</div><div><strong>Notes ICP</strong> — Léa / Marc / Camille / autre. Âge, profession, contexte. Crucial pour adapter.</div></li>
+    </ul>
+  </div>
+
+  <div class="note">
+    <strong>Outil recommandé.</strong> Airtable (gratuit jusqu'à 1000 lignes) OU Notion. Vue principale : Kanban par « Status ». Vue secondaire : filtre « Next action date = aujourd'hui ». Template Airtable possible si besoin.
+  </div>
+</section>
+
+<!-- SECTION 12 — KPI -->
+<section id="kpi">
+  <div class="section-num">12 — KPI hebdomadaires</div>
+  <h2>Les chiffres qui comptent</h2>
+  <p class="intro">Mesure hebdo. Report Jad lundi matin. KPI flanché 2 semaines de suite = rouge → correction immédiate.</p>
+
+  <div class="kpi">
+    <div class="kpi-row head">
+      <div class="kpi-metric">Métrique</div>
+      <div class="kpi-target">Cible</div>
+      <div class="kpi-status">Seuil rouge</div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-metric">Touches par jour (3 blocs × 3 cas)</div>
+      <div class="kpi-target">~200</div>
+      <div class="kpi-status">&lt; 150</div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-metric">Conversations actives par semaine</div>
+      <div class="kpi-target">80-120</div>
+      <div class="kpi-status">&lt; 60</div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-metric">Bookings par semaine</div>
+      <div class="kpi-target">15-25</div>
+      <div class="kpi-status">&lt; 10</div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-metric">Qualified rate (ICP Marc/Camille/Léa)</div>
+      <div class="kpi-target">&gt; 80%</div>
+      <div class="kpi-status">&lt; 60%</div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-metric">Show rate (call honoré)</div>
+      <div class="kpi-target">&gt; 80%</div>
+      <div class="kpi-status">&lt; 60%</div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-metric">Close rate post-call (Jad)</div>
+      <div class="kpi-target">30-50%</div>
+      <div class="kpi-status">&lt; 20%</div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-metric">Taux booking qualifié end-to-end</div>
+      <div class="kpi-target">20%</div>
+      <div class="kpi-status">&lt; 12%</div>
+    </div>
+  </div>
+
+  <h3 style="margin-top:50px;">Plausibilité — analyse rapide du 20%</h3>
+
+  <div class="card">
+    <p style="margin-bottom:14px;">Sur ~200 touches/jour × 5 jours = <strong>1000 touches/semaine</strong>. Décomposition réaliste :</p>
+    <ul class="checklist">
+      <li><div class="check">·</div><div><strong>40% de réponse</strong> = 400 conversations réactives/semaine.</div></li>
+      <li><div class="check">·</div><div><strong>30% deviennent conversations qualifiées</strong> = 120.</div></li>
+      <li><div class="check">·</div><div><strong>20% des qualifiées bookent</strong> = 24 bookings/semaine.</div></li>
+      <li><div class="check">·</div><div>Ratio booking / conversation = 24/120 = <strong>20% booking qualifié</strong>.</div></li>
+    </ul>
+    <p style="margin-top:14px;font-size:13px;color:var(--stone);"><em>20% atteignable mais exige discipline absolue : 7 principes + cadence quotidienne (3 blocs × 3 cas) + mapping vidéo Geoffrey systématique + tracker à jour. Équipe de 3 setters à 18-20% chacun = 50-75 bookings/sem sur volume identique.</em></p>
+  </div>
+
+  <h3 style="margin-top:50px;">Report hebdomadaire — template</h3>
+
+  <div class="script">
+    <span class="script-label">Slack #setting — lundi 10h</span>
+    <div class="msg"><div class="msg-tag">Semaine</div><div class="msg-text">[N]</div></div>
+    <div class="msg"><div class="msg-tag">Touches</div><div class="msg-text">[X] / 1000 — [%]</div></div>
+    <div class="msg"><div class="msg-tag">Bookings</div><div class="msg-text">[X] (sur cible 15-25)</div></div>
+    <div class="msg"><div class="msg-tag">Show rate</div><div class="msg-text">[%]</div></div>
+    <div class="msg"><div class="msg-tag">Close rate</div><div class="msg-text">[%] (info Jad)</div></div>
+    <div class="msg"><div class="msg-tag">Qualifié</div><div class="msg-text">[%] end-to-end</div></div>
+    <div class="msg"><div class="msg-tag">Best</div><div class="msg-text">[@handle] — pourquoi</div></div>
+    <div class="msg"><div class="msg-tag">Worst</div><div class="msg-text">[@handle] — leçon</div></div>
+    <div class="msg"><div class="msg-tag">Blocage</div><div class="msg-text">[...]</div></div>
+    <div class="script-note">Format Slack court. Jad répond avec 1-2 actions correctives si nécessaire.</div>
+  </div>
+</section>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <h3>SAPIENS 360 — Playbook DM V3 — Geoffrey/Setter</h3>
+  <p>Manuel opérationnel à usage interne — Jad + Geoffrey + futur setter</p>
+  <p>Première personne Geoffrey · micro-messages · empathie avant question · 3 phases 3 mois</p>
+  <p class="meta">MAI 2026 · V3 · CONFIDENTIEL · NE PAS PARTAGER EXTERNE</p>
+</footer>
+
+<!-- COPY TOAST -->
+<div id="copy-toast">Copié</div>
+
+<script>
+(function(){
+  // ─── ACTIVE NAV ON SCROLL ───
+  const links = document.querySelectorAll('.nav a');
+  const sections = Array.from(links).map(a => ({
+    link: a,
+    section: document.querySelector(a.getAttribute('href'))
+  }));
+  function updateNav(){
+    const y = window.scrollY + 180;
+    let cur = sections[0];
+    for(const s of sections){
+      if(s.section && s.section.offsetTop <= y) cur = s;
+    }
+    links.forEach(a => a.classList.remove('active'));
+    if(cur) cur.link.classList.add('active');
+  }
+  window.addEventListener('scroll', updateNav, {passive:true});
+
+  // ─── TOAST ───
+  const toast = document.getElementById('copy-toast');
+  let toastTimer = null;
+  function showToast(text){
+    toast.textContent = text || 'Copié';
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(()=>toast.classList.remove('show'), 1500);
+  }
+
+  // ─── COPY HELPERS ───
+  async function copyText(text){
+    try {
+      await navigator.clipboard.writeText(text);
+      return true;
+    } catch(err){
+      // fallback
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      let ok = false;
+      try { ok = document.execCommand('copy'); } catch(_){}
+      document.body.removeChild(ta);
+      return ok;
+    }
+  }
+
+  function getMsgText(msgEl){
+    const t = msgEl.querySelector('.msg-text');
+    return t ? t.textContent.trim() : '';
+  }
+
+  function getScriptSequence(scriptEl){
+    const msgs = scriptEl.querySelectorAll('.msg');
+    const lines = [];
+    msgs.forEach(m => {
+      const txt = getMsgText(m);
+      if (txt) lines.push(txt);
+    });
+    return lines.join('\n');
+  }
+
+  // ─── INJECT COPY BUTTONS INTO EVERY .script ───
+  const COPY_ICON_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>';
+  const CHECK_ICON_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
+
+  const scripts = document.querySelectorAll('.script');
+  scripts.forEach(scriptEl => {
+    // Sequence button (top-right of card)
+    const seqBtn = document.createElement('button');
+    seqBtn.type = 'button';
+    seqBtn.className = 'copy-seq-btn';
+    seqBtn.textContent = 'Copier séquence';
+    seqBtn.title = 'Copier tous les messages collés (séparés par retour ligne)';
+    seqBtn.addEventListener('click', async (e) => {
+      e.stopPropagation();
+      const seq = getScriptSequence(scriptEl);
+      const ok = await copyText(seq);
+      if (ok) {
+        seqBtn.classList.add('copied');
+        seqBtn.textContent = 'Copié ✓';
+        showToast('Séquence copiée');
+        setTimeout(()=>{
+          seqBtn.classList.remove('copied');
+          seqBtn.textContent = 'Copier séquence';
+        }, 1500);
+      } else {
+        showToast('Erreur');
+      }
+    });
+    scriptEl.appendChild(seqBtn);
+
+    // Per-message buttons
+    const msgs = scriptEl.querySelectorAll('.msg');
+    msgs.forEach(m => {
+      const txt = getMsgText(m);
+      if (!txt) return;
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'copy-msg-btn';
+      btn.innerHTML = COPY_ICON_SVG;
+      btn.setAttribute('aria-label', 'Copier ce message');
+      btn.title = 'Copier ce message';
+      btn.addEventListener('click', async (e) => {
+        e.stopPropagation();
+        const ok = await copyText(txt);
+        if (ok) {
+          btn.classList.add('copied');
+          btn.innerHTML = CHECK_ICON_SVG;
+          showToast('Message copié');
+          setTimeout(()=>{
+            btn.classList.remove('copied');
+            btn.innerHTML = COPY_ICON_SVG;
+          }, 1200);
+        } else {
+          showToast('Erreur');
+        }
+      });
+      m.appendChild(btn);
+    });
+  });
+
+  // ─── SEARCH FILTER ───
+  const searchInput = document.getElementById('playbook-search');
+  const clearBtn = document.getElementById('clear-search');
+  const allSections = document.querySelectorAll('main section');
+
+  // Filterable units: script, obj, profile, empathy-card, q-card, relance-item, card
+  const units = document.querySelectorAll(
+    '.script, .obj, .profile, .empathy-card, .q-card, .relance-item, .card, .map-table tbody tr, .principle'
+  );
+
+  function clearHighlights(root){
+    root.querySelectorAll('mark.search-hit').forEach(m => {
+      const parent = m.parentNode;
+      parent.replaceChild(document.createTextNode(m.textContent), m);
+      parent.normalize();
+    });
+  }
+
+  function highlightInText(node, regex){
+    if (node.nodeType === 3) {
+      const txt = node.nodeValue;
+      if (!regex.test(txt)) return;
+      regex.lastIndex = 0;
+      const frag = document.createDocumentFragment();
+      let last = 0, m;
+      while ((m = regex.exec(txt)) !== null) {
+        if (m.index > last) frag.appendChild(document.createTextNode(txt.slice(last, m.index)));
+        const mark = document.createElement('mark');
+        mark.className = 'search-hit';
+        mark.textContent = m[0];
+        frag.appendChild(mark);
+        last = m.index + m[0].length;
+        if (m[0].length === 0) regex.lastIndex++;
+      }
+      if (last < txt.length) frag.appendChild(document.createTextNode(txt.slice(last)));
+      node.parentNode.replaceChild(frag, node);
+    } else if (node.nodeType === 1) {
+      if (['SCRIPT','STYLE','MARK','BUTTON','SVG'].includes(node.tagName)) return;
+      // copy children to array since we mutate live
+      const children = Array.from(node.childNodes);
+      children.forEach(c => highlightInText(c, regex));
+    }
+  }
+
+  function applySearch(){
+    const q = searchInput.value.trim().toLowerCase();
+    // clear previous
+    units.forEach(u => u.classList.remove('search-no-match'));
+    allSections.forEach(s => s.classList.remove('search-no-match'));
+    clearHighlights(document.querySelector('main'));
+    document.body.classList.remove('search-active');
+
+    if (!q) return;
+    document.body.classList.add('search-active');
+    const escaped = q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const regex = new RegExp(escaped, 'gi');
+
+    // filter units
+    units.forEach(u => {
+      const text = u.textContent.toLowerCase();
+      if (!text.includes(q)) u.classList.add('search-no-match');
+    });
+
+    // hide sections with zero visible content
+    allSections.forEach(sec => {
+      const text = sec.textContent.toLowerCase();
+      if (!text.includes(q)) sec.classList.add('search-no-match');
+    });
+
+    // highlight matches in visible content
+    allSections.forEach(sec => {
+      if (sec.classList.contains('search-no-match')) return;
+      highlightInText(sec, regex);
+    });
+  }
+
+  let searchTimer = null;
+  searchInput.addEventListener('input', () => {
+    clearTimeout(searchTimer);
+    searchTimer = setTimeout(applySearch, 120);
+  });
+  clearBtn.addEventListener('click', () => {
+    searchInput.value = '';
+    applySearch();
+    searchInput.focus();
+  });
+
+  // keyboard shortcut: "/" focuses search
+  document.addEventListener('keydown', (e) => {
+    if (e.key === '/' && document.activeElement !== searchInput && !e.ctrlKey && !e.metaKey) {
+      e.preventDefault();
+      searchInput.focus();
+    }
+    if (e.key === 'Escape' && document.activeElement === searchInput) {
+      searchInput.value = '';
+      applySearch();
+      searchInput.blur();
+    }
+  });
+
+  updateNav();
+})();
+</script>
+
+</body>
+</html>
