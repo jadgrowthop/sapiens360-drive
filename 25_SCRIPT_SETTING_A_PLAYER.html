@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>SAPIENS 360 · Script Setting A-Player · post-VSL</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Jost:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+@page{size:A4;margin:18mm 16mm}
+:root{
+  --deep-green:#2C4A35;--deep-green-2:#1F3526;
+  --gold:#B8956A;--gold-bright:#D4B58A;--gold-soft:#E8D7BD;
+  --ivory:#FAF7F2;--sand:#F2EDE3;--cream:#F1EAD9;--paper:#FFFCF6;
+  --anthracite:#1A1A18;--gray:#5C5A55;--gray-soft:#A6A29B;
+  --success:#3E8E5C;--success-soft:#E8F2EC;
+  --terracotta:#C17B5A;--alert:#C73E3A;--alert-soft:#FBE4E2;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{font-family:'Jost',sans-serif;color:var(--anthracite);background:var(--paper);font-size:10.5pt;line-height:1.55}
+h1,h2,h3,h4,h5{font-family:'Cormorant Garamond',serif;font-weight:500;color:var(--deep-green);line-height:1.2;page-break-after:avoid}
+h1{font-size:54pt;font-style:italic}
+h2{font-size:24pt;font-style:italic;margin:14pt 0 6pt;border-bottom:1px solid var(--gold);padding-bottom:4pt}
+h3{font-size:17pt;margin:12pt 0 5pt;color:var(--deep-green-2)}
+h4{font-size:13pt;margin:8pt 0 4pt;font-weight:600;color:var(--gold)}
+h5{font-size:10pt;margin:6pt 0 2pt;font-weight:700;color:var(--deep-green-2);text-transform:uppercase;letter-spacing:1px}
+p{margin:0 0 5pt}
+strong{font-weight:600;color:var(--deep-green-2)}
+em{font-style:italic}
+ul,ol{margin:0 0 5pt 16pt}
+li{margin:0 0 3pt}
+code,.mono{font-family:'JetBrains Mono',monospace;font-size:8.5pt;background:var(--sand);padding:1pt 4pt;border-radius:3px;color:var(--deep-green-2)}
+
+.cover{background:var(--deep-green);color:var(--ivory);padding:24mm 20mm;page-break-after:always;display:flex;flex-direction:column;justify-content:space-between;min-height:267mm}
+.cover h1{color:var(--ivory);font-size:72pt;line-height:1}
+.cover .tag{font-family:'JetBrains Mono';font-size:11pt;letter-spacing:6px;color:var(--gold-bright);text-transform:uppercase;margin-bottom:18pt}
+.cover .sub{font-family:'Cormorant Garamond';font-size:20pt;font-style:italic;color:var(--gold-bright);margin-top:18pt;line-height:1.3}
+.cover .rule{width:90px;height:2px;background:var(--gold);margin:18pt 0}
+.cover-bottom{display:grid;grid-template-columns:1fr 1fr;gap:18pt;border-top:1px solid var(--gold);padding-top:14pt}
+.cover-bottom div{font-family:'JetBrains Mono';font-size:9pt;line-height:1.5}
+.cover-bottom .lbl{color:var(--gold-bright);letter-spacing:2px;text-transform:uppercase;font-size:8pt;display:block;margin-bottom:3pt}
+.monogram{width:70px;height:70px;border-radius:50%;border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond';font-style:italic;font-size:42pt;color:var(--gold-bright);margin-bottom:20pt}
+
+.content{padding:14mm 16mm}
+
+.eyebrow{font-family:'JetBrains Mono';font-size:9pt;letter-spacing:4px;color:var(--gold);text-transform:uppercase;margin-bottom:5pt}
+
+.principle{background:var(--sand);border-left:3px solid var(--gold);padding:6pt 14pt;margin:5pt 0;border-radius:0 4px 4px 0;font-size:10pt;page-break-inside:avoid}
+.principle strong{color:var(--deep-green-2)}
+
+.mathis-card{background:var(--cream);border-left:5px solid var(--terracotta);padding:10pt 14pt;margin:8pt 0;border-radius:0 5px 5px 0;page-break-inside:avoid}
+.mathis-card .ref{font-family:'JetBrains Mono';font-size:8pt;letter-spacing:2px;color:var(--terracotta);text-transform:uppercase;font-weight:700;display:block;margin-bottom:3pt}
+.mathis-card h5{margin:0 0 4pt}
+.mathis-card p{margin:0;font-size:9.5pt;color:var(--gray);font-style:italic}
+
+.phase-block{background:var(--deep-green);color:var(--ivory);padding:14pt 18pt;border-radius:6px;margin:14pt 0;page-break-inside:avoid}
+.phase-block .num{font-family:'JetBrains Mono';font-size:9pt;letter-spacing:4px;color:var(--gold-bright);text-transform:uppercase;display:block;margin-bottom:3pt}
+.phase-block h3{color:var(--ivory);margin:0 0 6pt;font-size:22pt}
+.phase-block .target{color:var(--gold-bright);font-style:italic;font-family:'Cormorant Garamond';font-size:13pt;display:block}
+
+.msg-geoffrey{background:#E8F2EC;border-left:4px solid var(--success);padding:8pt 14pt 8pt 14pt;border-radius:0 5px 5px 0;margin:5pt 0;page-break-inside:avoid;position:relative}
+.copy-btn{position:absolute;top:6pt;right:6pt;background:var(--success);color:var(--ivory);border:none;padding:3pt 8pt;border-radius:3px;font-family:'JetBrains Mono';font-size:7.5pt;letter-spacing:1px;text-transform:uppercase;cursor:pointer;font-weight:600;opacity:0.75;transition:opacity 0.15s}
+.copy-btn:hover{opacity:1}
+.copy-btn.copied{background:var(--gold);color:var(--deep-green)}
+@media print{.copy-btn{display:none}}
+.msg-geoffrey .who{font-family:'JetBrains Mono';font-size:8pt;letter-spacing:2px;color:var(--success);text-transform:uppercase;font-weight:700;display:block;margin-bottom:3pt}
+.msg-geoffrey .voice-tag{display:inline-block;background:var(--success);color:var(--ivory);padding:1pt 6pt;border-radius:3px;font-family:'JetBrains Mono';font-size:7.5pt;letter-spacing:1px;margin-left:6pt;font-weight:600}
+.msg-prospect{background:var(--cream);border-left:4px solid var(--gold-soft);padding:8pt 14pt;border-radius:0 5px 5px 0;margin:5pt 0;font-style:italic;color:var(--gray);page-break-inside:avoid}
+.msg-prospect .who{font-family:'JetBrains Mono';font-size:8pt;letter-spacing:2px;color:var(--gold);text-transform:uppercase;font-weight:700;display:block;margin-bottom:3pt;font-style:normal}
+
+.split-row{display:grid;grid-template-columns:1fr 1fr;gap:10pt;margin:6pt 0;page-break-inside:avoid}
+.branch{background:var(--paper);border:1px solid var(--gold-soft);padding:10pt 14pt;border-radius:5px}
+.branch.hot{border-left:4px solid var(--alert);background:var(--alert-soft)}
+.branch.warm{border-left:4px solid var(--gold);background:var(--cream)}
+.branch.cold{border-left:4px solid var(--gray-soft);background:var(--paper)}
+.branch .branch-tag{font-family:'JetBrains Mono';font-size:8pt;letter-spacing:2px;color:var(--gold);text-transform:uppercase;font-weight:700;display:block;margin-bottom:5pt}
+.branch.hot .branch-tag{color:var(--alert)}
+.branch.warm .branch-tag{color:var(--gold)}
+
+.note-card{background:var(--cream);border-left:4px solid var(--gold);padding:8pt 14pt;border-radius:0 5px 5px 0;margin:6pt 0;font-size:9.5pt;page-break-inside:avoid}
+.note-card strong{color:var(--deep-green-2)}
+
+.bigquote{font-family:'Cormorant Garamond';font-style:italic;font-size:16pt;color:var(--deep-green);text-align:center;padding:12pt 14pt;border-top:1px solid var(--gold);border-bottom:1px solid var(--gold);margin:12pt 0;line-height:1.3;page-break-inside:avoid}
+
+table{width:100%;border-collapse:collapse;margin:6pt 0;font-size:9pt;page-break-inside:avoid}
+th{background:var(--deep-green);color:var(--gold-bright);padding:6pt 8pt;text-align:left;font-family:'Jost';font-weight:500;font-size:8pt;letter-spacing:1px;text-transform:uppercase}
+td{padding:5pt 8pt;border-bottom:1px solid var(--gold-soft);vertical-align:top;font-size:9pt}
+tr:nth-child(even) td{background:var(--cream)}
+
+@media print{body{background:white}}
+</style>
+</head>
+<body>
+
+<!-- COVER -->
+<section class="cover">
+  <div>
+    <div class="monogram">S</div>
+    <div class="tag">SAPIENS 360 · SCRIPT SETTING A-PLAYER · POST-VSL</div>
+    <h1>1 script.<br>3 chemins.<br>1 close.</h1>
+    <div class="rule"></div>
+    <div class="sub">Démarre après VSL envoyée. Géré au nom de Geoffrey. Vocal d'ouverture. Qualification. Éducation YouTube ciblée. Booking. Pour A-players.</div>
+  </div>
+  <div class="cover-bottom">
+    <div><span class="lbl">Cible setter</span>Ta femme · ghost-write Geoffrey · vocal-first</div>
+    <div><span class="lbl">Principes</span>Mathis Clouet appliqués stricts</div>
+  </div>
+</section>
+
+<div class="content">
+
+<!-- LE FLOW MACRO -->
+<div class="eyebrow">Comprendre le flow macro</div>
+<h2 style="margin-top:0;border:none">Le funnel complet · de DM SAPIENS à signature</h2>
+
+<table>
+<tr><th>Étape</th><th>Quoi</th><th>Qui</th></tr>
+<tr><td>1</td><td>Prospect commente "SAPIENS" sur reel/post</td><td>Prospect</td></tr>
+<tr><td>2</td><td>ManyChat envoie le lien VSL auto · &lt;5 sec</td><td>Auto</td></tr>
+<tr><td>3</td><td>Vocal Geoffrey 30-60 sec · "Quelle est ta pathologie ?"</td><td>Setter (ta femme) · vocal</td></tr>
+<tr><td>4</td><td>Discovery 3 questions · qualification</td><td>Setter</td></tr>
+<tr><td>5</td><td>Bridge selon profil · 3 chemins (HOT · WARM · COLD)</td><td>Setter</td></tr>
+<tr><td>6</td><td>Booking Calendly</td><td>Prospect</td></tr>
+<tr><td>7</td><td>Post-booking · VSL Geoffrey + checklist + videos YT</td><td>Auto</td></tr>
+<tr><td>8</td><td>Vocal WhatsApp post-booking · Jad se présente perso</td><td>Jad</td></tr>
+<tr><td>9</td><td>Appel · 45 min · pas de pitch · diagnostic terrain</td><td>Jad</td></tr>
+<tr><td>9</td><td>Signature 1800€</td><td>Prospect</td></tr>
+</table>
+
+<!-- PRINCIPES MATHIS -->
+<h2>Les principes Mathis Clouet appliqués</h2>
+
+<div class="mathis-card">
+<span class="ref">★ Mathis · règle 1h15</span>
+<h5>Plus le prospect consomme de contenu Geoffrey avant le call · plus il signe</h5>
+<p>Médiane Mathis · 1h15 contenu consommé avant signature. Cible setter SAPIENS · 60-90 min YouTube + VSL + Bible avant booking. Pas de raccourci sauf prospect HOT explicite.</p>
+</div>
+
+<div class="mathis-card">
+<span class="ref">★ Mathis · réactivité 60 sec</span>
+<h5>+360% de chance de signature si répondu en moins de 60 sec</h5>
+<p>ManyChat fait la première réponse 5 sec. Setter humain prend le relais &lt;5 min. Non-négociable.</p>
+</div>
+
+<div class="mathis-card">
+<span class="ref">★ Mathis · donne gratuit ce que tes concurrents facturent</span>
+<h5>VSL gratuite + vidéo YouTube spécialisée + Bible PDF + Skool gratuit</h5>
+<p>Ces 4 ressources cumulées · valeur perçue 600€+. Aujourd'hui · SAPIENS donne ça gratis. Setter pousse ce levier en continu.</p>
+</div>
+
+<div class="mathis-card">
+<span class="ref">★ Mathis · damaging admission</span>
+<h5>Pour qui SAPIENS n'est PAS · dit dès le DM si nécessaire</h5>
+<p>Filtre auto les bidons. Augmente désir chez les qualifiés. Tone setter · "Si tu veux essayer juste un peu · pas pour toi. Si tu es engagé · on y va."</p>
+</div>
+
+<div class="mathis-card">
+<span class="ref">★ Mathis · ne pousse pas un prospect qui doute</span>
+<h5>Si prospect hésite · pas insister · WhatsApp nurture · libérer le créneau</h5>
+<p>Setter A-player détecte le doute · n'insiste pas · envoie 2-3 vidéos sur 14 jours · si silence · message final "renvoie-moi un message · la porte est ouverte".</p>
+</div>
+
+<div class="mathis-card">
+<span class="ref">★ Mathis · résultat &gt; process</span>
+<h5>Setter parle de la transformation peau · pas du protocole</h5>
+<p>Pas "30 jours stricts de cétose". Plutôt "ta peau apaisée en 6 semaines · comme Camille après 10 ans de rosacée".</p>
+</div>
+
+<!-- LE SCRIPT -->
+<h2 style="margin-top:18pt">Le script · A-Player level</h2>
+
+<!-- PHASE 1 · VOCAL -->
+<div class="phase-block">
+<span class="num">★ Phase 01 · vocal post-VSL</span>
+<h3>Le vocal d'ouverture Geoffrey</h3>
+<span class="target">30-60 sec · au moment de l'envoi VSL · pré-enregistré ou live</span>
+</div>
+
+<div class="msg-geoffrey">
+<span class="who">Geoffrey →</span><span class="voice-tag">VOCAL</span>
+<p style="margin-top:6pt">"Salut [prénom] · Geoffrey à l'appareil 🌿 Merci pour ton intérêt. Je viens de t'envoyer une vidéo qui pose la base · regarde-la quand tu peux.</p>
+<p>Avant qu'on aille plus loin · tu peux me dire quelle est ta problématique principale ?"</p>
+</div>
+
+<div class="note-card"><strong>Format vocal critique</strong> · ton calme · expert · jamais commercial. <strong>1 seule question.</strong> Mathis · "Parler avec intention · pas réciter un script". Vocal pré-enregistré OK · mais relances doivent rester perso.</div>
+
+<!-- PHASE 2 · DISCOVERY -->
+<div class="phase-block">
+<span class="num">★ Phase 02 · discovery · qualification</span>
+<h3>3 questions précises pour orienter</h3>
+<span class="target">Max 5 min · pas plus · pas moins de profondeur</span>
+</div>
+
+<div class="msg-prospect">
+<span class="who">Prospect</span>
+"[réponse pathologie]"
+</div>
+
+<div class="note-card"><strong>★ Règle absolue setter</strong> · <strong>simple et efficace</strong>. 1 question par message. Les questions profondes (motivation · projection · engagement) viennent <strong>dans le call avec Jad</strong> · pas en DM. Setter pose juste l'essentiel pour qualifier + orienter vidéo + bridge call.</div>
+
+<h5>★ Q1 · durée</h5>
+<div class="msg-geoffrey"><span class="who">Geoffrey →</span>"Depuis combien de temps tu vis avec ?"</div>
+
+<h5>★ Q2 · essais antérieurs</h5>
+<div class="msg-geoffrey"><span class="who">Geoffrey →</span>"Tu as essayé quoi jusqu'à maintenant ?"</div>
+
+<h5>★ Q3 · impact quotidien</h5>
+<div class="msg-geoffrey"><span class="who">Geoffrey →</span>"Qu'est-ce qui t'embête le plus au quotidien ?"</div>
+
+<h5>★ Q4 · filtre HOT/WARM</h5>
+<div class="msg-geoffrey"><span class="who">Geoffrey →</span>"Tu sens que faut faire quelque chose · ou tu te dis que ça partira un jour tout seul ?"</div>
+<p style="font-size:9pt;color:var(--gray);margin:4pt 0 8pt 0">★ Réponse = filtre direct · "faut faire quelque chose" → HOT · "ça partira" → WARM nurture vidéo</p>
+
+<h5>★ Q5 · projection émotion</h5>
+<div class="msg-geoffrey"><span class="who">Geoffrey →</span>"Si ça se réglait · qu'est-ce que ça changerait pour toi ?"</div>
+<p style="font-size:9pt;color:var(--gray);margin:4pt 0 8pt 0">★ Le prospect verbalise SA raison · réutilisable au call par Jad. À poser <strong>uniquement si Q4 = HOT</strong>.</p>
+
+<div class="note-card"><strong>Diagnostic interne setter après questions</strong> ·
+<ul style="margin:4pt 0 0 16pt">
+<li>Pathologie + durée + sévérité (Q1-Q3)</li>
+<li>État de chaleur HOT/WARM (Q4)</li>
+<li>Raison émotionnelle pour pitch call (Q5 · si HOT)</li>
+</ul>
+<p style="margin-top:4pt">→ Si HOT (Q4 + Q5 répondues) · bridge lien booking direct. Si WARM · vidéo YouTube ciblée + nurture. <strong>Stop questions ici</strong> · le reste dans le call.</p>
+</div>
+
+<!-- PHASE 3 · 3 CHEMINS -->
+<div class="phase-block">
+<span class="num">★ Phase 03 · branche selon profil</span>
+<h3>3 chemins · HOT · WARM · COLD</h3>
+<span class="target">Détecte signaux · bridge en conséquence</span>
+</div>
+
+<h5>★ Comment lire le signal</h5>
+<table>
+<tr><th>Signal</th><th>Statut</th></tr>
+<tr><td>"Je veux le protocole · combien ça coûte" / "Comment on commence"</td><td>★ HOT</td></tr>
+<tr><td>"Comment ça marche · explique-moi" / "C'est intéressant"</td><td>WARM</td></tr>
+<tr><td>"Je sais pas trop" / "Je regarderai plus tard" / Réponses courtes</td><td>COLD</td></tr>
+</table>
+
+<div class="split-row" style="grid-template-columns:1fr 1fr 1fr">
+
+<div class="branch hot">
+<span class="branch-tag">★ HOT · direct call</span>
+<p style="font-size:9pt"><strong>Bridge immédiat call</strong> · pas perdre de temps</p>
+</div>
+
+<div class="branch warm">
+<span class="branch-tag">WARM · contenu puis call</span>
+<p style="font-size:9pt"><strong>1-2 vidéos YouTube ciblées</strong> · puis bridge call J+2</p>
+</div>
+
+<div class="branch cold">
+<span class="branch-tag">COLD · nurture éducation</span>
+<p style="font-size:9pt"><strong>2-3 vidéos sur 14 jours</strong> · pas pousser</p>
+</div>
+
+</div>
+
+<!-- CHEMIN HOT -->
+<h5 style="margin-top:14pt">★ Chemin HOT · prospect prêt</h5>
+
+<div class="msg-geoffrey">
+<span class="who">Geoffrey →</span>
+"OK · tu es clair sur ta démarche. La prochaine étape · réserve ton appel ici · https://api.leadconnectorhq.com/widget/bookings/sapiens360v3"
+</div>
+
+<div class="note-card"><strong>★ Important HOT</strong> · message booking = <strong>juste le lien</strong>. Rien d'autre. Pas de "regarde encore une vidéo en plus". Le post-booking auto pousse la VSL + vidéos YouTube + vocal WhatsApp Jad qui se présente personnellement. Setter ne charge pas le message booking.</div>
+
+<!-- CHEMIN WARM -->
+<h5 style="margin-top:14pt">★ Chemin WARM · prospect qui veut comprendre</h5>
+
+<div class="msg-geoffrey">
+<span class="who">Geoffrey →</span>
+"Regarde cette vidéo · elle pose tout le mécanisme · [LIEN YT]"
+</div>
+
+<h5>★ Relance WARM · J+1 (24h)</h5>
+
+<div class="msg-geoffrey">
+<span class="who">Geoffrey →</span>
+"[prénom] · tu as eu le temps de regarder ?"
+</div>
+
+<div class="split-row" style="margin-top:6pt">
+
+<div class="branch warm">
+<span class="branch-tag">Si OUI</span>
+<div class="msg-geoffrey" style="margin:0">
+<span class="who">Geoffrey →</span>
+"Top. Cette deuxième vidéo te montre la suite · [LIEN YT]"
+</div>
+</div>
+
+<div class="branch cold">
+<span class="branch-tag">Si NON</span>
+<div class="msg-geoffrey" style="margin:0">
+<span class="who">Geoffrey →</span>
+"Pas de souci · prends ton temps."
+</div>
+</div>
+
+</div>
+
+<h5>★ Relance WARM · J+3 (si vidéos regardées)</h5>
+
+<div class="msg-geoffrey">
+<span class="who">Geoffrey →</span>
+"La prochaine étape · réserve ton appel ici · https://api.leadconnectorhq.com/widget/bookings/sapiens360v3"
+</div>
+
+<!-- CHEMIN COLD -->
+<h5 style="margin-top:14pt">★ Chemin COLD · prospect qui doute / observe</h5>
+
+<div class="msg-geoffrey">
+<span class="who">Geoffrey →</span>
+"Pas de souci · zéro pression. Je te laisse cette vidéo · regarde-la quand tu veux · [LIEN YT]"
+</div>
+
+<h5>★ Nurture COLD · J+3</h5>
+
+<div class="msg-geoffrey">
+<span class="who">Geoffrey →</span>
+"[prénom] · ce témoignage pourrait t'intéresser · [LIEN VIDÉO]"
+</div>
+
+<h5>★ Nurture COLD · J+7</h5>
+
+<div class="msg-geoffrey">
+<span class="who">Geoffrey →</span>
+"Nouvelle vidéo qui pourrait te parler · [LIEN YT]"
+</div>
+
+<h5>★ Closing nurture COLD · J+14 (dernier message si silence total)</h5>
+
+<div class="msg-geoffrey">
+<span class="who">Geoffrey →</span>
+"Je te laisse tranquille. Renvoie-moi un message quand tu veux · la porte est ouverte."
+</div>
+
+<!-- BANQUE OBJECTIONS -->
+<h2 style="margin-top:18pt">★ Banque d'objections · réponses scriptées</h2>
+
+<div class="note-card"><strong>Règle setter A-Player</strong> · les objections en DM sont presque toujours les mêmes 6-8. Réponses courtes · pas de débat · soit une vidéo qui répond · soit un cadrage damaging admission. Pas de pitch en DM. <strong>Le call avec Jad fait le vrai travail · pas le setter.</strong></div>
+
+<h3>★ Les 8 objections fréquentes · réponses Geoffrey</h3>
+
+<table>
+<tr><th>Objection</th><th>Réponse signée Geoffrey</th></tr>
+<tr><td>"C'est combien ?"</td><td>"Jad te dira tout sur l'investissement pendant l'appel · il a besoin de comprendre ta situation d'abord pour personnaliser. En attendant · regarde le mécanisme · [LIEN VIDÉO]"</td></tr>
+<tr><td>"J'y crois pas"</td><td>"Je comprends. Regarde ce témoignage de Pierre · 2 semaines de protocole · footings repris après 18 mois d'arrêt · ses mots à lui · [LIEN VIDÉO TÉMOIGNAGE]"</td></tr>
+<tr><td>"J'ai pas le temps"</td><td>"Pas de souci. La vidéo dure 22 min · tu peux la regarder dans le métro · à la pause. Quand tu auras 22 min · regarde · [LIEN]. Si tu veux pas y consacrer ces 22 min · c'est que ce n'est pas le bon moment pour toi."</td></tr>
+<tr><td>"Je veux d'abord voir encore un dermato"</td><td>"Vas-y · fais-le. Mais regarde cette vidéo avant pour savoir quoi lui demander précisément · [LIEN]. Si après le dermato rien ne tient · renvoie-moi un message · la porte est ouverte."</td></tr>
+<tr><td>"Je vais tester les crèmes encore"</td><td>"Vas-y · teste. Regarde cette vidéo où je démonte précisément pourquoi les crèmes ne tiennent jamais · [LIEN]. Si dans 3 mois rien n'a tenu · renvoie-moi un message."</td></tr>
+<tr><td>"Je vais tester X (jeûne · Pagano · sans gluten · naturopathe · etc.)"</td><td>"OK. Regarde cette vidéo où je compare précisément cette approche au protocole SAPIENS · tu sauras quoi attendre · [LIEN]. Si tu veux qu'on en reparle après · renvoie-moi un message."</td></tr>
+<tr><td>"Je veux juste essayer 30 jours"</td><td>"SAPIENS n'est pas un essai. On rejoint quand on a décidé d'arrêter de cycler. Si t'es pas prêt à t'engager 90 jours · attends que tu le sois. Renvoie-moi un message quand tu veux · la porte est ouverte."</td></tr>
+<tr><td>"Mon conjoint pense que c'est une arnaque"</td><td>"Sujet important. Pas de décision sans alignement couple. Envoie-lui cette vidéo · [LIEN]"</td></tr>
+</table>
+
+<div class="note-card" style="margin-top:8pt"><strong>★ Stratégie commune toutes objections</strong> · ne jamais débattre · répondre par contenu (vidéo qui adresse l'objection précise) + cadrage simple. Le prospect doit faire son chemin · tu donnes les outils.</div>
+
+<!-- KPI -->
+<h2 style="margin-top:18pt">★ KPI setter A-Player · tracker quotidien</h2>
+
+<table>
+<tr><th>KPI</th><th>Standard A-Player</th></tr>
+<tr><td>Réponse 1er DM</td><td>&lt;5 min · 100% des cas</td></tr>
+<tr><td>Vocal d'ouverture envoyé</td><td>100% des DM SAPIENS</td></tr>
+<tr><td>3 questions discovery posées</td><td>100% prospects qui répondent</td></tr>
+<tr><td>Vidéo YouTube envoyée</td><td>100% prospects qualifiés</td></tr>
+<tr><td>Relances J+1 effectuées</td><td>100% prospects WARM/COLD</td></tr>
+<tr><td>Calls bookés / DM reçus</td><td>15-20% cible</td></tr>
+<tr><td>Temps moyen DM → booking</td><td>2-5 jours (laisser éducation se faire)</td></tr>
+<tr><td>Showup rate</td><td>85%+ (avec post-booking actif)</td></tr>
+<tr><td>Détection HOT correctement</td><td>0 erreur · pas envoyer vidéo à un HOT</td></tr>
+</table>
+
+<!-- BANQUE DE RELANCES · MATHIS CLOUET FRAMEWORK -->
+<h2 style="margin-top:18pt">★ Banque de relances · framework Mathis Clouet</h2>
+
+<div class="note-card"><strong>Principes Mathis appliqués</strong> ·
+<ul style="margin:4pt 0 0 16pt">
+<li><strong>Damaging admission</strong> · jamais quémander · filtrer = qualifier · "si pas le bon moment · pas grave"</li>
+<li><strong>Croyances minimisées</strong> · pas de "tu en es où ?" · trop mou · trop besoin</li>
+<li><strong>Levier cumulatif</strong> · chaque relance = nouvel asset (vidéo · témoignage · cas) · jamais juste "tu réponds ?"</li>
+<li><strong>Domination contenu</strong> · sortir 1 vidéo nouvelle par semaine → relance valeur · pas pression</li>
+<li><strong>Offre Sauvage</strong> · proposer lead magnet gratuit (mot FATIGUE / PSORIASIS) avant booking</li>
+</ul>
+</div>
+
+<h3>★ Cadence relances · J+1 · J+3 · J+7 · J+14</h3>
+
+<h5>★ J+1 · check vidéo regardée (Croyances minimisées)</h5>
+<div class="msg-geoffrey"><span class="who">Geoffrey →</span>"[prénom] · tu as eu le temps de regarder ?"</div>
+<p style="font-size:9pt;color:var(--gray);margin:2pt 0 8pt 0">→ Si OUI · envoyer suite. Si NON · "Pas de souci · prends ton temps."</p>
+
+<h5>★ J+3 · nouveau témoignage (Levier social proof)</h5>
+<div class="msg-geoffrey"><span class="who">Geoffrey →</span>"Tiens · Pierre vient de poster ses 4 semaines · [LIEN]. Si t'as eu le temps de digérer la vidéo · dis-moi."</div>
+<p style="font-size:9pt;color:var(--gray);margin:2pt 0 8pt 0">→ Apporter de la valeur · pas demander. Le prospect ne te doit rien.</p>
+
+<h5>★ J+7 · damaging admission (filtre dur Mathis)</h5>
+<div class="msg-geoffrey"><span class="who">Geoffrey →</span>"[prénom] · pas de nouvelles. Si c'est pas le bon moment · pas grave. Renvoie-moi un message quand tu es prêt."</div>
+<p style="font-size:9pt;color:var(--gray);margin:2pt 0 8pt 0">→ Cadre la posture · pas le tien qui pousse. Mathis · "le prospect qui doute = nurture · pas push".</p>
+
+<h5>★ J+14 · vidéo nouvelle ciblée (Domination contenu)</h5>
+<div class="msg-geoffrey"><span class="who">Geoffrey →</span>"Je viens de sortir une vidéo qui répond exactement à ce que tu m'avais dit sur [X] · [LIEN YT]."</div>
+<p style="font-size:9pt;color:var(--gray);margin:2pt 0 8pt 0">→ Réveille le lead froid par asset nouveau · pas par insistance.</p>
+
+<h3 style="margin-top:14pt">★ Relances situationnelles</h3>
+
+<h5>★ Post no-show · reset chance</h5>
+<div class="msg-geoffrey"><span class="who">Geoffrey →</span>"Tu n'as pas pu venir aujourd'hui · pas de souci. Re-booke quand tu es prêt · https://api.leadconnectorhq.com/widget/bookings/sapiens360v3"</div>
+
+<h5>★ Réaction story → relance (Levier comportement)</h5>
+<div class="msg-geoffrey"><span class="who">Geoffrey →</span>"J'ai vu que tu as réagi à ma story · ça t'a parlé ?"</div>
+<p style="font-size:9pt;color:var(--gray);margin:2pt 0 8pt 0">→ Réouvre conversation par observation · pas par sales pitch.</p>
+
+<h5>★ Bridge offre sauvage avant booking</h5>
+<div class="msg-geoffrey"><span class="who">Geoffrey →</span>"Si tu veux le doc gratuit avant de réserver · dis-moi 'FATIGUE' · je te l'envoie en direct."</div>
+<p style="font-size:9pt;color:var(--gray);margin:2pt 0 8pt 0">→ Mathis · "lead magnet sauvage en priorité 1". Convertit le WARM hésitant.</p>
+
+<h5>★ Damaging admission · cap engagement</h5>
+<div class="msg-geoffrey"><span class="who">Geoffrey →</span>"Honnête avec toi · si tu n'es pas prêt à t'engager 90 jours · attends que tu le sois. Je préfère te le dire."</div>
+<p style="font-size:9pt;color:var(--gray);margin:2pt 0 8pt 0">→ Filtre les essayeurs. Mathis · "transforme 'strict' en 'engagé sérieux'".</p>
+
+<h5>★ Relance booking · 1 dernière fois</h5>
+<div class="msg-geoffrey"><span class="who">Geoffrey →</span>"Dernière relance de ma part · si tu veux qu'on en parle · le lien est là · https://api.leadconnectorhq.com/widget/bookings/sapiens360v3. Sinon · je laisse · la porte est ouverte."</div>
+<p style="font-size:9pt;color:var(--gray);margin:2pt 0 8pt 0">→ Mathis · "cadre clair vaut mieux que pression". Pas de relance infinie.</p>
+
+<div class="note-card" style="margin-top:8pt"><strong>★ Règle d'or relances</strong> · jamais 2 relances de suite sans nouvel asset. Si pas de nouveau contenu/témoignage/vidéo à apporter · attendre. Le silence vaut mieux que le push.</div>
+
+<div class="bigquote" style="margin-top:14pt">"Vocal d'ouverture. 3 questions · 1 par message.<br>1 vidéo ciblée. Relance par asset · pas par insistance.<br>Signature Geoffrey · toujours. Pas de pitch."</div>
+
+<p style="margin-top:14pt;font-style:italic;color:var(--gray);font-size:9pt;text-align:center">Script setting A-Player · 29 mai 2026 · post-VSL · Mathis Clouet appliqué stricte · 1h15 contenu · 60 sec réactivité · damaging admission · 3 chemins HOT/WARM/COLD.</p>
+
+</div>
+
+<script>
+document.querySelectorAll('.msg-geoffrey').forEach(function(box){
+  var btn = document.createElement('button');
+  btn.className = 'copy-btn';
+  btn.textContent = 'Copy';
+  btn.addEventListener('click', function(e){
+    e.preventDefault();
+    var clone = box.cloneNode(true);
+    clone.querySelectorAll('.copy-btn, .who, .voice-tag').forEach(function(el){ el.remove(); });
+    var txt = clone.textContent.trim().replace(/^["«]\s*/, '').replace(/\s*["»]$/, '');
+    navigator.clipboard.writeText(txt).then(function(){
+      btn.textContent = 'Copié';
+      btn.classList.add('copied');
+      setTimeout(function(){ btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 1500);
+    });
+  });
+  box.appendChild(btn);
+});
+</script>
+
+</body>
+</html>
