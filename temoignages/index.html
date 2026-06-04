@@ -1,0 +1,87 @@
+<!doctype html><html lang="fr"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SAPIENS 360 — Ils l'ont vécu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--green:#2C4A35;--gold:#B8956A;--goldb:#D4B58A;--ivory:#FAF7F2;--ink:#16140F;--stone:rgba(242,237,227,.55);--line:rgba(184,149,106,.20)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--ink);color:var(--ivory);font-family:'Jost',sans-serif;line-height:1.5;
+ background-image:radial-gradient(circle at 80% 0,rgba(44,74,53,.28),transparent 55%),radial-gradient(circle,rgba(184,149,106,.04) 1px,transparent 1px);background-size:auto,30px 30px}
+.wrap{max-width:1180px;margin:0 auto;padding:0 22px}
+.hero{text-align:center;padding:64px 22px 30px}
+.eyebrow{font-size:12px;letter-spacing:5px;text-transform:uppercase;color:var(--gold);font-weight:400}
+.hero h1{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:500;font-size:clamp(40px,7vw,72px);margin:10px 0 8px;line-height:1}
+.hero p{color:var(--stone);max-width:620px;margin:0 auto;font-size:clamp(15px,2.2vw,18px)}
+.sec{padding:34px 0 14px}
+.sec-h{display:flex;align-items:center;gap:14px;margin-bottom:20px}
+.sec-h .n{font-family:'JetBrains Mono',monospace;font-size:12px}
+.sec-h h2{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:500;font-size:clamp(26px,4vw,38px);color:var(--ivory);white-space:nowrap}
+.sec-h .ln{flex:1;height:1px;background:var(--line)}
+.sec-h .gold{color:var(--gold);font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase}
+/* avant/apres */
+.avap-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px}
+.avap{background:rgba(250,247,242,.035);border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.avap .duo{display:grid;grid-template-columns:1fr 1fr;gap:2px}
+.avap .ph{position:relative;aspect-ratio:3/4;overflow:hidden;background:#000}
+.avap .ph img{width:100%;height:100%;object-fit:cover}
+.avap.solo img{width:100%;display:block}
+.lbl{position:absolute;top:10px;left:10px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1.5px;padding:4px 9px;border-radius:5px;color:#16140F;font-weight:600}
+.lbl.av{background:rgba(212,181,138,.92)}.lbl.ap{background:rgba(90,138,106,.95);color:#fff}
+figcaption{display:flex;justify-content:space-between;align-items:baseline;padding:13px 16px;gap:10px}
+figcaption .nm,.ahead .nm{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:20px;color:var(--ivory)}
+figcaption .cp,.ahead .cp{font-size:12px;color:var(--stone);text-align:right}
+/* vidéos */
+.vid-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:20px}
+.vid-card{background:rgba(250,247,242,.035);border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.vid-card.pair{border-color:rgba(184,149,106,.4)}
+.vwrap{background:#000;aspect-ratio:9/16;display:flex;align-items:center;justify-content:center}
+.vid-card video{width:100%;height:100%;object-fit:cover;background:#000}
+/* audios */
+.aud-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
+.aud-card{background:rgba(250,247,242,.04);border:1px solid var(--line);border-radius:14px;padding:16px 18px}
+.ahead{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:14px}
+.player{display:flex;align-items:center;gap:12px}
+.pbtn{flex:none;width:42px;height:42px;border-radius:50%;border:none;background:var(--gold);color:#16140F;font-size:15px;cursor:pointer;transition:.2s}
+.pbtn:hover{background:var(--goldb)}.pbtn.playing{background:var(--green);color:#fff}
+.bar{flex:1;height:5px;background:rgba(250,247,242,.14);border-radius:3px;cursor:pointer;position:relative}
+.fill{height:100%;width:0;background:var(--gold);border-radius:3px}
+.time{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--stone);min-width:34px;text-align:right}
+/* captures */
+.cap-grid{columns:4 220px;column-gap:16px}
+.cap{display:block;break-inside:avoid;margin-bottom:16px;border-radius:12px;overflow:hidden;border:1px solid var(--line);position:relative;text-decoration:none}
+.cap img{width:100%;display:block}
+.ctag{position:absolute;left:0;right:0;bottom:0;padding:18px 12px 9px;font-size:11px;color:#fff;letter-spacing:.5px;background:linear-gradient(transparent,rgba(0,0,0,.75))}
+.foot{text-align:center;color:var(--stone);font-size:13px;padding:40px 22px 56px;border-top:1px solid var(--line);margin-top:30px}
+.foot .s{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:18px;color:var(--gold)}
+@media(max-width:520px){.avap .duo{grid-template-columns:1fr 1fr}.cap-grid{columns:2 150px}}
+</style></head>
+<body>
+<header class="hero">
+  <div class="eyebrow">SAPIENS 360 · TÉMOIGNAGES</div>
+  <h1>Ils l'ont vécu.</h1>
+  <p>Des vraies personnes, des vrais résultats. Audios, vidéos, photos avant/après, messages — rien de retouché, rien de scénarisé.</p>
+</header>
+<main class="wrap">
+  <section class="sec"><div class="sec-h"><span class="n gold">01</span><h2>Avant / Après</h2><span class="ln"></span><span class="gold">Psoriasis</span></div><div class="avap-grid"><figure class="avap"><div class="duo"><div class="ph"><img loading="lazy" src="media/erwan-avant.jpg"><span class="lbl av">AVANT</span></div><div class="ph"><img loading="lazy" src="media/erwan-apres.jpg"><span class="lbl ap">1 MOIS APRÈS</span></div></div><figcaption><span class="nm">Erwan</span><span class="cp">Psoriasis</span></figcaption></figure><figure class="avap solo"><img loading="lazy" src="media/choc-corps.jpg"><figcaption><span class="nm">Psoriasis · corps</span><span class="cp">Avant → Après</span></figcaption></figure><figure class="avap solo"><img loading="lazy" src="media/choc-main.jpg"><figcaption><span class="nm">Psoriasis · main</span><span class="cp">Avant → Après</span></figcaption></figure></div></section>
+  <section class="sec"><div class="sec-h"><span class="n gold">02</span><h2>En vidéo</h2><span class="ln"></span><span class="gold">Leurs mots</span></div><div class="vid-grid"><figure class="vid-card pair"><div class="vwrap"><video preload="none" playsinline controls poster="media/caroline-avant.jpg"><source src="media/caroline-avant.mp4" type="video/mp4"></video></div><figcaption><span class="nm">Caroline</span><span class="cp">Avant le protocole</span></figcaption></figure><figure class="vid-card pair"><div class="vwrap"><video preload="none" playsinline controls poster="media/caroline-apres.jpg"><source src="media/caroline-apres.mp4" type="video/mp4"></video></div><figcaption><span class="nm">Caroline</span><span class="cp">Après le protocole</span></figcaption></figure><figure class="vid-card"><div class="vwrap"><video preload="none" playsinline controls poster="media/caroline-montage.jpg"><source src="media/caroline-montage.mp4" type="video/mp4"></video></div><figcaption><span class="nm">Caroline</span><span class="cp">Son montage avant / après</span></figcaption></figure><figure class="vid-card"><div class="vwrap"><video preload="none" playsinline controls poster="media/coralie.jpg"><source src="media/coralie.mp4" type="video/mp4"></video></div><figcaption><span class="nm">Coralie</span><span class="cp">Témoignage</span></figcaption></figure><figure class="vid-card"><div class="vwrap"><video preload="none" playsinline controls poster="media/jordan.jpg"><source src="media/jordan.mp4" type="video/mp4"></video></div><figcaption><span class="nm">Jordan</span><span class="cp">2 mois après · terrain stabilisé, ça gratte moins, resté sec</span></figcaption></figure><figure class="vid-card"><div class="vwrap"><video preload="none" playsinline controls poster="media/yahia-video.jpg"><source src="media/yahia-video.mp4" type="video/mp4"></video></div><figcaption><span class="nm">Yahia</span><span class="cp">Après 2 semaines</span></figcaption></figure></div></section>
+  <section class="sec"><div class="sec-h"><span class="n gold">03</span><h2>En audio</h2><span class="ln"></span><span class="gold">Le contenu &amp; les lives</span></div><div class="aud-grid"><div class="aud-card"><div class="ahead"><span class="nm">Jennifer</span><span class="cp">« Une vidéo très claire » — sur le contenu du Skool</span></div><div class="player" data-src="media/jennifer.mp3"><button class="pbtn" aria-label="Lecture">▶</button><div class="bar"><div class="fill"></div></div><span class="time">0:00</span></div></div><div class="aud-card"><div class="ahead"><span class="nm">Thomas</span><span class="cp">Remerciement — la pédagogie</span></div><div class="player" data-src="media/thomas-pedagogie.m4a"><button class="pbtn" aria-label="Lecture">▶</button><div class="bar"><div class="fill"></div></div><span class="time">0:00</span></div></div><div class="aud-card"><div class="ahead"><span class="nm">Thomas</span><span class="cp">Remerciement — le live</span></div><div class="player" data-src="media/thomas-live.m4a"><button class="pbtn" aria-label="Lecture">▶</button><div class="bar"><div class="fill"></div></div><span class="time">0:00</span></div></div></div></section>
+  <section class="sec"><div class="sec-h"><span class="n gold">04</span><h2>Leurs messages</h2><span class="ln"></span><span class="gold">Captures Skool</span></div><div class="cap-grid"><a class="cap" href="media/erwan-skool-1.jpg" target="_blank"><img loading="lazy" src="media/erwan-skool-1.jpg"><span class="ctag">Erwan · Semaine 1</span></a><a class="cap" href="media/erwan-skool-2.jpg" target="_blank"><img loading="lazy" src="media/erwan-skool-2.jpg"><span class="ctag">Erwan · Semaine 2</span></a><a class="cap" href="media/jordan-skool-1.jpg" target="_blank"><img loading="lazy" src="media/jordan-skool-1.jpg"><span class="ctag">Jordan · Après 1 semaine</span></a><a class="cap" href="media/jordan-skool-2.jpg" target="_blank"><img loading="lazy" src="media/jordan-skool-2.jpg"><span class="ctag">Jordan · Après 1 semaine (suite)</span></a><a class="cap" href="media/jordan-skool-3.jpg" target="_blank"><img loading="lazy" src="media/jordan-skool-3.jpg"><span class="ctag">Jordan · Retour 2-3 semaines</span></a><a class="cap" href="media/yahia-skool-1.png" target="_blank"><img loading="lazy" src="media/yahia-skool-1.png"><span class="ctag">Yahia · 2 semaines</span></a><a class="cap" href="media/yahia-skool-2.jpg" target="_blank"><img loading="lazy" src="media/yahia-skool-2.jpg"><span class="ctag">Yahia · 6 semaines</span></a></div></section>
+</main>
+<footer class="foot"><div class="s">Témoignages réels, partagés avec leur accord.</div>SAPIENS 360™ · l'axe intestin-immunité-peau</footer>
+<script>
+document.querySelectorAll('.player').forEach(function(p){
+  var au=new Audio(p.dataset.src);au.preload='none';
+  var btn=p.querySelector('.pbtn'),fill=p.querySelector('.fill'),bar=p.querySelector('.bar'),tt=p.querySelector('.time');
+  function fmt(s){s=Math.floor(s||0);return Math.floor(s/60)+':'+('0'+(s%60)).slice(-2);}
+  btn.addEventListener('click',function(){
+    if(au.paused){document.querySelectorAll('audio').forEach(function(x){});au.play();}else{au.pause();}
+  });
+  au.addEventListener('play',function(){btn.textContent='❚❚';btn.classList.add('playing');});
+  au.addEventListener('pause',function(){btn.textContent='▶';btn.classList.remove('playing');});
+  au.addEventListener('timeupdate',function(){fill.style.width=(au.currentTime/au.duration*100||0)+'%';tt.textContent=fmt(au.currentTime);});
+  au.addEventListener('ended',function(){btn.textContent='▶';btn.classList.remove('playing');fill.style.width='0';tt.textContent='0:00';});
+  bar.addEventListener('click',function(e){var r=bar.getBoundingClientRect();au.currentTime=(e.clientX-r.left)/r.width*(au.duration||0);});
+});
+</script>
+</body></html>
