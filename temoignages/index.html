@@ -83,5 +83,7 @@ document.querySelectorAll('.player').forEach(function(p){
   au.addEventListener('ended',function(){btn.textContent='▶';btn.classList.remove('playing');fill.style.width='0';tt.textContent='0:00';});
   bar.addEventListener('click',function(e){var r=bar.getBoundingClientRect();au.currentTime=(e.clientX-r.left)/r.width*(au.duration||0);});
 });
+function sapH(){try{parent.postMessage({sapiensH:document.documentElement.scrollHeight},'*');}catch(e){}}
+addEventListener('load',sapH);addEventListener('resize',sapH);if(window.ResizeObserver)new ResizeObserver(sapH).observe(document.body);setInterval(sapH,1500);
 </script>
 </body></html>
